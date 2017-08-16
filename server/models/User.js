@@ -17,12 +17,12 @@ UserSchema.plugin(uniqueValidator, { message: 'is already taken.'});
 
 UserSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
-    // pdkdf2Sync <= password, salt, iteration, length of hash, algorithm
-    this.hash = crypto.pdkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+    // pbkdf2Sync <= password, salt, iteration, length of hash, algorithm
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
 UserSchema.methods.validPassword = function(password) {
-    var hash = crypto.pdkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+    var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
     return this.hash === hash;
 };
 
