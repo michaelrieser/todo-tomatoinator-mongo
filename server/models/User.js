@@ -42,6 +42,8 @@ UserSchema.methods.toAuthJSON = function() {
     return {
         username: this.username,
         email: this.email,
+        bio: this.bio, // not in original Thinkster tutorial - not having this here prevented bio population on app.settings
+        image: this.image, // not in original Thinkster tutorial - not having this here prevented image population on app.settings
         token: this.generateJWT()
     };
 };

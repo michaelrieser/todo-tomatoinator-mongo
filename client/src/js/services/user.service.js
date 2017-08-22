@@ -68,6 +68,7 @@ export default class User {
                 method: 'GET'
             }).then(
                 (res) => {
+                    console.log(res.data.user);
                     this.current = res.data.user;                    
                     deferred.resolve(true);
                 },
@@ -97,4 +98,18 @@ export default class User {
             }
         })
     }
+
+    // Update the current user's name, email, password, etc..
+    update(fields) {
+        return this._$http({
+            url: this._AppConstants.api + '/user',
+            method: 'PUT',
+            data: { user: fields }
+        }).then(
+            (res) => {
+                this.current = res.data.user;
+                return res.data.user;
+            }
+        )
+    };
 }
