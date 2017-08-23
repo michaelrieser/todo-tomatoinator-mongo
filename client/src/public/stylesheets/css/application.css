@@ -1,0 +1,11 @@
+ul.test {
+  display: none; }
+  ul.test a {
+    display: block; }
+
+.preview-link h1 {
+  color: purple; }
+
+.test {
+  color: red;
+  width: 71.42857%; }

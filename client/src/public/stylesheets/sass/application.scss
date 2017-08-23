@@ -1,0 +1,24 @@
+// TODO: find out how to override default bootstrap vars
+//      see: https://github.com/RailsApps/rails-composer/issues/146
+// $navbar-default-color: $light-orange; // doesn't appear to be working
+// $navbar-default-bg: red;
+
+// @import "bootstrap";
+
+ul.test {
+  display: none;
+  a {
+      display: block
+  }
+} 
+
+.preview-link {
+    h1 {
+        color: purple;        
+    }
+}
+
+.test {
+    color: red;
+    width: percentage(5/7);  
+}
