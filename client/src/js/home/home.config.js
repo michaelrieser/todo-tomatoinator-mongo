@@ -1,6 +1,6 @@
 function HomeConfig($stateProvider) {
   'ngInject';
-
+  
   $stateProvider
   .state('app.home', {
     url: '/',
@@ -8,7 +8,7 @@ function HomeConfig($stateProvider) {
     controllerAs: '$ctrl',
     templateUrl: 'home/home.html',
     title: 'Home'
-  });
+  })
 
 };
 

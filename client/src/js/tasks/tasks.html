@@ -1,0 +1,42 @@
+<!-- Main view - contains tabs & article list -->
+<div class="col-md-9">
+<!-- Tabs for toggling between feed, article lists -->
+<div class="feed-toggle">
+    <ul class="nav nav-pills outline-active">
+
+        <li class="nav-item" show-authed="true">
+            <a href="" class="nav-link"
+            ui-sref-active="active"
+            ui-sref="app.tasks.inprogress">
+            In Progress
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="" class="nav-link"
+            ui-sref-active="active"
+            ui-sref="app.tasks.completed">
+            Completed
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="" class="nav-link"
+            ui-sref-active="active"
+            ui-sref="app.tasks.team">
+            Team
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="" class="nav-link"
+            ui-sref-active="active"
+            ui-sref="app.tasks.new">
+            New
+            </a>
+        </li>
+
+    </ul>
+</div>        
+
+<div ui-view></div>

@@ -5,6 +5,11 @@
 
 // @import "bootstrap";
 
+.test {
+    color: red;
+    width: percentage(5/7); // Use this to ensure SASS compiled correctly
+}
+
 ul.test {
   display: none;
   a {
@@ -16,9 +21,4 @@ ul.test {
     h1 {
         color: purple;        
     }
-}
-
-.test {
-    color: red;
-    width: percentage(5/7);  
 }
