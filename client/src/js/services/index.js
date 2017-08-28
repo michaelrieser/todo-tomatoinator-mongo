@@ -10,4 +10,7 @@ servicesModule.service('User', UserService);
 import JwtService from './jwt.service';
 servicesModule.service('JWT', JwtService);
 
+import TasksService from './tasks.service';
+servicesModule.service('Tasks', TasksService);
+
 export default servicesModule;

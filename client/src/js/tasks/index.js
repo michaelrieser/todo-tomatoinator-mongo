@@ -11,4 +11,7 @@ tasksModule.config(TasksConfig);
 import TasksCtrl from './tasks.controller';
 tasksModule.controller('TasksCtrl', TasksCtrl);
 
+import TasksNewCtrl from './tasks-new.controller';
+tasksModule.controller('TasksNewCtrl', TasksNewCtrl);
+
 export default tasksModule;

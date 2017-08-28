@@ -7,7 +7,13 @@ function TasksConfig($stateProvider) {
             url: '/tasks',
             controller: 'TasksCtrl',
             controllerAs: '$ctrl',
-            templateUrl: 'tasks/tasks.html'
+            templateUrl: 'tasks/tasks.html',
+            resolve: {
+                auth: function(User) {                    
+                    return User.ensureAuthIs(true);
+                }
+            }
+            // TODO: retrieve all users' tasks and display on splash screen (In-Progress by default)
             // resolve: {
             //     tasks: function(Tasks, $state) {
             //         return Tasks.getAll().then(
@@ -16,6 +22,13 @@ function TasksConfig($stateProvider) {
             //         )
             //     }
             // }
+        })
+        // TODO: create Tasks "splash screen"
+        .state('app.tasks.all', {
+            url: '',
+            controller: 'TasksCtrl', // TODO: create TasksAllCtrl
+            controllerAs: '$ctrl',
+            templateUrl: 'tasks/tasks-all.html'
         })
         .state('app.tasks.inprogress', {
             url: '/in-progress',
@@ -42,7 +55,7 @@ function TasksConfig($stateProvider) {
         })  
         .state('app.tasks.new', {
             url: '/new',
-            controller: 'TasksCtrl',
+            controller: 'TasksNewCtrl',
             controllerAs: '$ctrl',
             templateUrl: 'tasks/tasks-new.html'
         })

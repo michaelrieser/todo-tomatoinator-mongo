@@ -88,7 +88,7 @@ export default class User {
     ensureAuthIs(bool) {
         let deferred = this._$q.defer();
 
-        this.verifyAuth().then((authValid) => {
+        this.verifyAuth().then((authValid) => {            
             // If it's the opposite, redirect home
             if (authValid !== bool) {
                 this._$state.go('app.home');

@@ -9,15 +9,15 @@ export default class Tasks {
 
   }
 
-  // Creates an article
-  save(article) {
+  // TODO: repurpose Article functionality for Tasks
+  save(task) {
     let request = {
-      url: `${this._AppConstants.api}/articles`,
+      url: `${this._AppConstants.api}/tasks`,
       method: 'POST',
-      data: { article: article }
+      data: { task: task }
     };
 
-    return this._$http(request).then((res) => res.data.article);
+    return this._$http(request).then((res) => res.data.task);
   }
 
   getAll() {
