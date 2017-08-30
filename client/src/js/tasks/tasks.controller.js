@@ -1,7 +1,8 @@
 class TasksCtrl {
-    constructor($state) {
+    constructor(tasks) {
         'ngInject';
-        
+
+        this._tasks = tasks;
     }    
 }
 

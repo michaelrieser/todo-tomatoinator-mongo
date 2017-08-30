@@ -9,7 +9,6 @@ export default class Tasks {
 
   }
 
-  // TODO: repurpose Article functionality for Tasks
   save(task) {
     let request = {
       url: `${this._AppConstants.api}/tasks`,
@@ -23,4 +22,15 @@ export default class Tasks {
   getAll() {
       console.log('TODO - create & wire up backend routes and return tasks (w/notes) for current user');
   };
+
+  query(config) {
+    // Create the $http object for this request
+    let request = {
+      url: `${this._AppConstants.api}/tasks`,
+      method: 'GET'
+      // params: config.filters ? config.filters : null
+    };
+    // console.log(this._$http(request).then((res) => console.log(`service: ${res.data.highestOrderNumber}`)));
+    return this._$http(request).then((res) => res.data);
+  }
 }

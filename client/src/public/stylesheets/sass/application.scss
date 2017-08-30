@@ -10,15 +10,3 @@
     width: percentage(5/7); // Use this to ensure SASS compiled correctly
 }
 
-ul.test {
-  display: none;
-  a {
-      display: block
-  }
-} 
-
-.preview-link {
-    h1 {
-        color: purple;        
-    }
-}

@@ -67,8 +67,7 @@ export default class User {
                 url: this._AppConstants.api + '/user',
                 method: 'GET'
             }).then(
-                (res) => {
-                    console.log(res.data.user);
+                (res) => {                    
                     this.current = res.data.user;                    
                     deferred.resolve(true);
                 },

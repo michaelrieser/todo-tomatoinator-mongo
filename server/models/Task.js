@@ -9,7 +9,8 @@ var TaskSchema = new mongoose.Schema({
     isActive: {type: Boolean, default: false},
     isComplete: {type: Boolean, default: false},
     wasSuccessful: {type: Boolean, default: false},
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    tagList: [{type: String}]
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
 // TaskSchema.methods.toJSONFor = function(user) {
@@ -22,6 +23,9 @@ TaskSchema.methods.toJSON = function() {
         isActive: this.isActive,
         isComplete: this.isComplete,
         wasSuccessful: this.wasSuccessful,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt,
+        tagList: this.tagList
         // user: this.user.toProfileJSONFor(user)
     };
 };
