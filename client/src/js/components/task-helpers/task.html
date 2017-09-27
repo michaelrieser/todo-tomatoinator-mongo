@@ -1,5 +1,35 @@
-<div class="task">
-    <!-- TODO: Add task controls -->
-    
-</div>
-    
+<span>{{$ctrl.task.title}}</span>
+<span class="task-controls-outer">
+    <div class="task-controls-inner">
+        <span class="task-delete-wrapper">
+            <span type="button" class="close" aria-label="close" ng-click="$ctrl.removeTask(task)">
+                <span aria-hidden="true">&times;</span>
+            </span>
+        </span>  
+        <span class="display-notes-wrapper">
+            <span type="button" class="toggle-notes" ng-click="$ctrl.toggleTaskNotes(task)">
+                <span class="ion-clipboard" data-pack="default" data-tags="write"></span>
+            </span>
+        </span>                
+    </div>
+</span>
+<!--<div>
+    <ul ng-show="vm.displayTaskNotes" class="task-notes-container">
+        <li ng-repeat="note in task.notes">
+            <span ng-show="note.isTodo">
+                <form style="display:inline;" ng-click="vm.toggleNoteTodoStatus(note)">
+                    <input type="checkbox" ng-checked="note.todoComplete"></input>
+                </form>
+            </span>
+            <span>{{ note.title }}</span>
+        </li>
+        <li>
+            <form class="add-task-note-form" ng-submit="vm.addTaskNote(task)">
+                <div class="form-group">
+                    <input ng-model="vm.taskNoteTitle" type="text" class="form-control add-task-note-input" placeholder="Title" required></input>
+                    <button class="btn btn-primary">Add</button>    
+                </div>
+            </form>
+        </li>
+    </ul>
+</div>-->

@@ -10,3 +10,84 @@
     width: percentage(5/7); // Use this to ensure SASS compiled correctly
 }
 
+.task-list {
+    
+}
+
+.task {            
+    font-size: 1.4  em; /* rem based off of root(relative) size, while em based off of direct parent */    
+    border-top: .1px solid ghostwhite;    
+    border-bottom: 1px solid seagreen;
+    // border-radius: 5px 0px 0px 5px;    
+    white-space: normal;    
+    width: 95%;    
+    display: inline-block;
+    padding: 10px;
+    position: relative; /* set to allow for absolute positioning on task controls */
+}
+.task:hover {
+    cursor: pointer;
+    background-color: lightblue;
+    color: white;
+}
+.task:nth-child(2) {
+    border-top: none;    
+}
+.task:last-child {
+    border-bottom: none;
+}
+.task-lvl-1 {
+    background-color: #007000; 
+    /*border-bottom: 2px solid black;*/
+}
+.task-lvl-2 {
+    background-color: #009000; 
+    /*border-bottom: 2px solid black;*/
+}
+.task-lvl-3 {
+    background-color: #00B800;
+    /*border-bottom: 2px solid #e6e600;*/
+}
+.task-lvl-4 {
+    background-color: #00FF00;
+    /*border-bottom: 2px solid darkolivegreen;*/
+}
+
+.task-active {
+    margin-top: 5px;
+    border: 5px ridge deepskyblue;
+}
+
+.task-controls-outer {    
+    /* setting absolute position in tandem with relative position on parent fixes bug in Firefox/Safari/Chrome 
+       that doesn't allow child elements to inherit height property. See: 
+       http://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height 
+    */    
+    position: absolute; 
+    display: inline-block;    
+    // background-color: whitesmoke;
+    border-radius: 0px 5px 5px 0px;
+    width: 5%;
+    padding: 3px;
+    /*padding-left: 4px;*/
+    /*padding-right: 4px;*/
+    // border-bottom: .5px solid seagreen;
+    height: 100%;   
+    top: 0;
+    right: 0;
+    // :hover {
+    //     color: red;        
+    // }
+}
+.task-controls-inner {
+    /*width: 100%;*/   
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+.task-delete-wrapper {
+    hover: red;
+}
+.task-display-notes-wrapper {
+
+}

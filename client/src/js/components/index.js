@@ -9,4 +9,10 @@ componentsModule.component('listErrors', ListErrors);
 import ShowAuthed from './show-authed.directive';
 componentsModule.directive('showAuthed', ShowAuthed);
 
+import TaskList from './task-helpers/task-list.component';
+componentsModule.component('taskList', TaskList);
+
+import Task from './task-helpers/task.component';
+componentsModule.component('task', Task);
+
 export default componentsModule;

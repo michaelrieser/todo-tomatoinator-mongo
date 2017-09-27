@@ -1,5 +1,2 @@
-<!--<pre>{{$ctrl._tasks}}</pre>-->
-<div ng-repeat="task in $ctrl._tasks">
-    {{task.title}}
-    <!-- TODO: add filter to convert ISO date to human readable date -->
-</div>
+<task class="task task-active task-lvl-{{$ctrl._activeTask.priority}}" task="$ctrl._activeTask"></task>
+<task-list class="task-list" tasks="$ctrl._tasks"></task-list>
