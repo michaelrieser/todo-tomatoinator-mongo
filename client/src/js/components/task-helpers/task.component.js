@@ -1,10 +1,10 @@
 class TaskCtrl {
-    constructor(Tasks, $scope) {
+    constructor(Tasks, $scope, $state) {
         'ngInject';
 
-        this._Tasks = Tasks;         
-        console.log(this.task.showNotes);
-        console.log(this.task.title);
+        this._Tasks = Tasks;   
+        this._$state = $state;              
+        this._$scope = $scope;
         /* Question - not sure if this is necessary, can we just use two-way binding with fields Ex: this.task etc.. */        
         // this.formData = {
         //     id: this.task.id,
@@ -29,8 +29,20 @@ class TaskCtrl {
         this._Tasks.toggleTaskNotes(this.task);                
     }
 
+    updateTasks() {
+        this._$scope.$emit('updateTasks');
+    }
+
     deleteTask() {
         console.log('deleteTask()');
+        // this.isDeleting = true; // TODO: send this to parent ctrl as component will be deleted? -see article-actions.component
+        this._Tasks.delete(this.task).then(
+            // TODO: rerender / update task list once task has been deleted
+            (success) => { this.updateTasks() },
+            (err) => console.log(err)
+            // (success) => this._$state.go('app.home'),
+            // (err) => this._$state.go('app.home')
+        )
     }
 }
 

@@ -87,11 +87,11 @@
     transform: translateY(-50%); 
     text-align: center;
 }
-.task-delete-wrapper {
-    hover: red;
+.task-delete-wrapper:hover {
+    color: red;
 }
-.task-display-notes-wrapper {
-
+.task-display-notes-wrapper:hover {
+    color: rebeccapurple;
 }
 
 .task-delete {

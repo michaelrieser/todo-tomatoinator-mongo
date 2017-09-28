@@ -6,7 +6,7 @@
                 <span aria-hidden="true">&times;</span>
             </span>
         </span>  
-        <span class="display-notes-wrapper">
+        <span class="task-display-notes-wrapper">
             <span type="button" class="toggle-notes" ng-click="$ctrl.toggleTaskNotes(task)">
                 <span class="ion-clipboard" data-pack="default" data-tags="write"></span>
             </span>
@@ -15,24 +15,3 @@
 </span>
 
 <task-notes notes="$ctrl.notes" ng-show="$ctrl.task.showNotes"></task-notes>
-<!--<div ng-show=""-->
-<!--<div>
-    <ul ng-show="vm.displayTaskNotes" class="task-notes-container">
-        <li ng-repeat="note in task.notes">
-            <span ng-show="note.isTodo">
-                <form style="display:inline;" ng-click="vm.toggleNoteTodoStatus(note)">
-                    <input type="checkbox" ng-checked="note.todoComplete"></input>
-                </form>
-            </span>
-            <span>{{ note.title }}</span>
-        </li>
-        <li>
-            <form class="add-task-note-form" ng-submit="vm.addTaskNote(task)">
-                <div class="form-group">
-                    <input ng-model="vm.taskNoteTitle" type="text" class="form-control add-task-note-input" placeholder="Title" required></input>
-                    <button class="btn btn-primary">Add</button>    
-                </div>
-            </form>
-        </li>
-    </ul>
-</div>-->

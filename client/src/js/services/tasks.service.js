@@ -35,6 +35,15 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data);
   }
 
+  delete(task) {
+    let request = {
+      // TODO: just send task id in url path (?)
+      url: `${this._AppConstants.api}/tasks/${task.id}`,
+      method: 'DELETE'
+    }
+    return this._$http(request).then((res) => res.data);
+  }
+
   toggleTaskNotes(task) {
     let request = {
       url: `${this._AppConstants.api}/tasks/update`,

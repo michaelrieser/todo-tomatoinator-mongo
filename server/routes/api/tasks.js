@@ -94,7 +94,6 @@ router.get('/', auth.optional, function(req, res, next) {
 
 /* PUT update task */ 
 router.put('/update', auth.required, function(req, res, next) {      
-    console.log(`req.task: ${req.task}`)
     User.findById(req.payload.id).then(function(user){
       if(req.body.task.user.id.toString() === req.payload.id.toString()){       
 
@@ -143,7 +142,6 @@ router.put('/update', auth.required, function(req, res, next) {
             // }                       
 
             return targetTask.save().then(function(task){
-                console.log('saved!');
                 return res.json({task: targetTask.toJSONFor(user)});
             }).catch(next)                  
           });
@@ -151,6 +149,34 @@ router.put('/update', auth.required, function(req, res, next) {
     
        }
     });
+});
+
+/* INTERCEPT and prepopulate task data from id */
+// TODO: REFACTOR other routes to utilize this interceptor //
+router.param('taskId', function(req, res, next, id) {
+    console.log('PARAM');
+    console.log(`id: ${id}`);
+    Task.findById(id)
+      .populate('user')
+      // .populate('notes')
+      .then(function (task) {            
+            if (!task) { return res.sendStatus(404); }
+            req.task = task;
+            return next();
+        }).catch(next);
+});
+
+/* DELETE task */
+router.delete('/:taskId', auth.required, function(req, res, next) {
+  User.findById(req.task.id).then(function(user){
+      if(req.task.user.id.toString() === req.payload.id.toString()){       
+          Task.findById(req.task.id).remove().then(function(targetTask) {     
+            return res.sendStatus(204);
+          });
+      } else {
+        return res.sendStatus(403);
+      }
+  });
 });
 
 module.exports = router;
