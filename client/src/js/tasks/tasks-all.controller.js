@@ -4,6 +4,7 @@ class TasksAllCtrl {
         this._tasks = this.getInactiveTasks(tasksInfo.tasks);
         this._activeTask = this.getActiveTask(tasksInfo.tasks);
         this._taskCount = tasksInfo.tasksCount;        
+        console.log(this._tasks);
         // console.log(`TasksAllCtrl - highestOrderNumber: ${tasksInfo.highestOrderNumber}`);
     }
 

@@ -48,13 +48,13 @@ UserSchema.methods.toAuthJSON = function() {
     };
 };
 
-// Note: probably not needed for TodoTomato but including just in case
-UserSchema.methods.toProfileJSON = function() {
+UserSchema.methods.toProfileJSONFor = function(user) {
     return {
+        id: this.id,
         username: this.username,
         bio: this.bio,
-        image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
-        following: false // TODO - implement following functionality from Thinkster Full Stack
+        image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
+        // following: false // TODO - implement following functionality from Thinkster Full Stack
     };
 };
 

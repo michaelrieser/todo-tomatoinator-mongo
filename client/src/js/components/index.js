@@ -15,4 +15,10 @@ componentsModule.component('taskList', TaskList);
 import Task from './task-helpers/task.component';
 componentsModule.component('task', Task);
 
+import TaskNotes from './task-helpers/task-notes.component';
+componentsModule.component('taskNotes', TaskNotes);
+
+import TaskNote from './task-helpers/task-note.component';
+componentsModule.component('taskNote', TaskNote);
+
 export default componentsModule;

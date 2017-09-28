@@ -55,7 +55,8 @@
 
 .task-active {
     margin-top: 5px;
-    border: 5px ridge deepskyblue;
+    background-color: deepskyblue
+    // border: 5px ridge deepskyblue;
 }
 
 .task-controls-outer {    
@@ -67,7 +68,7 @@
     display: inline-block;    
     // background-color: whitesmoke;
     border-radius: 0px 5px 5px 0px;
-    width: 5%;
+    width: 30px;
     padding: 3px;
     /*padding-left: 4px;*/
     /*padding-right: 4px;*/
@@ -84,10 +85,15 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%); 
+    text-align: center;
 }
 .task-delete-wrapper {
     hover: red;
 }
 .task-display-notes-wrapper {
+
+}
+
+.task-delete {
 
 }

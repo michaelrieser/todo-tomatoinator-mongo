@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var User = mongoose.model('User');
 // var uniqueValidator = require('mongoose-unique-validator');
 
 var TaskSchema = new mongoose.Schema({
@@ -10,12 +11,14 @@ var TaskSchema = new mongoose.Schema({
     isComplete: {type: Boolean, default: false},
     wasSuccessful: {type: Boolean, default: false},
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    tagList: [{type: String}]
+    // notes: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Note'}],
+    tagList: [{type: String}],
+    showNotes: {type: Boolean, default: false}
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
-// TaskSchema.methods.toJSONFor = function(user) {
-TaskSchema.methods.toJSON = function() {
+TaskSchema.methods.toJSONFor = function(user) {
     return {
+        id: this.id,
         title: this.title,
         order: this.order,
         priority: this.priority,
@@ -25,8 +28,10 @@ TaskSchema.methods.toJSON = function() {
         wasSuccessful: this.wasSuccessful,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,
-        tagList: this.tagList
-        // user: this.user.toProfileJSONFor(user)
+        tagList: this.tagList,
+        showNotes: this.showNotes,
+        user: this.user.toProfileJSONFor(user)
+        // user: user.toProfileJSONFor(user) // TODO: find out why this.user is only populating the objectID above (?)
     };
 };
 

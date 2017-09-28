@@ -10,6 +10,7 @@ export default class Tasks {
   }
 
   save(task) {
+    console.log(task);
     let request = {
       url: `${this._AppConstants.api}/tasks`,
       method: 'POST',
@@ -33,4 +34,14 @@ export default class Tasks {
     // console.log(this._$http(request).then((res) => console.log(`service: ${res.data.highestOrderNumber}`)));
     return this._$http(request).then((res) => res.data);
   }
+
+  toggleTaskNotes(task) {
+    let request = {
+      url: `${this._AppConstants.api}/tasks/update`,
+      method: 'PUT',
+      data: { task: task } // => becomes req.body.task in tasks.js route
+    }
+    return this._$http(request).then((res) => res.data);
+  }
+  
 }

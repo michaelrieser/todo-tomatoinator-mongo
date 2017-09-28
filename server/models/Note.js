@@ -7,12 +7,12 @@ var NoteSchema = new mongoose.Schema({
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' }
 }, {timestamps: true});
 
-NoteSchema.methods.toJSON = function() {
+NoteSchema.methods.toJSON = function(user) {
     return {
         title: this.title,
         isTodo: this.isTodo,
         todoComplete: this.todoComplete,
-        task: this.task.toJSON()
+        task: this.task.toJSONFor(user) // Not sure if this is required (?)
     };
 };
 
