@@ -7,19 +7,17 @@ class TasksAllCtrl {
         this._taskCount = tasksInfo.tasksCount;       
         this._$scope = $scope; 
         
+        // Listen for updateTasks event emitted from task.component child controllers
         $scope.$on('updateTasks', (evt, data) => { this.refreshTasks(); });
-        // console.log(`TasksAllCtrl - highestOrderNumber: ${tasksInfo.highestOrderNumber}`);
     }
 
     refreshTasks() {
-        console.log('refreshTasks()');
         this._Tasks.query().then(
             (tasksInfo) => this.setRefreshedTasks(tasksInfo.tasks),
             (err) => $state.go('app.home') // TODO: display error message (?)
         );        
     }
-    setRefreshedTasks(tasks) { // Note: this functionality couldn't be implemented in refreshTasks() success method (this inaccessible)
-        console.log('setRefreshedTasks()');
+    setRefreshedTasks(tasks) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)
         this._activeTask = this.getActiveTask(tasks);
         this._tasks = this.getInactiveTasks(tasks);
     }

@@ -24,15 +24,15 @@
     display: inline-block;
     padding: 10px;
     position: relative; /* set to allow for absolute positioning on task controls */
+    border-radius: 5px;
 }
 .task:hover {
     cursor: pointer;
     background-color: lightblue;
-    color: white;
 }
-.task:nth-child(2) {
-    border-top: none;    
-}
+// .task {
+//     border-top: none;    
+// }
 .task:last-child {
     border-bottom: none;
 }
@@ -64,6 +64,9 @@
        that doesn't allow child elements to inherit height property. See: 
        http://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height 
     */    
+    :hover {
+        // color: white;
+    }
     position: absolute; 
     display: inline-block;    
     // background-color: whitesmoke;
@@ -96,4 +99,30 @@
 
 .task-delete {
 
+}
+
+/* Notes */
+.add-note-form {
+    margin-left: 24px;
+    width: 85%;
+    padding: 10px;
+}
+.task-notes-list {
+    margin: 0px 20px 0px 20px;
+    padding: 5px;
+    list-style-type: none;
+    li {
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 3px;
+        margin-bottom: 2px;
+        background-color: white;
+        // border-bottom: 1px;
+    }
+}
+.add-note-icon, .add-note-icon-close {    
+    :hover {
+        border-radius: 2000px;
+        background-color: white;
+    }
 }

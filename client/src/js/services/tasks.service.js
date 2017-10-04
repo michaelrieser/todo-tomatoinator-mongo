@@ -1,4 +1,3 @@
-// TODO: copied from 'Creating the article editor' - adjust to use for tasks!
 export default class Tasks {
   constructor(AppConstants, $http) {
     'ngInject';

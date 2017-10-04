@@ -4,15 +4,18 @@ var NoteSchema = new mongoose.Schema({
     title: String,
     isTodo: {type: Boolean, default: false},
     todoComplete: {type: Boolean, default: false},
-    task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' }
+    tagList: [{type: String}],
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}, // Question: since Note references Task and Task references User, do we need to directly reference User from Note (?)
+    task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task'} 
 }, {timestamps: true});
 
-NoteSchema.methods.toJSON = function(user) {
+NoteSchema.methods.toJSON = function() {
     return {
         title: this.title,
         isTodo: this.isTodo,
         todoComplete: this.todoComplete,
-        task: this.task.toJSONFor(user) // Not sure if this is required (?)
+        // task: this.task.toJSONFor(task.user) // Not sure if this is required (?)
+        taskID: this.task.ObjectId
     };
 };
 

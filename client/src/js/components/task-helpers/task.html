@@ -1,3 +1,4 @@
+<!--<pre>{{$ctrl.task | json}}</pre>-->
 <span>{{$ctrl.task.title}}</span>
 <span class="task-controls-outer">
     <div class="task-controls-inner">
@@ -13,5 +14,5 @@
         </span>                
     </div>
 </span>
-
-<task-notes notes="$ctrl.notes" ng-show="$ctrl.task.showNotes"></task-notes>
+<!--<pre>{{ console.log($ctrl.task.notes) }}</pre>-->
+<task-notes task="$ctrl.task" ng-show="$ctrl.task.showNotes"></task-notes>

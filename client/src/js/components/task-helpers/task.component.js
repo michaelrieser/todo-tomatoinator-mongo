@@ -5,6 +5,7 @@ class TaskCtrl {
         this._Tasks = Tasks;   
         this._$state = $state;              
         this._$scope = $scope;
+        console.log(`task.component.js - this.task.notes: ${this.task.notes}`);
         /* Question - not sure if this is necessary, can we just use two-way binding with fields Ex: this.task etc.. */        
         // this.formData = {
         //     id: this.task.id,
@@ -34,15 +35,15 @@ class TaskCtrl {
     }
 
     deleteTask() {
-        console.log('deleteTask()');
         // this.isDeleting = true; // TODO: send this to parent ctrl as component will be deleted? -see article-actions.component
         this._Tasks.delete(this.task).then(
-            // TODO: rerender / update task list once task has been deleted
             (success) => { this.updateTasks() },
             (err) => console.log(err)
-            // (success) => this._$state.go('app.home'),
-            // (err) => this._$state.go('app.home')
         )
+    }
+
+    addNote() {
+        
     }
 }
 

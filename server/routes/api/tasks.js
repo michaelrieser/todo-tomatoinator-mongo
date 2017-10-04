@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var passport = require('passport');
 var mongoose = require('mongoose');
+var async = require('async')
+
 var User = mongoose.model('User');
 var Task = mongoose.model('Task');
 var Note = mongoose.model('Note');
@@ -66,6 +68,7 @@ router.get('/', auth.optional, function(req, res, next) {
       // *tasks*
       Task.find(query)
         .populate('user')
+        .populate('notes')
         // .limit(Number(limit))
         // .skip(Number(offset))
         .sort({order: 'asc'})        
@@ -78,10 +81,12 @@ router.get('/', auth.optional, function(req, res, next) {
       var tasks = results[0];
       var tasksCount = results[1];    
       var tasksLength = tasks.length
-      var highestOrderNumber = results[0][tasksLength-1].order        
+      var highestOrderNumber = results[0][tasksLength-1].order                   
 
       return res.json({
-        tasks: tasks.map(function(task){
+        tasks: tasks.map(function(task){          
+          // task.populate({path: 'notes'}).execPopulate().then((t) => console.log(t));
+          // console.log(`task: ${task}`);
           return task.toJSONFor(user);           
         }),
         tasksCount: tasksCount,
@@ -89,7 +94,6 @@ router.get('/', auth.optional, function(req, res, next) {
       });
     }).catch(next);
   })
-
 });
 
 /* PUT update task */ 
@@ -177,6 +181,29 @@ router.delete('/:taskId', auth.required, function(req, res, next) {
         return res.sendStatus(403);
       }
   });
+});
+
+// ------- NOTE routes -------
+router.post('/notes', auth.required, function(req, res, next) {
+  User.findById(req.body.task.user.id).then(function(user) {
+    // if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
+    if(req.body.task.user.id.toString() === req.payload.id.toString()) {            
+      Task.findById(req.body.task.id).then(function(task) {
+        var note = new Note(req.body.note);
+        note.task = req.body.task.id;
+        // TODO/QUESTION: Set Note's user?        
+                    
+        return note.save().then(function(note) {
+          task.notes.push(note);
+
+          return task.save().then(function() {
+            return res.json({note: note.toJSON()})
+          });
+        });
+    });            
+      
+    }
+  }).catch(next);
 });
 
 module.exports = router;

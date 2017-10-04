@@ -1,6 +1,47 @@
-<pre>{{ notes }}</pre>
-<p>Notes Here...</p>
-<task-note note="taskNote" ng-repeat="note in notes"></task-note>
+<ul class="task-notes-list">
+    <task-note task="$ctrl.task" note="note" ng-repeat="note in $ctrl.task.notes"></task-note>
+    <div ng-hide="$ctrl.showNoteForm" class="add-note-icon">
+        <i class="ion-plus-round" ng-click="$ctrl.toggleNoteForm()"></i>
+    </div>
+    <div ng-show="$ctrl.showNoteForm" class="add-note-icon-close">
+        <i class="ion-minus-round" ng-click="$ctrl.toggleNoteForm()"></i>
+    </div>    
+</ul>
+<form ng-show="$ctrl.showNoteForm" class="card add-note-form" ng-submit="$ctrl.addNote()">
+    <fieldset ng-disabled="$ctrl.newNoteForm.isSubmitting">        
+        <fieldset class="form-group">
+            <input class="form-control"
+                type="text"
+                placeholder="Add a note"
+                ng-model="$ctrl.newNoteForm.title">
+            </input>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <input ng-model="$ctrl.newNoteForm.isTodo" type="checkbox"> TODO</input>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <input class="form-control"
+                type="text"
+                placeholder="Enter tags"
+                ng-model="$ctrl.newNoteForm.tagField"
+                ng-keyup="$event.keyCode == 13 && $ctrl.addTag()" />
+
+            <div class="tag-list">
+                <span ng-repeat="tag in $ctrl.newNoteForm.tagList"
+                class="tag-default tag-pill">
+                <i class="ion-close-round" ng-click="$ctrl.removeTag(tag)"></i>
+                {{ tag }}
+                </span>
+            </div>
+        </fieldset>
+
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.addNote()">
+            Add
+        </button>
+    </fieldset>
+</form>
 <!--<div ng-show=""-->
 <!--<div>
     <ul ng-show="vm.displayTaskNotes" class="task-notes-container">
