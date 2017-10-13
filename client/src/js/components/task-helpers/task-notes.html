@@ -1,12 +1,14 @@
-<ul class="task-notes-list">
-    <task-note task="$ctrl.task" note="note" ng-repeat="note in $ctrl.task.notes"></task-note>
-    <div ng-hide="$ctrl.showNoteForm" class="add-note-icon">
-        <i class="ion-plus-round" ng-click="$ctrl.toggleNoteForm()"></i>
+<div class="task-notes-list">
+    <task-note index="$index" task="$ctrl.task" note="note" ng-repeat="note in $ctrl.task.notes"></task-note>
+    <div class="add-note-wrapper">
+        <div ng-hide="$ctrl.showNoteForm" class="add-note-icon" ng-click="$ctrl.toggleNoteForm()">
+            <i class="ion-plus-round"></i>
+        </div>
+        <div ng-show="$ctrl.showNoteForm" class="add-note-icon-close" ng-click="$ctrl.toggleNoteForm()">
+            <i class="ion-minus-round"></i>
+        </div>    
     </div>
-    <div ng-show="$ctrl.showNoteForm" class="add-note-icon-close">
-        <i class="ion-minus-round" ng-click="$ctrl.toggleNoteForm()"></i>
-    </div>    
-</ul>
+</div>
 <form ng-show="$ctrl.showNoteForm" class="card add-note-form" ng-submit="$ctrl.addNote()">
     <fieldset ng-disabled="$ctrl.newNoteForm.isSubmitting">        
         <fieldset class="form-group">
@@ -25,7 +27,7 @@
             <input class="form-control"
                 type="text"
                 placeholder="Enter tags"
-                ng-model="$ctrl.newNoteForm.tagField"
+                ng-model="$ctrl.tagField"
                 ng-keyup="$event.keyCode == 13 && $ctrl.addTag()" />
 
             <div class="tag-list">
@@ -42,24 +44,3 @@
         </button>
     </fieldset>
 </form>
-<!--<div ng-show=""-->
-<!--<div>
-    <ul ng-show="vm.displayTaskNotes" class="task-notes-container">
-        <li ng-repeat="note in task.notes">
-            <span ng-show="note.isTodo">
-                <form style="display:inline;" ng-click="vm.toggleNoteTodoStatus(note)">
-                    <input type="checkbox" ng-checked="note.todoComplete"></input>
-                </form>
-            </span>
-            <span>{{ note.title }}</span>
-        </li>
-        <li>
-            <form class="add-task-note-form" ng-submit="vm.addTaskNote(task)">
-                <div class="form-group">
-                    <input ng-model="vm.taskNoteTitle" type="text" class="form-control add-task-note-input" placeholder="Title" required></input>
-                    <button class="btn btn-primary">Add</button>    
-                </div>
-            </form>
-        </li>
-    </ul>
-</div>-->

@@ -68,7 +68,7 @@ router.get('/', auth.optional, function(req, res, next) {
       // *tasks*
       Task.find(query)
         .populate('user')
-        .populate('notes')
+        .populate({path: 'notes', options: { sort: { 'isTodo': -1  } } })
         // .limit(Number(limit))
         // .skip(Number(offset))
         .sort({order: 'asc'})        
@@ -158,8 +158,6 @@ router.put('/update', auth.required, function(req, res, next) {
 /* INTERCEPT and prepopulate task data from id */
 // TODO: REFACTOR other routes to utilize this interceptor //
 router.param('taskId', function(req, res, next, id) {
-    console.log('PARAM');
-    console.log(`id: ${id}`);
     Task.findById(id)
       .populate('user')
       // .populate('notes')
@@ -184,6 +182,7 @@ router.delete('/:taskId', auth.required, function(req, res, next) {
 });
 
 // ------- NOTE routes -------
+/* POST create note on task */
 router.post('/notes', auth.required, function(req, res, next) {
   User.findById(req.body.task.user.id).then(function(user) {
     // if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
@@ -205,5 +204,57 @@ router.post('/notes', auth.required, function(req, res, next) {
     }
   }).catch(next);
 });
+
+/* INTERCEPT and prepopulate note data from id */
+router.param('noteId', function(req, res, next, id) {
+    Note.findById(id)
+      // .populate('user')
+      .populate('task')
+      .populate('user')
+      .then(function (note) {            
+            if (!note) { return res.sendStatus(404); }
+            req.note = note;
+            return next();
+        }).catch(next);
+});
+/* DELETE destroy note on task */
+router.delete('/notes/:noteId', auth.required, function(req, res, next) {
+    User.findById(req.note.task.user).then(function(user) {
+      if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
+      if(user._id.toString() === req.payload.id.toString()) {
+         // must explicitly remove reference to note in Task model
+         //     NOTE: one of the pitfalls of a NoSQL database
+         Task.findById(req.note.task._id).then(function(task) {
+           task.notes.remove(req.note._id)
+           task.save()
+            .then(Note.find({_id: req.note._id}).remove().exec())
+            .then(function() {
+                res.sendStatus(204);
+            });           
+         })
+      } else {
+         res.sendStatus(403);
+      }
+    }); 
+});
+
+/* PUT update task note */
+router.put('/notes/:noteId', auth.required, function(req, res, next) {
+    User.findById(req.note.task.user).then(function(user) {
+      if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
+      if(user._id.toString() === req.payload.id.toString()) {
+
+            if(typeof req.body.setNoteTodoTo !== 'undefined'){
+              req.note.todoComplete = req.body.setNoteTodoTo;
+            }
+
+            req.note.save().then(function(note) {
+              res.json({todoComplete: note.todoComplete})
+            })
+      } else {
+          res.sendStatus(403);
+      }
+  }); 
+})
 
 module.exports = router;

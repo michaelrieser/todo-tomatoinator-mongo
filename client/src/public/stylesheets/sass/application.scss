@@ -10,6 +10,9 @@
     width: percentage(5/7); // Use this to ensure SASS compiled correctly
 }
 
+.fieldset-single-checkbox {
+    height: 0;
+}
 .task-list {
     
 }
@@ -111,7 +114,9 @@
     margin: 0px 20px 0px 20px;
     padding: 5px;
     list-style-type: none;
-    li {
+    div.task-note {
+        position: relative;
+        font-size: .75em;
         border: 1px solid white;
         border-radius: 5px;
         padding: 3px;
@@ -120,9 +125,60 @@
         // border-bottom: 1px;
     }
 }
+
+.add-note-wrapper:hover {
+    background-color: white;
+    border-radius: 5px;
+}
 .add-note-icon, .add-note-icon-close {    
+    padding-left: 3px;
     :hover {
         border-radius: 2000px;
         background-color: white;
     }
+}
+.task-note-todo {
+    display: inline-block;
+}
+.task-note-todo-complete {
+    text-decoration: line-through;
+    opacity: 0.6; /* Real Browsers */
+    filter: alpha(opacity = 0); /* MSIE */
+}
+.note-todo-checkbox {
+    vertical-align: middle; 
+}
+.note-controls-outer {    
+    /* setting absolute position in tandem with relative position on parent fixes bug in Firefox/Safari/Chrome 
+       that doesn't allow child elements to inherit height property. See: 
+       http://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height 
+    */    
+    :hover {
+        // color: white;
+    }
+    position: absolute; 
+    display: inline-block;    
+    // background-color: whitesmoke;
+    border-radius: 0px 5px 5px 0px;
+    width: 30px;
+    padding: 3px;
+    /*padding-left: 4px;*/
+    /*padding-right: 4px;*/
+    // border-bottom: .5px solid seagreen;
+    height: 100%;   
+    top: 0;
+    right: 0;
+    // :hover {
+    //     color: red;        
+    // }
+}
+.note-controls-inner {
+    /*width: 100%;*/   
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+    text-align: center;
+}
+.note-delete-wrapper:hover {
+    color: red;
 }

@@ -1,1 +1,19 @@
-<li>{{ $ctrl.note.title }}</li>
+<div class="task-note">
+    <span ng-class="{'task-note-todo-complete': $ctrl.note.isTodo && $ctrl.note.todoComplete}">{{ $ctrl.note.title }}</span>
+    <!--<span ng-show="$ctrl.note.isTodo">-->
+        <form ng-show="$ctrl.note.isTodo" class="task-note-todo" ng-submit="$ctrl.addNote()">
+            <fieldset class="form-group fieldset-single-checkbox">
+                <input class="note-todo-checkbox" ng-model="$ctrl.note.todoComplete" type="checkbox" ng-click="$ctrl.toggleTodo($ctrl.note)"></input>
+            </fieldset>
+        </form>
+    <!--</span>-->
+    <span class="note-controls-outer">
+        <div class="note-controls-inner">
+            <span class="note-delete-wrapper">
+                <span type="button" class="note-delete" aria-label="delete" ng-click="$ctrl.deleteNote($ctrl.note.id, $ctrl.index)">
+                    <span aria-hidden="true">&times;</span>
+                </span>
+            </span>               
+        </div>
+    </span>
+<div>

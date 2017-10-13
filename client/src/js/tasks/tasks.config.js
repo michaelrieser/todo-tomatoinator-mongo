@@ -14,10 +14,10 @@ function TasksConfig($stateProvider) {
                 }
             }
         })
-        // TODO: create Tasks "splash screen"
+        
         .state('app.tasks.all', {
             url: '',
-            controller: 'TasksAllCtrl', // TODO: create TasksAllCtrl
+            controller: 'TasksAllCtrl', 
             controllerAs: '$ctrl',
             templateUrl: 'tasks/tasks-all.html',
             title: 'All',

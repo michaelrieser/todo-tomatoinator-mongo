@@ -11,6 +11,7 @@ var NoteSchema = new mongoose.Schema({
 
 NoteSchema.methods.toJSON = function() {
     return {
+        id: this._id,
         title: this.title,
         isTodo: this.isTodo,
         todoComplete: this.todoComplete,

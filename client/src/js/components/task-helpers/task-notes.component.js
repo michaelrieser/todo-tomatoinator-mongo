@@ -9,12 +9,15 @@ class TaskNotesCtrl {
         
         this.resetNoteForm();        
         // this._Tasks = Tasks; 
+
+        $scope.$on('deleteNote', (evt, data) => this.deleteNote(data));
     }
     
     addTag() {
         // Make sure this tag isn't already in the array
         if (!this.newNoteForm.tagList.includes(this.tagField)) {
             this.newNoteForm.tagList.push(this.tagField);
+            console.log(this.newNoteForm.tagList);
             this.tagField = '';
         }
     }
@@ -39,28 +42,29 @@ class TaskNotesCtrl {
         this.newNoteForm.isSubmitting = true;
         this._Notes.add(this.task, this.newNoteForm).then(
             (note) => {
-                console.log('success');
-                console.log(`note: ${note}`);
                 this.notes.unshift(note);
                 this.resetNoteForm();
             },
             (err) => {
-                console.log('failure');
                 console.log(err);
                 this.newNoteForm.isSubmitting = false;
                 this.newNoteForm.errors = err.data.errors;
             }
         )
     }
-
-    deleteNote(noteId, index) {
-        // TODO: see article.controller.js in Conduit
+    deleteNote(data) {
+        this._Notes.delete(data.noteID).then(
+            (success) => { 
+                this.notes.splice(data.index, 1)},
+            (err) => console.log(err)
+        )
     }
 }
 
 let Task =  {
     bindings: {
         task: '=',
+        // deleteNote: '&'
     },
     controller: TaskNotesCtrl,
     templateUrl: 'components/task-helpers/task-notes.html'
