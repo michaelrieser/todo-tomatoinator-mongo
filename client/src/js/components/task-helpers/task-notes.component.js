@@ -42,7 +42,14 @@ class TaskNotesCtrl {
         this.newNoteForm.isSubmitting = true;
         this._Notes.add(this.task, this.newNoteForm).then(
             (note) => {
-                this.notes.unshift(note);
+                if (note.isTodo) { // Add to end of TODO list
+                   var todoNotes = this.notes.filter((n) => n.isTodo);
+                   var lastTodoNote = todoNotes[todoNotes.length-1];
+                   var lastTodoIndex = this.notes.indexOf(lastTodoNote);
+                   this.notes.splice(lastTodoIndex + 1, 0, note); // Remove 0 elements from lastTodoIndex + 1 and insert new todo note                          
+                } else { // Add to end of notes list
+                    this.notes.push(note);
+                }
                 this.resetNoteForm();
             },
             (err) => {

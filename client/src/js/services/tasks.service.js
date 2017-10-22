@@ -9,7 +9,6 @@ export default class Tasks {
   }
 
   save(task) {
-    console.log(task);
     let request = {
       url: `${this._AppConstants.api}/tasks`,
       method: 'POST',
@@ -43,7 +42,9 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data);
   }
 
-  toggleTaskNotes(task) {
+  update(task) {
+    console.log('update');
+    console.log(task);
     let request = {
       url: `${this._AppConstants.api}/tasks/update`,
       method: 'PUT',

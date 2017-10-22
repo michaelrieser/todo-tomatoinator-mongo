@@ -1,2 +1,3 @@
-<task class="task task-active task-lvl-{{$ctrl._activeTask.priority}}" task="$ctrl._activeTask"></task>
-<task-list class="task-list" tasks="$ctrl._tasks"></task-list>
+<task ng-if="$ctrl.activeTask" class="task task-active task-lvl-{{$ctrl.activeTask.priority}}" task="$ctrl.activeTask"></task>
+<div ng-if="!$ctrl.activeTask" class="task-active-empty">Set active task by dragging task here or clicking it active.</div>
+<task-list class="task-list" tasks="$ctrl.tasks"></task-list>

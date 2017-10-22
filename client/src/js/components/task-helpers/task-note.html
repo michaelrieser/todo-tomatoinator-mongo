@@ -1,5 +1,5 @@
 <div class="task-note">
-    <span ng-class="{'task-note-todo-complete': $ctrl.note.isTodo && $ctrl.note.todoComplete}">{{ $ctrl.note.title }}</span>
+    <span ng-class="{'greyed-out': $ctrl.note.isTodo && $ctrl.note.todoComplete}">{{ $ctrl.note.title }}</span>
     <!--<span ng-show="$ctrl.note.isTodo">-->
         <form ng-show="$ctrl.note.isTodo" class="task-note-todo" ng-submit="$ctrl.addNote()">
             <fieldset class="form-group fieldset-single-checkbox">

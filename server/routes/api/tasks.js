@@ -71,7 +71,7 @@ router.get('/', auth.optional, function(req, res, next) {
         .populate({path: 'notes', options: { sort: { 'isTodo': -1  } } })
         // .limit(Number(limit))
         // .skip(Number(offset))
-        .sort({order: 'asc'})        
+        .sort({isComplete: 1, order: 'asc'})        
         .exec(),
       // *tasksCount*
       Task.count(query).exec()
@@ -98,11 +98,12 @@ router.get('/', auth.optional, function(req, res, next) {
 
 /* PUT update task */ 
 router.put('/update', auth.required, function(req, res, next) {      
+    console.log(req.body.task);;
     User.findById(req.payload.id).then(function(user){
       if(req.body.task.user.id.toString() === req.payload.id.toString()){       
 
           Task.findById(req.body.task.id).populate('user').then(function(targetTask) {                      
-
+            
             if(typeof req.body.task.title !== 'undefined'){
                 targetTask.title = req.body.task.title;
             }
@@ -125,6 +126,7 @@ router.put('/update', auth.required, function(req, res, next) {
             }
 
             if(typeof req.body.task.isActive !== 'undefined'){
+                console.log('isActive block')
                 targetTask.isActive = req.body.task.isActive;
             }
 
@@ -144,6 +146,8 @@ router.put('/update', auth.required, function(req, res, next) {
             // if(typeof req.body.task.isComplete !== 'undefined'){
             //     targetTask.isComplete = req.body.task.isComplete;
             // }                       
+            
+            console.log(req.body.task.isActive);
 
             return targetTask.save().then(function(task){
                 return res.json({task: targetTask.toJSONFor(user)});

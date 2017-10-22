@@ -10,6 +10,8 @@
     width: percentage(5/7); // Use this to ensure SASS compiled correctly
 }
 
+.cursor-not-allowed { cursor: not-allowed; }
+
 .fieldset-single-checkbox {
     height: 0;
 }
@@ -25,9 +27,17 @@
     white-space: normal;    
     width: 95%;    
     display: inline-block;
-    padding: 10px;
+    // padding: 10px;
     position: relative; /* set to allow for absolute positioning on task controls */
     border-radius: 5px;
+}
+.task-outer-wrapper {
+    display: inline-block;
+    height: 100%;
+    width: 100%
+}
+.task-inner-wrapper {
+    margin: 10px;
 }
 .task:hover {
     cursor: pointer;
@@ -58,8 +68,14 @@
 
 .task-active {
     margin-top: 5px;
-    background-color: deepskyblue
+    background-color: deepskyblue;
     // border: 5px ridge deepskyblue;
+}
+.task-active-empty {
+    margin-top: 5px;
+    background-color: deepskyblue;
+    opacity: 0.6; /* Real Browsers */
+    filter: alpha(opacity = 0); /* MSIE */
 }
 
 .task-controls-outer {    
@@ -74,7 +90,7 @@
     display: inline-block;    
     // background-color: whitesmoke;
     border-radius: 0px 5px 5px 0px;
-    width: 30px;
+    width: 60px;
     padding: 3px;
     /*padding-left: 4px;*/
     /*padding-right: 4px;*/
@@ -93,15 +109,23 @@
     transform: translateY(-50%); 
     text-align: center;
 }
+.task-toggle-task-complete-wrapper:hover {
+    color: blue;
+}
+// .task-toggle-active-wrapper:hover {
+//     color: orange;
+// }
+.ion-pause:hover { 
+    color: orange;
+}
+.ion-play:hover {
+    color: lawngreen;
+}
 .task-delete-wrapper:hover {
     color: red;
 }
 .task-display-notes-wrapper:hover {
     color: rebeccapurple;
-}
-
-.task-delete {
-
 }
 
 /* Notes */
@@ -111,7 +135,7 @@
     padding: 10px;
 }
 .task-notes-list {
-    margin: 0px 20px 0px 20px;
+    margin: 0px 35px 0px 20px;
     padding: 5px;
     list-style-type: none;
     div.task-note {
@@ -140,7 +164,7 @@
 .task-note-todo {
     display: inline-block;
 }
-.task-note-todo-complete {
+.greyed-out {
     text-decoration: line-through;
     opacity: 0.6; /* Real Browsers */
     filter: alpha(opacity = 0); /* MSIE */

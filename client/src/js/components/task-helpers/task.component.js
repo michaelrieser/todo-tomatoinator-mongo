@@ -25,9 +25,14 @@ class TaskCtrl {
         // }
     }
 
-    toggleTaskNotes() {                                
+    toggleTaskNotes() {
         this.task.showNotes = !this.task.showNotes;
-        this._Tasks.toggleTaskNotes(this.task);                
+        this._Tasks.update(this.task);                
+                                
+        // this._Tasks.update(this.task).then(
+        //     (success) => { this.task.showNotes = !this.task.showNotes; },
+        //     (err) => console.log(err)
+        // );        
     }
 
     updateTasks() {
@@ -42,8 +47,17 @@ class TaskCtrl {
         )
     }
 
-    addNote() {
-        
+    toggleTaskComplete() {
+        this.task.isComplete = !this.task.isComplete;
+        if (this.task.isActive) { this.task.isActive = false; };
+        this._Tasks.update(this.task).then(
+            (success) => this.updateTasks(), 
+            (err) => console.log(err)
+        )
+    }
+
+    toggleTaskActive() {
+        this._$scope.$emit('toggleTaskActive', this.task);
     }
 }
 
