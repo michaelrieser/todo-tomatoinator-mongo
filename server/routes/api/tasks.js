@@ -81,7 +81,10 @@ router.get('/', auth.optional, function(req, res, next) {
       var tasks = results[0];
       var tasksCount = results[1];    
       var tasksLength = tasks.length
-      var highestOrderNumber = results[0][tasksLength-1].order                   
+      var highestOrderNumber = 0;
+      if (tasks.length > 0) {
+        highestOrderNumber = results[0][tasksLength-1].order                   
+      }      
 
       return res.json({
         tasks: tasks.map(function(task){          

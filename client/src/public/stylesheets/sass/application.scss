@@ -72,10 +72,22 @@
     // border: 5px ridge deepskyblue;
 }
 .task-active-empty {
+    text-align: center;
+    width: 95%;
+    border-radius: 5px;
     margin-top: 5px;
     background-color: deepskyblue;
+    border: 1px white dashed;    
     opacity: 0.6; /* Real Browsers */
     filter: alpha(opacity = 0); /* MSIE */
+}
+.task-list-empty {
+    margin-top: 5px;    
+    text-align: center;
+    width: 95%;
+    border-radius: 5px;
+    border: 1px white dashed;
+    background-color: lightgrey;    
 }
 
 .task-controls-outer {    
