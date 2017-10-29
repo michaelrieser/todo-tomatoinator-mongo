@@ -4,7 +4,8 @@ class TasksNewCtrl {
 
         this._Tasks = Tasks;
         this._$state = $state; 
-        this._highestOrderNumber = tasksInfo.highestOrderNumber;        
+        this._highestOrderNumber = tasksInfo.highestOrderNumber;
+        console.log(this._highestOrderNumber);        
         this.resetTask();
     }
 
@@ -40,7 +41,9 @@ class TasksNewCtrl {
         this._Tasks.save(this.task).then(
             (newTask) => {
                 this.resetTask();
-                this._$state.go('app.tasks.all');                
+                this._$state.go('app.tasks.all');              
+                this._highestOrderNumber = newTask.order;
+                console.log(this._highestOrderNumber);  
             },
             (err) => {
                 this.isSubmitting = false;

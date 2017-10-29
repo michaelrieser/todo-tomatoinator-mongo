@@ -81,7 +81,12 @@ gulp.task('build', ['html', 'browserify'], function() {
   return merge(html,js);
 });
 
-gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch'], function() {
+gulp.task('sounds', function() {
+  return gulp.src('./src/public/sounds/*')
+    .pipe(gulp.dest('./build/assets/sounds/'))
+})
+
+gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds'], function() {
   browserSync.init(['./build/**/**.**'], {
     server: "./build",
     // port: 4000,

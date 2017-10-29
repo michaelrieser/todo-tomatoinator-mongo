@@ -10,6 +10,7 @@ import './config/app.templates';
 // Import our app functionaity
 import './layout';
 import './components';
+import './filters';
 import './home';
 import './profile';
 // import './article';
@@ -17,7 +18,7 @@ import './services';
 import './auth';
 import './settings';
 import './tasks';
-
+import './vendor/javascripts/howler.min.js';
 
 // Create and bootstrap application
 const requires = [
@@ -25,6 +26,7 @@ const requires = [
   'templates',
   'app.layout',
   'app.components',
+  'app.filters',
   'app.home',
   'app.profile',
   // 'app.article',

@@ -1,0 +1,88 @@
+<link href="/public/stylesheets/home.css" type="text/css" rel="stylesheet">
+<div class="outer-panel site-background">
+  <div class="page-header">  
+    <pomodoro-timer-panel></pomodoro-timer-panel>
+    <!--<h2>Welcome {{ vm.username }}!</h2>    -->
+    <h3 class="text-align-center">Tasks</h3>    
+
+    <div ng-repeat="(taskLvl, tasks) in sortedTasks">
+      <task-panel tasklvl="taskLvl" tasks="tasks"></task-panel>
+    </div>
+
+    <!--<pre>{{sortedTasks | json}}</pre>-->
+
+    <!-- TEST Dual-binding for each task level     
+    <task-panel ng-model="tasksLevel1" tasklvl="1" tasks="tasksLevel1"></task-panel>    
+    
+    <form ng-submit="addTaskTest(1)">
+        /TEST -->
+    <form ng-submit="addTask()">            
+      <h3 class="text-align-center">Add New task</h3>
+
+      <!-- TODO: test db write with these params then add others + select boxes etc.. -->
+      <div class="form-group">
+        <input ng-model="title" type="text" class="form-control" placeholder="Title" required></input>
+      </div>
+      <div class="form-group">
+        <select ng-model="importance" class="form-control">
+          <!-- TODO: find out how to set default option -->
+          <option value="1">A</option>
+          <option value="2">B</option>
+          <option value="3">C</option>
+          <option value="4">D</option>
+        </select>
+      </div>
+      <!-- Question: allow user to select status -->
+      <!--<div class="form-group">
+        <input ng-model="status" type="text" class="form-control">
+      </div>-->
+      <button class="btn btn-primary">Post</button>     
+    </form>  
+
+    <script type="text/javascript" src="/vendor/javascripts/howler.min.js"></script>
+    <script type="text/javascript" src="/vendor/javascripts/notify.js"></script>
+    <script type="text/javascript" src="/vendor/javascripts/jquery-countdown.js"></script>
+    <script type="text/javascript" src="/vendor/javascripts/tomato.js"></script>
+  </div>
+
+  <!-- Notification selection modal - from tomato-timer.com -->
+  <div id="settingsModal" class="reveal-modal medium">
+    <h2>Options</h2>
+      <p><h3>Select Sound</h3>
+      <select id="alertoption" size="5">
+          <option value="80sAlarm">80s Alarm</option>
+          <option value="alarmclock">Alarm Clock</option>
+          <option value="alarmwatch">Wristwatch Alarm</option>
+          <option value="ding">Elevator Ding</option>
+          <option value="doorbell">Door Bell</option>
+      </select>
+      <br /><h3>Select Volume</h3>
+      <select id="volume" size=5>
+          <option value="0">Mute</option>
+          <option value="0.25">25%</option>
+          <option value="0.5">50%</option>
+          <option value="0.75">75%</option>
+          <option value="1.0">100%</option> <br />
+      </select>    </p>
+      <input type="button" id="submit" value="Submit" onclick="saveSETTINGS();">
+      <input type="button" id="reset" value="Reset" onclick="resetSETTINGS();">
+      <br />
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+  <script>
+    function saveSETTINGS() {
+      var snd = $('#alertoption').val();
+      var vol = $('#volume').val();
+      localStorage.setItem("alertoption",snd);
+      localStorage.setItem("volumeoption",vol);
+    }
+
+    function resetSETTINGS() {
+        localStorage.setItem("alertoption","alarmwatch");
+        localStorage.setItem("volumeoption",0.5);
+        $("#alertoption").val("alarmwatch");
+        $("#volume").val(0.5);
+    }
+  </script>
+  <!-- -->
+</div>

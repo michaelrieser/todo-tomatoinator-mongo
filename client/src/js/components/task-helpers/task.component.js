@@ -5,7 +5,6 @@ class TaskCtrl {
         this._Tasks = Tasks;   
         this._$state = $state;              
         this._$scope = $scope;
-        console.log(`task.component.js - this.task.notes: ${this.task.notes}`);
         /* Question - not sure if this is necessary, can we just use two-way binding with fields Ex: this.task etc.. */        
         // this.formData = {
         //     id: this.task.id,

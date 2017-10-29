@@ -7,7 +7,7 @@
 
 .test {
     color: red;
-    width: percentage(5/7); // Use this to ensure SASS compiled correctly
+    width: percentage(7/7); // Use this to ensure SASS compiled correctly
 }
 
 .cursor-not-allowed { cursor: not-allowed; }
@@ -50,19 +50,19 @@
     border-bottom: none;
 }
 .task-lvl-1 {
-    background-color: #007000; 
+    background-color: #00FF00; 
     /*border-bottom: 2px solid black;*/
 }
 .task-lvl-2 {
-    background-color: #009000; 
+    background-color: #00B800; 
     /*border-bottom: 2px solid black;*/
 }
 .task-lvl-3 {
-    background-color: #00B800;
+    background-color: #009000;
     /*border-bottom: 2px solid #e6e600;*/
 }
 .task-lvl-4 {
-    background-color: #00FF00;
+    background-color: #007000;
     /*border-bottom: 2px solid darkolivegreen;*/
 }
 
@@ -127,17 +127,43 @@
 // .task-toggle-active-wrapper:hover {
 //     color: orange;
 // }
+.pom-wrapper {
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 10px;
+    background-color: lightgray;
+    border-radius: 5px;
+    // :hover {
+    //     font-size: 1.2em;
+    // }
+}
+.ion-small {
+    font-size: .75em;
+}
 .ion-pause:hover { 
     color: orange;
 }
 .ion-play:hover {
     color: lawngreen;
 }
+.ion-stop:hover {
+    color: red;
+}
+.ion-ios-reload:hover {
+    color: mediumpurple;
+}
+.ion-ios-loop:hover {
+    color: rebeccapurple;
+}
 .task-delete-wrapper:hover {
     color: red;
 }
 .task-display-notes-wrapper:hover {
     color: rebeccapurple;
+}
+.ion-ios-bolt:hover {
+    color: yellow;
 }
 
 /* Notes */

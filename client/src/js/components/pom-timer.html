@@ -1,0 +1,33 @@
+<span class="pom-wrapper">
+    <span>
+        <span type="button" aria-label="play" ng-click="$ctrl.startTimer('pom')">
+            <span class="ion-play" data-pack="default" data-tags="write"></span>
+        </span>
+    </span>
+    <span>
+        <span type="button" aria-label="pause" ng-click="$ctrl.pauseTimer()">
+            <span class="ion-pause" data-pack="default" data-tags="write"></span>
+        </span>
+    </span>      
+    <span>
+        <span type="button" aria-label="stop" ng-click="$ctrl.stopTimer()">
+            <span class="ion-stop" data-pack="default" data-tags="write"></span>
+        </span>
+    </span>                    
+    <span>
+        <span type="button" aria-label="reset" ng-click="$ctrl.stopTimer()">
+            <span class="ion-ios-reload" data-pack="default" data-tags="write"></span>
+        </span>
+    </span>    
+    <span>{{$ctrl.timeRemaining | minutesSeconds}}</span>
+    <span>
+        <span type="button" aria-label="short-break" ng-click="$ctrl.startTimer('shortBrk')">
+            <span class="ion-ios-bolt ion-small" data-pack="default" data-tags="write"></span>
+        </span>
+    </span>
+    <span>
+        <span type="button" aria-label="long-break" ng-click="$ctrl.startTimer('longBrk')">
+            <span class="ion-ios-bolt" data-pack="default" data-tags="write"></span>
+        </span>
+    </span>        
+</span>

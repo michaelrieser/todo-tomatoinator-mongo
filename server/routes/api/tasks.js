@@ -83,8 +83,11 @@ router.get('/', auth.optional, function(req, res, next) {
       var tasksLength = tasks.length
       var highestOrderNumber = 0;
       if (tasks.length > 0) {
-        highestOrderNumber = results[0][tasksLength-1].order                   
+        // .slice() makes a copy of the tasks object, in JS .sort() is destructive and this was breaking desired task order w/o .slice()
+        highestOrderNumber = tasks.slice().sort((a,b) => a.order - b.order)[tasks.length-1].order;                   
       }      
+
+      console.log(tasks);
 
       return res.json({
         tasks: tasks.map(function(task){          
