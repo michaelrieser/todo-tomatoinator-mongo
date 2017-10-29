@@ -1,12 +1,15 @@
 class TasksAllCtrl {
     constructor(tasksInfo, Tasks, $scope) {
         'ngInject';
+        this.tasksInfo = tasksInfo;
         this._Tasks = Tasks;
+        this._$scope = $scope;
+
         this.tasks = this.getInactiveTasks(tasksInfo.tasks);
         this.activeTask = this.getActiveTask(tasksInfo.tasks);
         this.taskCount = tasksInfo.tasksCount;       
-        this._$scope = $scope; 
-        
+        this.showAddTaskForm = false;
+
         // Listen for updateTasks event emitted from task.component child controllers
         $scope.$on('updateTasks', (evt, data) => { this.refreshTasks(); });
 
@@ -15,7 +18,6 @@ class TasksAllCtrl {
     }
 
     refreshTasks() {
-        console.log('refreshTasks()');
         this._Tasks.query().then(
             (tasksInfo) => this.setRefreshedTasks(tasksInfo.tasks),
             (err) => $state.go('app.home') // TODO: display error message (?)

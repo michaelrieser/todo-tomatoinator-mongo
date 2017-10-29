@@ -5,3 +5,12 @@
     Select New tab to add a task
 </div>
 <task-list class="task-list" tasks="$ctrl.tasks"></task-list>
+
+<div class="toggle-add-task-outer">
+    <div class="toggle-add-task-inner" ng-click="$ctrl.showAddTaskForm = !$ctrl.showAddTaskForm">
+        <i ng-hide="$ctrl.showAddTaskForm" class="ion-plus-round"></i>
+        <i ng-show="$ctrl.showAddTaskForm" class="ion-minus-round"></i>
+    </div>
+</div>
+<list-errors errors="$ctrl.errors"></list-errors>
+<add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form" tasksinfo="$ctrl.tasksInfo"></add-task-form>

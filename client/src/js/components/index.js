@@ -15,6 +15,9 @@ componentsModule.component('taskList', TaskList);
 import Task from './task-helpers/task.component';
 componentsModule.component('task', Task);
 
+import AddTaskForm from './task-helpers/add-task-form.component';
+componentsModule.component('addTaskForm', AddTaskForm);
+
 import TaskNotes from './task-helpers/task-notes.component';
 componentsModule.component('taskNotes', TaskNotes);
 

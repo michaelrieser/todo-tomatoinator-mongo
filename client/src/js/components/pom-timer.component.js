@@ -28,7 +28,6 @@ class PomTimerCtrl {
 
         // Guard clauses
         if (angular.isDefined(this.timerInterval) && !isBreak) return; // Return if timer already running and not trying to start a break
-        // if (this.timerRunning && !isBreak) return; // Return if timer already running and not trying to start a break
         if (isBreak) this.stopTimer();
 
         var timerDuration;
@@ -43,12 +42,10 @@ class PomTimerCtrl {
 
         var endTime = new Date().getTime() + timerDuration * 1000;
 
-        // this.timerRunning = true;
 
         // SEE $interval => see: https://docs.angularjs.org/api/ng/service/$interval
         this.timerInterval = this._$interval(() => {            
 
-            // if (this.timerRunning) { 
                 var currentTimeDelta = Math.round((endTime - new Date().getTime()) / 1000);
                 
                 this.timeRemaining = currentTimeDelta;
@@ -60,16 +57,11 @@ class PomTimerCtrl {
                     currentTimeDelta = 0;
                     this.buzzer();
                     this.desktopAlert();
-                }        
-            // } else {
-// 
-            // }           
+                }               
         }, 1000);        
     }
 
     pauseTimer() {        
-        // if (!this.timerRunning) return; // Timer already paused || hasn't been started
-
         if (angular.isDefined(this.timerInterval)) {
             this._$interval.cancel(this.timerInterval);
             // this.timerRunning = false;
@@ -102,13 +94,6 @@ class PomTimerCtrl {
     * Enables Browser Desktop Notifications + Audio Notifications using <audio> tag
     *
     */
-
-    // could be deprecated
-    permit() {
-        if (Notification.permission !== "granted") Notification.requestPermission();
-
-    }
-
     // function to trigger notifications
     desktopAlert() {
         if (!Notification) {

@@ -121,6 +121,31 @@
     transform: translateY(-50%); 
     text-align: center;
 }
+
+.toggle-add-task-outer {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 95%;
+    // display: inline-block;
+    :hover:not(i) {
+        border: 1px solid green;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}
+.toggle-add-task-inner {
+    width: 100%; // Set to fill entire border on :hover
+    padding-left: 3px;
+}
+.add-task-form {
+    input[type=text], select {
+        width: 95%;
+    }
+    input[type=checkbox] {
+        margin-right: 5px;
+    }
+}
+
 .task-toggle-task-complete-wrapper:hover {
     color: blue;
 }

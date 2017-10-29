@@ -94,7 +94,7 @@ console.log('jquery-countdown loaded!');
       timers.text(timeRemainFormat(settings.time_in_seconds)).
       // timers.text(dateFormat(new Date(settings.time_in_seconds * 1000), settings.time_format)).
         data('countdown.duration', settings.time_in_seconds * 1000).
-        data('countdown.state', 'ready').
+        data('countdown.state', 'ready'). 
         data('countdown.timer_id', new Date().getTime());
 
       /* UnComment if you wish to reset the timer and make it start from rollback (if autostart = true). 

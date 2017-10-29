@@ -1,0 +1,46 @@
+ <form>
+    <fieldset ng-disabled="$ctrl.isSubmitting">
+
+    <fieldset class="form-group">
+        <input class="form-control form-control-lg"
+        ng-model="$ctrl.task.title"
+        type="text"
+        placeholder="Task Title" />
+    </fieldset>
+
+    <fieldset class="form-group">
+        <select class="form-control"
+                ng-model="$ctrl.task.priority">                    
+            <option value="" disabled selected>Priority</option>
+            <option value="1">A</option>
+            <option value="2">B</option>
+            <option value="3">C</option>
+            <option value="4">D</option>
+        </select>
+    </fieldset>
+
+    <fieldset class="form-group">
+        <input class="form-control"
+            type="text"
+            placeholder="Enter tags"
+            ng-model="$ctrl.tagField"
+            ng-keyup="$event.keyCode == 13 && $ctrl.addTag()" />
+
+        <div class="tag-list">
+            <span ng-repeat="tag in $ctrl.task.tagList"
+            class="tag-default tag-pill">
+            <i class="ion-close-round" ng-click="$ctrl.removeTag(tag)"></i>
+            {{ tag }}
+            </span>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+        <input type="checkbox">Set Active</input>
+    </fieldset>
+    <div style="width:95%">
+        <button class="btn btn-lg pull-xs-right btn-primary" type="button" ng-click="$ctrl.submit()">
+            Add Task
+        </button>
+    </div>
+</form>
