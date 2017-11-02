@@ -42,6 +42,7 @@ if(isProduction){
 require('./models/User');
 require('./models/Task');
 require('./models/Note');
+require('./models/Project');
 require('./config/passport');
 
 app.use(require('./routes'));

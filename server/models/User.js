@@ -48,7 +48,7 @@ UserSchema.methods.toAuthJSON = function() {
     };
 };
 
-UserSchema.methods.toProfileJSONFor = function(user) {
+UserSchema.methods.toProfileJSONFor = function(user) { // TODO: don't need to pass user to this method - remove and fix all method calls
     return {
         id: this.id,
         username: this.username,

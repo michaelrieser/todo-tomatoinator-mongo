@@ -11,8 +11,10 @@ var TaskSchema = new mongoose.Schema({
     isComplete: {type: Boolean, default: false},
     wasSuccessful: {type: Boolean, default: false},
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    notes: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Note'}],
-    tagList: [{type: String}],
+    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', default: '59fb0738174258442bbd4645'}, // miscellaneous
+    // project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
+    notes: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Note'} ],
+    tagList: [ {type: String} ],
     showNotes: {type: Boolean, default: false}
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
@@ -30,9 +32,9 @@ TaskSchema.methods.toJSONFor = function(user) {
         updatedAt: this.updatedAt,
         tagList: this.tagList,
         showNotes: this.showNotes,
-        user: this.user.toProfileJSONFor(user),
+        user: this.user.toProfileJSONFor(user), 
+        project: this.project.toJSONFor(user),
         notes: this.notes
-        // user: user.toProfileJSONFor(user) // TODO: find out why this.user is only populating the objectID above (?)
     };
 };
 

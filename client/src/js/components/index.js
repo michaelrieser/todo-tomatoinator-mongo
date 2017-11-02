@@ -27,4 +27,7 @@ componentsModule.component('taskNote', TaskNote);
 import PomTimer from './pom-timer.component';
 componentsModule.component('pomTimer', PomTimer);
 
+import Projects from './projects.component';
+componentsModule.component('projects', Projects);
+
 export default componentsModule;

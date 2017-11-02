@@ -43,8 +43,7 @@ export default class Tasks {
   }
 
   update(task) {
-    console.log('update');
-    console.log(task);
+
     let request = {
       url: `${this._AppConstants.api}/tasks/update`,
       method: 'PUT',

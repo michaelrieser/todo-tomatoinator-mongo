@@ -25,7 +25,7 @@ class AddTaskFormCtrl {
     resetTask() {        
         this.task = {
             title: '',
-            order: null,
+            order: null, // Question/TODO: set to this.highestOrderNumber + 1 ?
             priority: null,
             timesPaused: 0,
             isActive: false,
@@ -41,14 +41,16 @@ class AddTaskFormCtrl {
         // Note: user is set in backend via passed JWT
         this._Tasks.save(this.task).then(
             (newTask) => {
+                console.log('newTask')
+                this.highestOrderNumber = newTask.order;
                 this.resetTask();
                 this.isSubmitting = false;
                 this._$scope.$emit('updateTasks');
                 // TODO: Flash notification to user
                 // this._$state.go('app.tasks.all');              
-                this.highestOrderNumber = newTask.order;
             },
             (err) => {
+                console.log('err');
                 this.isSubmitting = false;
                 this.errors = err.data.errors;
             }

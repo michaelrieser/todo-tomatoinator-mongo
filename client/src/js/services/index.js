@@ -16,4 +16,7 @@ servicesModule.service('Tasks', TasksService);
 import NotesService from './notes.service';
 servicesModule.service('Notes', NotesService);
 
+import ProjectsService from './projects.service';
+servicesModule.service('Projects', ProjectsService);
+
 export default servicesModule;

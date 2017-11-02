@@ -10,6 +10,12 @@
     width: percentage(7/7); // Use this to ensure SASS compiled correctly
 }
 
+hr {
+    margin: 0;
+}
+h5 {
+    font-size: .85rem;
+}
 .cursor-not-allowed { cursor: not-allowed; }
 
 .fieldset-single-checkbox {
@@ -268,4 +274,10 @@
 }
 .note-delete-wrapper:hover {
     color: red;
+}
+
+.tasks-sidebar {
+    padding: 5px;
+    background: #f3f3f3;
+    border-radius: 5px;
 }

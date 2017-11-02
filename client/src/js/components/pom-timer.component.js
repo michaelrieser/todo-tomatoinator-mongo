@@ -4,7 +4,7 @@ class PomTimerCtrl {
         'ngInject';
 
         this.timerData = { // TODO: could dynamically load this from user settings in tasks route
-            'pom': .1, // .1 for testing
+            'pom': 25, // .1 for testing
             'shortBrk': 5,
             'longBrk': 10
         }

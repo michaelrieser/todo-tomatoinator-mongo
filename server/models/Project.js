@@ -1,0 +1,26 @@
+var mongoose = require('mongoose');
+// var User = mongoose.model('User');
+var uniqueValidator = require('mongoose-unique-validator');
+
+var ProjectSchema = new mongoose.Schema({
+    title: {type: String, unique: true, required: [true, "can't be blank"], index: true},
+    tasks: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Task'} ], // TODO: unsure if needed
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    notes: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Note'} ],
+    // dueDate: ?, /* TODO: allow user to set due date for project, potentially w/reminders */
+    // users: ? /* TODO: allow the tracking of all users on an individual project */
+}, {timestamps: true}); // adds createdAt and updatedAt fields
+
+ProjectSchema.plugin(uniqueValidator, { message: 'is already taken.'});
+
+ProjectSchema.methods.toJSONFor = function(user) {     
+    return {
+        id: this.id,
+        title: this.title,
+        // tasks: this.tasks, // TODO: unsure if needed
+        // user: this.user.toProfileJSONFor(user), // NOTE/TODO: hangs - unsure if even necessary!!
+        notes: this.notes
+    };
+};
+
+mongoose.model('Project', ProjectSchema);

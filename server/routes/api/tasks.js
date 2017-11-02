@@ -6,6 +6,7 @@ var async = require('async')
 var User = mongoose.model('User');
 var Task = mongoose.model('Task');
 var Note = mongoose.model('Note');
+var Project = mongoose.model('Project');
 var auth = require('../auth');
 // var Tag = mongoose.model('Tag'); // @wip
 
@@ -21,25 +22,24 @@ router.param('tasks', function(req, res, next) {
 });
 
 /* POST create task */
-// TODO: Once user auth functionality in place, implement saving tasks based off of user
-//  SEE: file:///C:/Projects/Angular_Workspace/1/Thinkster_Full_Stack/Backend_Node/07_creating_crud_endpoints_for_articles.htm - Utilizing router parameters
 router.post('/', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
+      var task = new Task(req.body.task);
+      task.user = user;
 
-    var task = new Task(req.body.task);
+      return task.save().then(function(task){        
+        task.populate('project').execPopulate().then(function(){
+          
+          task.project.tasks.push(task);
 
-    task.user = user;
-
-    return task.save().then(function(){
-        console.log(task.user);
-        // return res.json({task: task.toJSON});
-        return res.json({task: task.toJSONFor(user)});
-    });
+          return task.project.save().then(function() {
+            return res.json({task: task.toJSONFor(user)});
+          })
+        });
+      });
   }).catch(next);
 });
-
-
 
 /* GET task list */
 router.get('/', auth.optional, function(req, res, next) {
@@ -69,6 +69,7 @@ router.get('/', auth.optional, function(req, res, next) {
       Task.find(query)
         .populate('user')
         .populate({path: 'notes', options: { sort: { 'isTodo': -1  } } })
+        .populate('project')
         // .limit(Number(limit))
         // .skip(Number(offset))
         .sort({isComplete: 1, order: 'asc'})        
@@ -86,8 +87,6 @@ router.get('/', auth.optional, function(req, res, next) {
         // .slice() makes a copy of the tasks object, in JS .sort() is destructive and this was breaking desired task order w/o .slice()
         highestOrderNumber = tasks.slice().sort((a,b) => a.order - b.order)[tasks.length-1].order;                   
       }      
-
-      console.log(tasks);
 
       return res.json({
         tasks: tasks.map(function(task){          
@@ -170,6 +169,7 @@ router.put('/update', auth.required, function(req, res, next) {
 router.param('taskId', function(req, res, next, id) {
     Task.findById(id)
       .populate('user')
+      // .populate('project')
       // .populate('notes')
       .then(function (task) {            
             if (!task) { return res.sendStatus(404); }
@@ -179,12 +179,19 @@ router.param('taskId', function(req, res, next, id) {
 });
 
 /* DELETE task */
-router.delete('/:taskId', auth.required, function(req, res, next) {
+router.delete('/:taskId', auth.required, function(req, res, next) {  
   User.findById(req.task.id).then(function(user){
-      if(req.task.user.id.toString() === req.payload.id.toString()){       
-          Task.findById(req.task.id).remove().then(function(targetTask) {     
-            return res.sendStatus(204);
-          });
+      if(req.task.user.id.toString() === req.payload.id.toString()){                           
+        // must explicitly remove reference to Task in Project model
+        //      NOTE: one of the pitfalls of a NoSQL database                
+        Project.findById(req.task.project).then(function(project) {
+            project.tasks.remove(req.task._id)
+            project.save()
+              .then(Task.find({_id: req.task._id}).remove().exec())
+              .then(function() {
+                return res.sendStatus(204);
+              })                        
+        });          
       } else {
         return res.sendStatus(403);
       }
