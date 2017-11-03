@@ -33,7 +33,8 @@ TaskSchema.methods.toJSONFor = function(user) {
         tagList: this.tagList,
         showNotes: this.showNotes,
         user: this.user.toProfileJSONFor(user), 
-        project: this.project.toJSONFor(user),
+        // project: this.project.toJSONFor(user),
+        project: this.project.toJSON(),
         notes: this.notes
     };
 };

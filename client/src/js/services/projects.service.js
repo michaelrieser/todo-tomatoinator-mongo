@@ -12,7 +12,16 @@ export default class Projects {
       method: 'POST',
       data: { project: project }
     };
-
     return this._$http(request).then((res) => res.data.project);
   }
+
+  query(config) {
+    // Create the $http object for this request
+    let request = {
+      url: `${this._AppConstants.api}/projects`,
+      method: 'GET'
+      // params: config.filters ? config.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
+    };
+    return this._$http(request).then((res) => res.data);
+  }    
 }

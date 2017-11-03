@@ -13,7 +13,7 @@ var ProjectSchema = new mongoose.Schema({
 
 ProjectSchema.plugin(uniqueValidator, { message: 'is already taken.'});
 
-ProjectSchema.methods.toJSONFor = function(user) {     
+ProjectSchema.methods.toJSON = function() {     
     return {
         id: this.id,
         title: this.title,

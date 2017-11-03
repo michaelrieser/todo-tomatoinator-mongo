@@ -18,10 +18,6 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data.task);
   }
 
-  getAll() {
-      console.log('TODO - create & wire up backend routes and return tasks (w/notes) for current user');
-  };
-
   query(config) {
     // Create the $http object for this request
     let request = {

@@ -1,6 +1,7 @@
 class ProjectsCtrl {
     constructor(Projects, $scope) {
         'ngInject';
+
         this._Projects = Projects;
         this._$scope = $scope;
 
@@ -34,7 +35,7 @@ let Projects =  {
         projects: '=',
     },
     controller: ProjectsCtrl,
-    templateUrl: 'components/projects.html'
+    templateUrl: 'components/project-helpers/projects.html'
 };
 
 export default Projects;

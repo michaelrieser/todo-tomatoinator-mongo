@@ -5,12 +5,18 @@ function TasksConfig($stateProvider) {
         .state('app.tasks', {
             abstract: true,
             url: '/tasks',
-            // controller: 'TasksCtrl', // TODO: this is never used!
+            controller: 'TasksCtrl',
             controllerAs: '$ctrl',
             templateUrl: 'tasks/tasks.html',
             resolve: {
                 auth: function(User) {                    
                     return User.ensureAuthIs(true);
+                },
+                projects: function(Projects, $state) {
+                    return Projects.query().then(
+                        (projects) => projects,
+                        (err) => console.log(err)
+                    )
                 }
             }
         })

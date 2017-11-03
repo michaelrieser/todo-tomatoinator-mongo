@@ -23,9 +23,31 @@ router.post('/', auth.required, function(req, res, next) {
     // TODO: Add project to user model as well ?
     return project.save().then(function(project){
         // return res.json({task: task.toJSON});
-        return res.json({project: project.toJSONFor(user)});
+        return res.json({project: project.toJSON()});
     });
   }).catch(next);
+});
+
+/* GET all projects */
+router.get('/', auth.optional, function(req, res, next) {
+  var query = {};
+  var limit = 20;
+  var offset = 0;
+
+  User.findById(req.payload.id).then(function(user) {
+
+    var userId = user._id;
+    query.user = userId;
+
+    Project.find(query).then(function(projects) {
+      return res.json({
+        projects: projects.map(function(project) {
+          return project.toJSON();
+        })
+      })
+    }).catch(next);
+  })
+
 });
 
 module.exports = router;

@@ -1,8 +1,8 @@
 <div class="container page">
     <div class="row">
-        <!-- Main view - contains tabs & article list -->
+        <!-- Main view - contains tabs & task list-->
         <div class="col-md-9">
-        <!-- Tabs for toggling between feed, article lists -->
+        <!-- Tabs for toggling between different task types -->
         <div class="feed-toggle">
             <ul class="nav nav-pills outline-active">
 
@@ -51,7 +51,7 @@
 
         <div ui-view></div>
     </div>
-    <div class="col-md-3 sidebar tasks-sidebar">
+    <div class="col-md-3 sidebar tasks-sidebar">       
         <projects projects="$ctrl.projects"></projects>
         <hr/>
         <p>Quote of the Day</p>

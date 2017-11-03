@@ -1,8 +1,10 @@
 class TasksCtrl {
-    constructor(tasks) {
+    constructor(projects, $scope) {
         'ngInject';
 
-        this._tasks = tasks;
+        this._$scope = $scope;
+
+        this.projects = projects;
     }    
 }
 
