@@ -9,7 +9,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                     ui-sref-active="active"
-                    ui-sref="app.tasks.all">
+                    ui-sref="app.tasks.all">                    
                     All
                     </a>
                 </li>
@@ -49,11 +49,12 @@
             </ul>
         </div>        
 
-        <div ui-view></div>
+        <div ui-view="tasks"></div>
     </div>
-    <div class="col-md-3 sidebar tasks-sidebar">       
+    <div ui-view="sidebar"></div>
+    <!--<div class="col-md-3 sidebar tasks-sidebar">       
         <projects projects="$ctrl.projects"></projects>
         <hr/>
         <p>Quote of the Day</p>
-    </div>
+    </div>-->
 </div>    

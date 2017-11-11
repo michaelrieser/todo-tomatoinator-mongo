@@ -1,6 +1,8 @@
 class TasksAllCtrl {
     constructor(tasksInfo, Tasks, $scope) {
         'ngInject';
+
+        console.log(`tasksInfo: ${tasksInfo}`);
         this.tasksInfo = tasksInfo;
 
         this._Tasks = Tasks;

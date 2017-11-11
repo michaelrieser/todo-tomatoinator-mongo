@@ -19,10 +19,11 @@ export default class Tasks {
   }
 
   query(config) {
+    // console.log(`config: ${config.filters}`);
     // Create the $http object for this request
     let request = {
       url: `${this._AppConstants.api}/tasks`,
-      method: 'GET'
+      method: 'GET',
       // params: config.filters ? config.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
     };
     // console.log(this._$http(request).then((res) => console.log(`service: ${res.data.highestOrderNumber}`)));
