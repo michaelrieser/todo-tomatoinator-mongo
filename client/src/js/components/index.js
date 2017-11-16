@@ -27,6 +27,9 @@ componentsModule.component('taskNote', TaskNote);
 import PomTimer from './pom-timer.component';
 componentsModule.component('pomTimer', PomTimer);
 
+import Sidebar from './sidebar-helpers/sidebar.component';
+componentsModule.component('sidebar', Sidebar);
+
 import Projects from './project-helpers/projects.component';
 componentsModule.component('projects', Projects);
 

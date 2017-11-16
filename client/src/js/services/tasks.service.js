@@ -18,13 +18,12 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data.task);
   }
 
-  query(config) {
-    // console.log(`config: ${config.filters}`);
+  query(config={}) {
     // Create the $http object for this request
     let request = {
       url: `${this._AppConstants.api}/tasks`,
       method: 'GET',
-      // params: config.filters ? config.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
+      params: config.filters ? config.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
     };
     // console.log(this._$http(request).then((res) => console.log(`service: ${res.data.highestOrderNumber}`)));
     return this._$http(request).then((res) => res.data);
@@ -49,4 +48,20 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data);
   }
   
+  getTaskStatusFromString(taskStatusString) {
+    switch (taskStatusString) {
+      case 'all':
+        return {};
+        break;
+      case 'in-progress':
+        return {isComplete: false};
+        break;
+      case 'completed':
+        return {isComplete: true};
+        break;
+      case 'team':
+        return {}; // TODO: not sure what we're doing here yet!
+        break;
+    }
+  }
 }

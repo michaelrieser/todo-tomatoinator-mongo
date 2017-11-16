@@ -2,19 +2,19 @@ class SidebarCtrl {
     constructor($scope) {
         'ngInject';
 
-        this._Projects = Projects;
+        // this._Projects = Projects;
         this._$scope = $scope;
 
-        this.resetProject();
+        // this.resetProject();
     }
 }
 
 let Sidebar =  {
     bindings: {
-        projects: '=',
+        // projects: '=',
     },
     controller: SidebarCtrl,
-    templateUrl: 'components/sidebar-helpers/sidebar.component.js'
+    templateUrl: 'components/sidebar-helpers/sidebar.html'
 };
 
 export default Sidebar;

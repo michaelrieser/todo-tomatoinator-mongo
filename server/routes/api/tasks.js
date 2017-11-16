@@ -47,6 +47,8 @@ router.get('/', auth.optional, function(req, res, next) {
   var limit = 20;
   var offset = 0;
   
+  console.log(req.query);
+
   User.findById(req.payload.id).then(function(user){
     /* Kept for reference - see: file:///C:/Projects/Angular_Workspace/1/Thinkster_Full_Stack/Backend_Node/12_creating_queryable_endpoints_for_lists_and_feeds.htm - 'Create an endpoint to list articles'
     if(typeof req.query.limit !== 'undefined'){
@@ -57,6 +59,10 @@ router.get('/', auth.optional, function(req, res, next) {
       offset = req.query.offset;
     }
     */
+    if (typeof req.query.isComplete !== 'undefined') {
+      query.isComplete = req.query.isComplete === 'true' ? true : false;
+    }
+
     if (typeof req.query.tag !== 'undefined') {
       query.tagList = {"$in": [req.query.tag]};
     }
@@ -75,17 +81,22 @@ router.get('/', auth.optional, function(req, res, next) {
         .sort({isComplete: 1, order: 'asc'})        
         .exec(),
       // *tasksCount*
-      Task.count(query).exec()
-      // *user*
-      // req.payload ? User.findById(req.payload.id) : null, // not needed since we already know user
+      Task.count(query).exec(),
+      // *allTasks*
+      Task.find({user: userId}).sort({order: -1})
     ]).then(function(results){
+      // TODO: for performance, could get all tasks then sort by filters here... comida por pensamiento
+
       var tasks = results[0];
       var tasksCount = results[1];    
-      var tasksLength = tasks.length
+
+      var allTasks = results[2];
+      var allTasksLength = allTasks.length;
       var highestOrderNumber = 0;
-      if (tasks.length > 0) {
+      if (allTasksLength > 0) {
         // .slice() makes a copy of the tasks object, in JS .sort() is destructive and this was breaking desired task order w/o .slice()
-        highestOrderNumber = tasks.slice().sort((a,b) => a.order - b.order)[tasks.length-1].order;                   
+        // highestOrderNumber = tasks.slice().sort((a,b) => a.order - b.order)[allTasksLength-1].order;       
+        highestOrderNumber = allTasks[0].order;            
       }      
 
       return res.json({

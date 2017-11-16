@@ -17,9 +17,11 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 return User.ensureAuthIs(true);
                         },
                         tasksInfo: function(Tasks, $state, $stateParams) {
-                                console.log(`$stateParams.status: ${$stateParams.status}`)
+                                console.log(`$stateParams: ${$stateParams.status}`);
+                                var queryConfig = {};
+                                queryConfig['filters'] = Tasks.getTaskStatusFromString($stateParams.status);
                                 // TODO: extract task state from $stateParams and pass to Tasks.query()
-                                return Tasks.query().then(
+                                return Tasks.query(queryConfig).then(
                                         (tasksInfo) => tasksInfo,
                                         (err) => $state.go('app.home') // TODO: display error message (?)
                                 );

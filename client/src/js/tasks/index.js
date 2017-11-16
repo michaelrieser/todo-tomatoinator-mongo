@@ -11,10 +11,10 @@ tasksModule.config(TasksConfig);
 import TasksCtrl from './tasks.controller';
 tasksModule.controller('TasksCtrl', TasksCtrl);
 
-import TasksAllCtrl from './tasks-all.controller';
-tasksModule.controller('TasksAllCtrl', TasksAllCtrl);
+// import TasksAllCtrl from './tasks-all.controller';
+// tasksModule.controller('TasksAllCtrl', TasksAllCtrl);
 
-import TasksNewCtrl from './tasks-new.controller';
-tasksModule.controller('TasksNewCtrl', TasksNewCtrl);
+// import TasksNewCtrl from './tasks-new.controller';
+// tasksModule.controller('TasksNewCtrl', TasksNewCtrl);
 
 export default tasksModule;
