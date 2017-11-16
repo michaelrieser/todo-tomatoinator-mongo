@@ -9,7 +9,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                     ui-sref-active="active"
-                    ui-sref="app.tasks.all">                    
+                    ui-sref="app.tasks({status: 'all'})">                    
                     All
                     </a>
                 </li>
@@ -17,7 +17,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                     ui-sref-active="active"
-                    ui-sref="app.tasks.inprogress">
+                    ui-sref="app.tasks({status: 'in-progress'})">
                     In Progress
                     </a>
                 </li>
@@ -25,7 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                     ui-sref-active="active"
-                    ui-sref="app.tasks.completed">
+                    ui-sref="app.tasks({status: 'completed'})">
                     Completed
                     </a>
                 </li>
@@ -33,7 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                     ui-sref-active="active"
-                    ui-sref="app.tasks.team">
+                    ui-sref="app.tasks({status: 'team'})">
                     Team
                     </a>
                 </li>
@@ -41,7 +41,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                     ui-sref-active="active"
-                    ui-sref="app.tasks.new">
+                    ui-sref="app.tasks({status: 'new'})">
                     New
                     </a>
                 </li>
@@ -49,9 +49,29 @@
             </ul>
         </div>        
 
-        <div ui-view="tasks"></div>
+        <!-- tasks-all.html -->
+        <task ng-if="$ctrl.activeTask" class="task task-active task-lvl-{{$ctrl.activeTask.priority}}" task="$ctrl.activeTask"></task>
+        <div ng-if="!$ctrl.activeTask && $ctrl.tasks.length>0" class="task-active-empty">Set active task by dragging task here or clicking it active.</div>
+
+        <div class="task-list-empty" ng-if="$ctrl.tasks.length==0 && $ctrl.activeTask==undefined">
+            Select New tab to add a task
+        </div>
+        <task-list class="task-list" tasks="$ctrl.tasks"></task-list>
+
+        <!-- TODO: combine following 3 elements and place into component/directive ? -->
+        <div class="toggle-add-task-outer">
+            <div class="toggle-add-task-inner" ng-click="$ctrl.showAddTaskForm = !$ctrl.showAddTaskForm">
+                <i ng-hide="$ctrl.showAddTaskForm" class="ion-plus-round"></i>
+                <i ng-show="$ctrl.showAddTaskForm" class="ion-minus-round"></i>
+            </div>
+        </div>
+        <list-errors errors="$ctrl.errors"></list-errors>
+        <add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form" tasksinfo="$ctrl.tasksInfo"></add-task-form>
+        <!-- /tasks-all.html -->
+        
+        <!--<div ui-view="tasks"></div>-->
     </div>
-    <div ui-view="sidebar"></div>
+    <!--<div ui-view="sidebar"></div>-->
     <!--<div class="col-md-3 sidebar tasks-sidebar">       
         <projects projects="$ctrl.projects"></projects>
         <hr/>

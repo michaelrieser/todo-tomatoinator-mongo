@@ -4,7 +4,45 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
     // $urlRouterProvider.when('/tasks', '/tasks/all')
     $stateProvider
         /* 3rd iter - one route with params for all tasks and (potentially) abstract routing for sidebar */
+        /*    -QUESTION: will state be lost in sidebar when switching between panels? */
+        .state('app.tasks', {
+        //     abstract: true,
+            url: '/tasks/:status',
+                templateUrl: 'tasks/tasks.html',
+                controller: 'TasksCtrl',
+                controllerAs: '$ctrl',
+                resolve: {
+                        auth: function(User) {
+                                console.log('ensureAuthIs..')
+                                return User.ensureAuthIs(true);
+                        },
+                        tasksInfo: function(Tasks, $state, $stateParams) {
+                                console.log(`$stateParams.status: ${$stateParams.status}`)
+                                // TODO: extract task state from $stateParams and pass to Tasks.query()
+                                return Tasks.query().then(
+                                        (tasksInfo) => tasksInfo,
+                                        (err) => $state.go('app.home') // TODO: display error message (?)
+                                );
+                        }
+                }
 
+        //     views: {
+        //         '': {
+        //             templateUrl: 'tasks/tasks.html',
+        //             // controller: 'TasksCtrl', // TODO: DELETE tasks-controller as it is no longer needed
+        //             // controllerAs: '$ctrl', 
+        //             resolve: {
+        //                 auth: function(User) {
+        //                     console.log('ensureAuthIs..')
+        //                     return User.ensureAuthIs(true);
+        //                 }
+        //             }
+        //         },
+        //         'sidebar': {
+        //             templateUrl: '<p>Sidebar</p>'
+        //         }
+        //     }
+        })
 
         /* 2nd iter - abstract tasks working but abstract sidebar not so much - NOT SURE IF multiple abstract routes possible */
         /*      -QUESTION: possible to have abstract + concrete routes for each but only change .state String, NOT url path? */

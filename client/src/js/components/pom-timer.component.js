@@ -21,6 +21,8 @@ class PomTimerCtrl {
 
         // request permission on page load
         if (Notification.permission !== "granted") Notification.requestPermission();
+
+         $scope.$on('stopTimer', (evt, data) => { this.stopTimer(); });
     }    
 
     startTimer(timerType) {        
@@ -72,6 +74,7 @@ class PomTimerCtrl {
     stopTimer() {
         this.pauseTimer();
         this.timeRemaining = 0;
+        this.updateBrowserTitle(this.timeRemaining);
     }
 
     updateBrowserTitle(seconds) {

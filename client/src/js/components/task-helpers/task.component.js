@@ -48,7 +48,10 @@ class TaskCtrl {
 
     toggleTaskComplete() {
         this.task.isComplete = !this.task.isComplete;
-        if (this.task.isActive) { this.task.isActive = false; };
+        if (this.task.isActive) { 
+            this._$scope.$broadcast('stopTimer');
+            this.task.isActive = false; 
+        };
         this._Tasks.update(this.task).then(
             (success) => this.updateTasks(), 
             (err) => console.log(err)
