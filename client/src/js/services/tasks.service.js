@@ -2,8 +2,6 @@ export default class Tasks {
   constructor(AppConstants, $http) {
     'ngInject';
 
-    console.log('instantiated');
-
     this._AppConstants = AppConstants;
     this._$http = $http;
 
