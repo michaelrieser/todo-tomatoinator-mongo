@@ -2,10 +2,12 @@ export default class Tasks {
   constructor(AppConstants, $http) {
     'ngInject';
 
+    console.log('instantiated');
+
     this._AppConstants = AppConstants;
     this._$http = $http;
 
-
+    this.currentlySetFilters = {}; // TODO: hook this into local session storage
   }
 
   save(task) {
@@ -18,15 +20,24 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data.task);
   }
 
-  query(config={}) {
+  query(stateParams={}) {
+    var queryConfig = {};
+    queryConfig.filters = this.getMergedFilters(stateParams);
+
     // Create the $http object for this request
     let request = {
       url: `${this._AppConstants.api}/tasks`,
       method: 'GET',
-      params: config.filters ? config.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
+      params: queryConfig.filters ? queryConfig.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
     };
     // console.log(this._$http(request).then((res) => console.log(`service: ${res.data.highestOrderNumber}`)));
     return this._$http(request).then((res) => res.data);
+  }
+
+  getMergedFilters(stateParams = {}) {
+    this.setStatusFilterFromString(stateParams.status);
+    this.setProjectFilterFromString(stateParams.project);
+    return this.currentlySetFilters;
   }
 
   delete(task) {
@@ -48,20 +59,47 @@ export default class Tasks {
     return this._$http(request).then((res) => res.data);
   }
   
-  getTaskStatusFromString(taskStatusString) {
-    switch (taskStatusString) {
+  setStatusFilterFromString(targetStatus) {
+    if (targetStatus === undefined) { return; }
+
+    switch (targetStatus) {
       case 'all':
-        return {};
+        delete this.currentlySetFilters.isComplete;
         break;
       case 'in-progress':
-        return {isComplete: false};
+        this.currentlySetFilters.isComplete = false;
         break;
       case 'completed':
-        return {isComplete: true};
+        this.currentlySetFilters.isComplete = true;
         break;
       case 'team':
-        return {}; // TODO: not sure what we're doing here yet!
+        // TODO: not sure what we're doing here yet!
         break;
-    }
+    }    
   }
+
+  setProjectFilterFromString(targetProject) {
+    if (targetProject === undefined) { return; }
+
+    if (targetProject === 'all') delete this.currentlySetFilters.project;
+    else this.currentlySetFilters.project = targetProject;
+  }
+
+  // getTaskStatusFromString(targetStatus) {
+  //   console.log('getTaskStatusFromString');
+  //   switch (targetStatus) {
+  //     case 'all':
+  //       return {};
+  //       break;
+  //     case 'in-progress':
+  //       return {isComplete: false};
+  //       break;
+  //     case 'completed':
+  //       return {isComplete: true};
+  //       break;
+  //     case 'team':
+  //       return {}; // TODO: not sure what we're doing here yet!
+  //       break;
+  //   }
+  // }
 }

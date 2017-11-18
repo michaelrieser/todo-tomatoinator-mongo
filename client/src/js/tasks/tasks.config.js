@@ -6,27 +6,37 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
         /* 3rd iter - one route with params for all tasks and (potentially) abstract routing for sidebar */
         /*    -QUESTION: will state be lost in sidebar when switching between panels? */
         .state('app.tasks', {
-        //     abstract: true,
-            url: '/tasks/:status',
+                abstract: true,
                 templateUrl: 'tasks/tasks.html',
                 controller: 'TasksCtrl',
                 controllerAs: '$ctrl',
                 resolve: {
+                        projectsInfo: function(Projects) {
+                                return Projects.query().then(
+                                        (projectsInfo) => projectsInfo,
+                                        (err) => { console.log('error occurred in Projects.query()'); }
+                                )
+                        },
+                        // get stocksInfo => kinda weird to do all this in Tasks ?
+                }
+        })
+        .state('app.tasks.view', {
+                url: '/tasks/:status',
+                templateUrl: 'tasks/tasks-display.html',
+                controller: 'TasksDisplayCtrl',
+                controllerAs: '$ctrl',
+                resolve: {
                         auth: function(User) {
-                                console.log('ensureAuthIs..')
                                 return User.ensureAuthIs(true);
                         },
                         tasksInfo: function(Tasks, $state, $stateParams) {
-                                console.log(`$stateParams: ${$stateParams.status}`);
-                                var queryConfig = {};
-                                queryConfig['filters'] = Tasks.getTaskStatusFromString($stateParams.status);
-                                // TODO: extract task state from $stateParams and pass to Tasks.query()
-                                return Tasks.query(queryConfig).then(
+                                return Tasks.query($stateParams).then(
                                         (tasksInfo) => tasksInfo,
                                         (err) => $state.go('app.home') // TODO: display error message (?)
                                 );
                         }
                 }
+        })
 
         //     views: {
         //         '': {
@@ -44,7 +54,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
         //             templateUrl: '<p>Sidebar</p>'
         //         }
         //     }
-        })
+        
 
         /* 2nd iter - abstract tasks working but abstract sidebar not so much - NOT SURE IF multiple abstract routes possible */
         /*      -QUESTION: possible to have abstract + concrete routes for each but only change .state String, NOT url path? */

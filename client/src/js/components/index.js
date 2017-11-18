@@ -9,6 +9,9 @@ componentsModule.component('listErrors', ListErrors);
 import ShowAuthed from './show-authed.directive';
 componentsModule.directive('showAuthed', ShowAuthed);
 
+import TaskNavbar from './task-helpers/task-navbar.component';
+componentsModule.component('taskNavbar', TaskNavbar);
+
 import TaskList from './task-helpers/task-list.component';
 componentsModule.component('taskList', TaskList);
 

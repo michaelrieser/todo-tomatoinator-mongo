@@ -11,6 +11,9 @@ tasksModule.config(TasksConfig);
 import TasksCtrl from './tasks.controller';
 tasksModule.controller('TasksCtrl', TasksCtrl);
 
+import TasksDisplayCtrl from './tasks-display.controller.js';
+tasksModule.controller('TasksDisplayCtrl', TasksDisplayCtrl);
+
 // import TasksAllCtrl from './tasks-all.controller';
 // tasksModule.controller('TasksAllCtrl', TasksAllCtrl);
 
