@@ -19,8 +19,10 @@ export default class Tasks {
   }
 
   query(stateParams={}) {
+    var testParams = {};
+
     var queryConfig = {};
-    queryConfig.filters = this.getMergedFilters(stateParams);
+    queryConfig.filters = angular.equals(stateParams, {}) ? {} : this.getMergedFilters(stateParams);
 
     // Create the $http object for this request
     let request = {

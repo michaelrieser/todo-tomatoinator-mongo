@@ -7,34 +7,70 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
         /*    -QUESTION: will state be lost in sidebar when switching between panels? */
         .state('app.tasks', {
                 abstract: true,
-                templateUrl: 'tasks/tasks.html',
-                controller: 'TasksCtrl',
-                controllerAs: '$ctrl',
-                resolve: {
-                        projectsInfo: function(Projects) {
-                                return Projects.query().then(
-                                        (projectsInfo) => projectsInfo,
-                                        (err) => { console.log('error occurred in Projects.query()'); }
-                                )
+                // templateUrl: 'tasks/tasks.html',
+                // controller: 'TasksCtrl',
+                // controllerAs: '$ctrl',
+                // resolve: {
+                //         auth: function(User) {
+                //                 return User.ensureAuthIs(true);
+                //         },
+                //         projectsInfo: function(Projects) {
+                //                 return Projects.query().then(
+                //                         (projectsInfo) => projectsInfo,
+                //                         (err) => { console.log('error occurred in Projects.query()'); }
+                //                 )
+                //         },
+                //         // get stocksInfo => kinda weird to do all this in Tasks ?
+                // },
+                views: {
+                        '': {
+                                templateUrl: 'tasks/tasks.html',
+                                controller: 'TasksCtrl',
+                                controllerAs: '$ctrl',
                         },
-                        // get stocksInfo => kinda weird to do all this in Tasks ?
-                }
+                        'sidebar@app.tasks': { // Fully qualified name - <viewname-in-ui-view>@<statename>
+                                templateUrl: 'sidebar/sidebar.html',
+                                controller: 'SidebarCtrl',
+                                controllerAs: '$ctrl',
+                                resolve: {
+                                        projectsInfo: function(Projects) {
+                                                return Projects.query().then(
+                                                        (projectsInfo) => projectsInfo,
+                                                        (err) => { console.log('error occurred in Projects.query()'); }
+                                                )
+                                        },
+                                }
+                        }
+                },
         })
         .state('app.tasks.view', {
                 url: '/tasks/:status',
-                templateUrl: 'tasks/tasks-display.html',
-                controller: 'TasksDisplayCtrl',
-                controllerAs: '$ctrl',
-                resolve: {
-                        auth: function(User) {
-                                return User.ensureAuthIs(true);
+                // templateUrl: 'tasks/tasks-display.html',
+                // controller: 'TasksDisplayCtrl',
+                // controllerAs: '$ctrl',
+                // resolve: {
+                //         tasksInfo: function(Tasks, $state, $stateParams) {
+                //                 return Tasks.query($stateParams).then(
+                //                         (tasksInfo) => tasksInfo,
+                //                         (err) => $state.go('app.home') // TODO: display error message (?)
+                //                 );
+                //         }
+                // }    
+                views: {
+                        'tasks': {
+                                templateUrl: 'tasks/tasks-display.html',
+                                controller: 'TasksDisplayCtrl',
+                                controllerAs: '$ctrl',
+                                resolve: {
+                                        tasksInfo: function(Tasks, $state, $stateParams) {
+                                                return Tasks.query($stateParams).then(
+                                                        (tasksInfo) => tasksInfo,
+                                                        (err) => $state.go('app.home') // TODO: display error message (?)
+                                                );
+                                        }
+                                }
                         },
-                        tasksInfo: function(Tasks, $state, $stateParams) {
-                                return Tasks.query($stateParams).then(
-                                        (tasksInfo) => tasksInfo,
-                                        (err) => $state.go('app.home') // TODO: display error message (?)
-                                );
-                        }
+
                 }
         })
 

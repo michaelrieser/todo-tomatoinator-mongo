@@ -17,6 +17,7 @@ import './profile';
 import './services';
 import './auth';
 import './settings';
+import './sidebar';
 import './tasks';
 import './vendor/javascripts/howler.min.js';
 
@@ -33,6 +34,7 @@ const requires = [
   'app.services',
   'app.auth',
   'app.settings',
+  'app.sidebar',
   'app.tasks'
 ];
 
