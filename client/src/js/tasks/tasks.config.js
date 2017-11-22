@@ -49,8 +49,6 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 controllerAs: '$ctrl',
                                 resolve: {
                                         tasksInfo: function(Tasks, $state, $stateParams) {
-                                                console.log($stateParams);
-                                                console.log($stateParams.project === '');
                                                 return Tasks.query($stateParams).then(
                                                         (tasksInfo) => tasksInfo,
                                                         (err) => $state.go('app.home') // TODO: display error message (?)

@@ -5,7 +5,6 @@ class SidebarCtrl {
         'ngInject';
 
         this.projects = projectsInfo.projects;
-        // this._Projects = Projects;
         this._$scope = $scope;
 
         // this.resetProject();

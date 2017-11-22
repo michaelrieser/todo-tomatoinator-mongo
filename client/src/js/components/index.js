@@ -33,4 +33,7 @@ componentsModule.component('pomTimer', PomTimer);
 import Projects from './project-helpers/projects.component';
 componentsModule.component('projects', Projects);
 
+import Project from './project-helpers/project.component';
+componentsModule.component('project', Project);
+
 export default componentsModule;

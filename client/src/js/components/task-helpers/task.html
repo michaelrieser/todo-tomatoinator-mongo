@@ -4,6 +4,7 @@
         <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
             <span>{{$ctrl.task.title}}</span>
             <span>|&nbsp{{ $ctrl.task.order }}</span>
+            <span>|&nbsp{{ $ctrl.task.project.title }}</span>
             <span ng-if="$ctrl.task.isActive">
                 <pom-timer></pom-timer>
             </span>
