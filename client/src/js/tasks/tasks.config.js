@@ -7,21 +7,6 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
         /*    -QUESTION: will state be lost in sidebar when switching between panels? */
         .state('app.tasks', {
                 abstract: true,
-                // templateUrl: 'tasks/tasks.html',
-                // controller: 'TasksCtrl',
-                // controllerAs: '$ctrl',
-                // resolve: {
-                //         auth: function(User) {
-                //                 return User.ensureAuthIs(true);
-                //         },
-                //         projectsInfo: function(Projects) {
-                //                 return Projects.query().then(
-                //                         (projectsInfo) => projectsInfo,
-                //                         (err) => { console.log('error occurred in Projects.query()'); }
-                //                 )
-                //         },
-                //         // get stocksInfo => kinda weird to do all this in Tasks ?
-                // },
                 views: {
                         '': {
                                 templateUrl: 'tasks/tasks.html',
@@ -44,18 +29,19 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                 },
         })
         .state('app.tasks.view', {
-                url: '/tasks/:status',
-                // templateUrl: 'tasks/tasks-display.html',
-                // controller: 'TasksDisplayCtrl',
-                // controllerAs: '$ctrl',
-                // resolve: {
-                //         tasksInfo: function(Tasks, $state, $stateParams) {
-                //                 return Tasks.query($stateParams).then(
-                //                         (tasksInfo) => tasksInfo,
-                //                         (err) => $state.go('app.home') // TODO: display error message (?)
-                //                 );
-                //         }
-                // }    
+                url: '/tasks/:project/:status/',
+                params: {
+                        status: {
+                                value: 'all',
+                                // squash configures how a default parameter value is represented in the URL when the current parameter value is the same as the default value. SEE: https://stackoverflow.com/questions/25647454/how-to-pass-parameters-using-ui-sref-in-ui-router-to-controller
+                                // allegedly, squash forces default value 'all' to be injected into url if no value given. SEE: http://plnkr.co/edit/r2JhV4PcYpKJdBCwHIWS?p=preview - NOTE: doesn't appear to matter if this is here (?)
+                                squash: false
+                        },
+                        project: {
+                                value: 'all',
+                                squash: false 
+                        }
+                }, 
                 views: {
                         'tasks': {
                                 templateUrl: 'tasks/tasks-display.html',
@@ -63,6 +49,8 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 controllerAs: '$ctrl',
                                 resolve: {
                                         tasksInfo: function(Tasks, $state, $stateParams) {
+                                                console.log($stateParams);
+                                                console.log($stateParams.project === '');
                                                 return Tasks.query($stateParams).then(
                                                         (tasksInfo) => tasksInfo,
                                                         (err) => $state.go('app.home') // TODO: display error message (?)

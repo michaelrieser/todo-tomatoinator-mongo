@@ -40,27 +40,8 @@ export default class Tasks {
     return this.currentlySetFilters;
   }
 
-  delete(task) {
-    let request = {
-      // TODO: just send task id in url path (?)
-      url: `${this._AppConstants.api}/tasks/${task.id}`,
-      method: 'DELETE'
-    }
-    return this._$http(request).then((res) => res.data);
-  }
-
-  update(task) {
-
-    let request = {
-      url: `${this._AppConstants.api}/tasks/update`,
-      method: 'PUT',
-      data: { task: task } // => becomes req.body.task in tasks.js route
-    }
-    return this._$http(request).then((res) => res.data);
-  }
-  
   setStatusFilterFromString(targetStatus) {
-    if (targetStatus === undefined) { return; }
+    if (targetStatus === undefined) { return; } // TODO: this could probably be deleted since default params are used in ui-router
 
     switch (targetStatus) {
       case 'all':
@@ -79,27 +60,28 @@ export default class Tasks {
   }
 
   setProjectFilterFromString(targetProject) {
-    if (targetProject === undefined) { return; }
+    if (targetProject === undefined) { return; } // TODO: this could probably be deleted since default params are used in ui-router
 
     if (targetProject === 'all') delete this.currentlySetFilters.project;
     else this.currentlySetFilters.project = targetProject;
   }
 
-  // getTaskStatusFromString(targetStatus) {
-  //   console.log('getTaskStatusFromString');
-  //   switch (targetStatus) {
-  //     case 'all':
-  //       return {};
-  //       break;
-  //     case 'in-progress':
-  //       return {isComplete: false};
-  //       break;
-  //     case 'completed':
-  //       return {isComplete: true};
-  //       break;
-  //     case 'team':
-  //       return {}; // TODO: not sure what we're doing here yet!
-  //       break;
-  //   }
-  // }
+  delete(task) {
+    let request = {
+      // TODO: just send task id in url path (?)
+      url: `${this._AppConstants.api}/tasks/${task.id}`,
+      method: 'DELETE'
+    }
+    return this._$http(request).then((res) => res.data);
+  }
+
+  update(task) {
+
+    let request = {
+      url: `${this._AppConstants.api}/tasks/update`,
+      method: 'PUT',
+      data: { task: task } // => becomes req.body.task in tasks.js route
+    }
+    return this._$http(request).then((res) => res.data);
+  }
 }
