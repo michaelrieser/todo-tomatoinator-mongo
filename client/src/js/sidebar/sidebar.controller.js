@@ -1,10 +1,12 @@
 // *** TODO: delete sidebar.component.js if this works for ui-view="sidebar" in abstract tasks route ***
 
 class SidebarCtrl {
-    constructor(projectsInfo, $scope) {
+    constructor($scope) {
         'ngInject';
 
-        this.projects = projectsInfo.projects;
+        console.log(this.projectsinfo);
+
+        // this.projects = projectsInfo.projects;
         this._$scope = $scope;
 
         // this.resetProject();

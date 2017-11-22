@@ -22,7 +22,8 @@ export default class Tasks {
     var testParams = {};
 
     var queryConfig = {};
-    queryConfig.filters = angular.equals(stateParams, {}) ? {} : this.getMergedFilters(stateParams);
+    // NOTE: before queryConfig.filters was set to {} if stateParams === {}, but this resulted in all tasks being displayed when query called with no params, changed to this.currentlySetFilters
+    queryConfig.filters = angular.equals(stateParams, {}) ? this.currentlySetFilters : this.getMergedFilters(stateParams);
 
     // Create the $http object for this request
     let request = {
@@ -37,6 +38,7 @@ export default class Tasks {
   getMergedFilters(stateParams = {}) {
     this.setStatusFilterFromString(stateParams.status);
     this.setProjectFilterFromString(stateParams.project);
+    console.log(this.currentlySetFilters);
     return this.currentlySetFilters;
   }
 
