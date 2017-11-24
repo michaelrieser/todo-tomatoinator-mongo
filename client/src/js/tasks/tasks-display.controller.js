@@ -1,12 +1,10 @@
 class TasksDisplayCtrl {
-    constructor(tasksInfo, projectsInfo, Tasks, $scope, $stateParams) {
+    constructor(tasksInfo, Tasks, $scope, $stateParams) {
         'ngInject';
-
-        // $rootScope.testValue = 'testValue';
 
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
         this.tasksInfo = tasksInfo;
-        this.projectsInfo = projectsInfo;
+        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo;
 
         this._Tasks = Tasks;
         this._$scope = $scope;

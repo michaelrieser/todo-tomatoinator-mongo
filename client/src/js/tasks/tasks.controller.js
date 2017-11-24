@@ -1,8 +1,8 @@
 class TasksCtrl {
-    constructor($scope, $stateParams) {
+    constructor(projectsInfo, $scope, $stateParams) {
         'ngInject';
-            
-        // this.projects = projectsInfo.projects;
+
+        this.projectsInfo = projectsInfo;
     }
 }
 

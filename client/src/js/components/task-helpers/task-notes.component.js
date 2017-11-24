@@ -17,7 +17,6 @@ class TaskNotesCtrl {
         // Make sure this tag isn't already in the array
         if (!this.newNoteForm.tagList.includes(this.tagField)) {
             this.newNoteForm.tagList.push(this.tagField);
-            console.log(this.newNoteForm.tagList);
             this.tagField = '';
         }
     }
@@ -53,7 +52,6 @@ class TaskNotesCtrl {
                 this.resetNoteForm();
             },
             (err) => {
-                console.log(err);
                 this.newNoteForm.isSubmitting = false;
                 this.newNoteForm.errors = err.data.errors;
             }

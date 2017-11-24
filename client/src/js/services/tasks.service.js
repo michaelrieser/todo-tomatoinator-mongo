@@ -38,7 +38,6 @@ export default class Tasks {
   getMergedFilters(stateParams = {}) {
     this.setStatusFilterFromString(stateParams.status);
     this.setProjectFilterFromString(stateParams.project);
-    console.log(this.currentlySetFilters);
     return this.currentlySetFilters;
   }
 
@@ -78,7 +77,6 @@ export default class Tasks {
   }
 
   update(task) {
-
     let request = {
       url: `${this._AppConstants.api}/tasks/update`,
       method: 'PUT',

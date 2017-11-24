@@ -41,7 +41,6 @@ class AddTaskFormCtrl {
         // Note: user is set in backend via passed JWT
         this._Tasks.save(this.task).then(
             (newTask) => {
-                console.log('newTask')
                 this.highestOrderNumber = newTask.order;
                 this.resetTask();
                 this.isSubmitting = false;
@@ -50,7 +49,6 @@ class AddTaskFormCtrl {
                 // this._$state.go('app.tasks.all');              
             },
             (err) => {
-                console.log('err');
                 this.isSubmitting = false;
                 this.errors = err.data.errors;
             }

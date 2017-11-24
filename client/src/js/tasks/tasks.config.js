@@ -12,19 +12,19 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 templateUrl: 'tasks/tasks.html',
                                 controller: 'TasksCtrl',
                                 controllerAs: '$ctrl',
+                                resolve: {
+                                        projectsInfo: function(Projects) { 
+                                                return Projects.query().then(
+                                                        (projectsInfo) => projectsInfo,
+                                                        (err) => { console.log('error occurred in Projects.query()'); }
+                                                )
+                                        } 
+                                }
                         },
                         'sidebar@app.tasks': { // Fully qualified name - <viewname-in-ui-view>@<statename>
                                 templateUrl: 'sidebar/sidebar.html',
                                 controller: 'SidebarCtrl',
-                                controllerAs: '$ctrl',
-                                // resolve: {
-                                //         projectsInfo: function(Projects) {
-                                //                 return Projects.query().then(
-                                //                         (projectsInfo) => projectsInfo,
-                                //                         (err) => { console.log('error occurred in Projects.query()'); }
-                                //                 )
-                                //         },
-                                // }
+                                controllerAs: '$ctrl'
                         }
                 },
         })
@@ -49,19 +49,11 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 controllerAs: '$ctrl',
                                 resolve: {
                                         tasksInfo: function(Tasks, $state, $stateParams) {
-                                                console.log($stateParams);
                                                 return Tasks.query($stateParams).then(
                                                         (tasksInfo) => tasksInfo,
                                                         (err) => $state.go('app.home') // TODO: display error message (?)
                                                 );
-                                        },
-                                        // Note: moved from sidebar as projects need to be populated in projects dropdown in add task form as well
-                                        projectsInfo: function(Projects) { 
-                                                return Projects.query().then(
-                                                        (projectsInfo) => projectsInfo,
-                                                        (err) => { console.log('error occurred in Projects.query()'); }
-                                                )
-                                        }                                        
+                                        }                                     
                                 }
                         },
 
