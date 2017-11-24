@@ -32,7 +32,14 @@ export default class Tasks {
       params: queryConfig.filters ? queryConfig.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
     };
     // console.log(this._$http(request).then((res) => console.log(`service: ${res.data.highestOrderNumber}`)));
-    return this._$http(request).then((res) => res.data);
+    // return this._$http(request).then((res) => res.data);
+    return this._$http(request).then((res) => { return this.handleQueryResponse(res.data) });
+  }
+
+  handleQueryResponse(tasksInfo) {
+    // TODO - set tasks here, including active/inactive - MOVE ALL METHODS FROM tasks-display.controller to tasks.service
+    // this.tasks = tasksInfo.tasks;
+    return tasksInfo; // TODO: return object containing {activeTask, tasks, taskCount, etc.. for tasks-display.controller.js and elsewhere}
   }
 
   getMergedFilters(stateParams = {}) {

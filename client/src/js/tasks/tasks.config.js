@@ -49,6 +49,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 controllerAs: '$ctrl',
                                 resolve: {
                                         tasksInfo: function(Tasks, $state, $stateParams) {
+                                                // TODO: check here if target project (in $stateParams) does not match active task, clear active task if so
                                                 return Tasks.query($stateParams).then(
                                                         (tasksInfo) => tasksInfo,
                                                         (err) => $state.go('app.home') // TODO: display error message (?)
