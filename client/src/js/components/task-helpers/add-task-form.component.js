@@ -44,7 +44,8 @@ class AddTaskFormCtrl {
                 this.highestOrderNumber = newTask.order;
                 this.resetTask();
                 this.isSubmitting = false;
-                this._$scope.$emit('updateTasks');
+                this._Tasks.refreshTasks();
+                
                 // TODO: Flash notification to user
                 // this._$state.go('app.tasks.all');              
             },

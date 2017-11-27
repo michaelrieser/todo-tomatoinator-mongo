@@ -2,6 +2,12 @@ export default class Tasks {
   constructor(AppConstants, $http) {
     'ngInject';
 
+    console.log('Tasks instantiated!');
+    // this.tasksInfo = undefined;
+    // this.activeTask = undefined;
+    // this.tasks = undefined;
+    // QUESTION: call query when Tasks instantiated? *would this result in race condition with route/controllers/etc...?
+
     this._AppConstants = AppConstants;
     this._$http = $http;
 
@@ -37,9 +43,87 @@ export default class Tasks {
   }
 
   handleQueryResponse(tasksInfo) {
-    // TODO - set tasks here, including active/inactive - MOVE ALL METHODS FROM tasks-display.controller to tasks.service
+    // TODO - use setRefreshedTasks() here for tasks & activeTask ??
+    this.tasksInfo = tasksInfo;
+    this.tasks = this.getInactiveTasks(this.tasksInfo.tasks);
+    this.activeTask = this.getActiveTask(this.tasksInfo.tasks)
+    this.taskCount = this.tasksInfo.tasksCount;
     // this.tasks = tasksInfo.tasks;
     return tasksInfo; // TODO: return object containing {activeTask, tasks, taskCount, etc.. for tasks-display.controller.js and elsewhere}
+  }
+
+  refreshTasks() {
+      this.query().then(
+          (tasksInfo) => this.setRefreshedTasks(tasksInfo.tasks),
+          (err) => $state.go('app.home') // TODO: display error message (?)
+      );        
+  }
+  setRefreshedTasks(tasks) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
+      this.activeTask = this.getActiveTask(tasks);
+      this.tasks = this.getInactiveTasks(tasks);
+  }
+
+  clearObject(targetObject) {
+    for (var key in targetObject) {
+      if (targetObject.hasOwnProperty(key)) {
+        delete targetObject[key];
+      }
+    }
+    console.log(targetObject);
+  }
+
+  copyObject(srcObject, destObject) {
+    for (var prop in srcObject) destObject[prop] = srcObject[prop];
+    console.log('destObject');
+    console.log(destObject);
+  }
+
+  getActiveTask(tasks) {
+      return tasks.find( (task) => { return task.isActive; });
+  }
+
+  getInactiveTasks(tasks) {
+      return tasks.filter( (task) => { if (!task.isActive) { return task; }});
+  }
+
+  toggleTaskActive(task) {
+    console.log('toggleTaskActive()');
+    if (this.activeTask && !task.isActive) { // Not currently active task
+        this.activeTask.isActive = false;
+        this.update(this.activeTask).then(
+            (success) => {
+                task.isActive = true;
+                this.update(task).then(
+                    (success) => {
+                        // TODO: handle setting of new activeTask and relegating previously activeTask to inactive list in FRONTEND w/o refreshTasks service calls
+                        // console.log(this.tasks.indexOf(task));
+                        // var tgtActiveTaskIdx = this.tasks.indexOf(task);
+                        // this.activeTask = this.tasks.splice(tgtActiveTaskIdx, 1); // Remove task from inactive list and set to activeTask
+                        this.refreshTasks();
+                    },
+                    (failure) => console.log('toggleTaskActive failed')
+                )
+            },
+            (failure) => {
+                console.log('toggleTaskActive failed');
+            }
+        )
+    } else if (!this.activeTask) { // No currently active task
+        task.isActive = true;
+        this.update(task).then(
+            (success) => {
+                var tgtActiveTaskIdx = this.tasks.indexOf(task);
+                this.activeTask = this.tasks.splice(tgtActiveTaskIdx, 1)[0];
+            },
+            (failure) => console.log('toggleTaskActive failed')
+        ) 
+    } else if (task.isActive) { // Currently active task
+        task.isActive = false;
+        this.update(task).then(
+            (success) => this.refreshTasks(), // TODO: place note based off of whether it is completed
+            (failure) => console.log('toggleTaskActive() failed')
+        )
+    }
   }
 
   getMergedFilters(stateParams = {}) {

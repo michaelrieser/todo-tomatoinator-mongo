@@ -34,14 +34,10 @@ class TaskCtrl {
         // );        
     }
 
-    updateTasks() {
-        this._$scope.$emit('updateTasks');
-    }
-
     deleteTask() {
         // this.isDeleting = true; // TODO: send this to parent ctrl as component will be deleted? -see article-actions.component
         this._Tasks.delete(this.task).then(
-            (success) => { this.updateTasks() },
+            (success) => { this._Tasks.refreshTasks() },
             (err) => console.log(err)
         )
     }
@@ -53,13 +49,13 @@ class TaskCtrl {
             this.task.isActive = false; 
         };
         this._Tasks.update(this.task).then(
-            (success) => this.updateTasks(), 
+            (success) => this._Tasks.refreshTasks(), 
             (err) => console.log(err)
         )
     }
 
     toggleTaskActive() {
-        this._$scope.$emit('toggleTaskActive', this.task);
+        this._Tasks.toggleTaskActive(this.task);
     }
 }
 

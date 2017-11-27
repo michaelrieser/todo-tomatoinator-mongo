@@ -1,12 +1,12 @@
-<task ng-if="$ctrl.activeTask" class="task task-active task-lvl-{{$ctrl.activeTask.priority}}" task="$ctrl.activeTask"></task>
-<div ng-if="!$ctrl.activeTask && $ctrl.tasks.length>0 && $ctrl.tasksStatus !== 'completed'" class="task-active-empty">
+<task ng-if="$ctrl._Tasks.activeTask" class="task task-active task-lvl-{{$ctrl._Tasks.activeTask.priority}}" task="$ctrl._Tasks.activeTask"></task>
+<div ng-if="!$ctrl._Tasks.activeTask && $ctrl._Tasks.tasks.length>0 && $ctrl.tasksStatus !== 'completed'" class="task-active-empty">
     Set active task by dragging task here or clicking it active.
 </div>
 
-<div class="task-list-empty" ng-if="$ctrl.tasks.length==0 && $ctrl.activeTask==undefined">
+<div class="task-list-empty" ng-if="$ctrl._Tasks.tasks.length==0 && $ctrl._Tasks.activeTask==undefined">
     Select plus below to add a task
 </div>
-<task-list class="task-list" tasks="$ctrl.tasks"></task-list>
+<task-list class="task-list" tasks="$ctrl._Tasks.tasks"></task-list>
 
 <!-- TODO: combine following 3 elements and place into component/directive ? -->
 <div class="toggle-add-task-outer">
@@ -16,4 +16,4 @@
     </div>
 </div>
 <list-errors errors="$ctrl.errors"></list-errors>
-<add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form" tasksinfo="$ctrl.tasksInfo"></add-task-form>
+<add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form" tasksinfo="$ctrl._Tasks.tasksInfo"></add-task-form>

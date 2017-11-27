@@ -1,82 +1,24 @@
 class TasksDisplayCtrl {
     constructor(tasksInfo, Tasks, $scope, $stateParams) {
         'ngInject';
-
-        this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
-        this.tasksInfo = tasksInfo;
-        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo;
-
+        
         this._Tasks = Tasks;
         this._$scope = $scope;
 
-        this.tasks = this.getInactiveTasks(tasksInfo.tasks);
-        this.activeTask = this.getActiveTask(tasksInfo.tasks);
-        this.taskCount = tasksInfo.tasksCount;       
+        this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
+        // this.tasksInfo = tasksInfo; // QUESTION: set this (and all task values) from resolved binding || from Tasks service value ?
+        // this.tasksInfo = this._Tasks.tasksInfo;
+
+        // NOTE: initially tried to set references to Tasks properties here, but changes weren't reflected in view
+        // NOTE(con't): *perhaps because new array was being set to .tasks / .activeTask etc.. when Tasks#setRefreshedTasks() was called ?
+        // NOTE(con't): perhaps also investigate using $watch (http://stsc3000.github.io/blog/2013/10/26/a-tale-of-frankenstein-and-binding-to-service-values-in-angular-dot-js/) to decouple Model from View
+        // this.tasks = this._Tasks.tasks;
+        // this.activeTask = this._Tasks.activeTask;
+        // this.taskCount = this._Tasks.taskCount;
+
         this.showAddTaskForm = false;
 
-        // Listen for updateTasks event emitted from task.component child controllers
-        $scope.$on('updateTasks', (evt, data) => { this.refreshTasks(); });
-
-        // Listen for toggleTaskActive event emitted from task.component child controllers
-        $scope.$on('toggleTaskActive', (evt, data) => { this.toggleTaskActive(data); });
-    }
-
-    refreshTasks() {
-        this._Tasks.query().then(
-            (tasksInfo) => this.setRefreshedTasks(tasksInfo.tasks),
-            (err) => $state.go('app.home') // TODO: display error message (?)
-        );        
-    }
-    setRefreshedTasks(tasks) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)
-        this.activeTask = this.getActiveTask(tasks);
-        this.tasks = this.getInactiveTasks(tasks);
-    }
-
-    getActiveTask(tasks) {
-        return tasks.find( (task) => { return task.isActive; });
-    }
-
-    getInactiveTasks(tasks) {
-        return tasks.filter( (task) => { if (!task.isActive) { return task; }});
-    }
-
-    toggleTaskActive(task) {
-        if (this.activeTask && !task.isActive) { // Not currently active task
-            this.activeTask.isActive = false;
-            this._Tasks.update(this.activeTask).then(
-                (success) => {
-                    task.isActive = true;
-                    this._Tasks.update(task).then(
-                        (success) => {
-                            // TODO: handle setting of new activeTask and relegating previously activeTask to inactive list in FRONTEND w/o refreshTasks service calls
-                            // console.log(this.tasks.indexOf(task));
-                            // var tgtActiveTaskIdx = this.tasks.indexOf(task);
-                            // this.activeTask = this.tasks.splice(tgtActiveTaskIdx, 1); // Remove task from inactive list and set to activeTask
-                            this.refreshTasks();
-                        },
-                        (failure) => console.log('toggleTaskActive failed')
-                    )
-                },
-                (failure) => {
-                    console.log('toggleTaskActive failed');
-                }
-            )
-        } else if (!this.activeTask) { // No currently active task
-            task.isActive = true;
-            this._Tasks.update(task).then(
-                (success) => {
-                    var tgtActiveTaskIdx = this.tasks.indexOf(task);
-                    this.activeTask = this.tasks.splice(tgtActiveTaskIdx, 1)[0];
-                },
-                (failure) => console.log('toggleTaskActive failed')
-            ) 
-        } else if (task.isActive) { // Currently active task
-            task.isActive = false;
-            this._Tasks.update(task).then(
-                (success) => this.refreshTasks(), // TODO: place note based off of whether it is completed
-                (failure) => console.log('toggleTaskActive() failed')
-            )
-        }
+        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo; // TODO: inject Projects service and assign instead of accessing parent scope
     }
 }
 
