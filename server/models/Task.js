@@ -11,7 +11,7 @@ var TaskSchema = new mongoose.Schema({
     isComplete: {type: Boolean, default: false},
     wasSuccessful: {type: Boolean, default: false},
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', default: '59fb0738174258442bbd4645'}, // miscellaneous
+    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', default: '59fb0738174258442bbd4645'}, // TODO: set by title of 'miscellaneous'
     // project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
     notes: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Note'} ],
     tagList: [ {type: String} ],

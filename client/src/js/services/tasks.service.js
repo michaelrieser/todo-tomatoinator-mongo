@@ -2,7 +2,6 @@ export default class Tasks {
   constructor(AppConstants, $http) {
     'ngInject';
 
-    console.log('Tasks instantiated!');
     // this.tasksInfo = undefined;
     // this.activeTask = undefined;
     // this.tasks = undefined;

@@ -6,6 +6,21 @@ class TasksDisplayCtrl {
         this._$scope = $scope;
 
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
+
+        // $watch TEST
+        // this.activeTask = this._Tasks.activeTask;
+        // $scope.$watch(
+        //     () => { return this._Tasks.activeTask }, // Value to watch
+        //     (newVal) => { // Method to invoke when Value to watch changes
+        //         // console.log('changed!');
+        //         // console.log(newVal);
+        //         this.activeTask = newVal;
+        //         console.log('TasksDisplay');
+        //         console.log(this.activeTask);
+        //     }
+        // )
+        // END $watch TEST
+
         // this.tasksInfo = tasksInfo; // QUESTION: set this (and all task values) from resolved binding || from Tasks service value ?
         // this.tasksInfo = this._Tasks.tasksInfo;
 
