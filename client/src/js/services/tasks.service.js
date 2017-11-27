@@ -63,21 +63,6 @@ export default class Tasks {
       this.tasks = this.getInactiveTasks(tasks);
   }
 
-  clearObject(targetObject) {
-    for (var key in targetObject) {
-      if (targetObject.hasOwnProperty(key)) {
-        delete targetObject[key];
-      }
-    }
-    console.log(targetObject);
-  }
-
-  copyObject(srcObject, destObject) {
-    for (var prop in srcObject) destObject[prop] = srcObject[prop];
-    console.log('destObject');
-    console.log(destObject);
-  }
-
   getActiveTask(tasks) {
       return tasks.find( (task) => { return task.isActive; });
   }
@@ -87,7 +72,6 @@ export default class Tasks {
   }
 
   toggleTaskActive(task) {
-    console.log('toggleTaskActive()');
     if (this.activeTask && !task.isActive) { // Not currently active task
         this.activeTask.isActive = false;
         this.update(this.activeTask).then(
