@@ -10,6 +10,17 @@
 
     <fieldset class="form-group">
         <select class="form-control"
+                ng-model="$ctrl.task.project">                    
+            <option value="" disabled selected>Project</option>
+            <option value="1">A</option>
+            <option value="2">B</option>
+            <option value="3">C</option>
+            <option value="4">D</option>
+        </select>
+    </fieldset>    
+
+    <fieldset class="form-group">
+        <select class="form-control"
                 ng-model="$ctrl.task.priority">                    
             <option value="" disabled selected>Priority</option>
             <option value="1">A</option>

@@ -3,8 +3,6 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 
     // $urlRouterProvider.when('/tasks', '/tasks/all')
     $stateProvider
-        /* 3rd iter - one route with params for all tasks and (potentially) abstract routing for sidebar */
-        /*    -QUESTION: will state be lost in sidebar when switching between panels? */
         .state('app.tasks', {
                 abstract: true,
                 views: {
@@ -50,7 +48,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
                                 resolve: {
                                         tasksInfo: function(Tasks, $state, $stateParams) {
                                                 // TODO: check here if target project (in $stateParams) does not match active task, clear active task if so
-                                                
+                                                // console.log(Tasks.activeTask ? Tasks.activeTask.project.title : undefined); // TODO: strange happenings occurring when toggling btw projects?
                                                 return Tasks.query($stateParams).then(
                                                         (tasksInfo) => tasksInfo,
                                                         (err) => $state.go('app.home') // TODO: display error message (?)

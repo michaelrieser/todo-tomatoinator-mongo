@@ -22,10 +22,11 @@ class AddTaskFormCtrl {
         this.task.tagList = this.task.tagList.filter( (slug) => slug != tagName);
     }
 
-    resetTask() {        
+    resetTask() {
         this.task = {
             title: '',
             order: null, // Question/TODO: set to this.highestOrderNumber + 1 ?
+            project: this.getDefaultProject(),
             priority: null,
             timesPaused: 0,
             isActive: false,
@@ -33,6 +34,10 @@ class AddTaskFormCtrl {
             wasSuccessful: null,
             tagList: []
         }
+    }
+
+    getDefaultProject() {
+        return this.displayproject === 'all' ? '' : this.displayproject;
     }
 
     submit() {
@@ -60,6 +65,8 @@ class AddTaskFormCtrl {
 let AddTaskForm = {
     bindings: {
         tasksinfo: '=', // NOTE: Camel Cased binding keys are converted to kebab case. USE LOWERCASE
+        projectsinfo: '=',
+        displayproject: '='
     },
     controller: AddTaskFormCtrl,
     templateUrl: 'components/task-helpers/add-task-form.html'

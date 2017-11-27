@@ -6,6 +6,7 @@ class TasksDisplayCtrl {
         this._$scope = $scope;
 
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
+        this.displayProject = $stateParams.project;
 
         // $watch TEST
         // this.activeTask = this._Tasks.activeTask;
@@ -33,7 +34,7 @@ class TasksDisplayCtrl {
 
         this.showAddTaskForm = false;
 
-        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo; // TODO: inject Projects service and assign instead of accessing parent scope
+        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo; // TODO: inject Projects service and assign instead of accessing parent scope (SEE: Tasks service refactor)
     }
 }
 
