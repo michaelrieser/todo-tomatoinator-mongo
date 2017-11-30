@@ -9,13 +9,10 @@
     </fieldset>
 
     <fieldset class="form-group">
+        <!-- NOTE: data-ng-model (selected option) must be an Object in $ctrl.projects -->
         <select class="form-control"
-                ng-model="$ctrl.task.project">                    
-            <option value="" disabled selected>Project</option>
-            <option value="1">A</option>
-            <option value="2">B</option>
-            <option value="3">C</option>
-            <option value="4">D</option>
+                data-ng-model="$ctrl.task.project" 
+                data-ng-options="project.title for project in $ctrl.projects">                    
         </select>
     </fieldset>    
 

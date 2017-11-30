@@ -27,10 +27,11 @@ router.post('/', auth.required, function(req, res, next) {
     if (!user) { return res.sendStatus(401); }
       var task = new Task(req.body.task);
       task.user = user;
+      task.project = req.body.task.project.id;
 
       return task.save().then(function(task){        
         task.populate('project').execPopulate().then(function(){
-          
+
           task.project.tasks.push(task);
 
           return task.project.save().then(function() {

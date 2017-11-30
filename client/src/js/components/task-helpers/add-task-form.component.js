@@ -6,6 +6,8 @@ class AddTaskFormCtrl {
         this._$state = $state; 
         this._$scope = $scope;
 
+        this.projects = this.projectsinfo.projects;
+
         this.highestOrderNumber = this.tasksinfo.highestOrderNumber;
         this.resetTask();
     }
@@ -26,7 +28,7 @@ class AddTaskFormCtrl {
         this.task = {
             title: '',
             order: null, // Question/TODO: set to this.highestOrderNumber + 1 ?
-            project: this.getDefaultProject(),
+            project: this.getDefaultProject(), // NOTE: default to 'miscellaneous' if 'all' projects currently displayed
             priority: null,
             timesPaused: 0,
             isActive: false,
@@ -37,7 +39,9 @@ class AddTaskFormCtrl {
     }
 
     getDefaultProject() {
-        return this.displayproject === 'all' ? '' : this.displayproject;
+        var tgtProjectTitle = this.displayproject === 'all' ? 'miscellaneous' : this.displayproject;
+        // find project in projects array and return - must set selected option to Object in ng-repeat list
+        return this.projects.find( (p) => { return p.title === tgtProjectTitle }); 
     }
 
     submit() {

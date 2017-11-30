@@ -100,7 +100,7 @@ export default class Tasks {
             },
             (failure) => console.log('toggleTaskActive failed')
         ) 
-    } else if (task.isActive) { // Currently active task
+    } else if (task.isActive) { // Currently active task        
         task.isActive = false;
         this.update(task).then(
             (success) => this.refreshTasks(), // TODO: place note based off of whether it is completed
@@ -108,6 +108,20 @@ export default class Tasks {
         )
     }
   }
+
+  setTaskInactive(task) { // this can only be called in tasks route to clear active task, otherwise tasks will not be updated properly with freshly deactivated task
+      task.isActive = false;
+      this.update(task).then(
+          (success) => { return this.setTaskInactiveSuccessHandler() }, // TODO: place note based off of whether it is completed
+          (failure) => console.log('setTaskInactive() failed')
+      )
+  }
+
+  setTaskInactiveSuccessHandler() {
+    this.activeTask = undefined;
+    return true;
+  }
+
 
   getMergedFilters(stateParams = {}) {
     this.setStatusFilterFromString(stateParams.status);
@@ -157,5 +171,25 @@ export default class Tasks {
       data: { task: task } // => becomes req.body.task in tasks.js route
     }
     return this._$http(request).then((res) => res.data);
+  }
+
+  clearUnmatchedActiveTask(stateParamsProjTitle) {
+    // No activeTask set until resolve bindings in task route succeed first time. OK since we initally route to /tasks/all/all
+    if ( !this.activeTaskProjectTitle() || stateParamsProjTitle == 'all' || stateParamsProjTitle === this.activeTaskProjectTitle() ) {
+      return true;
+    } else {
+      return this.setTaskInactive(this.activeTask);
+    }
+  }
+
+  activeTaskProjMatchesStateParams(stateParamsProjTitle) { 
+    var activeTaskProjTitle = this.activeTaskProjectTitle();
+    
+    if (!activeTaskProjTitle || stateParamsProjTitle === 'all') return true; 
+    else return stateParamsProjTitle === activeTaskProjTitle;
+  }
+
+  activeTaskProjectTitle() {
+    return this.activeTask ? this.activeTask.project.title : undefined;
   }
 }
