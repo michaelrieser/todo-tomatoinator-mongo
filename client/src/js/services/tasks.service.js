@@ -182,13 +182,6 @@ export default class Tasks {
     }
   }
 
-  activeTaskProjMatchesStateParams(stateParamsProjTitle) { 
-    var activeTaskProjTitle = this.activeTaskProjectTitle();
-    
-    if (!activeTaskProjTitle || stateParamsProjTitle === 'all') return true; 
-    else return stateParamsProjTitle === activeTaskProjTitle;
-  }
-
   activeTaskProjectTitle() {
     return this.activeTask ? this.activeTask.project.title : undefined;
   }
