@@ -24,4 +24,14 @@ export default class Projects {
     };
     return this._$http(request).then((res) => res.data);
   }    
+
+  delete(project) {
+    console.log(project);
+    let request = {
+      // TODO: just send task id in url path (?)
+      url: `${this._AppConstants.api}/projects/${project.id}`,
+      method: 'DELETE'
+    }
+    return this._$http(request).then((res) => res.data);
+  }
 }

@@ -63,7 +63,7 @@ export default class Tasks {
   }
 
   getActiveTask(tasks) {
-      return tasks.find( (task) => { return task.isActive; });
+      return tasks.find( (task) => { return task.isActive; }); // TODO: .find() not viable in IE -> but shouldn't babel convert ES6 to vanilla JS?
   }
 
   getInactiveTasks(tasks) {
