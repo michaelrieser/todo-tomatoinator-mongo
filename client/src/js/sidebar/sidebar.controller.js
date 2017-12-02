@@ -4,8 +4,9 @@ class SidebarCtrl {
     constructor($scope) {
         'ngInject';
 
-        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo;
-        this.projects = this.projectsInfo.projects;
+        // this._Projects = Projects;
+        // this.projectsInfo = $scope.$parent.$ctrl.projectsInfo;
+        // this.projects = this.projectsInfo.projects;
 
         this._$scope = $scope;
     }

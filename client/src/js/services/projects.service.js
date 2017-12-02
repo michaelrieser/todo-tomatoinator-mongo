@@ -22,8 +22,14 @@ export default class Projects {
       method: 'GET'
       // params: config.filters ? config.filters : null // TODO uncomment this for other concrete tasks routes (EX: InProgress/Completed/etc..)
     };
-    return this._$http(request).then((res) => res.data);
+    return this._$http(request).then((res) =>  { return this.handleQueryResponse(res.data) });
   }    
+
+  handleQueryResponse(projectsInfo) {
+    this.projectsInfo = projectsInfo;
+    this.projects = projectsInfo.projects;
+    return projectsInfo;
+  }
 
   delete(project) {
     console.log(project);

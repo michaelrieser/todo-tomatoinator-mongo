@@ -1,3 +1,4 @@
+ 
  <form>
     <fieldset ng-disabled="$ctrl.isSubmitting">
 
@@ -12,7 +13,7 @@
         <!-- NOTE: data-ng-model (selected option) must be an Object in $ctrl.projects -->
         <select class="form-control"
                 data-ng-model="$ctrl.task.project" 
-                data-ng-options="project.title for project in $ctrl.projects">                    
+                data-ng-options="project.title for project in $ctrl._Projects.projects">                    
         </select>
     </fieldset>    
 

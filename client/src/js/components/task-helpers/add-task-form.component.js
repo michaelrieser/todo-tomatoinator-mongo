@@ -1,12 +1,11 @@
 class AddTaskFormCtrl {
-    constructor(Tasks, $state, $scope) {
+    constructor(Tasks, Projects, $state, $scope) {
         'ngInject';
 
         this._Tasks = Tasks;
+        this._Projects = Projects;
         this._$state = $state; 
         this._$scope = $scope;
-
-        this.projects = this.projectsinfo.projects;
 
         this.highestOrderNumber = this.tasksinfo.highestOrderNumber;
         this.resetTask();
@@ -41,7 +40,7 @@ class AddTaskFormCtrl {
     getDefaultProject() {
         var tgtProjectTitle = this.displayproject === 'all' ? 'miscellaneous' : this.displayproject;
         // find project in projects array and return - must set selected option to Object in ng-repeat list
-        return this.projects.find( (p) => { return p.title === tgtProjectTitle }); 
+        return this._Projects.projects.find( (p) => { return p.title === tgtProjectTitle }); 
     }
 
     submit() {
@@ -69,7 +68,6 @@ class AddTaskFormCtrl {
 let AddTaskForm = {
     bindings: {
         tasksinfo: '=', // NOTE: Camel Cased binding keys are converted to kebab case. USE LOWERCASE
-        projectsinfo: '=',
         displayproject: '='
     },
     controller: AddTaskFormCtrl,
