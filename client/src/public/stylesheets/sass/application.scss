@@ -21,6 +21,20 @@ h5 {
 .fieldset-single-checkbox {
     height: 0;
 }
+
+.navbar {
+    padding: 0;
+}
+.container {
+    max-width: none;
+    margin: 0;
+    padding: 0px 50px 0px 50px;
+}
+
+.tasks-wrapper {
+    width: 75%; 
+    margin-right: 5%;
+}
 .task-list {
     
 }
@@ -44,6 +58,9 @@ h5 {
 }
 .task-inner-wrapper {
     margin: 10px;
+}
+.task-title {
+    font-size: 0.85em;
 }
 .task:hover {
     cursor: pointer;
@@ -219,7 +236,9 @@ h5 {
         // border-bottom: 1px;
     }
 }
-
+.task-note-content-wrapper {
+    width: 95%;
+}
 .add-note-wrapper:hover {
     background-color: white;
     border-radius: 5px;
@@ -277,12 +296,14 @@ h5 {
     color: red;
 }
 
+.tasks-sidebar-wrapper {
+    width: 20%;
+}
 .tasks-sidebar {
     padding: 5px;
     background: #f3f3f3;
     border-radius: 5px;
 }
-
 /* Projects */
 .project-anchor-wrapper {
     position: relative;
@@ -300,6 +321,10 @@ h5 {
     cursor: pointer;
     background-color: lightblue;
 }
+.display-project {
+    background-color: deepskyblue;
+}
+
 .project-controls-outer {
     position: absolute; 
     display: inline-block;    

@@ -1,15 +1,14 @@
 <div class="container page">
     <div class="row">
         <!-- Main view - contains tabs & task list-->
-        <div class="col-md-9">
+        <div class="tasks-wrapper">
             <!-- Tabs for toggling between different task types -->
             <task-navbar></task-navbar>
 
             <div ui-view="tasks"></div>
         </div>
-        <div class="col-md-3 sidebar tasks-sidebar">   
+        <div class="sidebar tasks-sidebar-wrapper">   
             <div ui-view="sidebar"></div>
         </div>
-    
     </div>   
-</div> 
+</div>  
