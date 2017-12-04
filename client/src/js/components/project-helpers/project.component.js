@@ -23,6 +23,10 @@ class ProjectCtrl {
             this._Tasks.refreshTasks();
         }
     }
+
+    isDisplayProject() {
+        return this._Projects.displayProject === this.project.title;
+    }
 }
 
 let Project =  {
