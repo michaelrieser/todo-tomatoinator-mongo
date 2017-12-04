@@ -15,9 +15,7 @@ class ProjectCtrl {
         )
     }
 
-    handleProjDeleteSuccess(projectTitle) {
-        console.log(this._Projects.displayProject);
-        
+    handleProjDeleteSuccess(projectTitle) {        
         if (this.project.title === this._Projects.displayProject) {
             this._$state.go("app.tasks.view", {'project': 'all'}, {reload: true}) // TODO: call if currenlty set proj deleted, otherwise we're good :)  
         } else {
