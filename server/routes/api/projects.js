@@ -77,32 +77,20 @@ router.delete('/:projectId', auth.required, function (req, res, next) {
 
     if (req.project.user.id.toString() === req.payload.id.toString()) {
 
-      // SEE: https://stackoverflow.com/questions/30044792/mongodb-how-to-find-a-document-by-an-id-inside-a-nested-document
-      Note.find({"task": "5a1324ba3a6cf8b4307f2895"}).then(function(notes){ // WORKS!!!!!!!!!!!!!!!!!!! :)
-        console.log('B')
-        console.log(notes);
-      })
-      console.log('C')
-      // req.project.tasks.each
       // Aggregate list of task ids
-      // Delete notes from each task id => EXAMPLE: UTUSTP.remove({_id: {$in: wronglist}}, function(){...}); // and so on
-      // Delete task
-      // Delete Project
-
-      //       // must explicitly remove reference to Task in Project model
-      //       //      NOTE: one of the pitfalls of a NoSQL database                
-      //       Project.findById(req.task.project).then(function(project) {
-      //           project.tasks.remove(req.task._id)
-      //           project.save()
-      //             .then(Task.find({_id: req.task._id}).remove().exec())
-      //             .then(function() {
-      //               return res.sendStatus(204);
-      //             })                        
-      //       });          
-      //     } else {
-      //       return res.sendStatus(403);
-      //     }
-    };
+      var projectTaskIds = req.project.tasks.map((t) => {return t._id});      
+      // Delete notes from each task id => EXAMPLE: <Collection>.remove({_id: {$in: wronglist}}, function(){...}); // and so on
+      Note.find({"task": {$in: projectTaskIds} }).remove().exec().then(function() {
+        // Delete tasks        
+        Task.find({_id: {$in: projectTaskIds}}).remove().exec().then(function() {
+          Project.find({_id: req.project._id}).remove().exec().then(function() {
+            return res.sendStatus(204);
+          })
+        })
+      });
+    } else {
+      return res.sendStats(403);
+    }
   });
 });
 

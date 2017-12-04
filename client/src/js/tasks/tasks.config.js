@@ -19,6 +19,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 						}
 					}
 				},
+				// NOTE: sidebar placed in abstract route so it isn't updated each time app.tasks.view state is accessed
 				'sidebar@app.tasks': { // Fully qualified name - <viewname-in-ui-view>@<statename>
 					templateUrl: 'sidebar/sidebar.html',
 					controller: 'SidebarCtrl',

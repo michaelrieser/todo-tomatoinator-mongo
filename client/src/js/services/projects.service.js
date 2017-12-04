@@ -4,6 +4,14 @@ export default class Projects {
 
     this._AppConstants = AppConstants;
     this._$http = $http;
+
+    this.displayProject = 'all'; // TODO: allow user to save and set this dynamically with service on load
+  }
+
+  getDefaultProject() {
+      var tgtProjectTitle = this.displayProject === 'all' ? 'miscellaneous' : this.displayProject;
+      // find project in projects array and return - must set selected option to Object in ng-repeat list
+      return this.projects.find( (p) => { return p.title === tgtProjectTitle }); 
   }
 
   save(project) {
@@ -31,10 +39,15 @@ export default class Projects {
     return projectsInfo;
   }
 
+  refreshProjects() {
+    this.query().then(
+      (projectsInfo) => projectsInfo,
+      (err) => console.log('ERROR refreshing projects')
+    )
+  }
+
   delete(project) {
-    console.log(project);
     let request = {
-      // TODO: just send task id in url path (?)
       url: `${this._AppConstants.api}/projects/${project.id}`,
       method: 'DELETE'
     }

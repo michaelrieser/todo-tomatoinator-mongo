@@ -20,7 +20,7 @@ class ProjectsCtrl {
             (newProject) => {
                 this.resetProject();
                 this.isSubmitting = false;
-                this.projects.push(newProject); // Question: just add to end as projects will be sorted asc by date in backend?
+                this._Projects.projects.push(newProject);
             },
             (err) => {
                 this.isSubmitting = false;

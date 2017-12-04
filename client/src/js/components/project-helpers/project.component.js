@@ -1,5 +1,5 @@
 class ProjectCtrl {
-    constructor(Projects, Tasks, $scope, $state) {
+    constructor(Projects, Tasks, $scope, $state, $stateParams) {
         'ngInject';
 
         this._Projects = Projects;
@@ -15,9 +15,15 @@ class ProjectCtrl {
         )
     }
 
-    handleProjDeleteSuccess() {
-        // TODO: remove project from parent tasks.controller.js
-        this._Tasks.refreshTasks();
+    handleProjDeleteSuccess(projectTitle) {
+        console.log(this._Projects.displayProject);
+        
+        if (this.project.title === this._Projects.displayProject) {
+            this._$state.go("app.tasks.view", {'project': 'all'}, {reload: true}) // TODO: call if currenlty set proj deleted, otherwise we're good :)  
+        } else {
+            this._Projects.refreshProjects();
+            this._Tasks.refreshTasks();
+        }
     }
 }
 

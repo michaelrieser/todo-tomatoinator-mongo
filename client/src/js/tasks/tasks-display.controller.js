@@ -7,7 +7,9 @@ class TasksDisplayCtrl {
         this._$scope = $scope;
         
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
-        this.displayProject = $stateParams.project;
+
+        // Set displayProject - consumed by add-task-form.component to display default new task & projectHandleSuccess in project component
+        if ($stateParams.project) { Projects.displayProject = $stateParams.project };
 
         // $watch TEST
         // this.activeTask = this._Tasks.activeTask;
@@ -34,8 +36,6 @@ class TasksDisplayCtrl {
         // this.taskCount = this._Tasks.taskCount;
 
         this.showAddTaskForm = false;
-
-        this.projectsInfo = $scope.$parent.$ctrl.projectsInfo; // TODO: inject Projects service and assign instead of accessing parent scope (SEE: Tasks service refactor)
     }
 }
 

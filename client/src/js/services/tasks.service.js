@@ -2,11 +2,6 @@ export default class Tasks {
   constructor(AppConstants, $http) {
     'ngInject';
 
-    // this.tasksInfo = undefined;
-    // this.activeTask = undefined;
-    // this.tasks = undefined;
-    // QUESTION: call query when Tasks instantiated? *would this result in race condition with route/controllers/etc...?
-
     this._AppConstants = AppConstants;
     this._$http = $http;
 
