@@ -19,4 +19,7 @@ servicesModule.service('Notes', NotesService);
 import ProjectsService from './projects.service';
 servicesModule.service('Projects', ProjectsService);
 
+import PomTimerService from './pom-timer.service';
+servicesModule.service('PomTimer', PomTimerService);
+
 export default servicesModule;

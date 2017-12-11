@@ -25,7 +25,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					controller: 'SidebarCtrl',
 					controllerAs: '$ctrl'
 				}
-			},
+			}		
 		})
 		.state('app.tasks.view', {
 			url: '/tasks/:project/:status/',
@@ -47,8 +47,9 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					controller: 'TasksDisplayCtrl',
 					controllerAs: '$ctrl',
 					resolve: {
-						tasksInfo: function (Tasks, $state, $q, $stateParams) {
+						tasksInfo: function (Tasks, $state, $q, $stateParams) {							
 							return $q.when(
+								// TODO 001: to keep activeTask timer ticking when project/status set that includes it, perhaps have clearUnmatchedActiveTask return a Boolean true/false and pass to then...
 								Tasks.clearUnmatchedActiveTask($stateParams.project)
 							).then(() => {
 								return Tasks.query($stateParams).then(
@@ -61,7 +62,8 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					}
 				},
 
-			}
+			},
+			title: 'Tasks'
 		})
 
 	//     views: {

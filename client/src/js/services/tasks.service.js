@@ -1,8 +1,9 @@
 export default class Tasks {
-  constructor(AppConstants, $http) {
+  constructor(AppConstants, PomTimer, $http) {
     'ngInject';
 
     this._AppConstants = AppConstants;
+    this._PomTimer = PomTimer;
     this._$http = $http;
 
     this.currentlySetFilters = {}; // TODO: hook this into local session storage
@@ -173,6 +174,7 @@ export default class Tasks {
     if ( !this.activeTaskProjectTitle() || stateParamsProjTitle == 'all' || stateParamsProjTitle === this.activeTaskProjectTitle() ) {
       return true;
     } else {
+      this._PomTimer.resetTimer();
       return this.setTaskInactive(this.activeTask);
     }
   }
