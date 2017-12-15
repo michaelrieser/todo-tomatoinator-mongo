@@ -6,6 +6,8 @@ class AddTaskFormCtrl {
         this._Projects = Projects;
         this._$state = $state; 
         this._$scope = $scope;
+        
+        // TODO: add watch here for this._Tasks.highestOrderNumber and update class field accordingly
 
         this.highestOrderNumber = this.tasksinfo.highestOrderNumber;
         this.resetTask();
