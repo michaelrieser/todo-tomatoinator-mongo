@@ -89,7 +89,6 @@ export default class PomTimer {
 
     // TODO: DOM manipulation shouldn't occur in a service! Extract this to a directive?
     updateBrowserTitle(seconds) {
-        console.log(seconds);
         if (seconds > 0) {
             document.title = `${this.secondsToMinSec(seconds)} \u2014 ${this._AppConstants.appName}`;
         } else {
