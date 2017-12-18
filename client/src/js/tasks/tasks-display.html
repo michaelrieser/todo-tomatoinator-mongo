@@ -5,7 +5,6 @@
 </div>-->
 
 <!-- MVVM implementation with Model properties used in View -->
-<pre>{{ $ctrl._Tasks.highestOrderNumber }}</pre>
 <task ng-if="$ctrl._Tasks.activeTask" class="task task-active task-lvl-{{$ctrl._Tasks.activeTask.priority}}" task="$ctrl._Tasks.activeTask"></task>
 <div ng-if="!$ctrl._Tasks.activeTask && $ctrl._Tasks.tasks.length>0 && $ctrl.tasksStatus !== 'completed'" class="task-active-empty">
     Set active task by dragging task here or clicking it active.
@@ -24,7 +23,7 @@
     </div>
 </div>
 <list-errors errors="$ctrl.errors"></list-errors>
-<add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form" tasksinfo="$ctrl._Tasks.tasksInfo" displayproject="$ctrl.displayProject"></add-task-form>
+<add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form"></add-task-form>
 
 <!--<pre>{{ items }}</pre>
 <ul ui-sortable="sortableOptions" ng-model="items">
