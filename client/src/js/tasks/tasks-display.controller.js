@@ -5,7 +5,7 @@ class TasksDisplayCtrl {
         this._Tasks = Tasks;
         this._Projects = Projects;
         this._$scope = $scope;
-        
+
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
 
         // Set displayProject - consumed by add-task-form.component to display default new task & projectHandleSuccess in project component
@@ -36,6 +36,45 @@ class TasksDisplayCtrl {
         // this.taskCount = this._Tasks.taskCount;
 
         this.showAddTaskForm = false;
+
+        // Angular UI Sortable TEST
+        // this.items = ['one', 'two', 'three'];
+        // $scope.items = ['one', 'two', 'three'];
+        // $scope.sortableOptions = {
+        //     start: function (event, ui) {
+        //         console.log('start1');
+        //     },
+        //     stop: function (event, ui) {
+        //         console.log('stop1');
+        //     }
+        // };
+
+        this.items = [
+            {title: 'task 1', order: 1},
+            {title: 'task 2', order: 2},
+            {title: 'task 3', order: 3}
+        ];
+        this.sortableHandlers = {
+            start: function (event, ui) {                                
+                console.log('start dragging...');
+                console.log(event);
+                console.log(ui);
+            },
+            stop: function (event, ui) {
+                // PRELIMINARY QUESTIONS: 
+                    // 1.) do we want to allow user to order tasks by each project?
+                    // 2.) still an outstanding issue where TasksService#highestOrderNumber doesn't get updated when task deleted?
+
+                // find object in list
+                // grab order of object prior and add 1
+                // add 1 to each object after
+                // service call to update affected tasks in backend -> use mongo's $inc method?
+                console.log('...dropped');
+                console.log(event);
+                console.log(ui)                                
+            }
+        };
+
     }
 }
 

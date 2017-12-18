@@ -38,24 +38,22 @@ export default class Tasks {
   }
 
   handleQueryResponse(tasksInfo) {
-    // TODO - use setRefreshedTasks() here for tasks & activeTask ??
-    this.tasksInfo = tasksInfo;
-    this.tasks = this.getInactiveTasks(this.tasksInfo.tasks);
-    this.activeTask = this.getActiveTask(this.tasksInfo.tasks)
-    this.taskCount = this.tasksInfo.tasksCount;
-    // this.tasks = tasksInfo.tasks;
+    this.setRefreshedTasksInfo(tasksInfo);
     return tasksInfo; // TODO: return object containing {activeTask, tasks, taskCount, etc.. for tasks-display.controller.js and elsewhere}
   }
 
   refreshTasks() {
       this.query().then(
-          (tasksInfo) => this.setRefreshedTasks(tasksInfo.tasks),
+          (tasksInfo) => this.setRefreshedTasksInfo(tasksInfo),
           (err) => $state.go('app.home') // TODO: display error message (?)
       );        
   }
-  setRefreshedTasks(tasks) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
-      this.activeTask = this.getActiveTask(tasks);
-      this.tasks = this.getInactiveTasks(tasks);
+  setRefreshedTasksInfo(tasksInfo) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
+      this.tasksInfo = tasksInfo;
+      this.activeTask = this.getActiveTask(tasksInfo.tasks);
+      this.tasks = this.getInactiveTasks(tasksInfo.tasks);
+      this.taskCount = tasksInfo.tasksCount;
+      this.highestOrderNumber = tasksInfo.highestOrderNumber;
   }
 
   getActiveTask(tasks) {

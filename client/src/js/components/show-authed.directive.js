@@ -4,7 +4,7 @@ function ShowAuthed(User) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) { // element refers to the overarching component the directive is attached to
-      scope.User = User;
+      scope.User = User;      
 
       scope.$watch('User.current', function(val) {
           // If user detected

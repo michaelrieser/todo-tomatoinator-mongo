@@ -7,9 +7,10 @@ class AddTaskFormCtrl {
         this._$state = $state; 
         this._$scope = $scope;
         
-        // TODO: add watch here for this._Tasks.highestOrderNumber and update class field accordingly
-
-        this.highestOrderNumber = this.tasksinfo.highestOrderNumber;
+        this.highestOrderNumber = this._Tasks.highestOrderNumber;    
+        $scope.$watch(() => {return this._Tasks.highestOrderNumber}, (newValue) => {
+            this.highestOrderNumber = newValue;
+        })
         this.resetTask();
     }
 
@@ -62,10 +63,7 @@ class AddTaskFormCtrl {
 }
 
 let AddTaskForm = {
-    bindings: {
-        tasksinfo: '=', // NOTE: Camel Cased binding keys are converted to kebab case. USE LOWERCASE
-        displayproject: '='
-    },
+    bindings: {},
     controller: AddTaskFormCtrl,
     templateUrl: 'components/task-helpers/add-task-form.html'
 };
