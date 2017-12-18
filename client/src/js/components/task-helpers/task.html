@@ -1,45 +1,47 @@
-<!--<pre>{{$ctrl.task | json}}</pre>-->
-<span class="task-outer-wrapper" ng-dblclick="$ctrl.toggleTaskNotes(task)">
-    <div class="task-inner-wrapper">
-        <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
-            <span class="task-title">{{$ctrl.task.title}}</span>
-            <span>|&nbsp{{ $ctrl.task.order }}</span>
-            <!--<span>|&nbsp{{ $ctrl.task.project.title }}</span>-->
-            <span ng-if="$ctrl.task.isActive">        
-                <pom-timer></pom-timer>
+
+<li class="li-list-wrapper" data-order="{{$ctrl.task.order}}">
+    <span class="task-outer-wrapper" ng-dblclick="$ctrl.toggleTaskNotes(task)">
+        <div class="task-inner-wrapper">
+            <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
+                <span class="task-title">{{$ctrl.task.title}}</span>
+                <span>|&nbsp{{ $ctrl.task.order }}</span>
+                <!--<span>|&nbsp{{ $ctrl.task.project.title }}</span>-->
+                <span ng-if="$ctrl.task.isActive">        
+                    <pom-timer></pom-timer>
+                </span>
             </span>
-        </span>
-        <span class="task-controls-outer">
-            <div class="task-controls-inner">
-                <span class="task-toggle-task-complete-wrapper">
-                    <span type="button" ng-click="$ctrl.toggleTaskComplete()">                
-                        <span ng-class="{'ion-android-checkmark-circle' : $ctrl.task.isComplete, 
-                                        'ion-android-radio-button-off' : !$ctrl.task.isComplete}" 
-                            data-pack="default" data-tags="write"></span>
+            <span class="task-controls-outer">
+                <div class="task-controls-inner">
+                    <span class="task-toggle-task-complete-wrapper">
+                        <span type="button" ng-click="$ctrl.toggleTaskComplete()">                
+                            <span ng-class="{'ion-android-checkmark-circle' : $ctrl.task.isComplete, 
+                                            'ion-android-radio-button-off' : !$ctrl.task.isComplete}" 
+                                data-pack="default" data-tags="write"></span>
+                        </span>
                     </span>
-                </span>
-                <span class="task-toggle-active-wrapper">
-                    <span type="button" aria-label="set-active" ng-click="$ctrl.task.isComplete ? null : $ctrl.toggleTaskActive()">
-                        <span ng-class="{'ion-pause' : $ctrl.task.isActive, 
-                                        'ion-ios-play-outline cursor-not-allowed' : $ctrl.task.isComplete,
-                                        'ion-play' : !$ctrl.task.isActive && !$ctrl.task.isComplete}"
-                            data-pack="default" data-tags="write"></span>
+                    <span class="task-toggle-active-wrapper">
+                        <span type="button" aria-label="set-active" ng-click="$ctrl.task.isComplete ? null : $ctrl.toggleTaskActive()">
+                            <span ng-class="{'ion-pause' : $ctrl.task.isActive, 
+                                            'ion-ios-play-outline cursor-not-allowed' : $ctrl.task.isComplete,
+                                            'ion-play' : !$ctrl.task.isActive && !$ctrl.task.isComplete}"
+                                data-pack="default" data-tags="write"></span>
+                        </span>
+                    </span>        
+                    <span class="task-delete-wrapper">
+                        <span type="button" aria-label="delete" ng-click="$ctrl.deleteTask()">
+                            <span aria-hidden="true">&times;</span>
+                        </span>
+                    </span>  
+                    <span class="task-display-notes-wrapper">
+                        <span type="button" ng-click="$ctrl.toggleTaskNotes(task)">
+                            <span class="ion-clipboard" data-pack="default" data-tags="write"></span>
+                        </span>
                     </span>
-                </span>        
-                <span class="task-delete-wrapper">
-                    <span type="button" aria-label="delete" ng-click="$ctrl.deleteTask()">
-                        <span aria-hidden="true">&times;</span>
-                    </span>
-                </span>  
-                <span class="task-display-notes-wrapper">
-                    <span type="button" ng-click="$ctrl.toggleTaskNotes(task)">
-                        <span class="ion-clipboard" data-pack="default" data-tags="write"></span>
-                    </span>
-                </span>
-                            
-            </div>
-        </span>
-        <!--<pre>{{ console.log($ctrl.task.notes) }}</pre>-->
-        <task-notes task="$ctrl.task" ng-show="$ctrl.task.showNotes"></task-notes>
-    </div>
-</span>
+                                
+                </div>
+            </span>
+            <!--<pre>{{ console.log($ctrl.task.notes) }}</pre>-->
+            <task-notes task="$ctrl.task" ng-show="$ctrl.task.showNotes"></task-notes>
+        </div>
+    </span>
+</li>

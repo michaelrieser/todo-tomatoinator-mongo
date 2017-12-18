@@ -61,17 +61,13 @@ class TasksDisplayCtrl {
                 console.log(ui);
             },
             stop: function (event, ui) {
-                // PRELIMINARY QUESTIONS: 
-                    // 1.) do we want to allow user to order tasks by each project?
-                    // 2.) still an outstanding issue where TasksService#highestOrderNumber doesn't get updated when task deleted?
 
-                // find object in list
-                // grab order of object prior and add 1
-                // add 1 to each object after
-                // service call to update affected tasks in backend -> use mongo's $inc method?
+                
                 console.log('...dropped');
-                console.log(event);
-                console.log(ui)                                
+                console.log(ui.item);
+                // console.log(event);
+                // console.log(ui);
+                // console.log(`ui.item.index(): ${ui.item.index()}`);                                
             }
         };
 

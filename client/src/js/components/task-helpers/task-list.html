@@ -1,6 +1,9 @@
 <!--<pre>{{$ctrl.tasks}}</pre>-->
-<task class="task task-lvl-{{task.priority}}"       
-      task="task" ng-repeat="task in $ctrl.tasks"></task>
+<ul class="ul-task-list" ui-sortable="$ctrl.sortableTaskHandlers" ng-model="$ctrl.tasks">
+    <task class="task task-lvl-{{task.priority}}"       
+        task="task" ng-repeat="task in $ctrl.tasks"></task>
+</ul>
+
 
 <!--<article-preview
     article="article"

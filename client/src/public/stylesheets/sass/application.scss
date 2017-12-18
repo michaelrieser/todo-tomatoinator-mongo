@@ -51,6 +51,13 @@ h5 {
     position: relative; /* set to allow for absolute positioning on task controls */
     border-radius: 5px;
 }
+.ul-task-list {
+    padding: 0;
+}
+.li-list-wrapper {
+    list-style: none;
+    display: block;
+}
 .task-outer-wrapper {
     display: inline-block;
     height: 100%;
