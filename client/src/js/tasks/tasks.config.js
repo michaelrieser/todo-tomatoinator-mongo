@@ -14,7 +14,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 						projectsInfo: function (Projects) {
 							return Projects.query().then(
 								(projectsInfo) => projectsInfo,
-								(err) => { console.log('error occurred in Projects.query()'); }
+								(err) => { console.log(err); }
 							)
 						}
 					}
@@ -52,7 +52,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 								// TODO 001: to keep activeTask timer ticking when project/status set that includes it, perhaps have clearUnmatchedActiveTask return a Boolean true/false and pass to then...
 								Tasks.clearUnmatchedActiveTask($stateParams.project)
 							).then(() => {
-								return Tasks.query($stateParams).then(
+								return Tasks.queryAndSet($stateParams).then(
 									(tasksInfo) => tasksInfo,
 									(err) => $state.go('app.home') // TODO: display error message (?)
 								);

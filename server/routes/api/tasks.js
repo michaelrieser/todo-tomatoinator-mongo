@@ -66,6 +66,18 @@ router.get('/', auth.optional, function(req, res, next) {
       query.tagList = {"$in": [req.query.tag]};
     }
 
+    if (typeof req.query.title !== 'undefined') {
+      query.title = req.query.title;
+    }
+
+    if (typeof req.query.id !== 'undefined') {
+      query.id = req.query.id;
+    }
+
+    if (typeof req.query.order !== 'undefined') {
+      query.order = req.query.order;
+    }
+
     // NOTE: initially attempted to add project to query here, but query only takes ObjectIDs. Used Promise instead
     // if (typeof req.query.project !== 'undefined') {
     //   console.log('project NOT undefined');
@@ -109,9 +121,11 @@ router.get('/', auth.optional, function(req, res, next) {
         var allTasks = results[2];
         var allTasksLength = allTasks.length;
         var highestOrderNumber = 0;
+        var lowestOrderNumber = 0;
         if (allTasksLength > 0) {
           // .slice() makes a copy of the tasks object, in JS .sort() is destructive and this was breaking desired task order w/o .slice()
           // highestOrderNumber = tasks.slice().sort((a,b) => a.order - b.order)[allTasksLength-1].order;       
+          lowestOrderNumber = allTasks[allTasksLength - 1].order;
           highestOrderNumber = allTasks[0].order;            
         }      
 
@@ -122,6 +136,7 @@ router.get('/', auth.optional, function(req, res, next) {
             return task.toJSONFor(user);           
           }),
           tasksCount: tasksCount,
+          lowestOrderNumber: lowestOrderNumber,
           highestOrderNumber: highestOrderNumber
         });
       }).catch(next);
@@ -131,7 +146,6 @@ router.get('/', auth.optional, function(req, res, next) {
 
 /* PUT update task */ 
 router.put('/update', auth.required, function(req, res, next) {      
-    console.log(req.body.task);;
     User.findById(req.payload.id).then(function(user){
       if(req.body.task.user.id.toString() === req.payload.id.toString()){       
 
@@ -159,7 +173,6 @@ router.put('/update', auth.required, function(req, res, next) {
             }
 
             if(typeof req.body.task.isActive !== 'undefined'){
-                console.log('isActive block')
                 targetTask.isActive = req.body.task.isActive;
             }
 
@@ -180,8 +193,6 @@ router.put('/update', auth.required, function(req, res, next) {
             //     targetTask.isComplete = req.body.task.isComplete;
             // }                       
             
-            console.log(req.body.task.isActive);
-
             return targetTask.save().then(function(task){
                 return res.json({task: targetTask.toJSONFor(user)});
             }).catch(next)                  
@@ -189,6 +200,22 @@ router.put('/update', auth.required, function(req, res, next) {
 
     
        }
+    });
+});
+
+/* PUT increment order of all tasks on task drop event */
+router.put('/incrementorder', auth.required, function(req, res, next) {  
+    let startOrder = req.body.startOrder;
+    let initialTgtTaskOrder = req.body.initialTgtTaskOrder;
+    User.findById(req.payload.id).then(function(user){
+      if(req.body.tgtTask.user.id.toString() === req.payload.id.toString()){       
+        // Increment task order where order is >= startOrder and task id not equal to the updated task id
+        Task.update( { 'order': { $gte: startOrder }, _id: { $ne: req.body.tgtTask.id} },
+                      { $inc: { 'order': 1 } }, {multi: true})
+          .then(function (tasks) {
+            return res.sendStatus(204);
+          })
+      }
     });
 });
 

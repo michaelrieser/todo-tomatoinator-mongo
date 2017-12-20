@@ -37,40 +37,6 @@ class TasksDisplayCtrl {
 
         this.showAddTaskForm = false;
 
-        // Angular UI Sortable TEST
-        // this.items = ['one', 'two', 'three'];
-        // $scope.items = ['one', 'two', 'three'];
-        // $scope.sortableOptions = {
-        //     start: function (event, ui) {
-        //         console.log('start1');
-        //     },
-        //     stop: function (event, ui) {
-        //         console.log('stop1');
-        //     }
-        // };
-
-        this.items = [
-            {title: 'task 1', order: 1},
-            {title: 'task 2', order: 2},
-            {title: 'task 3', order: 3}
-        ];
-        this.sortableHandlers = {
-            start: function (event, ui) {                                
-                console.log('start dragging...');
-                console.log(event);
-                console.log(ui);
-            },
-            stop: function (event, ui) {
-
-                
-                console.log('...dropped');
-                console.log(ui.item);
-                // console.log(event);
-                // console.log(ui);
-                // console.log(`ui.item.index(): ${ui.item.index()}`);                                
-            }
-        };
-
     }
 }
 
