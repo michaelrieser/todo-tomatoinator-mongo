@@ -201,7 +201,10 @@ export default class Tasks {
     if (stopIdx === 0) {
       let lowestDisplayedTaskOrder = this.tasks.sort((a, b) => { return a.order - b.order })[0].order;
       tgtTask.order = lowestDisplayedTaskOrder;
-      this.updateTgtTaskAndExecuteCallback(tgtTask, this.incrementOrderOfNonTgtTasks(tgtTask, lowestDisplayedTaskOrder))
+      this.update(tgtTask).then(
+        (success) => this.incrementOrderOfNonTgtTasks(tgtTask, lowestDisplayedTaskOrder),
+        (err) => console.log(err)
+      )
     // else set to prior task's order +1
     } else {
       let priorTaskOrderPlusOne = this.tasks[stopIdx - 1].order + 1;
@@ -212,29 +215,25 @@ export default class Tasks {
         if (tgtOrderExists) {
           // add 1 to each object after (excluding newly updated task)
           tgtTask.order = priorTaskOrderPlusOne;
-          this.updateTgtTaskAndExecuteCallback(tgtTask, this.incrementOrderOfNonTgtTasks(tgtTask, priorTaskOrderPlusOne))
+          this.update(tgtTask).then(
+            (success) => incrementOrderOfNonTgtTasks(tgtTask, priorTaskOrderPlusOne),
+            (err) => console.log(err)
+          )
         // else order of task prior +1 does not exist - update task order
         } else {
           tgtTask.order = priorTaskOrderPlusOne;
-          this.updateTgtTaskAndExecuteCallback(tgtTask, this.refreshTasks());
+          this.update(tgtTask); 
         };
       });
     }
   }
 
-  updateTgtTaskAndExecuteCallback(tgtTask, callback) {
-    this.update(tgtTask).then(
-      (success) => callback,
-      (err) => console.log(err)
-    )
-  }
-
-  incrementOrderOfNonTgtTasks(tgtTask, startOrder, initialTgtTaskOrder) {
+  incrementOrderOfNonTgtTasks(tgtTask, startOrder) {
     let request = {
       url: `${this._AppConstants.api}/tasks/incrementorder`,
       method: 'PUT',
       data: { tgtTask: tgtTask, startOrder: startOrder }
     }
-    return this._$http(request).then((res) => this.refreshTasks());
+    return this._$http(request).then((res) => { return this.refreshTasks() });
   }
 }
