@@ -6,6 +6,11 @@ class AddTaskFormCtrl {
         this._Projects = Projects;
         this._$state = $state; 
         this._$scope = $scope;
+
+        this.priorityOptions = [{value: 1, label: 'A'},
+                                {value: 2, label: 'B'},
+                                {value: 3, label: 'C'},
+                                {value: 4, label: 'D'}];
         
         this.highestOrderNumber = this._Tasks.highestOrderNumber;    
         $scope.$watch(() => {return this._Tasks.highestOrderNumber}, (newValue) => {
@@ -31,7 +36,7 @@ class AddTaskFormCtrl {
             title: '',
             order: null, // Question/TODO: set to this.highestOrderNumber + 1 ?
             project: this._Projects.getDefaultProject(), // NOTE: default to 'miscellaneous' if 'all' projects currently displayed
-            priority: null,
+            priority: this.priorityOptions[0].value,
             timesPaused: 0,
             isActive: false,
             isComplete: false,

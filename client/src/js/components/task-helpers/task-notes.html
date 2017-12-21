@@ -9,7 +9,7 @@
         </div>    
     </div>
 </div>
-<form ng-show="$ctrl.showNoteForm" class="card add-note-form" ng-submit="$ctrl.addNote()">
+<form ng-show="$ctrl.showNoteForm" class="card add-note-form" ng-submit="!tagFieldFocused && $ctrl.addNote()">
     <fieldset ng-disabled="$ctrl.newNoteForm.isSubmitting">        
         <fieldset class="form-group">
             <input class="form-control"
@@ -28,7 +28,9 @@
                 type="text"
                 placeholder="Enter tags"
                 ng-model="$ctrl.tagField"
-                ng-keyup="$event.keyCode == 13 && $ctrl.addTag()" />
+                ng-keyup="$event.keyCode == 13 && $ctrl.addTag()"
+                ng-focus="tagFieldFocused=true"
+                ng-blur="tagFieldFocused=false" />
 
             <div class="tag-list">
                 <span ng-repeat="tag in $ctrl.newNoteForm.tagList"
@@ -39,7 +41,7 @@
             </div>
         </fieldset>
 
-        <button class="btn btn-primary" type="button" ng-click="$ctrl.addNote()">
+        <button class="btn btn-primary" type="submit">
             Add
         </button>
     </fieldset>

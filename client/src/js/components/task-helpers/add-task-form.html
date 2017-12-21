@@ -1,4 +1,4 @@
- <form>
+ <form ng-submit="!tagFieldFocused && $ctrl.submit()">
     <fieldset ng-disabled="$ctrl.isSubmitting">
 
     <fieldset class="form-group">
@@ -17,22 +17,18 @@
     </fieldset>    
 
     <fieldset class="form-group">
-        <select class="form-control"
-                ng-model="$ctrl.task.priority">                    
-            <option value="" disabled selected>Priority</option>
-            <option value="1">A</option>
-            <option value="2">B</option>
-            <option value="3">C</option>
-            <option value="4">D</option>
+        <select class="form-control" ng-model="$ctrl.task.priority" 
+            data-ng-options="opt.value as opt.label for opt in $ctrl.priorityOptions">                    
         </select>
     </fieldset>
 
     <fieldset class="form-group">
         <input class="form-control"
-            type="text"
             placeholder="Enter tags"
             ng-model="$ctrl.tagField"
-            ng-keyup="$event.keyCode == 13 && $ctrl.addTag()" />
+            ng-keyup="$event.keyCode == 13 && $ctrl.addTag()"
+            ng-focus="tagFieldFocused=true"
+            ng-blur="tagFieldFocused=false" />
 
         <div class="tag-list">
             <span ng-repeat="tag in $ctrl.task.tagList"
@@ -47,7 +43,7 @@
         <input type="checkbox">Set Active</input>
     </fieldset>
     <div style="width:95%">
-        <button class="btn btn-lg pull-xs-right btn-primary" type="button" ng-click="$ctrl.submit()">
+        <button class="btn btn-lg pull-xs-right btn-primary" type="submit">
             Add Task
         </button>
     </div>
