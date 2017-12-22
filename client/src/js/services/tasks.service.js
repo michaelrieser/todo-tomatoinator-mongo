@@ -216,7 +216,7 @@ export default class Tasks {
           // add 1 to each object after (excluding newly updated task)
           tgtTask.order = priorTaskOrderPlusOne;
           this.update(tgtTask).then(
-            (success) => incrementOrderOfNonTgtTasks(tgtTask, priorTaskOrderPlusOne),
+            (success) => this.incrementOrderOfNonTgtTasks(tgtTask, priorTaskOrderPlusOne),
             (err) => console.log(err)
           )
         // else order of task prior +1 does not exist - update task order
