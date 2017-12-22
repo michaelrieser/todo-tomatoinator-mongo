@@ -7,7 +7,7 @@
                 <span>|&nbsp{{ $ctrl.task.order }}</span>
                 <!--<span>|&nbsp{{ $ctrl.task.project.title }}</span>-->
                 <span ng-if="$ctrl.task.isActive">        
-                    <pom-timer></pom-timer>
+                    <pom-timer taskid="$ctrl.task.id"></pom-timer>
                 </span>
             </span>
             <span class="task-controls-outer">

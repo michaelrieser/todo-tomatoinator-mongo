@@ -23,6 +23,14 @@ export default class PomTimer {
         if (Notification.permission !== "granted") Notification.requestPermission();
     }
 
+    resetIfNewTaskId(newTaskId) {
+        if (!this.taskId) {
+            this.taskId = newTaskId;
+        } else {
+            if (this.taskId !== newTaskId) { this.resetTimer(); }
+        }
+    }
+
     startTimer(timerType) {
         var isBreak = timerType.indexOf('Brk') !== -1;
 
@@ -78,8 +86,9 @@ export default class PomTimer {
         this.updateBrowserTitle(this.timeRemaining);
     }
 
-    // TODO/Question: hook this method up to reset button on pom-timer component? Also, have it reset to previously set time?
+    // TODO/Question: have it reset to previously set time?
     resetTimer() {
+        this.taskId = null;
         this.clearTimerInterval();
         this.timeRemaining = 0;
         document.title = `Tasks - ${this._AppConstants.appName}` // TODO: See TODO on updateBrowserTitle()

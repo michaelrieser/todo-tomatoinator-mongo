@@ -6,7 +6,7 @@ class PomTimerCtrl {
         this._PomTimer = PomTimer;
         this.timeRemaining = PomTimer.timeRemaining;
 
-        this._PomTimer.resetTimer(); // Clear residual timer (if any) from previously active task
+        this._PomTimer.resetIfNewTaskId(this.taskid)
 
         $scope.$watch(() => {return this._PomTimer.timeRemaining}, (newValue) => {                
             this.timeRemaining = newValue;
@@ -36,6 +36,7 @@ class PomTimerCtrl {
 
 let PomTimer = {
     bindings: {
+        taskid: '=',
     },
     controller: PomTimerCtrl,
     templateUrl: 'components/pom-timer.html'
