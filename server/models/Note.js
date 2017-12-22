@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var NoteSchema = new mongoose.Schema({
     title: String,
     isTodo: {type: Boolean, default: false},
+    // steps: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Step'} ], // TODO: uncomment once Step model created
     todoComplete: {type: Boolean, default: false},
     tagList: [{type: String}],
     // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}, // Question: since Note references Task and Task references User, do we need to directly reference User from Note (?)

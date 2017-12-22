@@ -111,24 +111,28 @@ router.get('/', auth.optional, function(req, res, next) {
         // *tasksCount*
         Task.count(query).exec(),
         // *allTasks*
-        Task.find({user: userId}).sort({order: -1})
+        Task.find({user: userId}).populate('user').sort({order: -1}) // TODO: instead of populating user (again), just add another method (toJSON) to Task model?
       ]).then(function(results){
         // TODO: for performance, could get all tasks then sort by filters here... comida por pensamiento
 
-        var tasks = results[0];
+        var tasks      = results[0];
         var tasksCount = results[1];    
-
-        var allTasks = results[2];
+        var allTasks   = results[2];
         var allTasksLength = allTasks.length;
+
+        var activeTask = allTasks.find((task) => { return task.isActive; });
+        if (activeTask) { activeTask = activeTask.toJSONFor(user)};
+
         var highestOrderNumber = 0;
         var lowestOrderNumber = 0;
+
         if (allTasksLength > 0) {
           // .slice() makes a copy of the tasks object, in JS .sort() is destructive and this was breaking desired task order w/o .slice()
           // highestOrderNumber = tasks.slice().sort((a,b) => a.order - b.order)[allTasksLength-1].order;       
           lowestOrderNumber = allTasks[allTasksLength - 1].order;
           highestOrderNumber = allTasks[0].order;            
         }      
-
+        
         return res.json({
           tasks: tasks.map(function(task){          
             // task.populate({path: 'notes'}).execPopulate().then((t) => console.log(t));
@@ -137,7 +141,8 @@ router.get('/', auth.optional, function(req, res, next) {
           }),
           tasksCount: tasksCount,
           lowestOrderNumber: lowestOrderNumber,
-          highestOrderNumber: highestOrderNumber
+          highestOrderNumber: highestOrderNumber,
+          activeTask: activeTask
         });
       }).catch(next);
     })
@@ -145,7 +150,7 @@ router.get('/', auth.optional, function(req, res, next) {
 });
 
 /* PUT update task */ 
-router.put('/update', auth.required, function(req, res, next) {      
+router.put('/update', auth.required, function(req, res, next) {     
     User.findById(req.payload.id).then(function(user){
       if(req.body.task.user.id.toString() === req.payload.id.toString()){       
 

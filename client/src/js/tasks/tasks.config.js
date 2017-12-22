@@ -48,15 +48,21 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					controllerAs: '$ctrl',
 					resolve: {
 						tasksInfo: function (Tasks, $state, $q, $stateParams) {							
-							return $q.when(
-								// TODO 001: to keep activeTask timer ticking when project/status set that includes it, perhaps have clearUnmatchedActiveTask return a Boolean true/false and pass to then...
-								Tasks.clearUnmatchedActiveTask($stateParams.project)
-							).then(() => {
-								return Tasks.queryAndSet($stateParams).then(
-									(tasksInfo) => tasksInfo,
-									(err) => $state.go('app.home') // TODO: display error message (?)
-								);
-							})
+							return Tasks.queryAndSet($stateParams).then(
+								(tasksInfo) => tasksInfo,
+								(err) => $state.go('app.home') // TODO: display error message (?)
+							);
+
+							// ** CLEAR activeTask when it doesn't match project being set - initial business ask(those people) **
+							// return $q.when(
+							// 	// TODO 001: to keep activeTask timer ticking when project/status set that includes it, perhaps have clearUnmatchedActiveTask return a Boolean true/false and pass to then...
+							// 	Tasks.clearUnmatchedActiveTask($stateParams.project)
+							// ).then(() => {
+							// 	return Tasks.queryAndSet($stateParams).then(
+							// 		(tasksInfo) => tasksInfo,
+							// 		(err) => $state.go('app.home') // TODO: display error message (?)
+							// 	);
+							// })
 
 						}
 					}

@@ -32,10 +32,7 @@ export default class Tasks {
   }
 
   queryAndSet(stateParams = {}) {
-    var testParams = {};
-
     var queryConfig = {};
-    // NOTE: before queryConfig.filters was set to {} if stateParams === {}, but this resulted in all tasks being displayed when query called with no params, changed to this.currentlySetFilters
     queryConfig.filters = angular.equals(stateParams, {}) ? this.currentlySetFilters : this.getMergedFilters(stateParams);
 
     // Create the $http object for this request
@@ -60,7 +57,7 @@ export default class Tasks {
   }
   setRefreshedTasksInfo(tasksInfo) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
     this.tasksInfo = tasksInfo;
-    this.activeTask = this.getActiveTask(tasksInfo.tasks);
+    this.activeTask = tasksInfo.activeTask;
     this.tasks = this.getInactiveTasks(tasksInfo.tasks);
     this.taskCount = tasksInfo.tasksCount;
     this.lowestOrderNumber = tasksInfo.lowestOrderNumber;
