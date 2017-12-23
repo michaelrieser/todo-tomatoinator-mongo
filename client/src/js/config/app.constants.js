@@ -4,6 +4,9 @@ const AppConstants = {
   // api: 'https://todo-tomatoinator-mrieser100.c9users.io',
   jwtKey: 'jwtToken',
   appName: 'Todo-Tomatoinator',
+  apiKeys: {
+    wordnik: 'a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5' // TODO: replace with your key!
+  }
 };
 
 export default AppConstants;

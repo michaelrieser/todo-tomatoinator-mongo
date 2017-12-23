@@ -39,4 +39,7 @@ componentsModule.component('projects', Projects);
 import Project from './project-helpers/project.component';
 componentsModule.component('project', Project);
 
+import Words from './words-helpers/words.component';
+componentsModule.component('words', Words);
+
 export default componentsModule;

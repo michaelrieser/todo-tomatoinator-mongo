@@ -16,7 +16,14 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 								(projectsInfo) => projectsInfo,
 								(err) => { console.log(err); }
 							)
-						}
+						},
+						// NOTE: wordOfTheDay resolved binding NOT actually passed into sidebar controller - just utilized here to load data on demand
+						wordOfTheDay: function (Wordnik) {
+							return Wordnik.getWordOfTheDay().then(
+								(wordOfTheDay) => wordOfTheDay,
+								(err) => console.log(err)
+							)
+						}						
 					}
 				},
 				// NOTE: sidebar placed in abstract route so it isn't updated each time app.tasks.view state is accessed

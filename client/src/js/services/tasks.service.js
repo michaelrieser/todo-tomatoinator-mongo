@@ -57,6 +57,7 @@ export default class Tasks {
   }
   setRefreshedTasksInfo(tasksInfo) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
     this.tasksInfo = tasksInfo;
+    // if (!this.activeTask) { this.activeTask = tasksInfo.activeTask; } // QUESTION: only set activeTask if it hasn't been set prior?
     this.activeTask = tasksInfo.activeTask;
     this.tasks = this.getInactiveTasks(tasksInfo.tasks);
     this.taskCount = tasksInfo.tasksCount;

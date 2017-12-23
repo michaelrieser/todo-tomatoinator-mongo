@@ -1,0 +1,9 @@
+<div class="sidebar-well word-of-the-day-wrapper">
+    <span class="word-of-the-day">{{ $ctrl.wordOfTheDay }}:</span>
+    <ol type="i">
+        <li ng-repeat="def in $ctrl.wordOfTheDayDefs">
+            {{ def.text }}&nbsp<em>({{ def.partOfSpeech | partOfSpeechAbbrev }})</em>
+        </li>
+    </ol>
+</div>
+<button>Save</button>
