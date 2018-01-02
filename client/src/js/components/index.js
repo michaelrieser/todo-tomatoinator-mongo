@@ -42,4 +42,7 @@ componentsModule.component('project', Project);
 import Words from './words-helpers/words.component';
 componentsModule.component('words', Words);
 
+import Quotes from './quotes-helpers/quotes.component';
+componentsModule.component('quotes', Quotes);
+
 export default componentsModule;

@@ -248,6 +248,20 @@ h6 {
     width: 85%;
     padding: 10px;
 }
+@media (max-width: 480px) {
+    .add-note-form input {
+        font-size: 0.85em;
+    }
+    .add-note-form fieldset {
+        font-size: 0.85em;
+    }
+}
+@media (max-width: 848px) {
+    .add-note-form {
+        display: block;
+        width: 75%;
+    }
+}
 .task-notes-list {
     width: 85%;
     margin: 0px 35px 0px 20px;
@@ -402,11 +416,11 @@ h6 {
     border-radius: 5px;
 }
 /* Word Of The Day */
-.word-of-the-day-wrapper {
+.word-of-the-day-wrapper, .quote-of-the-day-wrapper {
     font-family: "Times New Roman", Times, serif;
     font-size: .90em;
 }
-.word-of-the-day {
+.word-of-the-day, .quote-of-the-day {
     color:  #903ab0;
 }
 @media (max-width: 480px) {
@@ -418,3 +432,9 @@ h6 {
     }
 }
 
+/* Quote Of The Day */
+.quote-of-the-day-wrapper {
+
+}
+.quote-of-the-day {
+}
