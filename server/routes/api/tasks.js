@@ -111,7 +111,10 @@ router.get('/', auth.optional, function(req, res, next) {
         // *tasksCount*
         Task.count(query).exec(),
         // *allTasks*
-        Task.find({user: userId}).populate('user').sort({order: -1}) // TODO: instead of populating user (again), just add another method (toJSON) to Task model?
+        Task.find({user: userId})
+          .populate('user') // TODO: instead of populating user (again), just add another method (toJSON) to Task model?
+          .populate('notes') // TODO: instead of populating notes for all tasks, just populate for activeTask below (if found)
+          .sort({order: -1}) 
       ]).then(function(results){
         // TODO: for performance, could get all tasks then sort by filters here... comida por pensamiento
 
