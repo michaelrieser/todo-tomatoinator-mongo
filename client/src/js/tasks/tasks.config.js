@@ -17,13 +17,20 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 								(err) => { console.log(err); }
 							)
 						},
-						// NOTE: wordOfTheDay resolved binding NOT actually passed into sidebar controller - just utilized here to load data on demand
+						// NOTE: wordOfTheDay & quoteOfTheDay resolved binding NOT actually passed into sidebar controller - just utilized here to load data on demand
 						wordOfTheDay: function (Wordnik) {
 							return Wordnik.getWordOfTheDay().then(
 								(wordOfTheDay) => wordOfTheDay,
 								(err) => console.log(err)
 							)
-						}						
+						},
+						quoteOfTheDay: function (ProgrammingQuotes) {
+							// TODO: find API with quote of the day and implement || store quote on first load of day?
+							return ProgrammingQuotes.getRandomQuote().then(
+								(quoteOfTheDay) => quoteOfTheDay,
+								(err) => console.log(err)
+							)
+						}
 					}
 				},
 				// NOTE: sidebar placed in abstract route so it isn't updated each time app.tasks.view state is accessed

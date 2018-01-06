@@ -1,14 +1,14 @@
 class QuotesCtrl {
-    constructor() {
+    constructor(ProgrammingQuotes) {
         'ngInject';
 
-        this.setQuoteOfTheDayData();
+        this._ProgrammingQuotes = ProgrammingQuotes;
+        this.setRandomQuoteData();
     }
 
-    setQuoteOfTheDayData() {
-        // TODO: find viable Quotes API and implement
-        this.quoteOfTheDay = 'Our greatest fear is not that we are inadequate, our greatest fear is that we are powerful beyond measure. It is our light, not our darkness that most frightens us.'
-        this.quoteOfTheDayAuthor = 'Marianne Williamson';
+    setRandomQuoteData() {
+        this.randomDevQt = this._ProgrammingQuotes.randomQuoteData.quote;
+        this.randomDevQtAuthor = this._ProgrammingQuotes.randomQuoteData.author;
     }
 }
 

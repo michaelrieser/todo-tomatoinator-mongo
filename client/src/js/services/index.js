@@ -25,4 +25,7 @@ servicesModule.service('PomTimer', PomTimerService);
 import WordnikService from './wordnik.service';
 servicesModule.service('Wordnik', WordnikService);
 
+import ProgrammingQuotesService from './programming-quotes.service';
+servicesModule.service('ProgrammingQuotes', ProgrammingQuotesService);
+
 export default servicesModule;

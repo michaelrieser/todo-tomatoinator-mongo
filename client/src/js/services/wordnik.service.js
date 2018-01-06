@@ -4,12 +4,12 @@ export default class Wordnik {
 
         this._$http = $http;
         this._AppConstants = AppConstants;
-        this.wordnikBaseUri = 'http://api.wordnik.com:80/v4/words.json';
+        this.wordnikBaseUri = 'http://api.wordnik.com:80/v4';
     }
 
     getWordOfTheDay() {
         let request = {
-            url: `${this.wordnikBaseUri}/wordOfTheDay`,
+            url: `${this.wordnikBaseUri}/words.json/wordOfTheDay`,
             method: 'GET',
             params: { api_key: this._AppConstants.apiKeys.wordnik }
         };
