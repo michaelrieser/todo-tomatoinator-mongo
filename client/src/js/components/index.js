@@ -30,6 +30,12 @@ componentsModule.component('taskNotes', TaskNotes);
 import TaskNote from './task-helpers/task-note.component';
 componentsModule.component('taskNote', TaskNote);
 
+import TaskChecklist from './checklist-helpers/task-checklist.component';
+componentsModule.component('taskChecklist', TaskChecklist);
+
+import ChecklistStep from './checklist-helpers/checklist-step.component';
+componentsModule.component('checklistStep', ChecklistStep);
+
 import PomTimer from './pom-timer.component';
 componentsModule.component('pomTimer', PomTimer);
 

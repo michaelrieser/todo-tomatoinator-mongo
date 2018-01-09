@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 var NoteSchema = new mongoose.Schema({
     title: String,
     isTodo: {type: Boolean, default: false},
-    // isTodoList: {type: Boolean, default: false}, // TODO: implement
-    // steps: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Step'} ], // TODO: uncomment once Step model created    
+    isChecklist: {type: Boolean, default: false},
+    steps: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Step'} ],
     order: {type: Number, default: 0},
     todoComplete: {type: Boolean, default: false},
     tagList: [{type: String}],
@@ -17,8 +17,8 @@ NoteSchema.methods.toJSON = function() {
         id: this._id,
         title: this.title,
         isTodo: this.isTodo,
-        // isTodoList: this.isTodoList // TODO: implement
-        // steps: this.steps, // TODO: implement
+        isChecklist: this.isChecklist, 
+        steps: this.steps, 
         order: this.order,
         todoComplete: this.todoComplete,
         task: this.task

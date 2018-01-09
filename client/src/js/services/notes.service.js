@@ -9,7 +9,7 @@ export default class Notes {
 
   add(task, note) {
     let request = {
-      url: `${this._AppConstants.api}/tasks/notes`,
+      url: `${this._AppConstants.api}/notes`,
       method: 'POST',
       data: { task: task, note: note }
     };
@@ -18,7 +18,7 @@ export default class Notes {
 
   delete(noteID) {
     let request = {
-      url: `${this._AppConstants.api}/tasks/notes/${noteID}`,
+      url: `${this._AppConstants.api}/notes/${noteID}`,
       method: 'DELETE'
     };  
     return this._$http(request).then((res) => res.data);
@@ -26,7 +26,7 @@ export default class Notes {
 
   query(queryConfig = {}) {
     let request = {
-      url: `${this._AppConstants.api}/tasks/notes`,
+      url: `${this._AppConstants.api}/notes`,
       method: 'GET',
       params: queryConfig.filters ? queryConfig.filters : null
     }
@@ -35,7 +35,7 @@ export default class Notes {
 
   update(note) {
     let request = { 
-      url: `${this._AppConstants.api}/tasks/notes`,
+      url: `${this._AppConstants.api}/notes`,
       method: 'PUT',
       data: { note: note }
     };

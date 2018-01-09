@@ -1,7 +1,8 @@
 <div class="task-notes-list">
     <ul class="ul-task-notes-list" ui-sortable="$ctrl.sortableTaskNoteHandlers" ng-model="$ctrl.task.notes">
         <li class="li-list-wrapper" ng-repeat="note in $ctrl.task.notes" data-order="{{note.order}}">
-            <task-note index="$index" task="$ctrl.task" note="note"></task-note>
+            <task-checklist ng-if="note.isChecklist" index="index" task="$ctrl.task" note="note"></task-checklist>
+            <task-note ng-if="!note.isChecklist" index="$index" task="$ctrl.task" note="note"></task-note>
         </li>
     </ul>
     <div class="add-note-wrapper">
@@ -31,9 +32,13 @@
             </input>
         </fieldset>
 
-        <fieldset class="form-group">
-            <input ng-model="$ctrl.newNoteForm.isTodo" type="checkbox"> TODO</input>
+        <fieldset class="form-group small-text">
+            <input ng-model="$ctrl.newNoteForm.isTodo" type="checkbox" ng-click="$ctrl.handleCbxChange('isTodo')">&nbsp;TODO</input>
+            <input ng-model="$ctrl.newNoteForm.isChecklist" type="checkbox" ng-click="$ctrl.handleCbxChange('isChecklist')">&nbsp;Checklist</input>            
         </fieldset>
+
+        <!--<fieldset class="form-group">-->
+        <!--</fieldset>-->
 
         <fieldset class="form-group">
             <input class="form-control"

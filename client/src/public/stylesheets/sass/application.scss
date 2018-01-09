@@ -29,6 +29,10 @@ h6 {
     height: 0;
 }
 
+.small-text {
+    font-size: 0.75em;
+}
+
 .navbar {
     padding: 0;
 }
@@ -271,7 +275,7 @@ h6 {
     margin: 0px 35px 0px 20px;
     padding: 5px;
     list-style-type: none;
-    div.task-note {
+    div.task-note, div.task-checklist {
         position: relative;
         font-size: .75em;
         border: 1px solid white;
@@ -280,11 +284,20 @@ h6 {
         margin-bottom: 2px;
         background-color: white;
         // border-bottom: 1px;
-    }
+    }    
 }
-.task-note-content-wrapper {
+.task-note-content-wrapper, task-checklist-content-wrapper {
     width: 95%;
 }
+
+.task-checklist-steps-wrapper {
+
+}
+
+.task-checklist {
+    list-style: none;
+}
+
 .add-note-wrapper:hover {
     background-color: white;
     border-radius: 5px;

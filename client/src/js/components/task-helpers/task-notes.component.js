@@ -75,7 +75,7 @@ class TaskNotesCtrl {
 
     incrementOrderOfNonTgtTaskNotes(tgtNote, startOrder) {
         let request = {
-            url: `${this._AppConstants.api}/tasks/notes/incrementorder`,
+            url: `${this._AppConstants.api}/notes/incrementorder`,
             method: 'PUT',
             data: { tgtNote: tgtNote, startOrder: startOrder }
         }
@@ -127,8 +127,16 @@ class TaskNotesCtrl {
             order: null,
             title: '',
             isTodo: false,
+            isChecklist: false,
             tagList: []
         }
+    }
+
+    // toggles between isTodo || isChecklist
+    handleCbxChange(tgtVal) { 
+        let newNoteForm = this.newNoteForm;
+        if (tgtVal === 'isTodo' && newNoteForm.isTodo && newNoteForm.isChecklist) { newNoteForm.isChecklist = false; }
+        else if (tgtVal === 'isChecklist' && newNoteForm.isChecklist && newNoteForm.isTodo) { newNoteForm.isTodo = false; }
     }
 
     addNote() {

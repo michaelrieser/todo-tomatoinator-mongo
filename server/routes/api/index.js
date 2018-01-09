@@ -1,7 +1,8 @@
 var router = require('express').Router();
 router.use('/', require('./users'));
-router.use('/tasks', require('./tasks'));
 router.use('/projects', require('./projects'));
+router.use('/tasks', require('./tasks'));
+router.use('/notes', require('./notes'));
 // router.use('/tags', require('./tags')); // @wip
 
 // ERROR HANDLER middleware - defined with 4 args

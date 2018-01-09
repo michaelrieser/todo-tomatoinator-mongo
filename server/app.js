@@ -40,9 +40,10 @@ if(isProduction){
 }
 
 require('./models/User');
+require('./models/Project');
 require('./models/Task');
 require('./models/Note');
-require('./models/Project');
+require('./models/Step');
 require('./config/passport');
 
 app.use(require('./routes'));
