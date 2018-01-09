@@ -4,23 +4,21 @@ class TaskNoteCtrl {
         this._Notes = Notes;
         this._$scope = $scope;
     }
-
+    
     deleteNote(noteID, index) {
         this._$scope.$emit('deleteNote', {noteID: noteID, index: index});
             // this.isDeleting = true; // TODO: send this to parent ctrl as component will be deleted? -see article-actions.component
         }
 
     toggleTodo(note) {
-        this._Notes.toggleTodo(note).then(
-            (success) => { 
-                this.note.todoComplete = success 
-            }, 
+        this._Notes.update(note).then(
+            (updatedNote) => {},  
             (err) => console.log(err)
         )        
     }    
 }
 
-let Task =  {
+let TaskNote =  {
     bindings: {
         task: '=',
         note: '=',
@@ -30,4 +28,4 @@ let Task =  {
     templateUrl: 'components/task-helpers/task-note.html'
 };
 
-export default Task;
+export default TaskNote;

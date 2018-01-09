@@ -8,6 +8,7 @@ class TaskListCtrl {
         
         // this._Tasks = Tasks; 
         this.sortableTaskHandlers = {
+            // placeholder: 'task-drop-placeholder', // TODO: implement placeholder for drop zone
             start: (event, ui) => {
                 this.startIdx = ui.item.index();
             },

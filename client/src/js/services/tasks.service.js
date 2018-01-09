@@ -52,7 +52,7 @@ export default class Tasks {
   refreshTasks() {
     this.queryAndSet().then(
       (tasksInfo) => this.setRefreshedTasksInfo(tasksInfo),
-      (err) => $state.go('app.home') // TODO: display error message (?)
+      (err) => console.log(err)
     );
   }
   setRefreshedTasksInfo(tasksInfo) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
@@ -197,7 +197,7 @@ export default class Tasks {
 
     // if set to first task in list, ex: 4 -> 1, set to lowest order of currently displayed tasks and increment order of other tasks
     if (stopIdx === 0) {
-      let lowestDisplayedTaskOrder = this.tasks.sort((a, b) => { return a.order - b.order })[0].order;
+      let lowestDisplayedTaskOrder = Math.min.apply(Math, this.tasks.map((t) => { return t.order }));
       tgtTask.order = lowestDisplayedTaskOrder;
       this.update(tgtTask).then(
         (success) => this.incrementOrderOfNonTgtTasks(tgtTask, lowestDisplayedTaskOrder),
@@ -217,10 +217,10 @@ export default class Tasks {
             (success) => this.incrementOrderOfNonTgtTasks(tgtTask, priorTaskOrderPlusOne),
             (err) => console.log(err)
           )
-        // else order of task prior +1 does not exist - update task order
+          // else order of task prior +1 does not exist - update task order
         } else {
           tgtTask.order = priorTaskOrderPlusOne;
-          this.update(tgtTask); 
+          this.update(tgtTask);
         };
       });
     }

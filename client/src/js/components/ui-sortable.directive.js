@@ -10,7 +10,10 @@ function UiSortable($timeout, $log) {
     // the default for jquery-ui sortable is "> *", we need to restrict this to
     // ng-repeat items
     // if the user uses
-    var uiSortableConfig = { items: '> [ng-repeat],> [data-ng-repeat],> [x-ng-repeat]' };
+    var uiSortableConfig = { 
+        items: '> [ng-repeat],> [data-ng-repeat],> [x-ng-repeat]',
+        // tolerance: 'pointer' // SEE: http://api.jqueryui.com/sortable/#option-tolerance
+    };
 
     return {
       // restrict: 'A',

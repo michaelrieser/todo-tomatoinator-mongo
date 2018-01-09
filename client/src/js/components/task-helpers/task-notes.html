@@ -1,5 +1,9 @@
 <div class="task-notes-list">
-    <task-note index="$index" task="$ctrl.task" note="note" ng-repeat="note in $ctrl.task.notes"></task-note>
+    <ul class="ul-task-notes-list" ui-sortable="$ctrl.sortableTaskNoteHandlers" ng-model="$ctrl.task.notes">
+        <li class="li-list-wrapper" ng-repeat="note in $ctrl.task.notes" data-order="{{note.order}}">
+            <task-note index="$index" task="$ctrl.task" note="note"></task-note>
+        </li>
+    </ul>
     <div class="add-note-wrapper">
         <div ng-hide="$ctrl.showNoteForm" class="add-note-icon" ng-click="$ctrl.toggleNoteForm()">
             <i class="ion-plus-round"></i>
@@ -9,6 +13,14 @@
         </div>    
     </div>
 </div>
+
+<!-- ui sortable TEST -->
+<!--<ul ui-sortable ng-model="$ctrl.items">
+  <li ng-repeat="item in $ctrl.items">{{ item }}</li>
+</ul>-->
+<!-- /ui sortable TEST -->
+
+<!-- TODO: extract to add-note-form component -->
 <form ng-show="$ctrl.showNoteForm" class="card add-note-form" ng-submit="!tagFieldFocused && $ctrl.addNote()">
     <fieldset ng-disabled="$ctrl.newNoteForm.isSubmitting">        
         <fieldset class="form-group">
@@ -46,3 +58,4 @@
         </button>
     </fieldset>
 </form>
+<!-- /add-note-form -->

@@ -20,15 +20,24 @@ export default class Notes {
     let request = {
       url: `${this._AppConstants.api}/tasks/notes/${noteID}`,
       method: 'DELETE'
-    };
+    };  
     return this._$http(request).then((res) => res.data);
   }
 
-  toggleTodo(note) {
+  query(queryConfig = {}) {
+    let request = {
+      url: `${this._AppConstants.api}/tasks/notes`,
+      method: 'GET',
+      params: queryConfig.filters ? queryConfig.filters : null
+    }
+    return this._$http(request).then((res) => res.data );
+  }
+
+  update(note) {
     let request = { 
-      url: `${this._AppConstants.api}/tasks/notes/${note.id}`,
+      url: `${this._AppConstants.api}/tasks/notes`,
       method: 'PUT',
-      data: { setNoteTodoTo: note.todoComplete }
+      data: { note: note }
     };
     return this._$http(request).then((res) => res.data.todoComplete);
   }
