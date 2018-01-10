@@ -286,16 +286,64 @@ h6 {
         // border-bottom: 1px;
     }    
 }
-.task-note-content-wrapper, task-checklist-content-wrapper {
-    width: 95%;
+
+.task-checklist {
+    list-style: none;
+}
+
+.task-note-content-wrapper {
+    width: 95%;    
+}
+.task-checklist-content-wrapper {
+    position: relative;
 }
 
 .task-checklist-steps-wrapper {
 
 }
+.checklist-controls-outer {    
+    position: absolute; 
+    display: inline-block;    
+    // background-color: whitesmoke;
+    border-radius: 0px 5px 5px 0px;
+    width: 30px;
+    padding: 3px;
+    height: 100%;   
+    top: 0;
+    right: -3px;
+}
+.checklist-controls-inner {
+    /*width: 100%;*/   
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+    text-align: center;
+}
+.checklist-delete-wrapper:hover {
+    color: red;
+}
+.checklist-step {
+    position: relative;
+    background-color: lightgray;
+    border-radius: 5px;
+    padding: 2px;
+    margin-bottom: 3px;
+    width: 95%;
+}
 
-.task-checklist {
-    list-style: none;
+.add-step-form {
+    padding: 5px;
+}
+.add-step-wrapper:hover {
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+.add-step-icon, .add-step-icon-close {    
+    padding-left: 5px;
+    :hover {
+        border-radius: 5px;
+        background-color: lightgrey;
+    }
 }
 
 .add-note-wrapper:hover {

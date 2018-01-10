@@ -9,6 +9,7 @@ var StepSchema = new mongoose.Schema({
 
 StepSchema.methods.toJSON = function() {
     return {
+        id: this._id,
         title: this.title,
         order: this.order,
         stepComplete: this.stepComplete,

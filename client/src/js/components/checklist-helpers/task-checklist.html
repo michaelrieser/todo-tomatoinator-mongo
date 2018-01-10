@@ -12,22 +12,43 @@
 
         <div class="task-checklist-steps-wrapper">
             <ul class="task-checklist">
-                <li><checklist-step></checklist-step></li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
+                <checklist-step ng-repeat="step in $ctrl.steps" step="step"></checklist-step>
             </ul>
-        </div>  
-    </div>
-    
-    <span class="note-controls-outer">
-        <div class="note-controls-inner">
-            <span class="note-delete-wrapper">
-                <span type="button" class="note-delete" aria-label="delete" ng-click="$ctrl.deleteNote($ctrl.note.id, $ctrl.index)">
-                    <span aria-hidden="true">&times;</span>
-                </span>
-            </span>               
         </div>
-    </span>    
+
+        <div class="add-step-wrapper">
+            <div ng-hide="$ctrl.showStepForm" class="add-step-icon" ng-click="$ctrl.toggleStepForm()">
+                <i class="ion-plus-round"></i>
+            </div>
+            <div ng-show="$ctrl.showStepForm" class="add-step-icon-close" ng-click="$ctrl.toggleStepForm()">
+                <i class="ion-minus-round"></i>
+            </div>    
+        </div>
+
+        <span class="checklist-controls-outer">
+            <div class="checklist-controls-inner">
+                <span class="checklist-delete-wrapper">
+                    <span type="button" class="note-delete" aria-label="delete" ng-click="$ctrl.deleteChecklist($ctrl.note.id, $ctrl.index)">
+                        <span aria-hidden="true">&times;</span>
+                    </span>
+                </span>               
+            </div>
+        </span>   
+    </div>
+
+    <form ng-show="$ctrl.showStepForm" class="card add-step-form" ng-submit="$ctrl.addStep()">
+        <fieldset ng-disabled="$ctrl.newStepForm.isSubmitting">
+            <fieldset class="form-group">
+                <input class="form-control"
+                    type="text"
+                    placeholder="Step title"
+                    ng-model="$ctrl.newStepForm.title">
+                </input>                
+            </fieldset>
+        </fieldset>
+
+        <button class="btn btn-primary btn-sm btn-block" type="submit">
+            Add
+        </button>
+    </form>     
 <div>

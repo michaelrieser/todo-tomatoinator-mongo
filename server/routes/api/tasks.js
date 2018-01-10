@@ -102,7 +102,14 @@ router.get('/', auth.optional, function (req, res, next) {
                 // *queried tasks*
                 Task.find(query)
                     .populate('user')
-                    .populate({ path: 'notes', options: { sort: { order: 'asc' } } })
+                    .populate({ path: 'notes', 
+                                options: { sort: { order: 'asc' } },
+                                populate: {
+                                    path: 'steps',
+                                    model: 'Step',
+                                    options: { sort: {order: 'asc'} }
+                                } 
+                     })
                     .populate('project')
                     // .limit(Number(limit))
                     // .skip(Number(offset))

@@ -1,1 +1,24 @@
-<span>checklist-step.html</span>
+<div class="checklist-step">
+    <div class="checklist-step-content-wrapper">
+        <span>
+            <form class="task-note-todo">
+                <fieldset class="form-group fieldset-single-checkbox">
+                    <input class="note-todo-checkbox" ng-model="$ctrl.step.stepComplete" type="checkbox" ng-click="$ctrl.toggleStepComplete()"></input>
+                </fieldset>
+            </form>
+        </span>
+        
+        <span ng-class="{'greyed-out': $ctrl.note.todoComplete}">{{ $ctrl.step.title }}</span>
+        <span>| {{ $ctrl.step.order }}</span>  
+    </div>
+
+    <span class="note-controls-outer">
+        <div class="note-controls-inner">
+            <span class="note-delete-wrapper">
+                <span type="button" class="note-delete" aria-label="delete" ng-click="$ctrl.deleteStep($ctrl.step.id, $ctrl.index)">
+                    <span aria-hidden="true">&times;</span>
+                </span>
+            </span>               
+        </div>
+    </span>
+</div>

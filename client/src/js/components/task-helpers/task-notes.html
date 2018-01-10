@@ -1,7 +1,7 @@
 <div class="task-notes-list">
     <ul class="ul-task-notes-list" ui-sortable="$ctrl.sortableTaskNoteHandlers" ng-model="$ctrl.task.notes">
         <li class="li-list-wrapper" ng-repeat="note in $ctrl.task.notes" data-order="{{note.order}}">
-            <task-checklist ng-if="note.isChecklist" index="index" task="$ctrl.task" note="note"></task-checklist>
+            <task-checklist ng-if="note.isChecklist" index="$index" task="$ctrl.task" note="note"></task-checklist>
             <task-note ng-if="!note.isChecklist" index="$index" task="$ctrl.task" note="note"></task-note>
         </li>
     </ul>
