@@ -41,7 +41,7 @@ router.get('/', auth.required, function (req, res, next) {
 
     // TODO: could find Note's corresponding Task and check its user against sent token,
     // TODO(con't): BUT, unnecessary since we already have a unique task ID?
-    Note.find(query).sort({ order: 'asc' }).exec().then(function (notes) {                
+    Note.find(query).sort({ order: 'asc' }).populate('steps').exec().then(function (notes) {                
         return res.json({
             notes: notes.map(function (note) {
                 return note.toJSON();
