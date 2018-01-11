@@ -10,6 +10,42 @@ var Step = mongoose.model('Step');
 var Project = mongoose.model('Project');
 var auth = require('../auth');
 
+/* GET step list */
+router.get('/', auth.required, function (req, res, next) {
+    var query = {};
+    var limit = 20;
+    var offset = 0;
+
+    if (typeof req.query.id !== 'undefined') {
+        query._id = req.query.id;
+    }
+
+    if (typeof req.query.title !== 'undefined') {
+        query.title = req.query.title;
+    }
+
+    if (typeof req.query.stepComplete !== 'undefined') {
+        query.stepComplete = req.query.stepComplete === 'true' ? true : false;
+    }
+
+    if (typeof req.query.noteID !== 'undefined') {
+        query.note = req.query.noteID;
+    }
+
+    if (typeof req.query.order !== 'undefined') {
+        query.order = req.query.order;
+    }
+
+    // TODO: could find Step's corresponding Note and check its user against sent token,
+    // TODO(con't): BUT, unnecessary since we already have a unique step ID?
+    Step.find(query).sort({ order: 'asc' }).exec().then(function (steps) {  
+        return res.json({
+            steps: steps.map(function (step) {
+                return step.toJSON();
+            }),
+        });
+    }).catch(next);
+});
 
 /* POST create step on checklist */
 router.post('/', auth.required, function (req, res, next) {
@@ -74,50 +110,22 @@ router.delete('/:stepId', auth.required, function (req, res, next) {
   })  
 })
 
-/* DELETE destroy note on task */
-// router.delete('/:noteId', auth.required, function (req, res, next) {
-//     User.findById(req.note.task.user).then(function (user) {
-//         if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
-//         if (user._id.toString() === req.payload.id.toString()) {
-//             // must explicitly remove reference to note in Task model
-//             //     NOTE: one of the pitfalls of a NoSQL database
-//             Task.findById(req.note.task._id).then(function (task) {
-//                 task.notes.remove(req.note._id)
-//                 task.save()
-//                     .then(Note.find({ _id: req.note._id }).remove().exec())
-//                     .then(function () {
-//                         res.sendStatus(204);
-//                     });
-//             })
-//         } else {
-//             res.sendStatus(403);
-//         }
-//     });
-// });
-
-/* POST create note on task */
-// router.post('/', auth.required, function (req, res, next) {
-//     console.log('note:');
-//     console.log(req.body.note);
-//     User.findById(req.body.task.user.id).then(function (user) {
-//         // if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
-//         if (req.body.task.user.id.toString() === req.payload.id.toString()) {
-//             Task.findById(req.body.task.id).then(function (task) {
-//                 var note = new Note(req.body.note);
-//                 note.task = req.body.task.id;
-//                 // TODO/QUESTION: Set Note's user?        
-
-//                 return note.save().then(function (note) {
-//                     task.notes.push(note);
-
-//                     return task.save().then(function () {
-//                         return res.json({ note: note.toJSON() })
-//                     });
-//                 });
-//             });
-
-//         }
-//     }).catch(next);
-// });
+/* PUT increment order of all note steps on step drop event */
+router.put('/incrementorder', auth.required, function (req, res, next) {
+    let startOrder = req.body.startOrder;
+    Step.findById(req.body.tgtStep.id).populate('note').exec().then(function (targetStep) {
+        // TODO/QUESTION: add user authentication here? UNNECESSARY since they'll have to have a valid noteID?
+        // User.findById(targetStep.task.user).then(function (user) {
+            // if (user.id.toString() === req.payload.id.toString()) {
+                // Increment step order where order is >= startOrder and step id not equal to the updated step id
+                Step.update({ 'order': { $gte: startOrder }, note: targetStep.note._id, _id: { $ne: req.body.tgtStep.id } },
+                    { $inc: { 'order': 1 } }, { multi: true })
+                    .then(function () {
+                        return res.sendStatus(204);
+                    })
+            // }
+        // });
+    })
+});
 
 module.exports = router;

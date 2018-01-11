@@ -24,27 +24,16 @@ export default class Steps {
     return this._$http(request).then((res) => res.data);
   }
 
-//      *** from Notes service: ***
-//   add(task, note) {
-//     let request = {
-//       url: `${this._AppConstants.api}/notes`,
-//       method: 'POST',
-//       data: { task: task, note: note }
-//     };
-//     return this._$http(request).then((res) => res.data.note);
-//   }    
-
-//   query(queryConfig = {}) {
-//     let request = {
-//       url: `${this._AppConstants.api}/notes`,
-//       method: 'GET',
-//       params: queryConfig.filters ? queryConfig.filters : null
-//     }
-//     return this._$http(request).then((res) => res.data );
-//   }
+  query(queryConfig = {}) {
+    let request = {
+      url: `${this._AppConstants.api}/steps`,
+      method: 'GET',
+      params: queryConfig.filters ? queryConfig.filters : null
+    }
+    return this._$http(request).then((res) => res.data );
+  }
 
   update(step) {
-    console.log('Steps#update')
     let request = { 
       url: `${this._AppConstants.api}/steps`,
       method: 'PUT',

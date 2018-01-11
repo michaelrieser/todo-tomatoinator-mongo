@@ -1,9 +1,12 @@
 class TaskChecklistCtrl {
-    constructor(Notes, Steps, $scope) {
+    constructor(AppConstants, Notes, Steps, $http, $scope) {
         'ngInject';
         
+        this._AppConstants = AppConstants;
         this._Notes = Notes;
         this._Steps = Steps;
+
+        this._$http = $http;
         this._$scope = $scope;
 
         this.showStepForm = false;
@@ -17,10 +20,9 @@ class TaskChecklistCtrl {
             start: (event, ui) => {
                 this.startIdx = ui.item.index();
             },
-            stop: (event, ui) => {
+            stop: (event, ui) => {                
                 this.stopIdx = ui.item.index();
-                // TODO: perform action to update steps
-                    // -EX: this.updateTaskNotesOrderOnDrop(this.startIdx, this.stopIdx);
+                this.updateStepOrderOnDrop(this.startIdx, this.stopIdx);
             }
         }
 
@@ -31,7 +33,6 @@ class TaskChecklistCtrl {
         this.highestStepOrderNumber = this.note.steps.length > 0
             ? Math.max.apply(Math, this.note.steps.map((s) => { return s.order }))
             : 0;
-        console.log(this.highestStepOrderNumber);
     }
 
     toggleStepForm() {
@@ -85,6 +86,65 @@ class TaskChecklistCtrl {
             },
             (err) => console.log(err)
         )
+    }
+
+    updateStepOrderOnDrop(startIdx, stopIdx) {
+        if (startIdx === stopIdx) { return; }
+        let tgtStep = this.steps[stopIdx];
+        let initialTgtStepOrder = tgtStep.order;
+
+        // if set to first step in list, ex: 4 -> 1, set to lowest step order and increment other steps' order
+        if (stopIdx === 0) {
+            let lowestStepOrder = Math.min.apply(Math, this.steps.map((s) => { return s.order }));
+            tgtStep.order = lowestStepOrder;
+            this._Steps.update(tgtStep).then(
+                (success) => this.incrementOrderOfNonTgtSteps(tgtStep, lowestStepOrder),
+                (err) => console.log(err)
+            )
+        // else set to prior steps's order +1
+        } else {
+            let priorStepOrderPlusOne = this.steps[stopIdx - 1].order + 1;
+            let query = {
+                filters: {
+                    order: priorStepOrderPlusOne,
+                    noteID: this.note.id
+                }
+            };
+            this._Steps.query(query).then((res) => {
+                let tgtOrderExists = res.steps.length === 1;
+                // if order of note prior +1 exists
+                if (tgtOrderExists) {
+                    // add 1 to each object after (excluding newly updated note)
+                    tgtStep.order = priorStepOrderPlusOne;
+                    this._Steps.update(tgtStep).then(
+                        (success) => this.incrementOrderOfNonTgtSteps(tgtStep, priorStepOrderPlusOne),
+                        (err) => console.log(err)
+                    )
+                // else order of note prior +1 does not exist - update note order
+                } else { 
+                    tgtStep.order = priorStepOrderPlusOne;
+                    this._Steps.update(tgtStep);
+                };
+            })
+        }        
+    }
+
+    incrementOrderOfNonTgtSteps(tgtStep, startOrder) {
+        let request = {
+            url: `${this._AppConstants.api}/steps/incrementorder`,
+            method: 'PUT',
+            data: { tgtStep: tgtStep, startOrder: startOrder }
+        }
+        return this._$http(request).then((res) => { return this.refreshStepsForChecklist() });
+        // return this._$http(request).then((res) => this.updateFrontendOrderOfNonTgtTaskNotes(tgtNote, startOrder))
+    }    
+
+    refreshStepsForChecklist() {
+        let queryConfig = { filters: { noteID: this.note.id }} // TODO test stepComplete & update route accordingly
+        this._Steps.query(queryConfig).then(
+            (refreshedSteps) => this.steps = refreshedSteps.steps,
+            (err) => console.log(err)
+        )    
     }
 }
 

@@ -28,7 +28,7 @@ router.get('/', auth.required, function (req, res, next) {
     }
 
     if (typeof req.query.id !== 'undefined') {
-        query.id = req.query.id;
+        query._id = req.query.id;
     }
 
     if (typeof req.query.taskID !== 'undefined') {
@@ -41,7 +41,7 @@ router.get('/', auth.required, function (req, res, next) {
 
     // TODO: could find Note's corresponding Task and check its user against sent token,
     // TODO(con't): BUT, unnecessary since we already have a unique task ID?
-    Note.find(query).sort({ order: 'asc' }).populate('steps').exec().then(function (notes) {                
+    Note.find(query).sort({ order: 'asc' }).populate('steps').exec().then(function (notes) {     
         return res.json({
             notes: notes.map(function (note) {
                 return note.toJSON();
@@ -142,7 +142,7 @@ router.put('/incrementorder', auth.required, function (req, res, next) {
     Note.findById(req.body.tgtNote.id).populate('task').exec().then(function (targetNote) {
         User.findById(targetNote.task.user).then(function (user) {
             if (user.id.toString() === req.payload.id.toString()) {
-                // TODO: Increment note order where order is >= startOrder and note id not equal to the updated note id
+                // Increment note order where order is >= startOrder and note id not equal to the updated note id
                 Note.update({ 'order': { $gte: startOrder }, task: targetNote.task._id, _id: { $ne: req.body.tgtNote.id } },
                     { $inc: { 'order': 1 } }, { multi: true })
                     .then(function () {

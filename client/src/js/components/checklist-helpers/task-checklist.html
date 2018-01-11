@@ -1,7 +1,7 @@
 <div class="task-checklist">
     <div class="task-checklist-content-wrapper">
         <span>
-            <form class="task-note-todo" ng-submit="$ctrl.addNote()">
+            <form class="task-note-todo">
                 <fieldset class="form-group fieldset-single-checkbox">
                     <input class="note-todo-checkbox" ng-model="$ctrl.note.todoComplete" type="checkbox" ng-click="$ctrl.toggleTodo($ctrl.note)"></input>
                 </fieldset>
@@ -11,8 +11,10 @@
         <span>&nbsp;|{{ $ctrl.note.order }}</span>   
 
         <div class="task-checklist-steps-wrapper">
-            <ul class="task-checklist">
-                <checklist-step ng-repeat="step in $ctrl.steps" step="step"></checklist-step>
+            <ul class="task-checklist" ui-sortable="$ctrl.sortableStepHandlers" ng-model="$ctrl.steps">
+                <li ng-repeat="step in $ctrl.steps">
+                    <checklist-step step="step" index="$index"></checklist-step>
+                </li>                
             </ul>
         </div>
 
