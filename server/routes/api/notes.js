@@ -6,6 +6,7 @@ var async = require('async')
 var User = mongoose.model('User');
 var Task = mongoose.model('Task');
 var Note = mongoose.model('Note');
+var Step = mongoose.model('Step');
 var Project = mongoose.model('Project');
 var auth = require('../auth');
 
@@ -92,16 +93,21 @@ router.delete('/:noteId', auth.required, function (req, res, next) {
     User.findById(req.note.task.user).then(function (user) {
         if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
         if (user._id.toString() === req.payload.id.toString()) {
-            // must explicitly remove reference to note in Task model
-            //     NOTE: one of the pitfalls of a NoSQL database
-            Task.findById(req.note.task._id).then(function (task) {
-                task.notes.remove(req.note._id)
-                task.save()
-                    .then(Note.find({ _id: req.note._id }).remove().exec())
-                    .then(function () {
-                        res.sendStatus(204);
-                    });
-            })
+            // If note is a checklist, delete associated steps
+            return Promise.all([
+                req.note.isChecklist ? Step.find({"note": req.note._id}).remove() : null
+            ]).then(function () {
+                // must explicitly remove reference to note in Task model
+                //     NOTE: one of the pitfalls of a NoSQL database
+                Task.findById(req.note.task._id).then(function (task) {
+                    task.notes.remove(req.note._id)
+                    task.save()
+                        .then(Note.find({ _id: req.note._id }).remove().exec())
+                        .then(function () {
+                            res.sendStatus(204);
+                        });
+                })
+            })            
         } else {
             res.sendStatus(403);
         }

@@ -97,14 +97,10 @@ router.param('stepId', function(req, res, next, id) {
 router.delete('/:stepId', auth.required, function (req, res, next) {    
     // TODO/QUESTION: add user authentication here? UNNECESSARY since they'll have to have a valid noteID?
   Note.findById(req.step.note).then(function (note) {
-      console.log('note A')
-      console.log(note)
       note.steps.remove(req.step._id);
       note.save()
         .then(Step.find({ _id: req.step._id }).remove().exec())
         .then(function () {
-            console.log('note B')
-            console.log(note)
             res.sendStatus(204);
         });
   })  
