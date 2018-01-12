@@ -6,6 +6,7 @@ var async = require('async')
 var User = mongoose.model('User');
 var Task = mongoose.model('Task');
 var Note = mongoose.model('Note');
+var Step = mongoose.model('Step');
 var Project = mongoose.model('Project');
 
 var auth = require('../auth');
@@ -54,12 +55,16 @@ router.get('/', auth.optional, function (req, res, next) {
 router.param('projectId', function (req, res, next, id) {
   Project.findById(id)
     .populate('user')
-    .populate('tasks') 
+    .populate('tasks')
     // .populate({ // TODO: *NOT WORKING* need to upgrade MongoDB from 3.4.7 to >= 4.5 for nested populates. SEE: https://stackoverflow.com/questions/19222520/populate-nested-array-in-mongoose
     //   path: 'tasks',
     //   populate: {
     //     path: 'notes',
-    //     model: 'Note'
+    //     model: 'Note',
+    //     populate: {
+    //       path: 'steps',
+    //       model: 'Step'
+    //     }
     //   }
     // }) 
     .then(function (project) {
@@ -78,16 +83,22 @@ router.delete('/:projectId', auth.required, function (req, res, next) {
     if (req.project.user.id.toString() === req.payload.id.toString()) {
 
       // Aggregate list of task ids
-      var projectTaskIds = req.project.tasks.map((t) => {return t._id});      
-      // Delete notes from each task id => EXAMPLE: <Collection>.remove({_id: {$in: wronglist}}, function(){...}); // and so on
-      Note.find({"task": {$in: projectTaskIds} }).remove().exec().then(function() {
-        // Delete tasks        
-        Task.find({_id: {$in: projectTaskIds}}).remove().exec().then(function() {
-          Project.find({_id: req.project._id}).remove().exec().then(function() {
-            return res.sendStatus(204);
+      var projectTaskIds = req.project.tasks.map((t) => { return t._id });
+
+      Note.find({ "task": { $in: projectTaskIds } }, { _id: 1 }).then(function (notes) {
+        let noteIds = notes.map((n) => { return n._id });
+        Step.find({ "note": { $in: noteIds } }).remove().exec().then(function () {
+          // Delete notes from each task id => EXAMPLE: <Collection>.remove({_id: {$in: wronglist}}, function(){...}); // and so on
+          Note.find({ _id: { $in: noteIds } }).remove().exec().then(function (notes) {
+            // Delete tasks        
+            Task.find({ _id: { $in: projectTaskIds } }).remove().exec().then(function () {
+              Project.find({ _id: req.project._id }).remove().exec().then(function () {
+                return res.sendStatus(204);
+              })
+            })
           })
         })
-      });
+      })
     } else {
       return res.sendStats(403);
     }

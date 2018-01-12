@@ -6,6 +6,7 @@ var async = require('async')
 var User = mongoose.model('User');
 var Task = mongoose.model('Task');
 var Note = mongoose.model('Note');
+var Step = mongoose.model('Step');
 var Project = mongoose.model('Project');
 var auth = require('../auth');
 // var Tag = mongoose.model('Tag'); // @wip
@@ -238,8 +239,8 @@ router.put('/incrementorder', auth.required, function (req, res, next) {
 router.param('taskId', function (req, res, next, id) {
     Task.findById(id)
         .populate('user')
-        // .populate('project')
-        // .populate('notes')
+        .populate('project')
+        .populate('notes')
         .then(function (task) {
             if (!task) { return res.sendStatus(404); }
             req.task = task;
@@ -251,16 +252,27 @@ router.param('taskId', function (req, res, next, id) {
 router.delete('/:taskId', auth.required, function (req, res, next) {
     User.findById(req.task.id).then(function (user) {
         if (req.task.user.id.toString() === req.payload.id.toString()) {
-            // must explicitly remove reference to Task in Project model
-            //      NOTE: one of the pitfalls of a NoSQL database                
-            Project.findById(req.task.project).then(function (project) {
-                project.tasks.remove(req.task._id)
-                project.save()
-                    .then(Task.find({ _id: req.task._id }).remove().exec())
-                    .then(function () {
-                        return res.sendStatus(204);
-                    })
-            });
+            let noteIds = req.task.notes.map((n) => {return n._id});
+
+            Step.find({"note": {$in: noteIds} }).remove().exec().then(function(){  
+                let noteObjIds = noteIds.map((nid) => { return mongoose.Types.ObjectId(nid) }); 
+                                 
+                Note.find({_id: {$in: noteObjIds} }).remove().exec().then(function() {
+                    Project.findById(req.task.project).then(function (project) {
+                        project.tasks.remove(req.task._id)
+                        project.save()
+                            .then(function () {                        
+                                Promise.all([
+                                    Task.find({ _id: req.task._id }).remove(),
+                                ])                        
+                            })
+                            .then(function () {
+                                return res.sendStatus(204);
+                            })
+                    });                    
+                })
+            })
+
         } else {
             return res.sendStatus(403);
         }
