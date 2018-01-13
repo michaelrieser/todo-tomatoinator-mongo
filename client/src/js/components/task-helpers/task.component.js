@@ -1,11 +1,18 @@
 class TaskCtrl {
-    constructor(Tasks, PomTimer, $scope, $state) {
+    constructor(Tasks, PomTimer, Projects, $scope, $state) {
         'ngInject';
 
         this._Tasks = Tasks;   
         this._PomTimer = PomTimer;
+        this._Projects = Projects;
         this._$state = $state;              
         this._$scope = $scope;
+
+        this.editing = false;
+        this.updatingTask = false;
+
+        // console.log(`this.task.project.title: ${this.task.project.title}`)
+
         /* Question - not sure if this is necessary, can we just use two-way binding with fields Ex: this.task etc.. */        
         // this.formData = {
         //     id: this.task.id,
@@ -25,14 +32,33 @@ class TaskCtrl {
         // }
     }
 
+    handleEditToggle() {
+        this.editing = !this.editing;
+        if (!this.editing) { // Done making edits
+            this.updateTask();
+        }
+    }
+
+    updateTask() {
+        this._Tasks.update(this.task).then(
+            (updatedTask) => {return updatedTask},
+            (err) => console.log(err)
+        )
+    }
+
+    // blurElement($event) {
+    //     let target = $event.target;
+    //     document.activeElement.blur(); // $event.target will be form, so we need activeElement from document
+    // }
+
+    // handleEnter() {
+    //     console.log('updateTaskOnEnter()')
+    //     this.updateTask().then((newTask) => { this.editing = false });
+    // }
+
     toggleTaskNotes() {
         this.task.showNotes = !this.task.showNotes;
         this._Tasks.update(this.task);                
-                                
-        // this._Tasks.update(this.task).then(
-        //     (success) => { this.task.showNotes = !this.task.showNotes; },
-        //     (err) => console.log(err)
-        // );        
     }
 
     deleteTask() {

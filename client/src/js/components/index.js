@@ -2,15 +2,19 @@ import angular from 'angular';
 
 let componentsModule = angular.module('app.components', []);
 
-// Components and Directives
-import ListErrors from './list-errors.component';
-componentsModule.component('listErrors', ListErrors);
-
+// Directives
 import ShowAuthed from './show-authed.directive';
 componentsModule.directive('showAuthed', ShowAuthed);
 
 import UiSortable from './ui-sortable.directive';
 componentsModule.directive('uiSortable', UiSortable);
+
+import ShowFocus from './show-focus.directive';
+componentsModule.directive('showFocus', ShowFocus);
+
+// Components
+import ListErrors from './list-errors.component';
+componentsModule.component('listErrors', ListErrors);
 
 import TaskNavbar from './task-helpers/task-navbar.component';
 componentsModule.component('taskNavbar', TaskNavbar);

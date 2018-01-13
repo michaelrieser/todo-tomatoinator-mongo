@@ -2,14 +2,36 @@
 <li class="li-list-wrapper" data-order="{{$ctrl.task.order}}">
     <span class="task-outer-wrapper" ng-dblclick="$ctrl.toggleTaskNotes(task)">
         <div class="task-inner-wrapper">
-            <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
-                <span class="task-title">{{$ctrl.task.title}}</span>
-                <span>|&nbsp{{ $ctrl.task.order }}</span>
-                <!--<span>|&nbsp{{ $ctrl.task.project.title }}</span>-->
-                <span ng-if="$ctrl.task.isActive">        
-                    <pom-timer taskid="$ctrl.task.id"></pom-timer>
+            <!--<div style="display:inline-block;">-->
+                <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
+                    <span ng-hide="$ctrl.editing" ng-click="$ctrl.handleEditToggle()" class="task-title">{{$ctrl.task.title}}</span>
+                    <span ng-if="$ctrl.editing" class="edit-task-form">
+                        <!--<form class="edit-task-form" ng-submit="$ctrl.blurElement($event)">-->
+                            <!-- NOTE: only way to submit form is for title input to have focus, so onsubmit works here -->
+                            <form class="edit-task-form" onsubmit="document.activeElement.blur()">
+                            <fieldset ng-disabled="$ctrl.updatingTask">
+                                <input class="form-control form-control-sm"
+                                    ng-blur="$ctrl.handleEditToggle()"
+                                    ng-model="$ctrl.task.title"
+                                    type="text"
+                                    show-focus="$ctrl.editing" 
+                                    required/>
+                            </fieldset>
+
+                            <!--<fieldset class="form-group">
+                                <select class="form-control"
+                                        data-ng-model="$ctrl.task.project.title"
+                                        data-ng-options="project.title for project in $ctrl._Projects.projects">
+                                </select>
+                            </fieldset>-->
+                        </form>
+                    </span>
                 </span>
+            <!--</div>-->
+            <span ng-if="$ctrl.task.isActive">        
+                <pom-timer taskid="$ctrl.task.id"></pom-timer>
             </span>
+
             <span class="task-controls-outer">
                 <div class="task-controls-inner">
                     <span class="task-toggle-task-complete-wrapper">
