@@ -33,10 +33,17 @@
         </fieldset>
 
         <fieldset class="form-group small-text">
-            <input ng-model="$ctrl.newNoteForm.isTodo" type="checkbox" ng-click="$ctrl.handleCbxChange('isTodo')">&nbsp;TODO</input>
-            <input ng-model="$ctrl.newNoteForm.isChecklist" type="checkbox" ng-click="$ctrl.handleCbxChange('isChecklist')">&nbsp;Checklist</input>            
+            <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary" ng-class="{'active' : $ctrl.newNoteForm.isTodo}">
+                        <input type="checkbox" ng-model="$ctrl.newNoteForm.isTodo" autocomplete="off"
+                            ng-click="$ctrl.handleCbxChange('isTodo')">&nbsp;TODO</input>
+                    </label>
+                    <label class="btn btn-primary" ng-class="{'active' : $ctrl.newNoteForm.isChecklist}">
+                        <input type="checkbox" ng-model="$ctrl.newNoteForm.isChecklist" autocomplete="off" 
+                            ng-click="$ctrl.handleCbxChange('isChecklist')">&nbsp;Checklist</input>            
+                    </label>
+            </div>
         </fieldset>
-
         <!--<fieldset class="form-group">-->
         <!--</fieldset>-->
 

@@ -133,7 +133,7 @@ class TaskNotesCtrl {
     }
 
     // toggles between isTodo || isChecklist
-    handleCbxChange(tgtVal) { 
+    handleCbxChange(tgtVal) {
         let newNoteForm = this.newNoteForm;
         if (tgtVal === 'isTodo' && newNoteForm.isTodo && newNoteForm.isChecklist) { newNoteForm.isChecklist = false; }
         else if (tgtVal === 'isChecklist' && newNoteForm.isChecklist && newNoteForm.isTodo) { newNoteForm.isTodo = false; }
