@@ -170,7 +170,7 @@ h6 {
     // border-bottom: .5px solid seagreen;
     height: 100%;   
     top: 0;
-    right: 0;
+    right: 5px;
     // :hover {
     //     color: red;        
     // }
@@ -337,6 +337,39 @@ h6 {
 .checklist-delete-wrapper:hover {
     color: red;
 }
+
+.checklist-progress-wrapper {
+    height: 11px;
+    width: 93%;
+    padding: 0 0 3px 10px;
+    margin: 3px 0 3px 0;
+    // position: relative;
+}
+.checklist-progress-percentage {
+    line-height: 10px;
+    position: absolute;
+    text-align: center;
+    width: 4%;
+}
+.checklist-progress-bar {
+    height: 11px;
+    left: 0;
+    clear: both;
+    margin: 0 0 0 32px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 2px;    
+}
+.checklist-progress-linear {
+    height: 11px;
+}
+.md-mode-determinate {
+    height: 11px !important; // Defaults to 5px
+}
+.md-bar {
+    height: 11px !important; // Defaults to 5px
+}
+
 .checklist-step {
     position: relative;
     background-color: lightgray;

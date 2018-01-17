@@ -9,15 +9,18 @@ class ChecklistStepCtrl {
     
     deleteStep(stepID, index) {
         this._$scope.$emit('deleteStep', {stepID: stepID, index: index});
+        this._$scope.$emit('updateRawStepCompletionPercentage');
             // this.isDeleting = true; // TODO: send this to parent ctrl as component will be deleted? -see article-actions.component
         }
 
     toggleStepComplete() {
         this._Steps.update(this.step).then(
-            (updatedStep) => {},
+            (updatedStep) => {
+                this._$scope.$emit('updateRawStepCompletionPercentage');
+            },
             (err) => console.log(err)
         )   
-    }    
+    }
 }
 
 let ChecklistStep =  {

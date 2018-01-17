@@ -13,6 +13,7 @@ class TaskChecklistCtrl {
         this.resetStepForm();
 
         this.steps = this.note.steps
+        this.updateRawStepCompletionPercentage();
 
         this.setHighestStepOrderNumber(); 
 
@@ -27,12 +28,28 @@ class TaskChecklistCtrl {
         }
 
         $scope.$on('deleteStep', (evt, data) => this.deleteStep(data));
+        $scope.$on('updateRawStepCompletionPercentage', (evt, data) => this.updateRawStepCompletionPercentage());
     }
     
     setHighestStepOrderNumber() {        
         this.highestStepOrderNumber = this.note.steps.length > 0
             ? Math.max.apply(Math, this.note.steps.map((s) => { return s.order }))
             : 0;
+    }
+
+    getStepsCompleted() {
+        return this.steps.filter( (s) => { if (s.stepComplete) { return s} }).length; 
+    }
+    getStepsTotal() {
+        return this.steps.length;
+    }
+    getRawStepCompletionPercentage() {
+        return this.stepsCompleted === 0 ? 0 : (this.stepsCompleted / this.stepsTotal) * 100;
+    }
+    updateRawStepCompletionPercentage() {        
+        this.stepsCompleted = this.getStepsCompleted();
+        this.stepsTotal = this.getStepsTotal();
+        this.rawCompletionPercentage = this.getRawStepCompletionPercentage();
     }
 
     toggleStepForm() {
@@ -56,7 +73,8 @@ class TaskChecklistCtrl {
             (newStep) => {                
                 this.highestStepOrderNumber = newStep.order;                
                 this.steps.push(newStep); 
-                this.resetStepForm();                
+                this.resetStepForm();
+                this.updateRawStepCompletionPercentage();                
             },
             (err) => {
                 this.newStepForm.isSubmitting = false;
@@ -83,6 +101,7 @@ class TaskChecklistCtrl {
             (success) => {
                 this.steps.splice(data.index, 1);
                 this.setHighestStepOrderNumber();
+                this.updateRawStepCompletionPercentage();
             },
             (err) => console.log(err)
         )

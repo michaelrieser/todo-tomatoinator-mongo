@@ -19,10 +19,10 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 						},
 						// NOTE: wordOfTheDay & quoteOfTheDay resolved binding NOT actually passed into sidebar controller - just utilized here to load data on demand
 						wordOfTheDay: function (Wordnik) {
-							return Wordnik.getWordOfTheDay().then(
-								(wordOfTheDay) => wordOfTheDay,
-								(err) => console.log(err)
-							)
+							// return Wordnik.getWordOfTheDay().then(
+							// 	(wordOfTheDay) => wordOfTheDay,
+							// 	(err) => console.log(err)
+							// )
 						},
 						quoteOfTheDay: function (ProgrammingQuotes) {
 							// TODO: find API with quote of the day and implement || store quote on first load of day?
