@@ -48,6 +48,8 @@ h6 {
     }
 }
 
+.inline { display: inline; }
+
 .tasks-wrapper {
     width: 65%; 
     margin-right: 5%;
@@ -81,7 +83,8 @@ h6 {
     width: 100%
 }
 .task-inner-wrapper {
-    margin: 10px;
+    // margin: 10px;
+    margin: 10px 65px 10px 10px;
 }
 .task-title {
     font-size: 0.85em;
@@ -91,7 +94,7 @@ h6 {
         font-size: 0.70em;
     }
     .task-inner-wrapper {
-        margin: 5px;
+        margin: 5px 65px 5px 5px;
     }
 }
 .task:hover {
@@ -207,6 +210,13 @@ h6 {
     }
 }
 
+.due-time-label {
+    margin-left: 30px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    color: grey;
+    font-size: 14px;
+}
+
 .task-toggle-task-complete-wrapper:hover {
     color: blue;
 }
@@ -258,8 +268,7 @@ h6 {
 
 /* Notes */
 .add-note-form {
-    margin-left: 24px;
-    width: 85%;
+    margin: 0px 2px 0px 10px;    
     padding: 10px;
 }
 @media (max-width: 480px) {
@@ -270,15 +279,9 @@ h6 {
         font-size: 0.85em;
     }
 }
-@media (max-width: 848px) {
-    .add-note-form {
-        display: block;
-        width: 75%;
-    }
-}
 .task-notes-list {
-    width: 85%;
-    margin: 0px 25px 0px 15px;
+    // width: 85%;
+    margin: 0px 0px 0px 15px;
     padding: 5px;
     list-style-type: none;
     div.task-note, div.task-checklist {
@@ -294,7 +297,7 @@ h6 {
 }
 @media (max-width: 848px) {
     .task-notes-list {
-        margin: 0px 15px 0px 5px;
+        margin: 0px 0px 0px 5px;
     }
 }
 .ul-task-notes-list {
@@ -307,7 +310,8 @@ h6 {
 }
 
 .task-note-content-wrapper {
-    width: 95%;    
+    // width: 95%;    
+    margin-right: 20px;
 }
 .task-checklist-content-wrapper {
     position: relative;
@@ -372,7 +376,8 @@ h6 {
 
 .checklist-step {
     position: relative;
-    background-color: lightgray;
+    background-color: #c7deea;
+    // border: 0.5px solid black;
     border-radius: 5px;
     padding: 2px;
     margin-bottom: 3px;
