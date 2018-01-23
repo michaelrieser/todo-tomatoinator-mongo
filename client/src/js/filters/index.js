@@ -11,4 +11,7 @@ filtersModule.filter('partOfSpeechAbbrev', PartOfSpeechAbbrev);
 import PrettyPercentage from './pretty-percentage.filter';
 filtersModule.filter('prettyPercentage', PrettyPercentage);
 
+import TimeDeltaInWords from './time-delta-in-words.filter';
+filtersModule.filter('timeDeltaInWords', TimeDeltaInWords);
+
 export default filtersModule;

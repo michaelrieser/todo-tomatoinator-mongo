@@ -1,0 +1,10 @@
+    <fieldset class="form-group pos-relative">
+        <!--<div class="input-group date-time-picker date">-->
+        <div class="input-group date-time-picker date">            
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+            <input type="text" class="form-control add-task-date-input" ng-model="$ctrl.task.dueDateTime" data-date-time-picker/>            
+        </div>        
+        <button type="button" class="ion-ios-refresh-outline clear-task-date-btn btn btn-sm" data-pack="ios" ng-click="$ctrl.resetTaskDate()"></button>        
+    </fieldset>

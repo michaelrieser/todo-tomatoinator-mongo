@@ -11,7 +11,7 @@ class AddTaskFormCtrl {
                                 {value: 2, label: 'B'},
                                 {value: 3, label: 'C'},
                                 {value: 4, label: 'D'}];
-        
+
         this.highestOrderNumber = this._Tasks.highestOrderNumber;    
         $scope.$watch(() => {return this._Tasks.highestOrderNumber}, (newValue) => {
             this.highestOrderNumber = newValue;
@@ -41,6 +41,7 @@ class AddTaskFormCtrl {
             isActive: false,
             isComplete: false,
             wasSuccessful: null,
+            dueDateTime: null, // TODO: combine date objects and send to backend
             tagList: []
         }
     }

@@ -12,6 +12,9 @@ componentsModule.directive('uiSortable', UiSortable);
 import ShowFocus from './show-focus.directive';
 componentsModule.directive('showFocus', ShowFocus);
 
+import DateTimePicker from './date-time-picker.directive';
+componentsModule.directive('dateTimePicker', DateTimePicker);
+
 // Components
 import ListErrors from './list-errors.component';
 componentsModule.component('listErrors', ListErrors);
@@ -54,5 +57,8 @@ componentsModule.component('words', Words);
 
 import Quotes from './quotes-helpers/quotes.component';
 componentsModule.component('quotes', Quotes);
+
+import TaskDueDateTimeInput from './task-helpers/task-due-date-time-input.component';
+componentsModule.component('taskDueDateTimeInput', TaskDueDateTimeInput);
 
 export default componentsModule;

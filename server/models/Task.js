@@ -15,7 +15,11 @@ var TaskSchema = new mongoose.Schema({
     // project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
     notes: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Note'} ],
     tagList: [ {type: String} ],
-    showNotes: {type: Boolean, default: false}
+    showNotes: {type: Boolean, default: false},
+    dueDateTime: { type: Date, default: null },
+    dueDateNotified: { type: Boolean, default: false },
+    reminderDateTime: { type: Date, default: null},
+    reminderDateTimeNotified: { type: Boolean, default: false }
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
 TaskSchema.methods.toJSONFor = function(user) {        
@@ -35,7 +39,11 @@ TaskSchema.methods.toJSONFor = function(user) {
         user: this.user.toProfileJSONFor(user), 
         // project: this.project.toJSONFor(user),
         project: this.project.toJSON(),
-        notes: this.notes
+        notes: this.notes,
+        dueDateTime: this.dueDateTime,
+        dueDateTimeNotified: this.dueDateNotified,
+        reminderDateTime: this.reminderDate,
+        reminderDateTimeNotified: this.reminderDateNotified
     };
 };
 
