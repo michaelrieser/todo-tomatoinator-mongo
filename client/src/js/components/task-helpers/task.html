@@ -3,18 +3,19 @@
     <span class="task-outer-wrapper" ng-dblclick="$ctrl.toggleTaskNotes(task)">
         <div class="task-inner-wrapper">
             <!--<div style="display:inline-block;">-->
+            <div>
                 <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
-                    <span ng-hide="$ctrl.editing" ng-click="$ctrl.handleEditToggle()" class="task-title">{{$ctrl.task.title}}</span>
-                    <span ng-if="$ctrl.editing" class="edit-task-form">
+                    <span ng-hide="$ctrl.editingTitle" ng-click="$ctrl.handleEditTitleToggle()" class="task-title">{{$ctrl.task.title}}</span>
+                    <span ng-if="$ctrl.editingTitle" class="edit-task-form">
                         <!--<form class="edit-task-form" ng-submit="$ctrl.blurElement($event)">-->
                             <!-- NOTE: only way to submit form is for title input to have focus, so onsubmit works here -->
                             <form class="edit-task-form" onsubmit="document.activeElement.blur()">
                             <fieldset ng-disabled="$ctrl.updatingTask">
-                                <input class="form-control form-control-sm"
-                                    ng-blur="$ctrl.handleEditToggle()"
+                                <textarea class="edit-task-textarea form-control form-control-sm"
+                                    ng-blur="$ctrl.handleEditTitleToggle()"
                                     ng-model="$ctrl.task.title"
                                     type="text"
-                                    show-focus="$ctrl.editing" 
+                                    show-focus="$ctrl.editingTitle" 
                                     required/>
                             </fieldset>
 
@@ -27,10 +28,20 @@
                         </form>
                     </span>
                 </span>
-            <!--</div>-->
-            <span ng-if="$ctrl.task.isActive">        
-                <pom-timer taskid="$ctrl.task.id"></pom-timer>
-            </span>
+                <span ng-if="$ctrl.task.isActive">
+                    <pom-timer taskid="$ctrl.task.id"></pom-timer>
+                </span>
+            </div>
+            <div class="task-due-date-time-wrapper" ng-class="{'small-bottom-margin' : $ctrl.task.showNotes}">
+                <span ng-if="$ctrl.task.dueDateTime && !$ctrl.editingDueDateTime" ng-click="$ctrl.handleEditDueDateTimeToggle()" 
+                    class="task-due-date-time">Due {{ $ctrl.task.dueDateTime | timeDeltaInWords }}
+                    <md-tooltip md-direction="right">{{ $ctrl.task.dueDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
+                </span>
+                <span ng-if="$ctrl.editingDueDateTime">
+                    <task-due-date-time-input task="$ctrl.task" editmode="true"></task-due-date-time-input>
+                </span>
+            </div>
+
 
             <span class="task-controls-outer">
                 <div class="task-controls-inner">
@@ -59,7 +70,16 @@
                             <span class="ion-clipboard" data-pack="default" data-tags="write"></span>
                         </span>
                     </span>
-                                
+                    <span class="task-edit-due-date-time-toggle-wrapper">
+                        <span type="button" ng-click="$ctrl.handleEditDueDateTimeToggle()"
+                            <span class="ion-ios-clock" data-pack="ios" data-tags="wake, ring">
+                        </span>
+                    </span>
+                    <span class="task-edit-reminder-date-toggle-wrapper">
+                        <span type="button" ng-click="$ctrl.handleEditReminderDateToggle()"
+                            <span class="ion-ios-alarm" data-pack="ios" data-tags="wake, ring">
+                        </span>
+                    </span>
                 </div>
             </span>
             <!--<pre>{{ console.log($ctrl.task.notes) }}</pre>-->

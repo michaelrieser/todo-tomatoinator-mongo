@@ -191,6 +191,10 @@ router.put('/update', auth.required, function (req, res, next) {
                 //     targetTask.timesPaused = req.body.task.timesPaused;
                 // }
 
+                if (typeof req.body.task.dueDateTime !== 'undefined') {
+                    targetTask.dueDateTime = req.body.task.dueDateTime;
+                }
+
                 if (typeof req.body.task.timesPaused !== 'undefined') {
                     targetTask.timesPaused = req.body.task.timesPaused;
                 }

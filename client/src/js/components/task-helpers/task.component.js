@@ -8,34 +8,24 @@ class TaskCtrl {
         this._$state = $state;              
         this._$scope = $scope;
 
-        this.editing = false;
-        this.updatingTask = false;
+        this.editingTitle = false;
+        this.editingDueDateTime = false;
+        this.updatingTask = false;        
 
-        // console.log(`this.task.project.title: ${this.task.project.title}`)
-
-        /* Question - not sure if this is necessary, can we just use two-way binding with fields Ex: this.task etc.. */        
-        // this.formData = {
-        //     id: this.task.id,
-        //     title: this.task.title,
-        //     order: this.task.order,
-        //     priority: this.task.priority,
-        //     timesPaused: this.task.timesPaused,
-        //     isActive: this.task.isActive,
-        //     isComplete: this.task.isComplete,
-        //     wasSuccessful: this.task.wasSuccessful,
-        //     createdAt: this.task.createdAt,
-        //     updatedAt: this.task.updatedAt,
-        //     tagList: this.task.tagList,
-        //     showNotes: this.task.showNotes,
-        //     // notes: this.task.notes,
-        //     user: this.task.user
-        // }
+        $scope.$on('updateTaskOnCalendarBlur', (evt, data) => this.handleEditDueDateTimeToggle());
     }
 
-    handleEditToggle() {
-        this.editing = !this.editing;
-        if (!this.editing) { // Done making edits
+    handleEditTitleToggle() {        
+        this.editingTitle = !this.editingTitle;
+        if (!this.editingTitle) { // Done making edits
             this.updateTask();
+        }
+    }
+
+    handleEditDueDateTimeToggle() {
+        this.editingDueDateTime = !this.editingDueDateTime;
+        if (!this.editingDueDateTime) { // Done making edits 
+            this.updateTask();    
         }
     }
 
@@ -45,16 +35,6 @@ class TaskCtrl {
             (err) => console.log(err)
         )
     }
-
-    // blurElement($event) {
-    //     let target = $event.target;
-    //     document.activeElement.blur(); // $event.target will be form, so we need activeElement from document
-    // }
-
-    // handleEnter() {
-    //     console.log('updateTaskOnEnter()')
-    //     this.updateTask().then((newTask) => { this.editing = false });
-    // }
 
     toggleTaskNotes() {
         this.task.showNotes = !this.task.showNotes;
