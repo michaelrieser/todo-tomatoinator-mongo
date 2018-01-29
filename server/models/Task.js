@@ -17,7 +17,7 @@ var TaskSchema = new mongoose.Schema({
     tagList: [ {type: String} ],
     showNotes: {type: Boolean, default: false},
     dueDateTime: { type: Date, default: null },
-    dueDateNotified: { type: Boolean, default: false },
+    dueDateTimeNotified: { type: Boolean, default: false },
     reminderDateTime: { type: Date, default: null},
     reminderDateTimeNotified: { type: Boolean, default: false }
 }, {timestamps: true}); // adds createdAt and updatedAt fields
@@ -46,5 +46,25 @@ TaskSchema.methods.toJSONFor = function(user) {
         reminderDateTimeNotified: this.reminderDateNotified
     };
 };
+
+// QUESTION: just return task notification objects with toJSONFor(), so they can be updated as a whole?
+//           **ACTUALLY, since we don't look at undefined fields in update route, could just send what we want to update
+TaskSchema.methods.toDueDateTimeNotification = function() {
+    return {
+        id: this.id,
+        title: this.title,
+        dueDateTime: this.dueDateTime,
+        dueDateTimeNotified: this.dueDateTimeNotified
+    }
+}
+
+TaskSchema.methods.toReminderDateTimeNotification = function() {
+    return {
+        id: this.id,
+        title: this.title,
+        reminderDateTime: this.reminderDateTime,
+        reminderDateTimeNotified: this.reminderDateTimeNotified
+    }
+}
 
 mongoose.model('Task', TaskSchema);

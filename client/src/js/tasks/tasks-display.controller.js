@@ -1,5 +1,5 @@
 class TasksDisplayCtrl {
-    constructor(tasksInfo, Projects, Tasks, $scope, $stateParams) {
+    constructor(tasksInfo, taskNotificationInfo, Projects, Tasks, $scope, $stateParams) {
         'ngInject';
         
         this._Tasks = Tasks;

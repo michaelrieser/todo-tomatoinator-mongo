@@ -64,7 +64,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 						tasksInfo: function (Tasks, $state, $q, $stateParams) {							
 							return Tasks.queryAndSet($stateParams).then(
 								(tasksInfo) => tasksInfo,
-								(err) => $state.go('app.home') // TODO: display error message (?)
+								(err) => console.log(err)
 							);
 
 							// ** CLEAR activeTask when it doesn't match project being set - initial business ask(those people) **
@@ -78,6 +78,12 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 							// 	);
 							// })
 
+						},
+						taskNotificationInfo: function (TaskNotifications) {
+							return TaskNotifications.query().then(
+								(taskNotificationInfo) => taskNotificationInfo,
+								(err) => console.log(err)
+							)
 						}
 					}
 				},

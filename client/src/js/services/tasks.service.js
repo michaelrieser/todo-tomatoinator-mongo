@@ -233,5 +233,5 @@ export default class Tasks {
       data: { tgtTask: tgtTask, startOrder: startOrder }
     }
     return this._$http(request).then((res) => { return this.refreshTasks() });
-  }
+  }  
 }

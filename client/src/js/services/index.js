@@ -31,4 +31,7 @@ servicesModule.service('Wordnik', WordnikService);
 import ProgrammingQuotesService from './programming-quotes.service';
 servicesModule.service('ProgrammingQuotes', ProgrammingQuotesService);
 
+import TaskNotificationsService from './task-notifications.service';
+servicesModule.service('TaskNotifications', TaskNotificationsService);
+
 export default servicesModule;

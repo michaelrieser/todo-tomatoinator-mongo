@@ -5,7 +5,7 @@ function dateTimePicker() {
         restrict: "A",
         require: "ngModel",
         link: function (scope, element, attrs, ngModelCtrl) {
-            // NOTE: Valid Moment Date instantiation (with format): moment('2018-02-09T05:00:00.000Z', 'YYYY/MM/DD, h:mm a').isValid()
+            // NOTE: Valid Moment Date instantiation (with format): moment('2018-02-09T05:00:00.000Z', 'YYYY/MM/DD, h:mm a')
             //       Instantiating Moment Date with format 'MMMM Do YYYY, h:mm a' is not valid
             var parent = $(element).parent();            
             var dtp = parent.datetimepicker({
