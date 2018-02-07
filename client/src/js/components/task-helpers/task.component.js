@@ -1,10 +1,11 @@
 class TaskCtrl {
-    constructor(Tasks, PomTimer, Projects, $scope, $state) {
+    constructor(Tasks, PomTimer, Projects, TimeUtils, $scope, $state) {
         'ngInject';
 
         this._Tasks = Tasks;   
         this._PomTimer = PomTimer;
         this._Projects = Projects;
+        this._TimeUtils = TimeUtils;
         this._$state = $state;              
         this._$scope = $scope;
 
@@ -13,6 +14,10 @@ class TaskCtrl {
         this.updatingTask = false;        
 
         $scope.$on('updateTaskOnCalendarBlur', (evt, data) => this.handleEditDueDateTimeToggle());
+    }
+
+    colorBasedOnTimeRemaining() {
+        return this._TimeUtils.colorBasedOnTimeRemaining(this.task.dueDateTime)
     }
 
     handleEditTitleToggle() {        

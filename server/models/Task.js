@@ -53,8 +53,10 @@ TaskSchema.methods.toDueDateTimeNotification = function() {
     return {
         id: this.id,
         title: this.title,
-        dueDateTime: this.dueDateTime,
-        dueDateTimeNotified: this.dueDateTimeNotified
+        targetDateTime: this.dueDateTime,
+        notified: this.dueDateTimeNotified
+        // dueDateTime: this.dueDateTime,
+        // dueDateTimeNotified: this.dueDateTimeNotified
     }
 }
 
@@ -62,8 +64,10 @@ TaskSchema.methods.toReminderDateTimeNotification = function() {
     return {
         id: this.id,
         title: this.title,
-        reminderDateTime: this.reminderDateTime,
-        reminderDateTimeNotified: this.reminderDateTimeNotified
+        targetDateTime: this.reminderDateTime,
+        notified: this.reminderDateTimeNotified
+        // reminderDateTime: this.reminderDateTime,
+        // reminderDateTimeNotified: this.reminderDateTimeNotified
     }
 }
 

@@ -34,7 +34,7 @@
             </div>
             <div class="task-due-date-time-wrapper" ng-class="{'small-bottom-margin' : $ctrl.task.showNotes}">
                 <span ng-if="$ctrl.task.dueDateTime && !$ctrl.editingDueDateTime" ng-click="$ctrl.handleEditDueDateTimeToggle()" 
-                    class="task-due-date-time">Due {{ $ctrl.task.dueDateTime | timeDeltaInWords }}
+                    ng-class="$ctrl.colorBasedOnTimeRemaining()" class="task-due-date-time">Due {{ $ctrl.task.dueDateTime | timeDeltaInWords }}
                     <md-tooltip md-direction="right">{{ $ctrl.task.dueDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
                 </span>
                 <span ng-if="$ctrl.editingDueDateTime">
@@ -71,12 +71,12 @@
                         </span>
                     </span>
                     <span class="task-edit-due-date-time-toggle-wrapper">
-                        <span type="button" ng-click="$ctrl.handleEditDueDateTimeToggle()"
+                        <span type="button" ng-click="$ctrl.handleEditDueDateTimeToggle()">
                             <span class="ion-ios-clock" data-pack="ios" data-tags="wake, ring">
                         </span>
                     </span>
                     <span class="task-edit-reminder-date-toggle-wrapper">
-                        <span type="button" ng-click="$ctrl.handleEditReminderDateToggle()"
+                        <span type="button" ng-click="$ctrl.handleEditReminderDateToggle()">
                             <span class="ion-ios-alarm" data-pack="ios" data-tags="wake, ring">
                         </span>
                     </span>

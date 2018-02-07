@@ -10,6 +10,25 @@
     width: percentage(7/7); // Use this to ensure SASS compiled correctly
 }
 
+.red {
+    color: red;
+}
+.red-orange {
+    color: #f46e42;
+}
+.orange {
+    color: orange;
+}
+.yellow-orange {
+    color: #ffce27;
+}
+.green {
+    color: green;
+}
+.black {
+    color: black;
+}
+
 ol {
     padding-left: 20px;
 }
@@ -631,10 +650,105 @@ h6 {
 .quote-of-the-day {
 }
 
-/* Bootstrap Overwrites */
+/* Bootstrap Overrides */
 .glyphicon-calendar {
     right: 7px !important;
 }
 .input-group-addon {
     height: 34px;
+}
+
+/* mdToast + Notifications */
+.md-bottom {
+    // width: 400px !important;
+}
+.md-toast-content {
+    max-width: 500px !important;
+    position: fixed;
+    bottom: 10%;
+    left: 25px;
+    height: fit-content !important;
+    max-height: none !important;
+    // max-height: 500px !important; // TODO: decrease this for smaller screens?
+    border-radius: 10px;
+    padding: 2px !important;
+}
+@media (max-width: 480px) {
+    .md-toast-content {
+        left: 0px;
+        margin: 0px 10px 0px 10px;
+    }
+}
+.toast-wrapper {
+    width: 100%;
+}
+.due-date-time-notifications-wrapper {
+    width: 100%;
+    background-color: orange;
+    padding: 0px 5px 0px 5px;
+    // padding: 5px 5px 5px 5px;
+    
+}
+.reminder-date-time-notifications-wrapper {
+    width: 100%;
+    background-color: skyblue;
+    padding: 0px 5px 0px 5px;
+    // padding: 5px 5px 5px 5px;
+
+}
+.notification {    
+    display: block;
+    position: relative;
+}
+@media (min-width: 480px) {
+    .notification {
+        font-size: 1.05rem;
+    }
+}
+.notification:not(:last-child) {
+    border-bottom: 1px solid black;
+}
+
+.notification-content-wrapper {
+    margin-right: 65px;
+}
+@media (max-width: 480px) {
+    .notification-content-wrapper {
+        margin-right: 45px;   
+    }
+}
+.notification-title-wrapper {
+    // line-height: 0.5;
+    // line-height: 1.0;
+    margin-bottom: -10px; /* Yep, this is gross, but didn't feel like fiddling with the line-height. TODO++ */
+    // padding-top: 5px;
+}
+.notification-title {
+    line-height: 1;
+    display: inline-block;
+}
+.notification-title:first-child {
+    margin-top: 5px;
+}
+.notification-controls-outer {
+    // font-size: 0.90rem;
+    height: 100%;
+    position: absolute;
+    display: inline-block;
+    // border-radius: 0px 5px 5px 0px;
+    width: 50px;
+    // padding: 3px;
+    top: 0;
+    right: 0;
+}
+@media (max-width: 480px) {
+    .notification-controls-outer {
+        width: 40px;
+    }
+}
+.notification-controls-inner {
+    position: relative;
+    top: 27%;
+    transform: translateY(-50%); 
+    // text-align: center;
 }

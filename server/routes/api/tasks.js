@@ -295,48 +295,45 @@ router.delete('/:taskId', auth.required, function (req, res, next) {
 
 /* GET notifications for the coming day(by default, may also specify date range) */
 router.get('/notifications', auth.required, function (req, res, next) {
-    console.log('GET /notifications')
     let userId = req.payload.id;
     
     let now = moment();
     let oneMonthAgo = moment().subtract(1, 'month').toDate(); // subtract month to glean past due notifications
-    let tomorrow = moment().add(1, 'days').toDate();
-    // console.log(`oneMonthAgo: ${oneMonthAgo.format('MMMM Do YYYY, h:mm a')}`)
-    // console.log(`tomorrow: ${tomorrow.format('MMMM Do YYYY, h:mm a')}`)
+    // let tomorrow = moment().add(1, 'days').toDate();
+    // let oneMinuteFromNow = moment().add(1, 'minute').toDate();
+    let oneMinuteFromNow = moment().add(20, 'minute').toDate();    
+    // console.log(`oneMinuteFromNow: ${moment().add(1, 'minute').format('MMMM Do YYYY, h:mm a')}`);
 
     // TODO: potentially combine the following queries via the mongoose $or operator. SEE: https://stackoverflow.com/questions/7382207/mongooses-find-method-with-or-condition-does-not-work-properly?noredirect=1&lq=1
     Promise.all([
-        Task.find({'user': userId, isComplete: false, dueDateTime: {$gte: oneMonthAgo, $lt: tomorrow}, dueDateTimeNotified: false}),
-        Task.find({'user': userId, isComplete: false, reminderDateTime: {$gte: oneMonthAgo, $lt: tomorrow}, reminderDateTimeNotified: false})
+        Task.find({'user': userId, isComplete: false, dueDateTime: {$gte: oneMonthAgo, $lte: oneMinuteFromNow}, dueDateTimeNotified: false}),
+        Task.find({'user': userId, isComplete: false, reminderDateTime: {$gte: oneMonthAgo, $lte: oneMinuteFromNow}, reminderDateTimeNotified: false})
     ]).then( function(results) {
         let tgtDueDateTimeTasks = results[0];
         let tgtReminderDateTimeTasks = results[1];
 
-        let outstandingDueDateTimeTasks = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isAfter(now)) { 
+        let outstandingDueDateTimeNotifications = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isAfter(now)) { 
             filtered.push(t.toDueDateTimeNotification()); }; return filtered; }, []);
-        let pastDueDateTimeTasks = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isBefore(now)) {
+        let pastDueDateTimeNotifications = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isBefore(now)) {
             filtered.push(t.toDueDateTimeNotification()); }; return filtered }, []);        
-        // console.log('after')
-        // console.log('outstanding tasks:')
-        // console.log(outstandingDateTimeTasks)
-        // console.log('past due tasks:')
-        // console.log(pastDueDateTimeTasks)
 
-        let outstandingReminderDateTimeTasks = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isAfter(now)) { 
+        let outstandingReminderDateTimeNotifications = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isAfter(now)) { 
             filtered.push(t.toReminderDateTimeNotification()); }; return filtered; }, []);
-
-        let pastDueReminderDateTimeTasks = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isBefore(now)) {
+        let pastDueReminderDateTimeNotifications = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isBefore(now)) {
             filtered.push(t.toReminderDateTimeNotification()); }; return filtered; }, []); 
         
+        console.log('results:')
+        console.log(results);
+
         return res.json({
             notifications: {
-                dateTimeTasks: {
-                    outstandingDateTimeTasks: outstandingDueDateTimeTasks,
-                    pastDueDateTimeTasks: pastDueDateTimeTasks
+                dueDateTimeNotifications: {
+                    outstanding: outstandingDueDateTimeNotifications,
+                    pastDue: pastDueDateTimeNotifications
                 },
-                reminderDateTimeTasks: {
-                    outstandingReminderDateTimeTasks: outstandingReminderDateTimeTasks,
-                    pastDueReminderDateTimeTasks: pastDueReminderDateTimeTasks
+                reminderDateTimeNotifications: {
+                    outstanding: outstandingReminderDateTimeNotifications,
+                    pastDue: pastDueReminderDateTimeNotifications
                 }
             }
         })

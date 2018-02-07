@@ -21,6 +21,7 @@ import './auth';
 import './settings';
 import './sidebar';
 import './tasks';
+import './toast';
 import './vendor/javascripts/howler.min.js';
 // import './sortable/src/sortable.js';
 
@@ -39,7 +40,8 @@ const requires = [
   'app.auth',
   'app.settings',
   'app.sidebar',
-  'app.tasks'
+  'app.tasks',
+  'app.toast'
 ];
 
 // Mount on window for testing

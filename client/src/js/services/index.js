@@ -34,4 +34,7 @@ servicesModule.service('ProgrammingQuotes', ProgrammingQuotesService);
 import TaskNotificationsService from './task-notifications.service';
 servicesModule.service('TaskNotifications', TaskNotificationsService);
 
+import TimeUtilsService from './time-utils.service';
+servicesModule.service('TimeUtils', TimeUtilsService);
+
 export default servicesModule;

@@ -6,7 +6,11 @@ const AppConstants = {
   appName: 'Todo-Tomatoinator',
   apiKeys: {
     wordnik: 'a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5' // TODO: replace with your key!
-  }
+  },
+  oneHourInMilliseconds: 36000000,
+  twelveHoursInMilliseconds: 43200000,
+  dayInMilliseconds: 86400000,
+  businessWeekInMilliseconds: 432000000
 };
 
 export default AppConstants;

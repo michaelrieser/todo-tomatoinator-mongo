@@ -1,7 +1,7 @@
 function timeDeltaInWords() {
     'ngInject';
 
-    return (dateTime) => {        
+    return (dateTime) => {
         return moment(dateTime).fromNow();
     }
 }

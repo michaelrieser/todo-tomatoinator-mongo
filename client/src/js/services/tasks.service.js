@@ -1,5 +1,5 @@
 export default class Tasks {
-  constructor(AppConstants, PomTimer, $http, $q) {
+    constructor(AppConstants, PomTimer, $http, $q) {
     'ngInject';
 
     this._AppConstants = AppConstants;
@@ -60,6 +60,7 @@ export default class Tasks {
     // if (!this.activeTask) { this.activeTask = tasksInfo.activeTask; } // QUESTION: only set activeTask if it hasn't been set prior?
     this.activeTask = tasksInfo.activeTask;
     this.tasks = this.getInactiveTasks(tasksInfo.tasks);
+    // TODO: use angular.copy(this.getInactiveTasks(tasksInfo.tasks), this.tasks), then potentially move from MVVM => MVC in view
     this.taskCount = tasksInfo.tasksCount;
     this.lowestOrderNumber = tasksInfo.lowestOrderNumber;
     this.highestOrderNumber = tasksInfo.highestOrderNumber;

@@ -4,28 +4,17 @@ export default class TaskNotifications {
 
     this._AppConstants = AppConstants;
     this._$http = $http;
-    this._$interval = $interval;        
+    this._$interval = $interval;            
 
+    this.initializeInterval();
   }
 
-
-
-//   add(task, note) {
-//     let request = {
-//       url: `${this._AppConstants.api}/notes`,
-//       method: 'POST',
-//       data: { task: task, note: note }
-//     };
-//     return this._$http(request).then((res) => res.data.note);
-//   }    
-
-//   delete(noteID) {
-//     let request = {
-//       url: `${this._AppConstants.api}/notes/${noteID}`,
-//       method: 'DELETE'
-//     };  
-//     return this._$http(request).then((res) => res.data);
-//   }
+  initializeInterval() {
+    this.timerInterval = this._$interval(() => {      
+      console.log('Notifications queried')
+      this.query();
+    }, 15000);
+  }
 
   query(queryConfig = {}) {
     let request = {
@@ -36,18 +25,24 @@ export default class TaskNotifications {
     }
     return this._$http(request).then((res) => this.handleQueryResponse(res.data) );
   }
-  handleQueryResponse(res) {
-    console.log(res);
-    this.taskNotificationInfo = res.notifications;
-    return this.taskNotificationInfo;
+  handleQueryResponse(refreshedTaskNotificationInfo) {
+    if (!this.notifications) { this.notifications = {}; };
+    // NOTE: angular.copy(<src>, <dest>) clears <dest> object and replaces its contents with <src> => thus alleviating need to set $watch on ctrl
+    angular.copy(refreshedTaskNotificationInfo.notifications, this.notifications);
+    return refreshedTaskNotificationInfo;
   }
 
-//   update(note) {
-//     let request = { 
-//       url: `${this._AppConstants.api}/notes`,
-//       method: 'PUT',
-//       data: { note: note }
-//     };
-//     return this._$http(request).then((res) => res.data.todoComplete);
-//   }
+  // reminderColorFromTimeRemaining(reminder) {
+  //   return this.colorFromTimeRemaining(reminder.reminderDateTime);    
+  // }
+  // dueDateColorFromTimeRemaining(dueDate) {
+  //   return this.colorFromTimeRemaining(dueDate.dueDateTime);
+  // }
+
+  // isReminderPastDue(reminder) {
+  //   return moment(reminder.reminderDateTime).isBefore(moment())
+  // }
+  // isDueDatePastDue(dueDate) {
+  //   return moment(dueDate.dueDateTime).isBefore(moment());
+  // }
 }

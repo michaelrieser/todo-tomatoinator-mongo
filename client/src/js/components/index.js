@@ -61,4 +61,10 @@ componentsModule.component('quotes', Quotes);
 import TaskDueDateTimeInput from './task-helpers/task-due-date-time-input.component';
 componentsModule.component('taskDueDateTimeInput', TaskDueDateTimeInput);
 
+import DueNotification from './notification-helpers/due-notification.component';
+componentsModule.component('dueNotification', DueNotification);
+
+import ReminderNotification from './notification-helpers/reminder-notification.component';
+componentsModule.component('reminderNotification', ReminderNotification);
+
 export default componentsModule;
