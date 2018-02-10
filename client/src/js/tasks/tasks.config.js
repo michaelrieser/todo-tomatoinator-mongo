@@ -61,7 +61,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					controller: 'TasksDisplayCtrl',
 					controllerAs: '$ctrl',
 					resolve: {
-						tasksInfo: function (Tasks, $state, $q, $stateParams) {							
+						tasksInfo: function (Tasks, $state, $q, $stateParams) {	
 							return Tasks.queryAndSet($stateParams).then(
 								(tasksInfo) => tasksInfo,
 								(err) => console.log(err)

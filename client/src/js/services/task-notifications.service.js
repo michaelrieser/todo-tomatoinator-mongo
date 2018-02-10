@@ -13,7 +13,7 @@ export default class TaskNotifications {
     this.timerInterval = this._$interval(() => {      
       console.log('Notifications queried')
       this.query();
-    }, 15000);
+    }, 60000);    
   }
 
   query(queryConfig = {}) {

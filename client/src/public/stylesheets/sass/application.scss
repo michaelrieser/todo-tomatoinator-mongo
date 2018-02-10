@@ -339,12 +339,12 @@ h6 {
 .task-display-notes-wrapper:hover {
     color: rebeccapurple;
 }
-.task-edit-due-date-time-toggle-wrapper:hover {
-    color: white;
-}
-.task-edit-reminder-date-toggle-wrapper:hover {
-    color: darkorange;
-}
+// .task-edit-due-date-time-toggle-wrapper:hover {
+//     color: white;
+// }
+// .task-edit-reminder-date-toggle-wrapper:hover {
+//     color: darkorange;
+// }
 .ion-ios-bolt:hover {
     color: yellow;
 }
@@ -663,6 +663,7 @@ h6 {
     // width: 400px !important;
 }
 .md-toast-content {
+    min-width: 320px !important;
     max-width: 500px !important;
     position: fixed;
     bottom: 10%;
@@ -751,4 +752,21 @@ h6 {
     top: 27%;
     transform: translateY(-50%); 
     // text-align: center;
+}
+
+.ion-ios-alarm:hover {
+    cursor: pointer;
+    color: yellow;
+}
+.ion-ios-clock:hover {
+    cursor: pointer;
+    color: mediumpurple;
+}
+.ion-ios-cloudy-night:hover {
+    cursor: pointer;    
+    color: black;
+}
+.ion-android-close:hover {
+    cursor: pointer;
+    color: red;
 }

@@ -1,0 +1,20 @@
+<md-toast>
+    <!--<span class="md-toast-text" flex>Custom toast!</span>-->
+    <!--<md-button class="md-highlight" ng-click="$ctrl.openMoreInfo($event)">
+      More info
+    </md-button>
+    <md-button ng-click="$ctrl.closeToast()">
+      Close
+    </md-button>-->    
+    <!-- TODO: commenting for daily use, uncomment for dev -->
+    <div class="toast-wrapper">
+      <div class="due-date-time-notifications-wrapper">
+        <due-notification ng-repeat="notification in $ctrl.dueDateTimeNotifications | orderBy: 'targetDateTime'" 
+          class="notification" notification="notification"></due-notification>
+      </div>
+      <div class="reminder-date-time-notifications-wrapper">
+        <reminder-notification ng-repeat="notification in $ctrl.reminderDateTimeNotifications | orderBy: 'targetDateTime'" 
+          class="notification" notification="notification"></reminder-notification>
+      </div>
+    </div>          
+</md-toast>

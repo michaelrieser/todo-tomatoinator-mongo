@@ -54,7 +54,8 @@ TaskSchema.methods.toDueDateTimeNotification = function() {
         id: this.id,
         title: this.title,
         targetDateTime: this.dueDateTime,
-        notified: this.dueDateTimeNotified
+        notified: this.dueDateTimeNotified,
+        user: this.user
         // dueDateTime: this.dueDateTime,
         // dueDateTimeNotified: this.dueDateTimeNotified
     }
@@ -65,7 +66,8 @@ TaskSchema.methods.toReminderDateTimeNotification = function() {
         id: this.id,
         title: this.title,
         targetDateTime: this.reminderDateTime,
-        notified: this.reminderDateTimeNotified
+        notified: this.reminderDateTimeNotified,
+        user: this.user
         // reminderDateTime: this.reminderDateTime,
         // reminderDateTimeNotified: this.reminderDateTimeNotified
     }

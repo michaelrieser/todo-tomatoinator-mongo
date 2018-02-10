@@ -196,6 +196,18 @@ router.put('/update', auth.required, function (req, res, next) {
                     targetTask.dueDateTime = req.body.task.dueDateTime;
                 }
 
+                if (typeof req.body.task.dueDateTimeNotified !== 'undefined') {
+                    targetTask.dueDateTimeNotified = req.body.task.dueDateTimeNotified;
+                }
+
+                if (typeof req.body.task.reminderDateTime !== 'undefined') {
+                    targetTask.reminderDateTime = req.body.task.reminderDateTime;
+                }
+
+                if (typeof req.body.task.reminderDateTimeNotified !== 'undefined') {
+                    targetTask.reminderDateTimeNotified = req.body.task.reminderDateTimeNotified;
+                }                                
+
                 if (typeof req.body.task.timesPaused !== 'undefined') {
                     targetTask.timesPaused = req.body.task.timesPaused;
                 }
@@ -221,7 +233,7 @@ router.put('/update', auth.required, function (req, res, next) {
                 //     targetTask.isComplete = req.body.task.isComplete;
                 // }                       
 
-                return targetTask.save().then(function (task) {
+                return targetTask.save().then(function () {
                     return res.json({ task: targetTask.toJSONFor(user) });
                 }).catch(next)
             });
@@ -302,7 +314,6 @@ router.get('/notifications', auth.required, function (req, res, next) {
     // let tomorrow = moment().add(1, 'days').toDate();
     // let oneMinuteFromNow = moment().add(1, 'minute').toDate();
     let oneMinuteFromNow = moment().add(20, 'minute').toDate();    
-    // console.log(`oneMinuteFromNow: ${moment().add(1, 'minute').format('MMMM Do YYYY, h:mm a')}`);
 
     // TODO: potentially combine the following queries via the mongoose $or operator. SEE: https://stackoverflow.com/questions/7382207/mongooses-find-method-with-or-condition-does-not-work-properly?noredirect=1&lq=1
     Promise.all([
@@ -312,29 +323,28 @@ router.get('/notifications', auth.required, function (req, res, next) {
         let tgtDueDateTimeTasks = results[0];
         let tgtReminderDateTimeTasks = results[1];
 
-        let outstandingDueDateTimeNotifications = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isAfter(now)) { 
-            filtered.push(t.toDueDateTimeNotification()); }; return filtered; }, []);
-        let pastDueDateTimeNotifications = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isBefore(now)) {
-            filtered.push(t.toDueDateTimeNotification()); }; return filtered }, []);        
+        // let outstandingDueDateTimeNotifications = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isAfter(now)) { 
+        //     filtered.push(t.toDueDateTimeNotification()); }; return filtered; }, []);
+        // let pastDueDateTimeNotifications = tgtDueDateTimeTasks.reduce( (filtered, t) => { if (moment(t.dueDateTime).isBefore(now)) {
+        //     filtered.push(t.toDueDateTimeNotification()); }; return filtered }, []);        
 
-        let outstandingReminderDateTimeNotifications = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isAfter(now)) { 
-            filtered.push(t.toReminderDateTimeNotification()); }; return filtered; }, []);
-        let pastDueReminderDateTimeNotifications = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isBefore(now)) {
-            filtered.push(t.toReminderDateTimeNotification()); }; return filtered; }, []); 
+        // let outstandingReminderDateTimeNotifications = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isAfter(now)) { 
+        //     filtered.push(t.toReminderDateTimeNotification()); }; return filtered; }, []);
+        // let pastDueReminderDateTimeNotifications = tgtReminderDateTimeTasks.reduce( (filtered, t) => { if (moment(t.reminderDateTime).isBefore(now)) {
+        //     filtered.push(t.toReminderDateTimeNotification()); }; return filtered; }, []); 
         
-        console.log('results:')
-        console.log(results);
-
         return res.json({
             notifications: {
-                dueDateTimeNotifications: {
-                    outstanding: outstandingDueDateTimeNotifications,
-                    pastDue: pastDueDateTimeNotifications
-                },
-                reminderDateTimeNotifications: {
-                    outstanding: outstandingReminderDateTimeNotifications,
-                    pastDue: pastDueReminderDateTimeNotifications
-                }
+                dueDateTimeNotifications: tgtDueDateTimeTasks.map( (task) => { return task.toDueDateTimeNotification(); }),
+                reminderDateTimeNotifications: tgtReminderDateTimeTasks.map( (task) => { return task.toReminderDateTimeNotification(); })
+                // dueDateTimeNotifications: {
+                //     outstanding: outstandingDueDateTimeNotifications,
+                //     pastDue: pastDueDateTimeNotifications
+                // },
+                // reminderDateTimeNotifications: {
+                //     outstanding: outstandingReminderDateTimeNotifications,
+                //     pastDue: pastDueReminderDateTimeNotifications
+                // }
             }
         })
     }).catch(next);

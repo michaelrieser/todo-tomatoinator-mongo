@@ -55,7 +55,7 @@ export default class Tasks {
       (err) => console.log(err)
     );
   }
-  setRefreshedTasksInfo(tasksInfo) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)     
+  setRefreshedTasksInfo(tasksInfo) { // Note: this functionality couldn't be implemented in refreshTasks() success method ('this' was inaccessible)         
     this.tasksInfo = tasksInfo;
     // if (!this.activeTask) { this.activeTask = tasksInfo.activeTask; } // QUESTION: only set activeTask if it hasn't been set prior?
     this.activeTask = tasksInfo.activeTask;
@@ -174,7 +174,22 @@ export default class Tasks {
       method: 'PUT',
       data: { task: task } // => becomes req.body.task in tasks.js route
     }
-    return this._$http(request).then((res) => res.data);
+    return this._$http(request).then((res) => res.data.task);    
+    // return this._$http(request).then((res) => res.data);
+  }
+
+  // updateAndSet(task) for when user is updating task data on backend (ex: task notification), but not on the frontend (ex: task corresponding to task notification)
+  updateAndSet(task) {
+    return this.update(task).then(
+      (updatedTask) => this.setUpdatedTask(updatedTask),
+      (err) => console.log(err)
+    )
+  }
+  setUpdatedTask(updatedTask) {    
+    let updatedTaskId = updatedTask.id;
+    let staleTaskIdx = this.tasks.findIndex( (task) => { return task.id === updatedTaskId })
+
+    return this.tasks.splice(staleTaskIdx, 1, updatedTask);
   }
 
   clearUnmatchedActiveTask(stateParamsProjTitle) {

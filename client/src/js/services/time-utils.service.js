@@ -7,8 +7,8 @@ export default class TimeUtils {
 
     dateTimeInPast(targetDateTime) {
         let now = moment(); 
-        let targetMoment = moment(targetDateTime);
-        return now.isAfter(targetMoment);
+        let targetDateTimeMoment = moment(targetDateTime);
+        return now.isAfter(targetDateTimeMoment);
     }
 
     colorBasedOnTimeRemaining(targetDateTime) {
