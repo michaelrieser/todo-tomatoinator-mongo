@@ -9,8 +9,16 @@ function dateTimePicker() {
             //       Instantiating Moment Date with format 'MMMM Do YYYY, h:mm a' is not valid
             var parent = $(element).parent();            
             var dtp = parent.datetimepicker({
+                keyBinds: {
+                    enter: function() {
+                        console.log(scope)
+                        console.log(ngModelCtrl)
+                        // TODO: allow user to submit date with Enter keypress - need to call parent
+                        //  => could do something like scope.$ctrl.<method-to-blur-element/submit>, but NEED TO MAKE SURE METHOD SHARED B/TW TASK + NOTIFICATION DATE TIME PICKERS
+                    }
+                },
                 useCurrent: false, // sets date to null || existing dueDateTime when datetimepicker loaded, fixes datetimepicker vanishing when calendar clicked on task   
-                format: 'MMMM Do YYYY, h:mm a',
+                format: attrs.dateTimePicker,
                 showClear: true
             });
             dtp.on("dp.change", function (e) {

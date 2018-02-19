@@ -186,6 +186,7 @@ export default class Tasks {
     )
   }
   setUpdatedTask(updatedTask) {    
+    // TODO: check if task is active and update it accordingly!
     let updatedTaskId = updatedTask.id;
     let staleTaskIdx = this.tasks.findIndex( (task) => { return task.id === updatedTaskId })
 

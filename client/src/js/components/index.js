@@ -67,4 +67,7 @@ componentsModule.component('dueNotification', DueNotification);
 import ReminderNotification from './notification-helpers/reminder-notification.component';
 componentsModule.component('reminderNotification', ReminderNotification);
 
+import NotificationDateTimeInput from './notification-helpers/notification-date-time-helpers/notification-date-time-input.component';
+componentsModule.component('notificationDateTimeInput', NotificationDateTimeInput);
+
 export default componentsModule;

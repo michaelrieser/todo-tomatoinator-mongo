@@ -5,11 +5,10 @@
             </span>            
             <input type="text" ng-blur="$ctrl.handleDateTimeInputBlur()" 
                 class="form-control add-task-date-input" 
-                ng-model="$ctrl.task.dueDateTime"                                 
+                ng-model="$ctrl.notification.targetDateTime"                                 
                 data-date-time-picker="MMMM Do YYYY, h:mm a"
-                show-focus="$ctrl.editingDueDateTime"/>
-                <!--ng-submit="$ctrl.handleDateTimeInputBlur()"/>-->
+                show-focus="$ctrl.editingdatetime"/>
         </div>        
-        <button type="button" class="ion-close-round clear-task-date-btn btn btn-sm" 
-            data-pack="ios" ng-click="$ctrl.removeTaskDate()"></button>        
+        <!--<button type="button" class="ion-close-round clear-task-date-btn btn btn-sm" 
+            data-pack="ios" ng-click="$ctrl.removeNotificationDate()"></button>        -->
     </fieldset>

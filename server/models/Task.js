@@ -52,10 +52,11 @@ TaskSchema.methods.toJSONFor = function(user) {
 TaskSchema.methods.toDueDateTimeNotification = function() {
     return {
         id: this.id,
+        type: 'due',
         title: this.title,
         targetDateTime: this.dueDateTime,
         notified: this.dueDateTimeNotified,
-        user: this.user
+        user: this.user        
         // dueDateTime: this.dueDateTime,
         // dueDateTimeNotified: this.dueDateTimeNotified
     }
@@ -64,6 +65,7 @@ TaskSchema.methods.toDueDateTimeNotification = function() {
 TaskSchema.methods.toReminderDateTimeNotification = function() {
     return {
         id: this.id,
+        type: 'reminder',
         title: this.title,
         targetDateTime: this.reminderDateTime,
         notified: this.reminderDateTimeNotified,

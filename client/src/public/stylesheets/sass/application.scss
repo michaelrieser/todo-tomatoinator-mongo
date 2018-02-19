@@ -658,6 +658,11 @@ h6 {
     height: 34px;
 }
 
+/* Angular Material Overrides */
+.md-tooltip {
+    z-index: 999 !important;
+}
+
 /* mdToast + Notifications */
 .md-bottom {
     // width: 400px !important;
@@ -673,6 +678,7 @@ h6 {
     // max-height: 500px !important; // TODO: decrease this for smaller screens?
     border-radius: 10px;
     padding: 2px !important;
+    overflow: visible !important;
 }
 @media (max-width: 480px) {
     .md-toast-content {

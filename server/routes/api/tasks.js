@@ -174,7 +174,6 @@ router.put('/update', auth.required, function (req, res, next) {
         if (req.body.task.user.id.toString() === req.payload.id.toString()) {
 
             Task.findById(req.body.task.id).populate('user').then(function (targetTask) {
-
                 if (typeof req.body.task.title !== 'undefined') {
                     targetTask.title = req.body.task.title;
                 }

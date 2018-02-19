@@ -1,8 +1,9 @@
 export default class TaskNotifications {
-  constructor(AppConstants, $http, $interval) {
+  constructor(AppConstants, Tasks, $http, $interval) {
     'ngInject';
 
     this._AppConstants = AppConstants;
+    this._Tasks = Tasks;
     this._$http = $http;
     this._$interval = $interval;            
 
@@ -32,17 +33,34 @@ export default class TaskNotifications {
     return refreshedTaskNotificationInfo;
   }
 
-  // reminderColorFromTimeRemaining(reminder) {
-  //   return this.colorFromTimeRemaining(reminder.reminderDateTime);    
-  // }
-  // dueDateColorFromTimeRemaining(dueDate) {
-  //   return this.colorFromTimeRemaining(dueDate.dueDateTime);
-  // }
+  updateTaskAndNotification(tgtTask, notificationType) {
+    let tgtNotificationId = tgtTask.id;
+    return this._Tasks.updateAndSet(tgtTask).then(
+      (updatedTask) => this.removeResolvedNotification(tgtNotificationId, 'due'),
+      (err) => console.log(err)
+    )   
+  }
 
-  // isReminderPastDue(reminder) {
-  //   return moment(reminder.reminderDateTime).isBefore(moment())
-  // }
-  // isDueDatePastDue(dueDate) {
-  //   return moment(dueDate.dueDateTime).isBefore(moment());
-  // }
+  removeResolvedNotification(tgtNotificationId, notificationType) { 
+    let targetNotifications = notificationType === 'due' ? 
+             this.notifications.dueDateTimeNotifications : 
+             this.notifications.reminderDateTimeNotifications;
+    let tgtNotificationIdx = targetNotifications.findIndex( (n) => { return n.id === tgtNotificationId } );
+    targetNotifications.splice(tgtNotificationIdx, 1);
+    return true;
+  }
+
+  getTaskFromNotification(notification) {
+    let tgtTask = {};
+    tgtTask.id = notification.id;
+    tgtTask.user = {id: notification.user}; // TODO: this seems hacky, but PUT /tasks/update takes id from user object
+    
+    if (notification.type === 'due') {
+      tgtTask.dueDateTime = notification.targetDateTime;
+    } else {
+      tgtTask.reminderDateTime = notification.targetDateTime;
+    }
+
+    return tgtTask;
+  }
 }

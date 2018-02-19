@@ -2,12 +2,21 @@
     <div class="notification-title-wrapper">
         <span class="notification-title">{{ $ctrl.notification.title }}</span>
     </div>
-    <span ng-class="{'red' : $ctrl.targetDateTimeInPast()}" class="task-due-date-time">{{ $ctrl.notification.targetDateTime | timeDeltaInWords }}</span>
+    <div>        
+        <span ng-hide="$ctrl.editingdatetime" ng-class="{'red' : $ctrl.targetDateTimeInPast()}" class="task-due-date-time"            
+            ng-click="$ctrl.handleEditDateTimeToggle()">
+            {{ $ctrl.notification.targetDateTime | timeDeltaInWords }}
+            <md-tooltip md-direction="right">{{ $ctrl.notification.targetDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
+        </span>
+        <span ng-if="$ctrl.editingdatetime">
+            <notification-date-time-input editingdatetime="$ctrl.editingdatetime" notification="$ctrl.notification"></notification-date-time-input>
+        </span>
+    </div>  
 </div>
 
 <span class="notification-controls-outer">
     <span class="notification-controls-inner">
-        <span class="ion-ios-clock" data-pack="ios" data-tags="wake, ring"></span>
+        <span class="ion-ios-clock" ng-click="$ctrl.handleEditDateTimeToggle()" data-pack="ios" data-tags="wake, ring"></span>
         <span class="ion-ios-cloudy-night" data-pack="ios"></span>
         <span class="ion-android-close" ng-click="$ctrl.clearDueDateTime()"></span>
     </span>

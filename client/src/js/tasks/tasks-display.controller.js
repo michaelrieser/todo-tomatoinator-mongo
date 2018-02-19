@@ -1,43 +1,53 @@
 class TasksDisplayCtrl {
-    constructor(tasksInfo, taskNotificationInfo, Projects, Tasks, $scope, $stateParams) {
+    constructor(tasksInfo, taskNotificationInfo, Projects, Tasks, TaskNotifications, $scope, $stateParams, $mdToast) {
         'ngInject';
-        
+
         this._Tasks = Tasks;
         this._Projects = Projects;
+        this._TaskNotifications = TaskNotifications;
         this._$scope = $scope;
+        this._$mdToast = $mdToast;
 
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
 
+        this.notifications = this._TaskNotifications.notifications;
+        this.toastDisplayed = false;
+        
+        $scope.$watch(
+            () => { return this.notifications },
+            (newNotifications) => {
+                let notificationsLength = newNotifications.dueDateTimeNotifications.length + 
+                                          newNotifications.reminderDateTimeNotifications.length;
+                if ( notificationsLength > 0 ) { this.displayToast(); }                
+            },
+            true // perform deep watch
+        )       
+
         // Set displayProject - consumed by add-task-form.component to display default new task & projectHandleSuccess in project component
-        if ($stateParams.project) { Projects.displayProject = $stateParams.project };
-
-        // $watch TEST
-        // this.activeTask = this._Tasks.activeTask;
-        // $scope.$watch(
-        //     () => { return this._Tasks.activeTask }, // Value to watch
-        //     (newVal) => { // Method to invoke when Value to watch changes
-        //         // console.log('changed!');
-        //         // console.log(newVal);
-        //         this.activeTask = newVal;
-        //         console.log('TasksDisplay');
-        //         console.log(this.activeTask);
-        //     }
-        // )
-        // END $watch TEST
-
-        // this.tasksInfo = tasksInfo; // QUESTION: set this (and all task values) from resolved binding || from Tasks service value ?
-        // this.tasksInfo = this._Tasks.tasksInfo;
-
-        // NOTE: initially tried to set references to Tasks properties here, but changes weren't reflected in view
-        // NOTE(con't): *perhaps because new array was being set to .tasks / .activeTask etc.. when Tasks#setRefreshedTasks() was called ?
-        // NOTE(con't): perhaps also investigate using $watch (http://stsc3000.github.io/blog/2013/10/26/a-tale-of-frankenstein-and-binding-to-service-values-in-angular-dot-js/) to decouple Model from View
-        // this.tasks = this._Tasks.tasks;
-        // this.activeTask = this._Tasks.activeTask;
-        // this.taskCount = this._Tasks.taskCount;
+        if ($stateParams.project) { Projects.displayProject = $stateParams.project };        
 
         this.showAddTaskForm = false;
 
     }
+    displayToast() { 
+        this.toastDisplayed = true;
+        // SEE: https://material.angularjs.org/latest/demo/toast & https://material.angularjs.org/latest/api/service/$mdToast
+        this._$mdToast.show({
+            hideDelay: false,            
+            // animation: 'fade',
+            position: 'bottom left', // TODO: appears to be overriding this and going to bottom, this is OK but probably worth investigating
+            controller: 'ToastCtrl',
+            controllerAs: '$ctrl',
+            templateUrl: 'toast/toast.html',
+            locals: {
+                notifications: this.notifications,
+                // toastDisplayed: this.toastDisplayed
+            }, 
+            bindToController: true
+        }).then( 
+            (resolvedPromise) => { this.toastDisplayed = false; }
+        );
+    };    
 }
 
 export default TasksDisplayCtrl;
