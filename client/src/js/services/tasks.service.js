@@ -186,11 +186,14 @@ export default class Tasks {
     )
   }
   setUpdatedTask(updatedTask) {    
-    // TODO: check if task is active and update it accordingly!
-    let updatedTaskId = updatedTask.id;
-    let staleTaskIdx = this.tasks.findIndex( (task) => { return task.id === updatedTaskId })
-
-    return this.tasks.splice(staleTaskIdx, 1, updatedTask);
+    if (updatedTask.isActive) {
+      this.activeTask = updatedTask;
+    } else {
+      let updatedTaskId = updatedTask.id;      
+      let staleTaskIdx = this.tasks.findIndex( (task) => { return task.id === updatedTaskId })
+      return this.tasks.splice(staleTaskIdx, 1, updatedTask);
+    }
+    return updatedTask;
   }
 
   clearUnmatchedActiveTask(stateParamsProjTitle) {

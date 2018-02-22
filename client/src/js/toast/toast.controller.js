@@ -15,31 +15,6 @@ class ToastCtrl {
     this.reminderDateTimeNotifications = this.notifications.reminderDateTimeNotifications;
 
   }
-
-  closeToast() {
-    if (this.isDlgOpen) return;
-
-    this._$mdToast
-      .hide()
-      .then(() => { this.isDlgOpen = false; });
-  }
-
-  // TODO: remove this, DIALOG NOT CURRENTLY USED
-  openMoreInfo(e) {
-    if (this.isDlgOpen) return;
-    this.isDlgOpen = true;
-
-    this._$mdDialog
-      .show(this._$mdDialog
-        .alert()
-        .title('More info goes here.')
-        .textContent('Something witty.')
-        .ariaLabel('More info')
-        .ok('Got it')
-        .targetEvent(e)
-      )
-      .then(() => { this.isDlgOpen = false; });
-  };
 }
 
 export default ToastCtrl;

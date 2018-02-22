@@ -34,7 +34,6 @@ class NotificationDateTimeInputCtrl {
         } else {
             return;
         }
-        console.log('updating dateTime')
         // START => date time is closing when date is selected on date picker + figure out WTSH is goin on hur
         let tgtTask = this._TaskNotifications.getTaskFromNotification(this.notification);
         this._TaskNotifications.updateTaskAndNotification(tgtTask, 'due').then(

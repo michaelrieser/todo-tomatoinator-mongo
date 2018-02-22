@@ -18,7 +18,8 @@ class TasksDisplayCtrl {
             (newNotifications) => {
                 let notificationsLength = newNotifications.dueDateTimeNotifications.length + 
                                           newNotifications.reminderDateTimeNotifications.length;
-                if ( notificationsLength > 0 ) { this.displayToast(); }                
+                if ( notificationsLength > 0 ) { this.displayToast(); }  // QUESION/TODO: is it even necessary to call displayToast() since notifications set via two-way binding?
+                else { this._$mdToast.hide(); }            
             },
             true // perform deep watch
         )       

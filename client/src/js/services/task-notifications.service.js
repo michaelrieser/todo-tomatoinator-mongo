@@ -63,4 +63,12 @@ export default class TaskNotifications {
 
     return tgtTask;
   }
+
+  sleepNotification(tgtNotification, sleepDuration) {
+    let tgtTask = this.getTaskFromNotification(tgtNotification);
+      // NOTE: this would add sleepDuration to current targetDateTime, but that could be a month in the past
+    // tgtTask.dueDateTime = moment(tgtTask.dueDateTime).add(sleepDuration).toISOString();
+    tgtTask.dueDateTime = moment().add(sleepDuration).toISOString();
+    this.updateTaskAndNotification(tgtTask, 'due')
+  }
 }

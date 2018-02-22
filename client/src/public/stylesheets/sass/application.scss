@@ -44,6 +44,7 @@ h6 {
 .cursor-not-allowed { cursor: not-allowed; }
 .text-center-aligned { text-align: center; }
 
+.no-margin { margin: 0; }
 .small-bottom-margin { margin-bottom: 5px !important; }
 
 .fieldset-single-checkbox {
@@ -77,7 +78,7 @@ h6 {
     margin-right: 5%;
 }
 .task-list {
-    
+    // height: 
 }
 
 .task {            
@@ -104,7 +105,7 @@ h6 {
 .task-outer-wrapper {
     display: inline-block;
     height: 100%;
-    width: 100%
+    width: 100%;
 }
 .task-inner-wrapper {
     // margin: 10px;
@@ -660,6 +661,7 @@ h6 {
 
 /* Angular Material Overrides */
 .md-tooltip {
+    display: block;
     z-index: 999 !important;
 }
 
@@ -668,6 +670,7 @@ h6 {
     // width: 400px !important;
 }
 .md-toast-content {
+    height: auto !important;
     min-width: 320px !important;
     max-width: 500px !important;
     position: fixed;
@@ -679,6 +682,7 @@ h6 {
     border-radius: 10px;
     padding: 2px !important;
     overflow: visible !important;
+    z-index: 998 !important;
 }
 @media (max-width: 480px) {
     .md-toast-content {
@@ -743,7 +747,7 @@ h6 {
     position: absolute;
     display: inline-block;
     // border-radius: 0px 5px 5px 0px;
-    width: 50px;
+    width: 72px;
     // padding: 3px;
     top: 0;
     right: 0;
@@ -759,7 +763,6 @@ h6 {
     transform: translateY(-50%); 
     // text-align: center;
 }
-
 .ion-ios-alarm:hover {
     cursor: pointer;
     color: yellow;
@@ -768,11 +771,20 @@ h6 {
     cursor: pointer;
     color: mediumpurple;
 }
-.ion-ios-cloudy-night:hover {
+.glyphicon-log-in:hover {
     cursor: pointer;    
-    color: black;
+    color: deepskyblue;
+}
+.glyphicon-share:hover {
+    cursor: pointer;
+    color: blue;
 }
 .ion-android-close:hover {
     cursor: pointer;
     color: red;
+}
+
+.notification-date-time-input-wrapper {
+    display: inline-block;
+    margin: 10px 0 2px 0;
 }

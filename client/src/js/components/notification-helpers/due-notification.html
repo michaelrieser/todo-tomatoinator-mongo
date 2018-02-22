@@ -9,7 +9,9 @@
             <md-tooltip md-direction="right">{{ $ctrl.notification.targetDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
         </span>
         <span ng-if="$ctrl.editingdatetime">
-            <notification-date-time-input editingdatetime="$ctrl.editingdatetime" notification="$ctrl.notification"></notification-date-time-input>
+            <div class="notification-date-time-input-wrapper">
+                <notification-date-time-input editingdatetime="$ctrl.editingdatetime" notification="$ctrl.notification"></notification-date-time-input>
+            </div>
         </span>
     </div>  
 </div>
@@ -17,7 +19,12 @@
 <span class="notification-controls-outer">
     <span class="notification-controls-inner">
         <span class="ion-ios-clock" ng-click="$ctrl.handleEditDateTimeToggle()" data-pack="ios" data-tags="wake, ring"></span>
-        <span class="ion-ios-cloudy-night" data-pack="ios"></span>
+        <i class="glyphicon glyphicon-log-in" ng-click="$ctrl._TaskNotifications.sleepNotification($ctrl.notification, {'days': 1})">
+            <md-tooltip md-direction="right">Set Due Tomorrow</md-tooltip>
+        </i>
+        <i class="glyphicon glyphicon-share" ng-click="$ctrl._TaskNotifications.sleepNotification($ctrl.notification, {'weeks': 1})">
+            <md-tooltip md-direction="right">Set Due In a Week</md-tooltip>
+        </i>
         <span class="ion-android-close" ng-click="$ctrl.clearDueDateTime()"></span>
     </span>
 </span>

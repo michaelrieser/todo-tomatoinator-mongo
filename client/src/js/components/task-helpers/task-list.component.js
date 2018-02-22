@@ -8,6 +8,9 @@ class TaskListCtrl {
         
         // this._Tasks = Tasks; 
         this.sortableTaskHandlers = {
+            // TODO: only allow vertical scrolling with axis + containment keys => list elements jump around on drag! SEE: Trello
+            // axis: 'y',
+            // containment: 'parent',
             // placeholder: 'task-drop-placeholder', // TODO: implement placeholder for drop zone
             start: (event, ui) => {
                 this.startIdx = ui.item.index();
