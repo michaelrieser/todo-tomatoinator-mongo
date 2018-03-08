@@ -4,9 +4,6 @@ class TaskDueDateTimeInputCtrl {
 
         this._$scope = $scope;
         this._Tasks = Tasks;
-
-        // TODO: better to pass this in to task-due-date-time-input-component, but this doesn't seem too bad for now
-        this.editingDueDateTime = $scope.$parent.$ctrl.editingDueDateTime;
     }
     
     removeTaskDate() {
@@ -19,17 +16,12 @@ class TaskDueDateTimeInputCtrl {
         }  
     }
 
-    handleDateTimeInputBlur() {
-        if (!this.editmode) { return; }
-        this._$scope.$emit('updateTaskOnCalendarBlur');
-    }
 }
 
 let TaskDueDateTimeInput =  {
     bindings: {
-        // editingduedatetime: '=',
+        displayingduedatetimeinput: '=',
         task: '=',
-        editmode: '=?' // question mark makes this parameter optional, 'submitonblur' used in task component to submit updated time when date-time-picker loses focus
     },
     controller: TaskDueDateTimeInputCtrl,
     templateUrl: 'components/task-helpers/task-due-date-time-input.html'

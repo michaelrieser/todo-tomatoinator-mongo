@@ -44,6 +44,8 @@ h6 {
 .cursor-not-allowed { cursor: not-allowed; }
 .text-center-aligned { text-align: center; }
 
+.vertically-centered { vertical-align: middle; }
+
 .no-margin { margin: 0; }
 .small-bottom-margin { margin-bottom: 5px !important; }
 
@@ -71,7 +73,9 @@ h6 {
 }
 
 .inline { display: inline; }
+.inline-block { display: inline-block; }
 .pos-relative { position: relative; }
+
 
 .tasks-wrapper {
     width: 65%; 
@@ -264,6 +268,10 @@ h6 {
     input[type=checkbox] {
         margin-right: 5px;
     }
+}
+
+.reminder-date-time-ctrls-wrapper {
+    margin-top: 10px;
 }
 
 .date-time-picker {
@@ -665,14 +673,19 @@ h6 {
     z-index: 999 !important;
 }
 
-/* mdToast + Notifications */
+/* mdToast + Notifications */   
 .md-bottom {
     // width: 400px !important;
 }
+.notifications-md-toast {
+    width: 0;
+    height: 0;  
+}
 .md-toast-content {
     height: auto !important;
-    min-width: 320px !important;
-    max-width: 500px !important;
+    // min-width: 320px !important;
+    // max-width: 500px !important;
+    width: 320px !important;
     position: fixed;
     bottom: 10%;
     left: 25px;

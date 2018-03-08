@@ -191,7 +191,8 @@ export default class Tasks {
     } else {
       let updatedTaskId = updatedTask.id;      
       let staleTaskIdx = this.tasks.findIndex( (task) => { return task.id === updatedTaskId })
-      return this.tasks.splice(staleTaskIdx, 1, updatedTask);
+      // Only return if updatedTask is in current task list (i.e. currently set project)
+      if (staleTaskIdx !== -1) { this.tasks.splice(staleTaskIdx, 1, updatedTask); }
     }
     return updatedTask;
   }

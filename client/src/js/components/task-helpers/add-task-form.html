@@ -3,14 +3,15 @@
 
     <fieldset class="form-group">
         <input class="form-control form-control-lg"
-        ng-model="$ctrl.task.title"
-        type="text"
-        placeholder="Task Title" />
+            required
+            ng-model="$ctrl.task.title"
+            type="text"
+            placeholder="Task Title" />
     </fieldset>
 
     <fieldset class="form-group">
         <!-- NOTE: data-ng-model (selected option) must be an Object in $ctrl.projects -->
-        <select class="form-control"
+        <select class="form-control" 
                 data-ng-model="$ctrl.task.project" 
                 data-ng-options="project.title for project in $ctrl._Projects.projects">                    
         </select>
@@ -22,7 +23,40 @@
         </select>
     </fieldset>
 
-    <task-due-date-time-input task="$ctrl.task"></task-due-date-time-input>
+    <div class="due-date-time-ctrls-wrapper"> <!-- todo: wrap in a bootstrap? well -->
+        <!-- NOTE: button type is "submit" by default -->
+        <button type="button" ng-hide="$ctrl.displayingduedatetimeinput" ng-click="$ctrl.toggleDueDateTimeDisplay()"
+            class="btn btn-sm btn-info">
+            Add Due Date
+        </button>
+        <button type="button" ng-show="$ctrl.displayingduedatetimeinput" ng-click="$ctrl.toggleDueDateTimeDisplay()" 
+            class="btn btn-sm btn-warning">
+            Remove Due Date
+        </button>
+        <span>
+            <task-due-date-time-input displayingduedatetimeinput="$ctrl.displayingduedatetimeinput"
+                ng-show="$ctrl.displayingduedatetimeinput" task="$ctrl.task">
+            </task-due-date-time-input>
+        </span>
+    </div>
+
+     <!--TODO: extract this into a component || place in task-reminder-date-time-input component?  -->
+    <div class="reminder-date-time-ctrls-wrapper">
+        <button type="button" ng-hide="$ctrl.displayingreminderdatetimeinput" ng-click="$ctrl.toggleReminderDateTimeDisplay()"
+            class="btn btn-sm btn-info">
+            Add Reminder
+        </button>
+        <button type="button" ng-show="$ctrl.displayingreminderdatetimeinput" ng-click="$ctrl.toggleReminderDateTimeDisplay()" 
+            class="btn btn-sm btn-warning">
+            Remove Reminder
+        </button>        
+        <div ng-show="$ctrl.displayingreminderdatetimeinput">
+            <task-reminder-date-time-input class="inline-block" task="$ctrl.task"
+                displayingreminderdatetimeinput="$ctrl.displayingreminderdatetimeinput">
+            </task-reminder-date-time-input>
+        </div>        
+    </div>
+    <!-- /TODO -->
 
     <fieldset class="form-group">
         <input class="form-control"
@@ -49,4 +83,6 @@
             Add Task
         </button>
     </div>
+
+    <!-- TODO: add button to clear form via type="reset" (I think) -->
 </form>

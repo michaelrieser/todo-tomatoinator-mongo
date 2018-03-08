@@ -17,6 +17,7 @@ function dateTimePicker() {
                         //  => could do something like scope.$ctrl.<method-to-blur-element/submit>, but NEED TO MAKE SURE METHOD SHARED B/TW TASK + NOTIFICATION DATE TIME PICKERS
                     }
                 },
+                defaultDate: moment().format(attrs.format),
                 useCurrent: false, // sets date to null || existing dueDateTime when datetimepicker loaded, fixes datetimepicker vanishing when calendar clicked on task   
                 format: attrs.dateTimePicker,
                 showClear: true

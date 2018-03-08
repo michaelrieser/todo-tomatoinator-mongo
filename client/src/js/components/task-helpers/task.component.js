@@ -10,10 +10,10 @@ class TaskCtrl {
         this._$scope = $scope;
 
         this.editingTitle = false;
-        this.editingDueDateTime = false;
-        this.updatingTask = false;        
+        this.displayingduedatetimeinput = false;
+        this.displayingreminderdatetimeinput = false;
 
-        $scope.$on('updateTaskOnCalendarBlur', (evt, data) => this.handleEditDueDateTimeToggle());
+        this.updatingTask = false;                
     }
 
     colorBasedOnTimeRemaining() {
@@ -28,10 +28,14 @@ class TaskCtrl {
     }
 
     handleEditDueDateTimeToggle() {
-        this.editingDueDateTime = !this.editingDueDateTime;
-        if (!this.editingDueDateTime) { // Done making edits 
+        this.displayingduedatetimeinput = !this.displayingduedatetimeinput;
+        if (!this.displayingduedatetimeinput) { // Done making edits 
             this.updateTask();    
         }
+    }
+
+    handleEditReminderDateTimeToggle() {
+        this.displayingreminderdatetimeinput = !this.displayingreminderdatetimeinput;
     }
 
     updateTask() {

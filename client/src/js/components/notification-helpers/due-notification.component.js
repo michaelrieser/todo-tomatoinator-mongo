@@ -25,7 +25,7 @@ class DueNotificationCtrl {
         // tgtTask.dueDateTimeNotified = '<unsure-what-to-set-here || how-to-handle-this>?' //TODO
 
         let tgtNotificationId = tgtTask.id
-        this._TaskNotifications.updateTaskAndNotification(tgtTask, 'due'); // QUESTION => bad practice to call Task service methods from Notification?
+        this._TaskNotifications.updateTaskAndResolveNotification(tgtTask, 'due'); // QUESTION => bad practice to call Task service methods from Notification?
     }
 
     handleEditDateTimeToggle() {

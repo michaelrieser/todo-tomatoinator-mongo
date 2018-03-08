@@ -19,7 +19,9 @@ var TaskSchema = new mongoose.Schema({
     dueDateTime: { type: Date, default: null },
     dueDateTimeNotified: { type: Boolean, default: false },
     reminderDateTime: { type: Date, default: null},
-    reminderDateTimeNotified: { type: Boolean, default: false }
+    reminderDateTimeNotified: { type: Boolean, default: false },
+    reminderIntervalNumber: { type: Number, default: null },
+    reminderIntervalPeriod: { type: String, default: null } // 'hour', 'day', 'week', 'month'
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
 TaskSchema.methods.toJSONFor = function(user) {        
@@ -42,8 +44,10 @@ TaskSchema.methods.toJSONFor = function(user) {
         notes: this.notes,
         dueDateTime: this.dueDateTime,
         dueDateTimeNotified: this.dueDateNotified,
-        reminderDateTime: this.reminderDate,
-        reminderDateTimeNotified: this.reminderDateNotified
+        reminderDateTime: this.reminderDateTime,
+        reminderDateTimeNotified: this.reminderDateNotified,
+        reminderIntervalNumber: this.reminderIntervalNumber,
+        reminderIntervalPeriod: this.reminderIntervalPeriod
     };
 };
 
@@ -69,6 +73,8 @@ TaskSchema.methods.toReminderDateTimeNotification = function() {
         title: this.title,
         targetDateTime: this.reminderDateTime,
         notified: this.reminderDateTimeNotified,
+        reminderIntervalNumber: this.reminderIntervalNumber,
+        reminderIntervalPeriod: this.reminderIntervalPeriod,
         user: this.user
         // reminderDateTime: this.reminderDateTime,
         // reminderDateTimeNotified: this.reminderDateTimeNotified

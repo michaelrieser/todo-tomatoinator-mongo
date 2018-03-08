@@ -8,7 +8,7 @@
                     <span ng-hide="$ctrl.editingTitle" ng-click="$ctrl.handleEditTitleToggle()" class="task-title">{{$ctrl.task.title}}</span>
                     <span ng-if="$ctrl.editingTitle" class="edit-task-form">
                         <!--<form class="edit-task-form" ng-submit="$ctrl.blurElement($event)">-->
-                            <!-- NOTE: only way to submit form is for title input to have focus, so onsubmit works here -->
+                            <!-- NOTE: only way to submit form is for title input to have focus, so activeElement.blur() works here #hack -->
                             <form class="edit-task-form" onsubmit="document.activeElement.blur()">
                             <fieldset ng-disabled="$ctrl.updatingTask">
                                 <textarea class="edit-task-textarea form-control form-control-sm"
@@ -18,13 +18,6 @@
                                     show-focus="$ctrl.editingTitle" 
                                     required/>
                             </fieldset>
-
-                            <!--<fieldset class="form-group">
-                                <select class="form-control"
-                                        data-ng-model="$ctrl.task.project.title"
-                                        data-ng-options="project.title for project in $ctrl._Projects.projects">
-                                </select>
-                            </fieldset>-->
                         </form>
                     </span>
                 </span>
@@ -33,15 +26,25 @@
                 </span>
             </div>
             <div class="task-due-date-time-wrapper" ng-class="{'small-bottom-margin' : $ctrl.task.showNotes}">
-                <span ng-if="$ctrl.task.dueDateTime && !$ctrl.editingDueDateTime" ng-click="$ctrl.handleEditDueDateTimeToggle()" 
+                <span ng-if="$ctrl.task.dueDateTime && !$ctrl.displayingduedatetimeinput" ng-click="$ctrl.handleEditDueDateTimeToggle()" 
                     ng-class="$ctrl.colorBasedOnTimeRemaining()" class="task-due-date-time">Due {{ $ctrl.task.dueDateTime | timeDeltaInWords }}
                     <md-tooltip md-direction="right">{{ $ctrl.task.dueDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
                 </span>
-                <span ng-if="$ctrl.editingDueDateTime">
-                    <task-due-date-time-input task="$ctrl.task" editmode="true"></task-due-date-time-input>
+                <span ng-if="$ctrl.displayingduedatetimeinput">
+                    <task-due-date-time-input-form 
+                        displayingduedatetimeinput="$ctrl.displayingduedatetimeinput" task="$ctrl.task">
+                    </task-due-date-time-input-form>
                 </span>
             </div>
 
+            <div class="task-reminder-date-time-wrapper" ng-class="{'small-bottom-margin' : $ctrl.task.showNotes}">
+                <span ng-if="$ctrl.displayingreminderdatetimeinput">
+                    <task-reminder-date-time-input-form 
+                        displayingreminderdatetimeinput="$ctrl.displayingreminderdatetimeinput" 
+                        task="$ctrl.task" >
+                    </task-reminder-date-time-input-form>
+                </span>
+            </div>
 
             <span class="task-controls-outer">
                 <div class="task-controls-inner">
@@ -76,7 +79,7 @@
                         </span>
                     </span>
                     <span class="task-edit-reminder-date-toggle-wrapper">
-                        <span type="button" ng-click="$ctrl.handleEditReminderDateToggle()">
+                        <span type="button" ng-click="$ctrl.handleEditReminderDateTimeToggle()">
                             <span class="ion-ios-alarm" data-pack="ios" data-tags="wake, ring"></span>
                         </span>
                     </span>

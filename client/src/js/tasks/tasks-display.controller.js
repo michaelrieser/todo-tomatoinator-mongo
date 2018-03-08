@@ -28,15 +28,16 @@ class TasksDisplayCtrl {
         if ($stateParams.project) { Projects.displayProject = $stateParams.project };        
 
         this.showAddTaskForm = false;
-
     }
+
+
     displayToast() { 
         this.toastDisplayed = true;
         // SEE: https://material.angularjs.org/latest/demo/toast & https://material.angularjs.org/latest/api/service/$mdToast
         this._$mdToast.show({
             hideDelay: false,            
             // animation: 'fade',
-            position: 'bottom left', // TODO: appears to be overriding this and going to bottom, this is OK but probably worth investigating
+            // position: 'bottom left', // TODO: appears to be overriding this and going to bottom, this is OK but probably worth investigating
             controller: 'ToastCtrl',
             controllerAs: '$ctrl',
             templateUrl: 'toast/toast.html',

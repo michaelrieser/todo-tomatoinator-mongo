@@ -7,6 +7,9 @@ class AddTaskFormCtrl {
         this._$state = $state; 
         this._$scope = $scope;
 
+        this.displayingduedatetimeinput = false;
+        this.displayingreminderdatetimeinput = false;
+
         this.priorityOptions = [{value: 1, label: 'A'},
                                 {value: 2, label: 'B'},
                                 {value: 3, label: 'C'},
@@ -17,6 +20,22 @@ class AddTaskFormCtrl {
             this.highestOrderNumber = newValue;
         })
         this.resetTask();
+    }
+
+    toggleDueDateTimeDisplay() {
+        this.displayingduedatetimeinput = !this.displayingduedatetimeinput;
+        if (!this.displayingduedatetimeinput) {
+            this.task.dueDateTime = null;
+        }
+    }
+
+    toggleReminderDateTimeDisplay() {
+        this.displayingreminderdatetimeinput = !this.displayingreminderdatetimeinput;
+        if (!this.displayingreminderdatetimeinput) { // clear reminderDateTime fields on close
+            this.task.reminderIntervalNumber = null;
+            this.task.reminderIntervalPeriod = null;
+            this.task.reminderDateTime = null;
+        }
     }
 
     addTag() {
@@ -42,6 +61,9 @@ class AddTaskFormCtrl {
             isComplete: false,
             wasSuccessful: null,
             dueDateTime: null, // TODO: combine date objects and send to backend
+            reminderIntervalNumber: null,
+            reminderIntervalPeriod: null,
+            reminderDateTime: null,
             tagList: []
         }
     }

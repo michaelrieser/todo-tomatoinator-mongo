@@ -205,7 +205,15 @@ router.put('/update', auth.required, function (req, res, next) {
 
                 if (typeof req.body.task.reminderDateTimeNotified !== 'undefined') {
                     targetTask.reminderDateTimeNotified = req.body.task.reminderDateTimeNotified;
-                }                                
+                }          
+
+                if (typeof req.body.task.reminderIntervalNumber !== 'undefined') {
+                    targetTask.reminderIntervalNumber = req.body.task.reminderIntervalNumber;
+                }                                     
+                
+                if (typeof req.body.task.reminderIntervalPeriod !== 'undefined') {
+                    targetTask.reminderIntervalPeriod = req.body.task.reminderIntervalPeriod;
+                }                        
 
                 if (typeof req.body.task.timesPaused !== 'undefined') {
                     targetTask.timesPaused = req.body.task.timesPaused;

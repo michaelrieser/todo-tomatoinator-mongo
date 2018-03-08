@@ -33,7 +33,7 @@ export default class TaskNotifications {
     return refreshedTaskNotificationInfo;
   }
 
-  updateTaskAndNotification(tgtTask, notificationType) {
+  updateTaskAndResolveNotification(tgtTask, notificationType) {
     let tgtNotificationId = tgtTask.id;
     return this._Tasks.updateAndSet(tgtTask).then(
       (updatedTask) => this.removeResolvedNotification(tgtNotificationId, 'due'),
@@ -46,7 +46,7 @@ export default class TaskNotifications {
              this.notifications.dueDateTimeNotifications : 
              this.notifications.reminderDateTimeNotifications;
     let tgtNotificationIdx = targetNotifications.findIndex( (n) => { return n.id === tgtNotificationId } );
-    targetNotifications.splice(tgtNotificationIdx, 1);
+    if (tgtNotificationIdx !== -1) { targetNotifications.splice(tgtNotificationIdx, 1); }
     return true;
   }
 
@@ -69,6 +69,6 @@ export default class TaskNotifications {
       // NOTE: this would add sleepDuration to current targetDateTime, but that could be a month in the past
     // tgtTask.dueDateTime = moment(tgtTask.dueDateTime).add(sleepDuration).toISOString();
     tgtTask.dueDateTime = moment().add(sleepDuration).toISOString();
-    this.updateTaskAndNotification(tgtTask, 'due')
+    this.updateTaskAndResolveNotification(tgtTask, 'due')
   }
 }
