@@ -20,7 +20,6 @@ class NotificationDateTimeInputCtrl {
         } else {
             return;
         }
-        // START => date time is closing when date is selected on date picker + figure out WTSH is goin on hur
         let tgtTask = this._TaskNotifications.getTaskFromNotification(this.notification);
         this._TaskNotifications.updateTaskAndResolveNotification(tgtTask, 'due').then(
             (success) => { this.editingdatetime = false; // updates parent due to passed two-way binding

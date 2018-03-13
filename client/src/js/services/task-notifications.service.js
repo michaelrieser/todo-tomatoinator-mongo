@@ -36,7 +36,7 @@ export default class TaskNotifications {
   updateTaskAndResolveNotification(tgtTask, notificationType) {
     let tgtNotificationId = tgtTask.id;
     return this._Tasks.updateAndSet(tgtTask).then(
-      (updatedTask) => this.removeResolvedNotification(tgtNotificationId, 'due'),
+      (updatedTask) => this.removeResolvedNotification(tgtNotificationId, notificationType),
       (err) => console.log(err)
     )   
   }
@@ -59,16 +59,40 @@ export default class TaskNotifications {
       tgtTask.dueDateTime = notification.targetDateTime;
     } else {
       tgtTask.reminderDateTime = notification.targetDateTime;
+      tgtTask.reminderIntervalNumber = notification.reminderIntervalNumber;
+      tgtTask.reminderIntervalPeriod = notification.reminderIntervalPeriod;
     }
 
     return tgtTask;
   }
 
-  sleepNotification(tgtNotification, sleepDuration) {
+  sleepDueNotification(tgtNotification, sleepDuration) {
     let tgtTask = this.getTaskFromNotification(tgtNotification);
       // NOTE: this would add sleepDuration to current targetDateTime, but that could be a month in the past
     // tgtTask.dueDateTime = moment(tgtTask.dueDateTime).add(sleepDuration).toISOString();
     tgtTask.dueDateTime = moment().add(sleepDuration).toISOString();
     this.updateTaskAndResolveNotification(tgtTask, 'due')
+  }
+
+  sleepReminderNotification(tgtNotification) {
+    let tgtTask = this.getTaskFromNotification(tgtNotification);
+    let priorTgtDateTime = moment(tgtNotification.targetDateTime);
+    let reminderIntervalNumber = tgtNotification.reminderIntervalNumber;
+    let reminderIntervalPeriod = tgtNotification.reminderIntervalPeriod;
+
+    let reminderDateTime = moment().add(reminderIntervalNumber, reminderIntervalPeriod)
+
+    if (reminderIntervalPeriod.indexOf('day') !== -1) { // TODO: look into ES6 includes()
+      let tgtHour = priorTgtDateTime.get('hour');
+      let tgtMinute = priorTgtDateTime.get('minute');
+      let tgtSecond = priorTgtDateTime.get('second');
+
+      reminderDateTime.set('hour', tgtHour);
+      reminderDateTime.set('minute', tgtMinute);
+      reminderDateTime.set('second', tgtSecond);
+    }
+
+    tgtTask.reminderDateTime = reminderDateTime.toISOString();
+    this.updateTaskAndResolveNotification(tgtTask, 'reminder');
   }
 }

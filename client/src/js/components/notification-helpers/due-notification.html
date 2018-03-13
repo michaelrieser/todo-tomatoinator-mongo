@@ -16,13 +16,13 @@
     </div>  
 </div>
 
-<span class="notification-controls-outer">
+<span class="notification-controls-outer" style="width: 72px;">
     <span class="notification-controls-inner">
         <span class="ion-ios-clock" ng-click="$ctrl.handleEditDateTimeToggle()" data-pack="ios" data-tags="wake, ring"></span>
-        <i class="glyphicon glyphicon-log-in" ng-click="$ctrl._TaskNotifications.sleepNotification($ctrl.notification, {'days': 1})">
+        <i class="glyphicon glyphicon-log-in" ng-click="$ctrl._TaskNotifications.sleepDueNotification($ctrl.notification, {'days': 1})">
             <md-tooltip md-direction="right">Set Due Tomorrow</md-tooltip>
         </i>
-        <i class="glyphicon glyphicon-share" ng-click="$ctrl._TaskNotifications.sleepNotification($ctrl.notification, {'weeks': 1})">
+        <i class="glyphicon glyphicon-share" ng-click="$ctrl._TaskNotifications.sleepDueNotification($ctrl.notification, {'weeks': 1})">
             <md-tooltip md-direction="right">Set Due In a Week</md-tooltip>
         </i>
         <span class="ion-android-close" ng-click="$ctrl.clearDueDateTime()"></span>

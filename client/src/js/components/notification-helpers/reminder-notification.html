@@ -7,10 +7,13 @@
     </span>
 </div>
 
-<span class="notification-controls-outer">
+<span class="notification-controls-outer" style="width: 36px;">
     <span class="notification-controls-inner">
-        <span class="ion-ios-alarm" ng-click="$ctrl.handleEditDateTimeToggle()" data-pack="ios" data-tags="wake, ring"></span>
-        <span class="ion-ios-cloudy-night" data-pack="ios"></span>
+        <!--<span class="ion-ios-alarm" ng-click="$ctrl.handleEditDateTimeToggle()" data-pack="ios" data-tags="wake, ring"></span>-->
+        <i class="glyphicon glyphicon-log-in" style="margin-right:3px" ng-click="$ctrl._TaskNotifications.sleepReminderNotification($ctrl.notification)">
+            <md-tooltip md-direction="right">Sleep Reminder</md-tooltip>
+        </i>
+        <!--<span class="ion-ios-cloudy-night" data-pack="ios"></span>-->
         <span class="ion-android-close" ng-click="$ctrl.clearReminderDateTime()"></span>
     </span>
 </span>

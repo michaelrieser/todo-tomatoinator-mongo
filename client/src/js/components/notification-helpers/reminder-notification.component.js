@@ -17,7 +17,9 @@ class ReminderNotificationCtrl {
     clearReminderDateTime() {    
         let tgtTask = this._TaskNotifications.getTaskFromNotification(this.notification);
         tgtTask.reminderDateTime = null;
-        // tgtTask.dueDateTimeNotified = '<unsure-what-to-set-here || how-to-handle-this>?' //TODO
+        // tgtTask.dueDateTimeNotified = '<unsure-what-to-set-here || how-to-handle-this>?' // TODO
+        tgtTask.reminderIntervalNumber = null;
+        tgtTask.reminderIntervalPeriod = null;
 
         let tgtNotificationId = tgtTask.id
         this._Tasks.updateAndSet(tgtTask).then(
