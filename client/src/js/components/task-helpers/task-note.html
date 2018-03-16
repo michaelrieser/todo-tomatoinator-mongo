@@ -3,11 +3,11 @@
         <span>
             <form ng-show="$ctrl.note.isTodo" class="task-note-todo">
                 <fieldset class="form-group fieldset-single-checkbox">
-                    <input class="note-todo-checkbox" ng-model="$ctrl.note.todoComplete" type="checkbox" ng-click="$ctrl.toggleTodo($ctrl.note)"></input>
+                    <input class="note-todo-checkbox" ng-model="$ctrl.note.isComplete" type="checkbox" ng-click="$ctrl.toggleTodo($ctrl.note)"></input>
                 </fieldset>
             </form>
         </span>
-        <span ng-class="{'greyed-out': $ctrl.note.isTodo && $ctrl.note.todoComplete}">{{ $ctrl.note.title }}</span>
+        <span ng-class="{'greyed-out': $ctrl.note.isTodo && $ctrl.note.isComplete}">{{ $ctrl.note.title }}</span>
     </div>
 
     <span class="note-controls-outer">

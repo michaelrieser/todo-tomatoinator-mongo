@@ -16,8 +16,8 @@ router.get('/', auth.required, function (req, res, next) {
     var limit = 20;
     var offset = 0;
 
-    if (typeof req.query.todoComplete !== 'undefined') {
-        query.todoComplete = req.query.todoComplete === 'true' ? true : false;
+    if (typeof req.query.isComplete !== 'undefined') {
+        query.isComplete = req.query.isComplete === 'true' ? true : false;
     }
 
     if (typeof req.query.tag !== 'undefined') {
@@ -122,8 +122,8 @@ router.put('/', auth.required, function (req, res, next) {
             if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
             if (user._id.toString() === req.payload.id.toString()) {
                 Note.findById(req.body.note.id).then(function (targetNote) {
-                    if (typeof req.body.note.todoComplete !== 'undefined') {
-                        targetNote.todoComplete = req.body.note.todoComplete;
+                    if (typeof req.body.note.isComplete !== 'undefined') {
+                        targetNote.isComplete = req.body.note.isComplete;
                     }
 
                     if (typeof req.body.note.order !== 'undefined') {
@@ -131,7 +131,7 @@ router.put('/', auth.required, function (req, res, next) {
                     }
 
                     targetNote.save().then(function (note) {
-                        // res.json({todoComplete: note.todoComplete})
+                        // res.json({isComplete: note.isComplete})
                         return res.json(note.toJSON());
                     })
                 })

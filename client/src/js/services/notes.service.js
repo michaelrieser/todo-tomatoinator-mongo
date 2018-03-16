@@ -39,6 +39,6 @@ export default class Notes {
       method: 'PUT',
       data: { note: note }
     };
-    return this._$http(request).then((res) => res.data.todoComplete);
+    return this._$http(request).then((res) => res.data.isComplete);
   }
 }
