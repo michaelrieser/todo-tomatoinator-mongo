@@ -6,7 +6,9 @@ class TaskReminderDateTimeInputCtrl {
         this._Tasks = Tasks;
 
         this.reminderIntervalOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];        
+        this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];
+        
+        this.handleReminderIntervalChange();    
     }
     
     removeTaskDate() {
@@ -22,11 +24,22 @@ class TaskReminderDateTimeInputCtrl {
     handleReminderIntervalChange() {
         let intervalNumber = this.task.reminderIntervalNumber;
         let intervalPeriod = this.task.reminderIntervalPeriod;
+        let intervalPeriodIndex = this.reminderPeriodOptions.indexOf(intervalPeriod);
+        
+        if (intervalNumber > 1) {
+            this.reminderPeriodOptions = ['hours', 'days', 'weeks', 'months'];
+        } else {
+            this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];
+        }
+        // reset period if set prior to change
+        if (intervalPeriodIndex > -1) {
+            this.task.reminderIntervalPeriod = this.reminderPeriodOptions[intervalPeriodIndex]; 
+        }
 
         if (intervalNumber && intervalPeriod) {
             this.task.reminderDateTime = moment().add(intervalNumber, intervalPeriod).toISOString();
         }
-    }    
+    } 
 }
 
 let TaskReminderDateTimeInput =  {

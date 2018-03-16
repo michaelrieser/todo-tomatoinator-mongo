@@ -76,7 +76,9 @@ h6 {
 .inline-block { display: inline-block; }
 .pos-relative { position: relative; }
 
-
+.tasks-container {
+    width: 100%;
+}
 .tasks-wrapper {
     width: 65%; 
     margin-right: 5%;
@@ -670,7 +672,6 @@ h6 {
 /* Angular Material Overrides */
 .md-tooltip {
     display: block;
-    z-index: 999 !important;
 }
 
 /* mdToast + Notifications */   

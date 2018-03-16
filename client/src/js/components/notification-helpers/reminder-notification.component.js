@@ -31,6 +31,12 @@ class ReminderNotificationCtrl {
     handleEditDateTimeToggle() {
         this.editingdatetime = !this.editingdatetime;
     }
+
+    reminderIntervalString() {
+        let reminderIntervalNumber = this.notification.reminderIntervalNumber;
+        let reminderIntervalPeriod = this.notification.reminderIntervalPeriod;
+        return `${reminderIntervalNumber} ${reminderIntervalPeriod}${reminderIntervalNumber > 1 ? 's' : '' }`;
+    }
 }
 
 let ReminderNotification = {

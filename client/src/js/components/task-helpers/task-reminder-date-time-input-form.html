@@ -11,6 +11,11 @@
             <select class="form-control" ng-required="$ctrl.displayingreminderdatetimeinput" 
                 ng-model="$ctrl.task.reminderIntervalPeriod" ng-change="$ctrl.handleReminderIntervalChange()" 
                 data-ng-options="opt for opt in $ctrl.reminderPeriodOptions">
+                <!--pluralize-time-period reminder-interval-number="{{$ctrl.task.reminderIntervalNumber}}"-->
+                <!--ng-pluralize count="{{$ctrl.task.reminderIntervalNumber}}" 
+                             when="{'1': 'week',
+                                    'other': 'day'}">                               -->
+                                    
             </select>
         </fieldset>
 
@@ -26,7 +31,7 @@
                 <input type="text" ng-required="$ctrl.displayingreminderdatetimeinput"                      
                     class="form-control add-task-date-input" 
                     ng-model="$ctrl.task.reminderDateTime"                                 
-                    data-date-time-picker="MMMM Do YYYY, h:mm a"
+                    data-date-time-picker="MMMM Do YYYY, h:mm a"                    
                     show-focus="$ctrl.editingReminderDateTime"/>
             </div>        
             <button type="button" class="ion-close-round clear-task-date-btn btn btn-sm" 

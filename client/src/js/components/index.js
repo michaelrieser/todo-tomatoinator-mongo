@@ -15,6 +15,9 @@ componentsModule.directive('showFocus', ShowFocus);
 import DateTimePicker from './date-time-picker.directive';
 componentsModule.directive('dateTimePicker', DateTimePicker);
 
+import PluralizeTimePeriod from './pluralize-time-period.directive';
+componentsModule.directive('pluralizeTimePeriod', PluralizeTimePeriod);
+
 // Components
 import ListErrors from './list-errors.component';
 componentsModule.component('listErrors', ListErrors);

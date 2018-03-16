@@ -7,7 +7,9 @@ class TaskReminderDateTimeInputFormCtrl {
         this._TaskNotifications = TaskNotifications;
 
         this.reminderIntervalOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];        
+        this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];
+        
+        this.handleReminderIntervalChange();
     }
 
     // Assuming that since user is updating reminder at task level, they are already aware if a notification is present,
@@ -21,7 +23,6 @@ class TaskReminderDateTimeInputFormCtrl {
 
     clearReminder() {
         this.clearTaskReminderFields();
-        console.log(this.task);
         this._TaskNotifications.updateTaskAndResolveNotification(this.task, 'reminder').then(
             (updatedTask) => this.displayingreminderdatetimeinput = false,
             (err) => console.log(err)            
@@ -53,6 +54,17 @@ class TaskReminderDateTimeInputFormCtrl {
     handleReminderIntervalChange() {
         let intervalNumber = this.task.reminderIntervalNumber;
         let intervalPeriod = this.task.reminderIntervalPeriod;
+        let intervalPeriodIndex = this.reminderPeriodOptions.indexOf(intervalPeriod);
+        
+        if (intervalNumber > 1) {
+            this.reminderPeriodOptions = ['hours', 'days', 'weeks', 'months'];
+        } else {
+            this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];
+        }
+        // reset period if set prior to change
+        if (intervalPeriodIndex > -1) {
+            this.task.reminderIntervalPeriod = this.reminderPeriodOptions[intervalPeriodIndex]; 
+        }
 
         if (intervalNumber && intervalPeriod) {
             this.task.reminderDateTime = moment().add(intervalNumber, intervalPeriod).toISOString();
