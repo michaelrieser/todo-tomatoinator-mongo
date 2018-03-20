@@ -235,6 +235,10 @@ router.put('/update', auth.required, function (req, res, next) {
                     targetTask.showNotes = req.body.task.showNotes;
                 }
 
+                if (typeof req.body.task.hideCompletedItems !== 'undefined') {
+                    targetTask.hideCompletedItems = req.body.task.hideCompletedItems;
+                }
+
                 /* Note: placeholders for (potential) future fields */
                 // if(typeof req.body.task.isComplete !== 'undefined'){
                 //     targetTask.isComplete = req.body.task.isComplete;

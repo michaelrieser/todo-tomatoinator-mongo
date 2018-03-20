@@ -1,5 +1,5 @@
 class TaskChecklistCtrl {
-    constructor(AppConstants, Notes, Steps, $http, $scope) {
+    constructor(AppConstants, Notes, Steps, $http, $scope, $q) {
         'ngInject';
         
         this._AppConstants = AppConstants;
@@ -8,6 +8,7 @@ class TaskChecklistCtrl {
 
         this._$http = $http;
         this._$scope = $scope;
+        this._$q = $q;
 
         this.showStepForm = false;
         this.resetStepForm();
@@ -90,10 +91,11 @@ class TaskChecklistCtrl {
 
     // TODO: update this method to automatically check all nested checklist steps
     toggleTodo(note) {
-        this._Notes.update(note).then(
-            (updatedNote) => {},  
-            (err) => console.log(err)
-        )        
+        this.note.steps.forEach( (step) => { step.stepComplete = note.isComplete; } );
+        this._$q.when(
+            this._Notes.update(note),
+            this._Notes.updateChecklistSteps(note)
+        )       
     }    
 
     deleteStep(data) {

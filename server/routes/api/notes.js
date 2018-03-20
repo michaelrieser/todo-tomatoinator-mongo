@@ -159,4 +159,11 @@ router.put('/incrementorder', auth.required, function (req, res, next) {
     })
 });
 
+/* PUT update all checklist-steps attached to passed task-checklist ID based on checklistIsComplete parameter */
+router.put('/updatecheckliststeps', auth.required, function (req, res, next) {
+    Step.update({"note": req.body.taskChecklistID}, {"stepComplete": req.body.checklistIsComplete}, {multi: true}).then(function () {
+        return res.sendStatus(204)
+    }).catch(next);
+})
+
 module.exports = router;

@@ -41,4 +41,16 @@ export default class Notes {
     };
     return this._$http(request).then((res) => res.data.isComplete);
   }
+
+  updateChecklistSteps(taskChecklist) {
+    let taskChecklistID = taskChecklist.id;
+    let checklistIsComplete = taskChecklist.isComplete;
+    
+    let request = { 
+      url: `${this._AppConstants.api}/notes/updatecheckliststeps`,
+      method: 'PUT',
+      data: { taskChecklistID: taskChecklistID, checklistIsComplete: checklistIsComplete }
+    };
+    return this._$http(request).then( (res) => console.log(res.data) )
+  }
 }
