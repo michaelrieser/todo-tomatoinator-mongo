@@ -29,15 +29,41 @@ class TaskChecklistCtrl {
         }
 
         $scope.$on('deleteStep', (evt, data) => this.deleteStep(data));
-        $scope.$on('updateRawStepCompletionPercentage', (evt, data) => this.updateRawStepCompletionPercentage());
+        // $scope.$on('emitUpdateTaskChecklistOnStepChange', (evt, data) => this.updateTaskChecklistOnStepChange());
+        $scope.$on('emitToggleStepComplete', (evt, data) => this.toggleStepComplete(data.step))
     }
     
     setHighestStepOrderNumber() {        
         this.highestStepOrderNumber = this.note.steps.length > 0
-            ? Math.max.apply(Math, this.note.steps.map((s) => { return s.order }))
+            ? Math.max.apply(Math, this.note.steps.map((s) => { return s.order; }))
             : 0;
     }
 
+    updateTaskChecklistOnStepChange() {
+        this.updateRawStepCompletionPercentage();
+        this.syncChecklistCompletionWithSteps();             
+    }
+
+    syncChecklistCompletionWithSteps() {
+        if (this.allStepsCompleted() && !this.note.isComplete) {
+            this.note.isComplete = true;
+            this._Notes.update(this.note).then(
+                (updatedNote) => console.log('success'),
+                (err) => console.log(err)
+            )
+        } else if (this.note.isComplete && !this.allStepsCompleted()) {
+            this.note.isComplete = false;
+            this._Notes.update(this.note).then(
+                (updatedNote) => console.log('success'),
+                (err) => console.log(err)
+            )
+        }   
+    }
+
+
+    allStepsCompleted() {
+        return this.stepsCompleted === this.stepsTotal;
+    }
     getStepsCompleted() {
         return this.steps.filter( (s) => { if (s.stepComplete) { return s} }).length; 
     }
@@ -75,7 +101,7 @@ class TaskChecklistCtrl {
                 this.highestStepOrderNumber = newStep.order;                
                 this.steps.push(newStep); 
                 this.resetStepForm();
-                this.updateRawStepCompletionPercentage();                
+                this.updateTaskChecklistOnStepChange();             
             },
             (err) => {
                 this.newStepForm.isSubmitting = false;
@@ -89,21 +115,32 @@ class TaskChecklistCtrl {
             // this.isDeleting = true; // TODO: send this to parent ctrl as component will be deleted? -see article-actions.component
     }
 
-    // TODO: update this method to automatically check all nested checklist steps
     toggleTodo(note) {
         this.note.steps.forEach( (step) => { step.stepComplete = note.isComplete; } );
+        this.updateRawStepCompletionPercentage();
         this._$q.when(
             this._Notes.update(note),
             this._Notes.updateChecklistSteps(note)
         )       
     }    
 
+    // emitted from step
+    toggleStepComplete(step) {
+        this.updateTaskChecklistOnStepChange();
+        this._Steps.update(step).then(
+            (updatedStep) => {
+                console.log('step updated!')
+            },
+            (err) => console.log(err)
+        )   
+    }
+
     deleteStep(data) {
         this._Steps.delete(data.stepID).then(
             (success) => {
                 this.steps.splice(data.index, 1);
                 this.setHighestStepOrderNumber();
-                this.updateRawStepCompletionPercentage();
+                this.updateTaskChecklistOnStepChange();
             },
             (err) => console.log(err)
         )

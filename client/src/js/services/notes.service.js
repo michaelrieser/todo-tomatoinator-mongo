@@ -42,6 +42,7 @@ export default class Notes {
     return this._$http(request).then((res) => res.data.isComplete);
   }
 
+  // set all checklist steps tethered to taskChecklist to value of taskChecklist.isComplete
   updateChecklistSteps(taskChecklist) {
     let taskChecklistID = taskChecklist.id;
     let checklistIsComplete = taskChecklist.isComplete;
