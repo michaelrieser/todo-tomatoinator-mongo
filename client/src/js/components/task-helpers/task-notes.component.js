@@ -6,9 +6,9 @@ class TaskNotesCtrl {
         this._Notes = Notes;
         this._Tasks = Tasks;
         this._$http = $http;
+        this._$scope = $scope;
 
-        this.notes = this.task.notes;
-        // this.task.notes.forEach( (n) => console.log(n));
+        this.notes = this.task.notes;        
         this.showNoteForm = false;
 
         // this.items = [ {name: 1}, {name: 2}, {name: 3} ]; // ui-sortable TEST
@@ -28,7 +28,25 @@ class TaskNotesCtrl {
             }
         }
 
+        this._$scope.$watch( 
+            () => { return this.notes }, 
+            (refreshedNotes) => {
+                this.taskHasTodos = !!refreshedNotes.find( (note) => {
+                    if (note.isTodo || note.isChecklist) { return note; }
+                });
+                this.completedItemCount = refreshedNotes.reduce( (sum, note) => {
+                    return note.isComplete ? ++sum : sum;
+                }, 0)
+            },
+            true // QUESTION/TODO => find out why we need a deep watch here?
+        )
+
         $scope.$on('deleteNote', (evt, data) => this.deleteNote(data));
+    }
+
+    toggleCompletedItems() {
+        this.task.hideCompletedItems = !this.task.hideCompletedItems;
+        this._Tasks.update(this.task);
     }
 
     updateTaskNotesOrderOnDrop(startIdx, stopIdx) {

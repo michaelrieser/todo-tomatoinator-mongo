@@ -1,6 +1,11 @@
+<div class="toggle-completed-items-wrapper" ng-show="$ctrl.taskHasTodos">
+    <p class="toggle-completed-items" ng-click="$ctrl.toggleCompletedItems()" ng-hide="$ctrl.task.hideCompletedItems">Hide completed items</p>
+    <p class="toggle-completed-items" ng-click="$ctrl.toggleCompletedItems()" ng-show="$ctrl.task.hideCompletedItems">Show completed items ({{ $ctrl.completedItemCount }})</p>
+</div>
 <div class="task-notes-list">
     <ul class="ul-task-notes-list" ui-sortable="$ctrl.sortableTaskNoteHandlers" ng-model="$ctrl.task.notes">
-        <li class="li-list-wrapper" ng-repeat="note in $ctrl.task.notes" data-order="{{note.order}}">
+        <li class="li-list-wrapper" ng-repeat="note in $ctrl.task.notes" data-order="{{note.order}}" 
+            ng-hide="$ctrl.task.hideCompletedItems && note.isComplete">
             <task-checklist ng-if="note.isChecklist" index="$index" task="$ctrl.task" note="note"></task-checklist>
             <task-note ng-if="!note.isChecklist" index="$index" task="$ctrl.task" note="note"></task-note>
         </li>
