@@ -31,12 +31,10 @@ class TaskNotesCtrl {
         this._$scope.$watch( 
             () => { return this.notes }, 
             (refreshedNotes) => {
-                this.taskHasTodos = !!refreshedNotes.find( (note) => {
-                    if (note.isTodo || note.isChecklist) { return note; }
-                });
                 this.completedItemCount = refreshedNotes.reduce( (sum, note) => {
                     return note.isComplete ? ++sum : sum;
                 }, 0)
+                this.taskHasCompletedItems = () => { return this.completedItemCount > 0; };
             },
             true // QUESTION/TODO => find out why we need a deep watch here?
         )

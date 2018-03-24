@@ -1,4 +1,4 @@
-<div class="toggle-completed-items-wrapper" ng-show="$ctrl.taskHasTodos">
+<div class="toggle-completed-items-wrapper" ng-show="$ctrl.taskHasCompletedItems()">    
     <p class="toggle-completed-items" ng-click="$ctrl.toggleCompletedItems()" ng-hide="$ctrl.task.hideCompletedItems">Hide completed items</p>
     <p class="toggle-completed-items" ng-click="$ctrl.toggleCompletedItems()" ng-show="$ctrl.task.hideCompletedItems">Show completed items ({{ $ctrl.completedItemCount }})</p>
 </div>

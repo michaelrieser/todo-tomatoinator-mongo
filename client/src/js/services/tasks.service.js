@@ -51,7 +51,7 @@ export default class Tasks {
 
   refreshTasks() {
     this.queryAndSet().then(
-      (tasksInfo) => this.setRefreshedTasksInfo(tasksInfo),
+      (tasksInfo) => tasksInfo,
       (err) => console.log(err)
     );
   }
@@ -77,6 +77,7 @@ export default class Tasks {
   toggleTaskActive(task) {
     if (this.activeTask && !task.isActive) { // Not currently active task
       this.activeTask.isActive = false;
+      // TODO: use $q promise here to call both services asynchronously
       this.update(this.activeTask).then(
         (success) => {
           task.isActive = true;
@@ -86,6 +87,11 @@ export default class Tasks {
               // console.log(this.tasks.indexOf(task));
               // var tgtActiveTaskIdx = this.tasks.indexOf(task);
               // this.activeTask = this.tasks.splice(tgtActiveTaskIdx, 1); // Remove task from inactive list and set to activeTask
+               
+              // clear activeTask binding so that newly set activeTask in setRefreshedTasksInfo() is re-instantiated, and consequently doesn't have lingering   
+              //  bindings from old task. without clearing reference, task completed items panels would linger from previously set activeTask, potentially bc the new activeTask 
+              //  (and child components) weren't being re-instantiated
+              this.activeTask = undefined; 
               this.refreshTasks();
             },
             (failure) => console.log('toggleTaskActive failed')

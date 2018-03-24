@@ -1,5 +1,5 @@
 class TaskCtrl {
-    constructor(Tasks, PomTimer, Projects, TimeUtils, $scope, $state) {
+    constructor(Tasks, PomTimer, Projects, TimeUtils, $state) {
         'ngInject';
 
         this._Tasks = Tasks;   
@@ -7,7 +7,6 @@ class TaskCtrl {
         this._Projects = Projects;
         this._TimeUtils = TimeUtils;
         this._$state = $state;              
-        this._$scope = $scope;
 
         this.editingTitle = false;
         this.displayingduedatetimeinput = false;
