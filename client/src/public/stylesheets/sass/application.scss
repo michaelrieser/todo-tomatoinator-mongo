@@ -427,6 +427,19 @@ h6 {
     // width: 95%;    
     margin-right: 20px;
 }
+
+.edit-note-form {
+    display: inline-block;
+    width: 95%;
+}
+.edit-note-textarea {
+    overflow-wrap: break-word;
+    resize: none;
+    line-height: 1rem;
+    height: 50px;
+    overflow-x: hidden; /* set to remove extra line in FF => SEE: https://stackoverflow.com/questions/7695945/height-of-textarea-does-not-match-the-rows-in-firefox */
+}
+
 .task-checklist-content-wrapper {
     position: relative;
 }

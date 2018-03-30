@@ -122,6 +122,10 @@ router.put('/', auth.required, function (req, res, next) {
             if (!user) { return res.sendStatus(401); } // Note: user was NOT authenticated in articles.js POST create comment on article, this was there instead (??)
             if (user._id.toString() === req.payload.id.toString()) {
                 Note.findById(req.body.note.id).then(function (targetNote) {
+                    if (typeof req.body.note.title !== 'undefined') {
+                        targetNote.title = req.body.note.title;
+                    }
+                    
                     if (typeof req.body.note.isComplete !== 'undefined') {
                         targetNote.isComplete = req.body.note.isComplete;
                     }

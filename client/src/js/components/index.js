@@ -18,6 +18,9 @@ componentsModule.directive('dateTimePicker', DateTimePicker);
 import PluralizeTimePeriod from './pluralize-time-period.directive';
 componentsModule.directive('pluralizeTimePeriod', PluralizeTimePeriod);
 
+import AutoHeight from './auto-height.directive';
+componentsModule.directive('autoHeight', AutoHeight);
+
 // Components
 import ListErrors from './list-errors.component';
 componentsModule.component('listErrors', ListErrors);
