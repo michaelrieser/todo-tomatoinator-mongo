@@ -46,6 +46,9 @@ componentsModule.component('taskNote', TaskNote);
 import TaskChecklist from './checklist-helpers/task-checklist.component';
 componentsModule.component('taskChecklist', TaskChecklist);
 
+import NoteTitle from './note-helpers/note-title.component';
+componentsModule.component('noteTitle', NoteTitle);
+
 import ChecklistStep from './checklist-helpers/checklist-step.component';
 componentsModule.component('checklistStep', ChecklistStep);
 

@@ -5,14 +5,7 @@ class TaskNoteCtrl {
         this._$scope = $scope;
 
         this.editingTitle = false;
-    }
-    
-    handleEditTitleToggle() {
-        this.editingTitle = !this.editingTitle;
-        if (!this.editingTitle) { // Done making edits
-            this.updateNote();
-        }
-    }
+    }    
 
     deleteNote(noteID, index) {
         this._$scope.$emit('deleteNote', {noteID: noteID, index: index});

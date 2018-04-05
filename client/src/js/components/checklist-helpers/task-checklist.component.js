@@ -32,7 +32,7 @@ class TaskChecklistCtrl {
         // $scope.$on('emitUpdateTaskChecklistOnStepChange', (evt, data) => this.updateTaskChecklistOnStepChange());
         $scope.$on('emitToggleStepComplete', (evt, data) => this.toggleStepComplete(data.step))
     }
-    
+
     setHighestStepOrderNumber() {        
         this.highestStepOrderNumber = this.note.steps.length > 0
             ? Math.max.apply(Math, this.note.steps.map((s) => { return s.order; }))

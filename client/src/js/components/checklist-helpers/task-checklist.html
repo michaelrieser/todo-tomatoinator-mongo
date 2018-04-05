@@ -7,7 +7,7 @@
                 </fieldset>
             </form>
         </span>
-        <span ng-class="{'greyed-out': $ctrl.note.isComplete}">{{ $ctrl.note.title }}</span>
+        <note-title note="$ctrl.note"></note-title>
         <!--<span>&nbsp;|{{ $ctrl.note.order }}</span>   -->
         <div class="checklist-progress-wrapper">
             <span class="checklist-progress-percentage">{{ $ctrl.rawCompletionPercentage | prettyPercentage }}</span>

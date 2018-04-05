@@ -7,22 +7,7 @@
                 </fieldset>
             </form>
         </span>
-        <span ng-class="{'greyed-out': $ctrl.note.isComplete}">
-            <span ng-hide="$ctrl.editingTitle" ng-click="$ctrl.handleEditTitleToggle()" class="note-title">{{ $ctrl.note.title }}</span>
-            <span ng-show="$ctrl.editingTitle" class="edit-note-form">
-                <form class="edit-note-form" onsubmit="document.activeElement.blur()">
-                    <fieldset ng-disabled="$ctrl.updatingNote">
-                        <textarea class="edit-note-textarea form-control form-control-sm"
-                            rows="1"
-                            ng-blur="$ctrl.handleEditTitleToggle()"
-                            ng-model="$ctrl.note.title"
-                            type="text"
-                            show-focus="$ctrl.editingTitle"
-                            required/>
-                    </fieldset>
-                </form>
-            </span>
-        </span>
+        <note-title note="$ctrl.note"></note-title>
     </div>
 
     <span class="note-controls-outer">
