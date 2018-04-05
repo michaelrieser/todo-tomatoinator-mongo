@@ -1,0 +1,16 @@
+<span ng-class="{'greyed-out': $ctrl.step.stepComplete}">
+    <span ng-hide="$ctrl.editingTitle" ng-click="$ctrl.handleEditTitleToggle()" class="note-title">{{ $ctrl.step.title }}</span>
+    <span ng-show="$ctrl.editingTitle" class="edit-note-form">
+        <form class="edit-note-form" onsubmit="document.activeElement.blur()">
+            <fieldset ng-disabled="$ctrl.updatingStep">
+                <textarea class="edit-note-textarea form-control form-control-sm"
+                    rows="1"
+                    ng-blur="$ctrl.handleEditTitleToggle()"
+                    ng-model="$ctrl.step.title"
+                    type="text"
+                    show-focus="$ctrl.editingTitle"
+                    required/>
+            </fieldset>
+        </form>
+    </span>        
+</span>

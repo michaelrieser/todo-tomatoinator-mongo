@@ -52,6 +52,9 @@ componentsModule.component('noteTitle', NoteTitle);
 import ChecklistStep from './checklist-helpers/checklist-step.component';
 componentsModule.component('checklistStep', ChecklistStep);
 
+import ChecklistStepTitle from './checklist-helpers/checklist-step-title.component';
+componentsModule.component('checklistStepTitle', ChecklistStepTitle);
+
 import PomTimer from './pom-timer.component';
 componentsModule.component('pomTimer', PomTimer);
 
