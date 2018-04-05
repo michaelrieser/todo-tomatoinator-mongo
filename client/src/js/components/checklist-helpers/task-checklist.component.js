@@ -44,6 +44,7 @@ class TaskChecklistCtrl {
         this.syncChecklistCompletionWithSteps();             
     }
 
+    // Check and mark parent checklist as complete if all of its children are complete, otherwise set uncomplete
     syncChecklistCompletionWithSteps() {
         if (this.allStepsCompleted() && !this.note.isComplete) {
             this.note.isComplete = true;
@@ -131,7 +132,7 @@ class TaskChecklistCtrl {
             (updatedStep) => {
                 console.log('step updated!')
             },
-            (err) => console.log(err)
+            (err) => console.log(err) // QUESTION/TODO: call this.updateTaskChecklistOnStepChange() again since step (probably) wasn't updated properly?
         )   
     }
 
