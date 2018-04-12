@@ -1,11 +1,24 @@
 class ProjectsCtrl {
     constructor(Projects, $scope) {
         'ngInject';
-
-        this._Projects = Projects;
+        
         this._$scope = $scope;
 
+        this._Projects = Projects;
+        this.projects = this._Projects.projects;
+
         this.resetProject();
+        
+        this.startIdx = null;
+        this.stopIdx = null;
+        this.sortableProjectHandlers = {
+            start: (event, ui) => {
+                console.log('start dragging project')
+            },
+            stop: (event, ui) => {
+                console.log('stop dragging project')
+            }
+        }                                
     }
 
     resetProject() {
@@ -20,7 +33,7 @@ class ProjectsCtrl {
             (newProject) => {
                 this.resetProject();
                 this.isSubmitting = false;
-                this._Projects.projects.push(newProject);
+                this.projects.push(newProject);
             },
             (err) => {
                 this.isSubmitting = false;
@@ -31,9 +44,7 @@ class ProjectsCtrl {
 }
 
 let Projects =  {
-    bindings: {
-        projects: '=',
-    },
+    bindings: {},
     controller: ProjectsCtrl,
     templateUrl: 'components/project-helpers/projects.html'
 };

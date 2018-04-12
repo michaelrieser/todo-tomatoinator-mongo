@@ -1,7 +1,9 @@
-<div class="project-anchor-wrapper">
-    <a class="project-anchor" ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl.project.title}) }}">
-        <button ng-class="{'display-project': $ctrl.isDisplayProject()}" class="btn btn-sm primary project-button" class="button">{{ $ctrl.project.title }}</button>
-    </a>
+<div class="project-anchor-wrapper">    
+    <div>
+        <div ng-class="{'display-project': $ctrl.isDisplayProject()}" class="project-button">
+            <a class="project-anchor" ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl.project.title}) }}">{{ $ctrl.project.title }}</a>
+        </div>
+    </div>
     <span ng-if="$ctrl.project.title !== 'all'" class="project-controls-outer">
         <div class="project-controls-inner">
             <span class="project-delete-wrapper">

@@ -6,6 +6,9 @@ export default class Projects {
     this._$http = $http;
 
     this.displayProject = 'all'; // TODO: allow user to save and set this dynamically with service on load
+    
+    this.projectsInfo = {};
+    this.projects = [];
   }
 
   getDefaultProject() {
@@ -34,8 +37,8 @@ export default class Projects {
   }    
 
   handleQueryResponse(projectsInfo) {
-    this.projectsInfo = projectsInfo;
-    this.projects = projectsInfo.projects;
+    angular.copy(projectsInfo, this.projectsInfo);
+    angular.copy(projectsInfo.projects, this.projects)
     return projectsInfo;
   }
 

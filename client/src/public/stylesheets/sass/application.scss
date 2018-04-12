@@ -608,17 +608,28 @@ h6 {
 }
 
 /* Projects */
+.project-list {
+    list-style: none;
+    padding: 0;
+}
+
 .project-anchor-wrapper {
     position: relative;
     width: 100%;
 }
-.project-anchor {
-    width: 100%;
-}
-.project-button {
-    width: 100%;
+.project-button {    
+    // padding: 5px;
     background-color: #5CB85C;
     color: white;
+    border-radius: 3px;
+}
+.project-anchor {    
+    display: block;
+    text-align: center;
+    // width: 100%;
+    margin: auto;
+    color: white;
+    text-decoration: none !important;
 }
 @media (max-width: 738px) {
     .project-button {
