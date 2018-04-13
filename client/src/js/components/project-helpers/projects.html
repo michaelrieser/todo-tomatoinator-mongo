@@ -4,26 +4,5 @@
     <span>Learning</span>
 </div>-->
 
-<project project="{title: 'all'}">all</project>
-<ul class="project-list" ui-sortable="$ctrl.sortableProjectHandlers" ng-model="$ctrl.projects">
-    <li ng-repeat="project in $ctrl.projects">
-        <project project="project"></project>
-    </li>
-    <!--<project project="project" ng-repeat="project in $ctrl.projects"></project>-->
-</ul>
-
-<h5>Add New Project<h5>
-<list-errors errors="$ctrl.errors"></list-errors>    
-<form ng-submit="$ctrl.submit()">
-    <fieldset ng-disabled="$ctrl.isSubmitting">
-        <fieldset class="form-group">
-            <input class="form-control form-control-sm"
-            ng-model="$ctrl.project.title"
-            type="text"
-            placeholder="Project Title" />
-        </fieldset>
-        <button class="add-project-btn btn btn-sm pull-xs-right btn-primary" type="submit">
-            Add Project
-        </button>
-    </fieldset>
-</form>
+<project-list></project-list>
+<add-project-form></add-project-form>

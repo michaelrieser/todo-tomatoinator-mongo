@@ -23,7 +23,13 @@ export default class Projects {
       method: 'POST',
       data: { project: project }
     };
-    return this._$http(request).then((res) => res.data.project);
+    return this._$http(request).then((res) => this.addNewProjectToList(res.data.project) );
+  }
+
+  addNewProjectToList(project) {
+    this.highestOrderNumber = project.order;
+    this.projects.push(project);
+    return project;
   }
 
   query(config) {
@@ -38,7 +44,9 @@ export default class Projects {
 
   handleQueryResponse(projectsInfo) {
     angular.copy(projectsInfo, this.projectsInfo);
-    angular.copy(projectsInfo.projects, this.projects)
+    angular.copy(projectsInfo.projects, this.projects);
+    this.lowestOrderNumber = projectsInfo.lowestOrderNumber;
+    this.highestOrderNumber = projectsInfo.highestOrderNumber;
     return projectsInfo;
   }
 
@@ -55,5 +63,13 @@ export default class Projects {
       method: 'DELETE'
     }
     return this._$http(request).then((res) => res.data);
+  }
+
+  updateProjectsOrderOnDrop(startIdx, stopIdx) {
+    if (startIdx === stopIdx) { return; }
+    let tgtProject = this.projects[stopIdx];
+    let initialTgtTaskOrder = tgtTask.order;
+
+
   }
 }

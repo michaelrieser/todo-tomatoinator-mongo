@@ -3,10 +3,9 @@ class TaskListCtrl {
         'ngInject';
 
         this._Tasks = Tasks;
+        
         this.startIdx = null;
         this.stopIdx = null;
-        
-        // this._Tasks = Tasks; 
         this.sortableTaskHandlers = {
             // TODO: only allow vertical scrolling with axis + containment keys => list elements jump around on drag! SEE: Trello
             // axis: 'y',

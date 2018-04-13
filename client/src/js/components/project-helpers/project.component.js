@@ -10,7 +10,7 @@ class ProjectCtrl {
 
     deleteProject() {
         this._Projects.delete(this.project).then(
-            // TODO/REFACTOR(?) => move handleProjDeleteSuccess() to Projects service?
+            // TODO/REFACTOR(?) => pop target project in Projects service and move handleProjDeleteSuccess() to Projects service as well?
             (success) => { this.handleProjDeleteSuccess() },
             (err) => console.log(err) 
         )

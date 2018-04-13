@@ -15,10 +15,11 @@ class AddTaskFormCtrl {
                                 {value: 3, label: 'C'},
                                 {value: 4, label: 'D'}];
 
-        this.highestOrderNumber = this._Tasks.highestOrderNumber;    
+        this.highestOrderNumber = this._Tasks.highestOrderNumber;
         $scope.$watch(() => {return this._Tasks.highestOrderNumber}, (newValue) => {
             this.highestOrderNumber = newValue;
-        })
+        });
+
         this.resetTask();
     }
 

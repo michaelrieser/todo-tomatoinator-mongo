@@ -41,10 +41,22 @@ router.get('/', auth.required, function (req, res, next) {
     query.user = userId;
 
     Project.find(query).then(function (projects) {
+      let mappedProjects = projects.map(function (project) {
+        return project.toJSON();
+      });
+
+      let sortedMappedProjects = mappedProjects.sort( (a,b) => {
+        return a.order - b.order;
+      });
+      
+      let lowestOrderNumber  = sortedMappedProjects[0].order;
+      let lastProjectIdx = sortedMappedProjects.length - 1;
+      let highestOrderNumber = sortedMappedProjects[lastProjectIdx].order;
+
       return res.json({
-        projects: projects.map(function (project) {
-          return project.toJSON();
-        })
+        projects: sortedMappedProjects,
+        lowestOrderNumber: lowestOrderNumber,
+        highestOrderNumber: highestOrderNumber
       })
     }).catch(next);
   })

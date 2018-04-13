@@ -61,6 +61,12 @@ componentsModule.component('pomTimer', PomTimer);
 import Projects from './project-helpers/projects.component';
 componentsModule.component('projects', Projects);
 
+import ProjectList from './project-helpers/project-list.component';
+componentsModule.component('projectList', ProjectList);
+
+import AddProjectForm from './project-helpers/add-project-form.component';
+componentsModule.component('addProjectForm', AddProjectForm);
+
 import Project from './project-helpers/project.component';
 componentsModule.component('project', Project);
 
