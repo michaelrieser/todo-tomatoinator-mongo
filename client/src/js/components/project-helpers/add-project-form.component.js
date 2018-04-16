@@ -6,7 +6,6 @@ class AddProjectFormCtrl {
         this.projects = this._Projects.projects;
         this.highestOrderNumber = this._Projects.highestOrderNumber;
         $scope.$watch(() => {return this._Projects.highestOrderNumber}, (newValue) => {
-            console.log('highestOrderNumber: ', newValue)
             this.highestOrderNumber = newValue;
         });
 

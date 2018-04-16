@@ -36,31 +36,74 @@ router.get('/', auth.required, function (req, res, next) {
   var offset = 0;
 
   User.findById(req.payload.id).then(function (user) {
-
     var userId = user._id;
     query.user = userId;
 
-    Project.find(query).then(function (projects) {
-      let mappedProjects = projects.map(function (project) {
+    if (typeof req.query.order !== 'undefined') {
+      query.order = req.query.order;
+    }
+
+    return Promise.all([
+      // *queried projects*     
+      Project.find(query).sort({ 'order': 1 }),
+      // *lowestOrderNumber*
+      Project.find({}).sort({ 'order': 1 }).limit(1),
+      // *highestOrderNumber*
+      Project.find({}).sort({ 'order': -1 }).limit(1)
+    ]).then(function (results) {
+      let queriedProjects    = results[0];
+      let lowestOrderNumber  = results[1][0].order;
+      let highestOrderNumber = results[2][0].order;
+
+      let mappedQueriedProjects = queriedProjects.map(function (project) {
         return project.toJSON();
       });
 
-      let sortedMappedProjects = mappedProjects.sort( (a,b) => {
-        return a.order - b.order;
-      });
-      
-      let lowestOrderNumber  = sortedMappedProjects[0].order;
-      let lastProjectIdx = sortedMappedProjects.length - 1;
-      let highestOrderNumber = sortedMappedProjects[lastProjectIdx].order;
-
       return res.json({
-        projects: sortedMappedProjects,
+        projects: mappedQueriedProjects,
         lowestOrderNumber: lowestOrderNumber,
         highestOrderNumber: highestOrderNumber
       })
     }).catch(next);
-  })
+  })  
+});
 
+/* PUT update project */
+router.put('/update', auth.required, function (req, res, next) {
+  User.findById(req.payload.id).then(function (user) {
+    if (req.body.project.user.toString() === req.payload.id.toString()) {
+
+      Project.findById(req.body.project.id).then(function (targetProject) {
+
+        if (typeof req.body.project.title !== 'undefined') {
+          targetProject.title = req.body.project.title;
+        }
+
+        if (typeof req.body.project.order !== 'undefined') {
+          targetProject.order = req.body.project.order;
+        }
+
+        return targetProject.save().then(function () {
+          return res.json({ project: targetProject.toJSON() })
+        }).catch(next)
+      })
+    }
+  })
+})
+
+/* PUT increment order of all projects on project drop event */
+router.put('/incrementorder', auth.required, function (req, res, next) {  
+  let startOrder = req.body.startOrder;
+  User.findById(req.payload.id).then(function (user) {    
+    if (req.body.tgtProject.user.toString() === req.payload.id.toString()) {
+      // Increment project order where order is >= startOrder and project id not equal to the updated task id
+      Project.update({ 'order': { $gte: startOrder }, _id: { $ne: req.body.tgtProject.id } },
+        { $inc: { 'order': 1 } }, { multi: true })
+        .then(function (projects) {
+          return res.sendStatus(204);
+        })
+    }
+  });
 });
 
 /* INTERCEPT and prepopulate project data from id */

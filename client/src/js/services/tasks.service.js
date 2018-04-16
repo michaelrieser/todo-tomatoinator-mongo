@@ -181,7 +181,6 @@ export default class Tasks {
       data: { task: task } // => becomes req.body.task in tasks.js route
     }
     return this._$http(request).then((res) => res.data.task);    
-    // return this._$http(request).then((res) => res.data);
   }
 
   // updateAndSet(task) for when user is updating task data on backend (ex: task notification), but not on the frontend (ex: task corresponding to task notification)

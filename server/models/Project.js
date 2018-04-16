@@ -20,6 +20,7 @@ ProjectSchema.methods.toJSON = function() {
         order: this.order,
         title: this.title,
         // tasks: this.tasks, // TODO: unsure if needed
+        user: this.user,
         // user: this.user.toProfileJSONFor(user), // NOTE/TODO: hangs - unsure if even necessary!!
         notes: this.notes
     };

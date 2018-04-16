@@ -12,7 +12,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					controllerAs: '$ctrl',
 					resolve: {
 						projectsInfo: function (Projects) {
-							return Projects.query().then(
+							return Projects.queryAndSet().then(
 								(projectsInfo) => projectsInfo,
 								(err) => { console.log(err); }
 							)

@@ -11,6 +11,7 @@ class ProjectCtrl {
     deleteProject() {
         this._Projects.delete(this.project).then(
             // TODO/REFACTOR(?) => pop target project in Projects service and move handleProjDeleteSuccess() to Projects service as well?
+            //  => unsure how to handle first case in handleProjDeleteSuccess() in service, when deleted project is active project?
             (success) => { this.handleProjDeleteSuccess() },
             (err) => console.log(err) 
         )
