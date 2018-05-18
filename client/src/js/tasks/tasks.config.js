@@ -25,11 +25,11 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 							// )
 						},
 						quoteOfTheDay: function (ProgrammingQuotes) {
-							// TODO: find API with quote of the day and implement || store quote on first load of day?
-							return ProgrammingQuotes.getRandomQuote().then(
-								(quoteOfTheDay) => quoteOfTheDay,
-								(err) => console.log(err)
-							)
+							// // TODO: find API with quote of the day and implement || store quote on first load of day?
+							// return ProgrammingQuotes.getRandomQuote().then(
+							// 	(quoteOfTheDay) => quoteOfTheDay,
+							// 	(err) => console.log(err)
+							// )
 						}
 					}
 				},

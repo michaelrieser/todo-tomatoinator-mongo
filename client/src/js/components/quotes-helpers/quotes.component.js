@@ -7,8 +7,8 @@ class QuotesCtrl {
     }
 
     setRandomQuoteData() {
-        this.randomDevQt = this._ProgrammingQuotes.randomQuoteData.quote;
-        this.randomDevQtAuthor = this._ProgrammingQuotes.randomQuoteData.author;
+        // this.randomDevQt = this._ProgrammingQuotes.randomQuoteData.quote;
+        // this.randomDevQtAuthor = this._ProgrammingQuotes.randomQuoteData.author;        
     }
 }
 
