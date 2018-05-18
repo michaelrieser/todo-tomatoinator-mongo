@@ -4,16 +4,20 @@
     Set active task by dragging task here or clicking it active.
 </div>-->
 
-<!-- MVVM implementation with Model properties used in View -->
-<task ng-if="$ctrl._Tasks.activeTask" class="task task-active task-lvl-{{$ctrl._Tasks.activeTask.priority}}" task="$ctrl._Tasks.activeTask"></task>
-<div ng-if="!$ctrl._Tasks.activeTask && $ctrl._Tasks.tasks.length>0 && $ctrl.tasksStatus !== 'completed'" class="task-active-empty">
-    Set active task by dragging task here or clicking it active.
-</div>
+<ul data-list="activeTaskList" ui-sortable="$ctrl.sortableOptions" 
+    class="active-inactive-connected-list active-task-list" ng-model="$ctrl.activeTaskList">    
+    <!-- NOTE: will only be one element in activeTaskList, but we need list (w/ng-repeat) for angular ui-sortable to maintain ng-model -->        
+    <li ng-if="$ctrl.activeTaskList[0].elementType === 'li'" ng-hide="$ctrl.hoveringActiveTaskList" 
+        ng-repeat="element in $ctrl.activeTaskList" class="unsortable {{element.cssClass}}">{{ element.displayText }}</li>
+    <!--<task ng-repeat="element in $ctrl.activeTaskList" task="element.task" class="task task-active task-lvl-{{element.priority}}"></task>-->
+    <task ng-if="$ctrl.activeTaskList[0].elementType === 'task'" ng-hide="$ctrl.hoveringActiveTaskList" 
+        ng-repeat="element in $ctrl.activeTaskList | filter:{elementType:'task'}:true" task="element" 
+        class="task task-active task-lvl-{{element.priority}}"></task>
+</ul>
 
-<div class="task-list-empty" ng-if="$ctrl._Tasks.tasks.length==0 && $ctrl._Tasks.activeTask==undefined">
-    Select plus below to add a task
-</div>
-<task-list class="task-list" tasks="$ctrl._Tasks.tasks"></task-list>
+<!-- MVVM implementation with Model properties used in View -->
+<task-list class="task-list" tasks="$ctrl._Tasks.tasks" sortableoptions="$ctrl.sortableOptions" 
+    hoveringinactivetasklist="$ctrl.hoveringInactiveTaskList"></task-list>
 
 <!-- TODO: combine following 3 elements and place into component/directive ? -->
 <div class="toggle-add-task-outer">
@@ -24,3 +28,11 @@
 </div>
 <list-errors errors="$ctrl.errors"></list-errors>
 <add-task-form ng-show="$ctrl.showAddTaskForm" class="add-task-form"></add-task-form>
+
+<!-- TEST: ui-sortable drag and drop demo -->
+<!--<pre>{{ $ctrl.list1 }}</pre>
+<ul style="height:20px; width:100%; background-color:blue;" ui-sortable="$ctrl.sortableOptions" class="connectedList" ng-model="$ctrl.list1">
+    <li ng-repeat="item in $ctrl.list1">{{item}}</li>
+</ul>
+<test-component sortableoptions="$ctrl.sortableOptions"></test-component>-->
+<!--            /TEST                   -->

@@ -6,19 +6,10 @@ class TaskListCtrl {
         
         this.startIdx = null;
         this.stopIdx = null;
-        this.sortableTaskHandlers = {
-            // TODO: only allow vertical scrolling with axis + containment keys => list elements jump around on drag! SEE: Trello
-            // axis: 'y',
-            // containment: 'parent',
-            // placeholder: 'task-drop-placeholder', // TODO: implement placeholder for drop zone
-            start: (event, ui) => {
-                this.startIdx = ui.item.index();
-            },
-            stop: (event, ui) => {
-                this.stopIdx = ui.item.index();
-                this._Tasks.updateTasksOrderOnDrop(this.startIdx, this.stopIdx);
-            }
-        }
+    }
+
+    hasZeroTaskLength() {
+        return this.tasks.length === 0;
     }
 
 }
@@ -26,6 +17,8 @@ class TaskListCtrl {
 let TaskList = {
     bindings: {
         tasks: '=',
+        sortableoptions: '=',
+        hoveringinactivetasklist: '='
     },
     controller: TaskListCtrl,
     templateUrl: 'components/task-helpers/task-list.html'

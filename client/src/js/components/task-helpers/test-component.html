@@ -1,0 +1,5 @@
+<p>Test Component</p>
+<pre>{{ $ctrl.list2 }}</pre>
+<ul data-list="testTaskList" ui-sortable="$ctrl.sortableoptions" class="connected-list" ng-model="$ctrl.list2">
+    <li ng-repeat="item in $ctrl.list2">{{item}}</li>
+</ul>

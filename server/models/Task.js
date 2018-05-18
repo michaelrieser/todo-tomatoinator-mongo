@@ -29,6 +29,7 @@ TaskSchema.methods.toJSONFor = function(user) {
     return {
         id: this.id,
         title: this.title,
+        elementType: 'task',
         order: this.order,
         priority: this.priority,
         timesPaused: this.timesPaused,

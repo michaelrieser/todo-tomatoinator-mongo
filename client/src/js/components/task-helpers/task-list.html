@@ -1,7 +1,6 @@
-<!--<pre>{{$ctrl.tasks}}</pre>-->
-<ul class="ul-task-list" ui-sortable="$ctrl.sortableTaskHandlers" ng-model="$ctrl.tasks">
-    <task class="task task-lvl-{{task.priority}}"       
-        task="task" ng-repeat="task in $ctrl.tasks"></task>
+<ul data-list="inactiveTaskList" class="inactive-task-list active-inactive-connected-list" ui-sortable="$ctrl.sortableoptions" ng-model="$ctrl.tasks">
+    <task class="task task-lvl-{{task.priority}}" ng-if="!$ctrl.hasZeroTaskLength()" task="task" ng-repeat="task in $ctrl.tasks"></task>
+    <li class="inactive-tasks-placeholder" ng-show="$ctrl.hasZeroTaskLength() && !$ctrl.hoveringinactivetasklist">Inactive tasks will go here...</li>
 </ul>
 
 

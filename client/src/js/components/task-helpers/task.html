@@ -1,5 +1,5 @@
 
-<li class="li-list-wrapper" data-order="{{$ctrl.task.order}}">
+<li class="li-list-wrapper" data-order="{{$ctrl.task.order}}">    
     <span class="task-outer-wrapper" ng-dblclick="$ctrl.toggleTaskNotes(task)">
         <div class="task-inner-wrapper">
             <!--<div style="display:inline-block;">-->
@@ -85,7 +85,6 @@
                     </span>
                 </div>
             </span>
-            <!--<pre>{{ console.log($ctrl.task.notes) }}</pre>-->
             <task-notes task="$ctrl.task" ng-show="$ctrl.task.showNotes"></task-notes>
         </div>
     </span>

@@ -76,9 +76,17 @@ export default class Tasks {
 
   toggleTaskActive(task) {
     if (this.activeTask && !task.isActive) { // Not currently active task
-      this.activeTask.isActive = false;
+      
+      // TODO/QUESTION: do we need to keep below four lines, OR revert back?
+      let priorActiveTask = this.activeTask;
+      priorActiveTask.isActive = false;
+      
+      task.isActive = true;
+      this.activeTask = task;
+
+      // this.activeTask.isActive = false;
       // TODO: use $q promise here to call both services asynchronously
-      this.update(this.activeTask).then(
+      this.update(priorActiveTask).then(
         (success) => {
           task.isActive = true;
           this.update(task).then(
@@ -91,24 +99,43 @@ export default class Tasks {
               // clear activeTask binding so that newly set activeTask in setRefreshedTasksInfo() is re-instantiated, and consequently doesn't have lingering   
               //  bindings from old task. without clearing reference, task completed items panels would linger from previously set activeTask, potentially bc the new activeTask 
               //  (and child components) weren't being re-instantiated
-              this.activeTask = undefined; 
+              // this.activeTask = undefined; 
               this.refreshTasks();
             },
-            (failure) => console.log('toggleTaskActive failed')
+            (failure) => { 
+              console.log('toggleTaskActive() failed');
+              this.refreshTasks(); // call refresh to clear activeTask since service call failed, TODO: need error notification
+            }
           )
         },
-        (failure) => {
-          console.log('toggleTaskActive failed');
+        (failure) => { 
+          console.log('toggleTaskActive() failed');
+          this.refreshTasks(); // call refresh to clear activeTask since service call failed, TODO: need error notification
         }
       )
     } else if (!this.activeTask) { // No currently active task
-      task.isActive = true;
+      task.isActive = true;            
+
+      this.activeTask = task; // set activeTask to passed task
+      // remove task if it hasn't been removed via ui-sortable (hitting play/pause button on task)
+      var tgtActiveTaskIdx = this.tasks.indexOf(task);
+      if (tgtActiveTaskIdx > -1) { 
+        this.tasks.splice(tgtActiveTaskIdx, 1)[0];
+      }  
+
       this.update(task).then(
         (success) => {
-          var tgtActiveTaskIdx = this.tasks.indexOf(task);
-          this.activeTask = this.tasks.splice(tgtActiveTaskIdx, 1)[0];
+          // this.activeTask = task; // set activeTask to passed task
+          // // remove task if it hasn't been removed via ui-sortable (hitting play/pause button on task)
+          // var tgtActiveTaskIdx = this.tasks.indexOf(task);
+          // if (tgtActiveTaskIdx > -1) { 
+          //   this.tasks.splice(tgtActiveTaskIdx, 1)[0];
+          // }   
         },
-        (failure) => console.log('toggleTaskActive failed')
+        (failure) => { 
+          console.log('toggleTaskActive() failed');
+          this.refreshTasks(); // call refresh to clear activeTask since service call failed, TODO: need error notification
+        }
       )
     } else if (task.isActive) { // Currently active task        
       task.isActive = false;

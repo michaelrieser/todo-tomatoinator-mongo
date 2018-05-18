@@ -29,6 +29,11 @@
     color: black;
 }
 
+.gray-background {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
 ol {
     padding-left: 20px;
 }
@@ -83,6 +88,7 @@ h6 {
     width: 65%; 
     margin-right: 5%;
 }
+
 .task-list {
     // height: 
 }
@@ -101,8 +107,20 @@ h6 {
     margin-bottom: 2px;
     background-color: #F5F5F5;
 }
-.ul-task-list {
+
+.inactive-tasks-placeholder {
+    list-style: none;
+    width:100%;
+    line-height: 60px;
+    background-color: lightgray;
+    color: darkgray;
+    font-style: italic;
+    text-align: center;
+    border-radius: 5px;
+}
+.inactive-task-list {
     padding: 0;
+    min-height: 65px;
 }
 .li-list-wrapper {
     list-style: none;
@@ -192,6 +210,24 @@ h6 {
     /*border-bottom: 2px solid darkolivegreen;*/
 }
 
+.highlighted-task-list {
+    display: block;
+    width: 100%;
+    height: 60px;
+    background-color: lightpink;
+    border: 1px solid crimson;    
+    border-radius: 5px;
+}
+
+.li-no-active-task {
+    height: 60px;
+}
+.active-task-list {
+    // background-color: crimson;
+    min-height: 60px;
+    list-style-type: none;
+    padding: 0;
+}
 .task-active {
     margin-top: 5px;
     background-color: deepskyblue;
@@ -200,6 +236,9 @@ h6 {
 .task-active-empty {
     text-align: center;
     width: 100%;
+    height: 60px;
+    line-height: 60px;
+    vertical-align: 50%;
     border-radius: 5px;
     margin-top: 5px;
     background-color: deepskyblue;
@@ -211,6 +250,9 @@ h6 {
     margin-top: 5px;    
     text-align: center;
     width: 100%;
+    height: 60px;
+    line-height: 60px;
+    vertical-align: 50%;
     border-radius: 5px;
     border: 1px white dashed;
     background-color: lightgrey;    

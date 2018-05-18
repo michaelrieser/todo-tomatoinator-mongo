@@ -97,4 +97,7 @@ componentsModule.component('reminderNotification', ReminderNotification);
 import NotificationDateTimeInput from './notification-helpers/notification-date-time-helpers/notification-date-time-input.component';
 componentsModule.component('notificationDateTimeInput', NotificationDateTimeInput);
 
+import TestComponent from './task-helpers/test-component.component';
+componentsModule.component('testComponent', TestComponent);
+
 export default componentsModule;

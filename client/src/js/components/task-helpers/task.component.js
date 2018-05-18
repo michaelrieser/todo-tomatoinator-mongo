@@ -12,7 +12,7 @@ class TaskCtrl {
         this.displayingduedatetimeinput = false;
         this.displayingreminderdatetimeinput = false;
 
-        this.updatingTask = false;                
+        this.updatingTask = false;                 
     }
 
     colorBasedOnTimeRemaining() {
