@@ -1,10 +1,11 @@
 class TasksDisplayCtrl {
-    constructor(tasksInfo, taskNotificationInfo, Projects, Tasks, TaskNotifications, $scope, $stateParams, $mdToast) {
+    constructor(tasksInfo, taskNotificationInfo, Tasks, Projects, TaskNotifications, PomTimer, $scope, $stateParams, $mdToast) {
         'ngInject';
 
         this._Tasks = Tasks;
         this._Projects = Projects;
         this._TaskNotifications = TaskNotifications;
+        this._PomTimer = PomTimer;
         this._$scope = $scope;
         this._$mdToast = $mdToast;
 
@@ -62,8 +63,10 @@ class TasksDisplayCtrl {
                 let targetTask = ui.item.sortable.model;
 
                 if (sourceList === 'inactiveTaskList' && targetList === 'activeTaskList') {
-                    this._Tasks.toggleTaskActive(targetTask);
+                    this._PomTimer.resetTimer();
+                    this._Tasks.toggleTaskActive(targetTask);                    
                 } else if (sourceList === 'activeTaskList' && targetList === 'inactiveTaskList') {
+                    this._PomTimer.resetTimer();
                     this._Tasks.toggleTaskActive(targetTask);
                 } else if (sourceList === 'activeTaskList' && targetList === 'activeTaskList') {   
                 } else if (sourceList === 'inactiveTaskList' && targetList === 'inactiveTaskList') {
