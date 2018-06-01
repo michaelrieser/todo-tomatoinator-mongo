@@ -57,7 +57,7 @@ class TaskCtrl {
         )
     }
     handleTaskDeleteSuccess() {
-        this._PomTimer.resetTimer();
+        if (this.task.isActive) { this._PomTimer.resetTimer(); }        
         this._Tasks.refreshTasks()
     }
 
