@@ -1,13 +1,12 @@
 <nav class="navbar navbar-light">
-  <div class="container">
-
+  <div>
     <a class="navbar-brand"
       ui-sref="app.home"
       ng-bind="::$ctrl.appName | lowercase">
     </a>
 
     <!-- Show this for logged out users -->
-    <ul class="nav navbar-nav pull-xs-right" show-authed="false">
+    <ul class="nav navbar-nav navbar-inner" show-authed="false">
 
       <li class="nav-item">
         <a class="nav-link"
@@ -36,7 +35,7 @@
 
     <!-- Show this for logged in users -->
     <ul show-authed="true"
-      class="nav navbar-nav pull-xs-right">
+      class="nav navbar-nav navbar-inner">
 
       <li class="nav-item">
         <a class="nav-link"
