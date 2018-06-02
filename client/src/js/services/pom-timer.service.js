@@ -5,6 +5,7 @@ export default class PomTimer {
         this._AppConstants = AppConstants;
         this._$http = $http;
 
+        this.setTimerType = null;
         this.timerData = { // TODO: could dynamically load this from user settings in tasks route
             'pom': 25, // .1 for testing
             'shortBrk': 5,
@@ -33,11 +34,14 @@ export default class PomTimer {
 
     startTimer(timerType) {
         var isBreak = timerType.indexOf('Brk') !== -1;
+        if (isBreak || (this.setTimerType && this.setTimerType.indexOf('Brk') !== -1) ) { // starting break || break currently set
+            this.stopTimer();
+        } else if (this.setTimerType && this.setTimerType === 'pom') {
+            this.clearTimerInterval();
+        }
 
-        // Guard clauses
-        if (angular.isDefined(this.timerInterval) && !isBreak) return; // Return if timer already running and not trying to start a break
-        if (isBreak) this.stopTimer();
-
+        this.setTimerType = timerType;
+        
         var timerDuration;
         var timerData = this.timerData;
 
@@ -85,12 +89,14 @@ export default class PomTimer {
         this.clearTimerInterval();
         this.timeRemaining = 0;
         this.updateBrowserTitle(this.timeRemaining);
+        this.setTimerType = null;
     }
 
     resetTimer() {
         this.clearTimerInterval();
         this.timeRemaining = 0;
         document.title = `Tasks - ${this._AppConstants.appName}` // TODO: See TODO on updateBrowserTitle()
+        this.setTimerType = null;
     }
 
     clearAndResetTimer() {
