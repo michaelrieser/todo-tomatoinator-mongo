@@ -52,7 +52,6 @@ export default class PomTimer {
 
         var endTime = new Date().getTime() + timerDuration * 1000;
 
-
         // SEE $interval => see: https://docs.angularjs.org/api/ng/service/$interval
         this.timerInterval = this._$interval(() => {
 
@@ -60,6 +59,7 @@ export default class PomTimer {
 
             this.timeRemaining = currentTimeDelta;
             this.updateBrowserTitle(this.timeRemaining);
+            // TODO call PomTracker#logTime(taskId) if (this.timeRemaining % 60 === 0) {  }
 
             if (currentTimeDelta <= 0) {
                 this.clearTimerInterval();
@@ -82,16 +82,20 @@ export default class PomTimer {
     }
 
     stopTimer() {
-        this.resetTimer();
+        this.clearTimerInterval();
+        this.timeRemaining = 0;
         this.updateBrowserTitle(this.timeRemaining);
     }
 
-    // TODO/Question: have it reset to previously set time?
     resetTimer() {
-        this.taskId = null;
         this.clearTimerInterval();
         this.timeRemaining = 0;
         document.title = `Tasks - ${this._AppConstants.appName}` // TODO: See TODO on updateBrowserTitle()
+    }
+
+    clearAndResetTimer() {
+        this.taskId = null;
+        this.resetTimer();
     }
 
     /** 'PRIVATE' methods **/

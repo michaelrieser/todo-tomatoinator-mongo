@@ -1,5 +1,4 @@
 class PomTimerCtrl {
-    // TODO: create PomService to make backend calls for updating time spent on tasks? -OR- just put in tasks.service.js
     constructor(PomTimer, $scope, $interval, AppConstants) {
         'ngInject';
 

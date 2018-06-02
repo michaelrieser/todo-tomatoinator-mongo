@@ -57,14 +57,14 @@ class TaskCtrl {
         )
     }
     handleTaskDeleteSuccess() {
-        if (this.task.isActive) { this._PomTimer.resetTimer(); }        
+        if (this.task.isActive) { this._PomTimer.clearAndResetTimer(); }        
         this._Tasks.refreshTasks()
     }
 
     toggleTaskComplete() {
         this.task.isComplete = !this.task.isComplete;
         if (this.task.isActive) { 
-            this._PomTimer.resetTimer();
+            this._PomTimer.clearAndResetTimer();
             this.task.isActive = false; 
         };
         this._Tasks.update(this.task).then(
@@ -74,7 +74,7 @@ class TaskCtrl {
     }
 
     toggleTaskActive() {
-        this._PomTimer.resetTimer(); // Added here if connection is slow and new PomTimer component isn't instantiated right away (and resetTimer() is called in PomTimer ctor)
+        this._PomTimer.clearAndResetTimer(); // Added here if connection is slow and new PomTimer component isn't instantiated right away (and resetTimer() is called in PomTimer ctor)
         this._Tasks.toggleTaskActive(this.task);
     }
 }

@@ -229,7 +229,8 @@ export default class Tasks {
     return updatedTask;
   }
 
-  clearUnmatchedActiveTask(stateParamsProjTitle) {
+  // ** DEPRECATED **
+  clearUnmatchedActiveTask(stateParamsProjTitle) {  
     // No activeTask set until resolve bindings in task route succeed first time. OK since we initally route to /tasks/all/all
     if (!this.activeTaskProjectTitle() || stateParamsProjTitle == 'all' || stateParamsProjTitle === this.activeTaskProjectTitle()) {
       return true;

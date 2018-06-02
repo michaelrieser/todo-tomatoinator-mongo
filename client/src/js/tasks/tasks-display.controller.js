@@ -63,10 +63,10 @@ class TasksDisplayCtrl {
                 let targetTask = ui.item.sortable.model;
 
                 if (sourceList === 'inactiveTaskList' && targetList === 'activeTaskList') {
-                    this._PomTimer.resetTimer();
+                    this._PomTimer.clearAndResetTimer();
                     this._Tasks.toggleTaskActive(targetTask);                    
                 } else if (sourceList === 'activeTaskList' && targetList === 'inactiveTaskList') {
-                    this._PomTimer.resetTimer();
+                    this._PomTimer.clearAndResetTimer();
                     this._Tasks.toggleTaskActive(targetTask);
                 } else if (sourceList === 'activeTaskList' && targetList === 'activeTaskList') {   
                 } else if (sourceList === 'inactiveTaskList' && targetList === 'inactiveTaskList') {
