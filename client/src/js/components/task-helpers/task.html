@@ -22,7 +22,7 @@
                     </span>
                 </span>
                 <span ng-if="$ctrl.task.isActive">
-                    <pom-timer taskid="$ctrl.task.id"></pom-timer>
+                    <pom-timer task="$ctrl.task"></pom-timer>
                 </span>
             </div>
             <div class="task-due-date-time-wrapper" ng-class="{'small-bottom-margin' : $ctrl.task.showNotes}">

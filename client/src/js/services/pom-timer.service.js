@@ -1,18 +1,21 @@
 export default class PomTimer {
-    constructor(AppConstants, $interval, $http) {
+    constructor(AppConstants, PomTracker, $interval, $http) {
         'ngInject';
 
         this._AppConstants = AppConstants;
+        this._PomTracker = PomTracker;
         this._$http = $http;
 
         this.setTimerType = null;
         this.timerData = { // TODO: could dynamically load this from user settings in tasks route
-            'pom': 25, // .1 for testing
-            'shortBrk': 5,
+            // 'pom': 25, 
+            'pom': .1, // .1 for testing
+            // 'shortBrk': 5,
+            'shortBrk': .1, // .1 for testing
             'longBrk': 10
         }
 
-        this._$interval = $interval;        
+        this._$interval = $interval;
 
         this.timerInterval = undefined;
 
@@ -27,51 +30,69 @@ export default class PomTimer {
     resetIfNewTaskId(newTaskId) {
         if (!this.taskId) {
             this.taskId = newTaskId;
-        } else {
-            if (this.taskId !== newTaskId) { this.resetTimer(); }
+        } else { // NOTE: this may never be hit, since Tasks#toggleTaskActive sets taskId to null
+            if (this.taskId !== newTaskId) { 
+                console.log('***** WARNING: did not think we would hit this, investigate: PomTimer#resetIfNewTaskId() *****')
+                this.resetTimer(); 
+                this._PomTracker.resetPomTracker();
+            }
         }
     }
 
     startTimer(timerType) {
         var isBreak = timerType.indexOf('Brk') !== -1;
-        if (isBreak || (this.setTimerType && this.setTimerType.indexOf('Brk') !== -1) ) { // starting break || break currently set
+        if (isBreak || (this.setTimerType && this.setTimerType.indexOf('Brk') !== -1)) { // starting break || break currently set
             this.stopTimer();
         } else if (this.setTimerType && this.setTimerType === 'pom') {
             this.clearTimerInterval();
         }
 
         this.setTimerType = timerType;
+
+        this.timeRemaining = this.timeRemaining || this.timerData[timerType] * 60;
+        this.updateBrowserTitle(this.timeRemaining); // Interval below waits 1000ms to tick for the first time, need to set title initially here
+
+        var endTime = new Date().getTime() + this.timeRemaining * 1000;
         
-        var timerDuration;
-        var timerData = this.timerData;
-
-        if (this.timeRemaining > 0) { // Timer paused prior
-            timerDuration = this.timeRemaining
-        } else { // Fresh timer
-            timerDuration = timerData[timerType] * 60;
-            this.timeRemaining = timerDuration;
-        }
-
-        this.updateBrowserTitle(timerDuration); // Interval below waits 1000ms to tick for the first time, need to set title initially here
-
-        var endTime = new Date().getTime() + timerDuration * 1000;
-
-        // SEE $interval => see: https://docs.angularjs.org/api/ng/service/$interval
         this.timerInterval = this._$interval(() => {
 
             var currentTimeDelta = Math.round((endTime - new Date().getTime()) / 1000);
 
             this.timeRemaining = currentTimeDelta;
             this.updateBrowserTitle(this.timeRemaining);
-            // TODO call PomTracker#logTime(taskId) if (this.timeRemaining % 60 === 0) {  }
 
-            if (currentTimeDelta <= 0) {
-                this.clearTimerInterval();
-                currentTimeDelta = 0;
-                this.buzzer();
-                this.desktopAlert();
+            console.log(`timeRemaining: ${this.timeRemaining}`);
+
+            if (this.timeRemaining % 2 === 0) { // FOR TESTING
+            // if (this.timeRemaining % 60 === 0) {
+                this.logTimeAndCloseIntervalIfComplete(currentTimeDelta);
             }
         }, 1000);
+    }
+
+    logTimeAndCloseIntervalIfComplete(currentTimeDelta) {
+        this._PomTracker.logIntervalMinute().then(
+            (res) => {
+                if (currentTimeDelta <= 0) {
+                    this.clearIntervalAndAlertUser();
+                    this._PomTracker.closePomInterval().then(
+                        // *** TODO: this should DEFINITELY have error handling of some stripe ***
+                        (res) => { console.log('*PomTracker interval closed successfully') },
+                        (err) => { console.log('error closing PomTracker interval: ${err}') }
+                    )
+                }
+            }
+            // *NOTE: this doesn't do anything if error, need to check in res
+            // (err) => { console.log(`error logging PomTracker minute: ${err}`) }
+        )
+    }
+
+
+    clearIntervalAndAlertUser() {
+        console.log('DONE!!')
+        this.clearTimerInterval();
+        this.buzzer();
+        this.desktopAlert();
     }
 
     clearTimerInterval() {
@@ -100,8 +121,10 @@ export default class PomTimer {
     }
 
     clearAndResetTimer() {
+        console.log('clearAndResetTimer()')
         this.taskId = null;
         this.resetTimer();
+        this._PomTracker.resetPomTracker();
     }
 
     /** 'PRIVATE' methods **/

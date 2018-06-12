@@ -44,6 +44,7 @@ require('./models/Project');
 require('./models/Task');
 require('./models/Note');
 require('./models/Step');
+require('./models/PomTracker');
 require('./config/passport');
 
 app.use(require('./routes'));

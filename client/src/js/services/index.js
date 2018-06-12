@@ -25,6 +25,9 @@ servicesModule.service('Projects', ProjectsService);
 import PomTimerService from './pom-timer.service';
 servicesModule.service('PomTimer', PomTimerService);
 
+import PomTrackerService from './pom-tracker.service';
+servicesModule.service('PomTracker', PomTrackerService);
+
 import WordnikService from './wordnik.service';
 servicesModule.service('Wordnik', WordnikService);
 

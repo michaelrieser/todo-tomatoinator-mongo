@@ -1,12 +1,14 @@
 class TaskCtrl {
-    constructor(Tasks, PomTimer, Projects, TimeUtils, $state) {
+    constructor(Tasks, PomTimer, PomTracker, Projects, TimeUtils, $state, $q) {
         'ngInject';
 
         this._Tasks = Tasks;   
         this._PomTimer = PomTimer;
+        this._PomTracker = PomTracker;
         this._Projects = Projects;
         this._TimeUtils = TimeUtils;
-        this._$state = $state;              
+        this._$state = $state;   
+        this._$q = $q;           
 
         this.editingTitle = false;
         this.displayingduedatetimeinput = false;
@@ -62,14 +64,27 @@ class TaskCtrl {
     }
 
     toggleTaskComplete() {
+        let taskIsActive = this.task.isActive;
+        if (taskIsActive) { this.task.isActive = false; }
+        
         this.task.isComplete = !this.task.isComplete;
-        if (this.task.isActive) { 
-            this._PomTimer.clearAndResetTimer();
-            this.task.isActive = false; 
-        };
-        this._Tasks.update(this.task).then(
-            (success) => this._Tasks.refreshTasks(), 
-            (err) => console.log(err)
+        
+        this._$q.all(
+            [
+                // only call closePomInterval() if toggling active task complete                  
+                taskIsActive ? this._PomTracker.closePomInterval() : true,
+                this._Tasks.update(this.task)
+            ]
+        ).then(
+            (success) => {
+                console.log('success');
+                if (taskIsActive) { this._PomTimer.clearAndResetTimer(); }
+                this._Tasks.refreshTasks();
+            },
+            (err) => {
+                console.log('ERROR');
+                console.log(err);           
+            }
         )
     }
 
