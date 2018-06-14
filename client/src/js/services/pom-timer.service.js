@@ -15,9 +15,9 @@ export default class PomTimer {
             'longBrk': 10
         }
 
-        this._$interval = $interval;
-
+        this._$interval = $interval;        
         this.timerInterval = undefined;
+        this.timerPaused = false;
 
         this.timeRemaining = 0; // seconds
         //   *Note - just using angular.isDefined(this.timerInterval) to determine if timer currently running        
@@ -39,15 +39,23 @@ export default class PomTimer {
         }
     }
 
-    startTimer(timerType) {
-        var isBreak = timerType.indexOf('Brk') !== -1;
-        if (isBreak || (this.setTimerType && this.setTimerType.indexOf('Brk') !== -1)) { // starting break || break currently set
-            this.stopTimer();
-        } else if (this.setTimerType && this.setTimerType === 'pom') {
-            this.clearTimerInterval();
+    startTimer(timerType) {        
+        if (!this.timerPaused) { 
+            // ** NOTE: this was for stopping timer for everything but pom -> pom, now just stopping everything
+            // var isBreak = timerType.indexOf('Brk') !== -1;
+            // if (isBreak || (this.setTimerType && this.setTimerType.indexOf('Brk') !== -1)) { // starting break || break currently set
+            //     this.stopTimer();
+            // } else if (this.setTimerType && this.setTimerType === 'pom') {
+            //     this.clearTimerInterval(); // QUESTION: unsure if necessary, as new interval doesn't appear to be created?
+            // }
+            // ** /NOTE
+            if (this.setTimerType) { this.stopTimer(); }
+            this.setTimerType = timerType;
+        } else {
+            var isBreak = timerType.indexOf('Brk') !== -1;
+            if (isBreak) { this.resetTimer(); } // pressing Play(pom) will not reset timer, but breaks will
+            this.timerPaused = false;
         }
-
-        this.setTimerType = timerType;
 
         this.timeRemaining = this.timeRemaining || this.timerData[timerType] * 60;
         this.updateBrowserTitle(this.timeRemaining); // Interval below waits 1000ms to tick for the first time, need to set title initially here
@@ -75,7 +83,7 @@ export default class PomTimer {
             (res) => {
                 if (currentTimeDelta <= 0) {
                     this.clearIntervalAndAlertUser();
-                    this._PomTracker.closePomInterval().then(
+                    this._PomTracker.closeInterval().then(
                         // *** TODO: this should DEFINITELY have error handling of some stripe ***
                         (res) => { console.log('*PomTracker interval closed successfully') },
                         (err) => { console.log('error closing PomTracker interval: ${err}') }
@@ -89,7 +97,6 @@ export default class PomTimer {
 
 
     clearIntervalAndAlertUser() {
-        console.log('DONE!!')
         this.clearTimerInterval();
         this.buzzer();
         this.desktopAlert();
@@ -103,6 +110,8 @@ export default class PomTimer {
     }
 
     pauseTimer() {
+        // if (!this.setTimerType) { return; }
+        this.timerPaused = true;
         this.clearTimerInterval();
     }
 
@@ -121,7 +130,6 @@ export default class PomTimer {
     }
 
     clearAndResetTimer() {
-        console.log('clearAndResetTimer()')
         this.taskId = null;
         this.resetTimer();
         this._PomTracker.resetPomTracker();

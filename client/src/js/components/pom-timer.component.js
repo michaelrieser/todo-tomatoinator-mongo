@@ -20,30 +20,54 @@ class PomTimerCtrl {
 
     startTimer(timerType) {  
         this._$q.when(
-            this._PomTracker.buildPomTracker(this.task, timerType)
+            // only reset and create new PomTracker if PomTimer is NOT ( paused and pressing Play(pom) )
+            this._PomTimer.timerPaused  && timerType === 'pom' ? true : this._PomTracker.resetAndBuildPomTracker(this.task, timerType)
         ).then((res) => {            
             if (res.status && res.status !== 200) { // create succeeded with HTTP 200 success
                 // TODO: inform user and/or try again?
                 console.log('ERROR: ', res.statusText);
-            } else { // timer already created || created with HTTP 200 success
+            } else { // timer created with HTTP 200 success
                 this._PomTimer.startTimer(timerType);                                
             }            
         })
     }
 
-    pauseTimer() {
-        // TODO/QUESTION: call PomTracker.logPomInterruption ?
-        this._PomTimer.pauseTimer();
+    pauseTimer() { 
+        if (this._PomTimer.timerPaused || !this._PomTimer.setTimerType) { return; }
+        this._$q.when(
+            this._PomTracker.incrementPause()
+        ).then( (res) => {
+            console.log(res)
+            if (res.status && res.status !== 204) { // Expecting 204: No Content
+                console.log('ERROR: ', res.statusText);
+            } else {
+                console.log('SUCCESS')
+                this._PomTimer.pauseTimer()
+            }
+        })
+        
     }
 
     stopTimer() {
-        // TODO/QUESTION: call PomTracker.closePomEntry(<flag-to-specify-incomplete>) ?
-        this._PomTimer.stopTimer();
+        this._PomTracker.closeInterval(false).then( (res) => {
+            if (res.status && res.status !== 200) {
+                // TODO: alert user
+                console.log('ERROR: ', res.statusText);
+            } else {
+                this._PomTimer.stopTimer();
+            }
+        })
     }
 
     resetTimer() {
-        // TODO/QUESTION: call PomTracker.closePomEntry(<flag-to-specify-incomplete>) ?        
-        this._PomTimer.resetTimer();
+        this._PomTracker.closeInterval(false).then( (res) => {
+            if (res.status && res.status !== 200) {
+                // TODO: alert user
+                console.log('ERROR: ', res.statusText);
+            } else {
+                this._PomTimer.resetTimer();                
+            }
+        })           
     }
 
 }

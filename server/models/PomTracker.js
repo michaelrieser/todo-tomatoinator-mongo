@@ -32,7 +32,7 @@ PomTrackerSchema.methods.toJSON = function() {
       timesPaused: this.timesPaused,
       intervalSuccessful: this.intervalSuccessful,
       closed: this.closed,
-      completedTime: this.closedTime,
+      closedTime: this.closedTime,
       createdAt: this.createdAt  
     };
 };

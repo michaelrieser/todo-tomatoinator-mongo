@@ -71,18 +71,16 @@ class TaskCtrl {
         
         this._$q.all(
             [
-                // only call closePomInterval() if toggling active task complete                  
-                taskIsActive ? this._PomTracker.closePomInterval() : true,
+                // only call closeInterval() if toggling active task complete                  
+                taskIsActive ? this._PomTracker.closeInterval() : true,
                 this._Tasks.update(this.task)
             ]
         ).then(
             (success) => {
-                console.log('success');
                 if (taskIsActive) { this._PomTimer.clearAndResetTimer(); }
                 this._Tasks.refreshTasks();
             },
             (err) => {
-                console.log('ERROR');
                 console.log(err);           
             }
         )
