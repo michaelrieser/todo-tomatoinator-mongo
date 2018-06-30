@@ -16,6 +16,7 @@ import './components';
 import './filters';
 import './home';
 import './profile';
+import './pomreport';
 import './services';
 import './auth';
 import './settings';
@@ -36,6 +37,7 @@ const requires = [
   'app.filters',
   'app.home',
   'app.profile',
+  'app.pomreport',
   'app.services',
   'app.auth',
   'app.settings',

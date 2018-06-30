@@ -84,5 +84,21 @@ export default class PomTracker {
     resetPomTracker() {        
         this.pomTracker = null;
     }
+
+    query(stateParams = {}) {
+        var queryConfig = {};
+        queryConfig.filters = stateParams || null;
+
+        let request = {
+            url: `${this._AppConstants.api}/pomtracker`,
+            method: 'GET',
+            params: queryConfig.filters ? queryConfig.filters : null
+        }
+
+        return this._$http(request).then(
+            (res) => { return res.data; },
+            (err) => { console.log(err); }
+        );
+    }
     
 }

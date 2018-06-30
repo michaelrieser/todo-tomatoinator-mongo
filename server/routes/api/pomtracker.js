@@ -4,10 +4,35 @@ var mongoose = require('mongoose');
 var async = require('async');
 
 var PomTracker = mongoose.model('PomTracker');
-// var auth = require('../auth'); // NOTE: assuming that if user has taskId at this point, they have already been authenticated
+var auth = require('../auth'); 
+var moment = require('moment');
 
 /* GET pomtracker list */
-// @wip
+router.get('/', auth.required, function (req, res, next) {
+    console.log('GET /pomtracker');
+    console.log('req.query: ', req.query); // START => return values from given user based on { type: 'daily' }
+    console.log('USER - req.payload.id: ', req.payload.id.toString());    
+
+    var query = {};
+    // var limit = 20;
+    // var offset = 0;
+
+    // ** type: 'daily' **
+    // TDOO: add conditional for 'daily' || 'weekly' || 'monthly' || etc..
+    var todayStart = moment().startOf('day');
+    var todayEnd   = moment().endOf('day');
+
+    query.user = req.payload.id.toString();
+    query.updatedAt = { $gte: todayStart, $lt: todayEnd };
+
+    PomTracker.find(query).sort({ updatedAt: 'asc'}).populate('task', 'title project dueDateTime').exec().then(function (pomtrackers) {
+        return res.json({
+            pomtrackers: pomtrackers.map(function (pomtracker) {
+                return pomtracker.toJSON();
+            }),
+        });
+    }).catch(next);    
+});
 
 /* POST create new pomtracker record */
 router.post('/', function (req, res, next) {

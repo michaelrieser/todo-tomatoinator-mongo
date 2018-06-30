@@ -893,3 +893,72 @@ h6 {
     display: inline-block;
     margin: 10px 0 2px 0;
 }
+
+/* pomreport */
+.pomreport-outer-wrapper {
+    padding: 15px
+}
+.pomreport-navbar {
+    margin-bottom: 0;
+}
+
+.pomreport-inner-wrapper {
+    padding-top: 0px;
+}
+
+.pomreport-list {
+    padding: 0;
+    list-style: none;
+}
+
+.pomreport-interval-wrapper {
+    padding: 5px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    background-color: lightgray;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid white;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f4ff+0,7db9e8+100&1+0,0+100 */
+    background: -moz-linear-gradient(top,  rgba(246,244,255,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(246,244,255,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(246,244,255,1) 0%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f4ff', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+
+    // div {
+    //     -webkit-flex: 1;  /* Safari 6.1+ */
+    //     -ms-flex: 1;  /* IE 10 */    
+    //     flex: 1;
+    // }
+}
+// .pomreport-interval-wrapper:first-child {
+//         border-top: none;
+//     }
+
+// .pomreport-interval-wrapper:last-child {
+//     border-bottom: none;
+// }
+
+
+.pomreport-box-wrapper {
+    flex-basis: 50px;
+}
+.pomreport-box-outer {
+    position: relative;
+    width: 50px;
+    background-color: indianred;
+    // margin-bottom: 5px;
+    border-radius: 4px;
+}
+.pomreport-box-inner {
+    position: absolute;
+    width: 50px;
+    background-color: lightskyblue;
+    // border-radius: 4px;
+}
+
+.pomreport-info-wrapper {
+    margin-left: 10px;
+    // height: 100%;    
+    // display: inline-block;
+}

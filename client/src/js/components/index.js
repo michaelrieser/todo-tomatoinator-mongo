@@ -21,6 +21,11 @@ componentsModule.directive('pluralizeTimePeriod', PluralizeTimePeriod);
 import AutoHeight from './auto-height.directive';
 componentsModule.directive('autoHeight', AutoHeight);
 
+// *** NOTE: decision was made to just dynamically set height of pomreport completion display boxes via ng-style directives in pomreport-interval.html *** //
+// ***       LEAVING FOR REFERENCE/FUTURE REFACTOR                   
+// import PomreportCompletionDisplay from './pomreport-helpers/pomreport-completion-display.directive';
+// componentsModule.directive('PomreportCompletionDisplay', PomreportCompletionDisplay);
+
 // Components
 import ListErrors from './list-errors.component';
 componentsModule.component('listErrors', ListErrors);
@@ -99,5 +104,9 @@ componentsModule.component('notificationDateTimeInput', NotificationDateTimeInpu
 
 import TestComponent from './task-helpers/test-component.component';
 componentsModule.component('testComponent', TestComponent);
+
+import PomreportInterval from './pomreport-helpers/pomreport-interval.component';
+componentsModule.component('pomreportInterval', PomreportInterval);
+
 
 export default componentsModule;

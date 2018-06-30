@@ -7,13 +7,8 @@ export default class PomTimer {
         this._$http = $http;
 
         this.setTimerType = null;
-        this.timerData = { // TODO: could dynamically load this from user settings in tasks route
-            // 'pom': 25, 
-            'pom': .1, // .1 for testing
-            // 'shortBrk': 5,
-            'shortBrk': .1, // .1 for testing
-            'longBrk': 10
-        }
+
+        this.timerData = this._AppConstants.pomTimerData;
 
         this._$interval = $interval;        
         this.timerInterval = undefined;

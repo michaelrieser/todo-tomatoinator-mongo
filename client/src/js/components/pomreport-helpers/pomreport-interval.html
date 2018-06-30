@@ -1,0 +1,25 @@
+<!--<span class="pomreport-tracker-type">{{ $ctrl.pomtracker.trackerType }}</span>-->
+<div class="pomreport-interval-wrapper">
+    <div style="display:table">
+        <div style="display:table-cell;vertical-align: middle">
+            <div class="pomreport-box-wrapper">
+                <div ng-style="{ height: $ctrl.boxPixelHeightFromIntervalType() }" class="pomreport-box-outer">
+                    <div ng-style="{ 'height': $ctrl.intervalCompletionPercentage, 'border-radius': $ctrl.setInnerBoxBottomBorderRadius() }" class="pomreport-box-inner"></div>    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<span>test span</span>-->
+
+    <div class="pomreport-info-wrapper">
+        <div style="height:100%">
+            <span ng-switch on="$ctrl.trackerType">
+                <span ng-switch-when="pom" class="ion-play" data-pack="default" data-tags="write"></span>    
+                <span ng-switch-when="shortBrk" class="ion-ios-bolt ion-small" data-pack="default" data-tags="write"></span>
+                <span ng-switch-when="longBrk" class="ion-ios-bolt" data-pack="default" data-tags="write"></span>
+            </span>
+            &nbsp;
+            <span ng-if="$ctrl.isPomInterval()">{{ $ctrl.pomtracker.task.title }}</span>
+        </div>
+    </div>
+</div>

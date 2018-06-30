@@ -7,10 +7,6 @@ class NotificationDateTimeInputCtrl {
         this._TaskNotifications = TaskNotifications;
 
         this.handlingDateTimeInputBlur = false;
-
-        this._$scope.$watch( () => { return this.handlingDateTimeInputBlur},
-                              (newVal) => console.log(`this.handlingDateTimeInputBlur: ${this.handlingDateTimeInputBlur}`) 
-                            )
     }
     
     handleDateTimeInputBlur() {        

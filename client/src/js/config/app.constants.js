@@ -10,7 +10,12 @@ const AppConstants = {
   oneHourInMilliseconds: 36000000,
   twelveHoursInMilliseconds: 43200000,
   dayInMilliseconds: 86400000,
-  businessWeekInMilliseconds: 432000000
+  businessWeekInMilliseconds: 432000000,
+  pomTimerData: { // TODO: could dynamically load this from user settings in tasks route
+      'pom': 25, 
+      'shortBrk': 5,
+      'longBrk': 10
+  }
 };
 
 export default AppConstants;
