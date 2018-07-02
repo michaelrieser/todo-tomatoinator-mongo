@@ -23,7 +23,6 @@ router.post('/', auth.required, function (req, res, next) {
 
     // TODO: Add project to user model as well ?
     return project.save().then(function (project) {
-      // return res.json({task: task.toJSON});
       return res.json({ project: project.toJSON() });
     });
   }).catch(next);

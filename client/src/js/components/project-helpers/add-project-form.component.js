@@ -1,10 +1,13 @@
 class AddProjectFormCtrl {
-    constructor(Projects, $scope) {
+    constructor(Projects, $scope, $timeout) {
         'ngInject';
 
         this._Projects = Projects;
+        this._$scope = $scope;
+        this._$timeout = $timeout;        
+
         this.projects = this._Projects.projects;
-        this.highestOrderNumber = this._Projects.highestOrderNumber;
+        this.highestOrderNumber = this._Projects.highestOrderNumber;                    
         $scope.$watch(() => {return this._Projects.highestOrderNumber}, (newValue) => {
             this.highestOrderNumber = newValue;
         });
@@ -19,6 +22,11 @@ class AddProjectFormCtrl {
         }
     }
 
+    clearErrors() {
+        // TODO: this is throwing error
+        this.errors = null;
+    }
+
     submit() {
         this.isSubmitting = true;
         this.project.order = this.highestOrderNumber + 1;
@@ -27,12 +35,14 @@ class AddProjectFormCtrl {
                 this.highestOrderNumber = newProject.order;
                 this.resetProject();
                 this.isSubmitting = false;
+                this.clearErrors();
                 // TODO: flash notification to user?
                 // this.projects.push(newProject); // NOTE: now performing this in Projects#addNewProjectToList()
             },
             (err) => {
                 this.isSubmitting = false;
-                this.errors = err.data.errors;
+                this.errors = {'title': [err.data.errors.message] };
+                this._$timeout(this.clearErrors, 3000);
             }
         )
     }

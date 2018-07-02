@@ -23,7 +23,8 @@ export default class Projects {
       method: 'POST',
       data: { project: project }
     };
-    return this._$http(request).then((res) => this.addNewProjectToList(res.data.project) );
+    // NOTE: if success, call Projects#addNewProjectToList, if error, send back to caller (ex: add-project-form)
+    return this._$http(request).then((res) => this.addNewProjectToList(res.data.project));
   }
 
   addNewProjectToList(project) {

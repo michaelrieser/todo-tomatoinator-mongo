@@ -1,9 +1,7 @@
 var mongoose = require('mongoose');
-// var User = mongoose.model('User');
-var uniqueValidator = require('mongoose-unique-validator');
 
 var ProjectSchema = new mongoose.Schema({
-    title: {type: String, unique: true, required: [true, "can't be blank"], index: true},
+    title: {type: String, required: [true, "can't be blank"]}, // NOTE: removed unique: true & index: true
     order: { type: Number, default: 0 },
     tasks: [ {type: mongoose.Schema.Types.ObjectId, ref: 'Task'} ], // TODO: unsure if needed
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -11,8 +9,6 @@ var ProjectSchema = new mongoose.Schema({
     // dueDate: ?, /* TODO: allow user to set due date for project, potentially w/reminders */
     // users: ? /* TODO: allow the tracking of all users on an individual project */
 }, {timestamps: true}); // adds createdAt and updatedAt fields
-
-ProjectSchema.plugin(uniqueValidator, { message: 'is already taken.'});
 
 ProjectSchema.methods.toJSON = function() {     
     return {
@@ -26,4 +22,17 @@ ProjectSchema.methods.toJSON = function() {
     };
 };
 
-mongoose.model('Project', ProjectSchema);
+var Project = mongoose.model('Project', ProjectSchema);
+
+// ProjectSchema.plugin(uniqueValidator, { message: 'is already taken.'});
+ProjectSchema.pre('save', function(next) {
+    let userId = this.user._id;
+    let tgtProjTitle = this.title;
+    Project.find({user: userId, title: tgtProjTitle}).then(function (projects) {
+        if (!projects.length) {
+            next();
+        } else {
+            next(new Error("already exists!"));
+        }
+    });
+});
