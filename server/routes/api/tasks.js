@@ -28,18 +28,23 @@ router.post('/', auth.required, function (req, res, next) {
     User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
         var task = new Task(req.body.task);
+        var taskProject = req.body.task.project;
         task.user = user;
-        task.project = req.body.task.project.id;
+        task.project = taskProject ? taskProject.id : null;
 
         return task.save().then(function (task) {
-            task.populate('project').execPopulate().then(function () {
+            if (taskProject) {
+                task.populate('project').execPopulate().then(function () {
 
-                task.project.tasks.push(task);
+                    task.project.tasks.push(task);
 
-                return task.project.save().then(function () {
-                    return res.json({ task: task.toJSONFor(user) });
-                })
-            });
+                    return task.project.save().then(function () {
+                        return res.json({ task: task.toJSONFor(user) });
+                    })
+                });
+            } else {
+                return res.json({ task: task.toJSONFor(user) });
+            };
         });
     }).catch(next);
 });
@@ -293,10 +298,14 @@ router.delete('/:taskId', auth.required, function (req, res, next) {
                 let noteObjIds = noteIds.map((nid) => { return mongoose.Types.ObjectId(nid) }); 
                                  
                 Note.find({_id: {$in: noteObjIds} }).remove().exec().then(function() {
-                    Project.findById(req.task.project).then(function (project) {
-                        project.tasks.remove(req.task._id)
-                        project.save()
-                            .then(function () {                        
+                    return Promise.all([
+                        req.task.project ? Project.findById(req.task.project._id) : null
+                    ]).then(function(result) {
+                        var project = result[0];
+
+                        return Promise.all([
+                            project ?  ( project.tasks.remove(req.task._id), project.save() ) : null
+                        ]).then(function () {              
                                 Promise.all([
                                     Task.find({ _id: req.task._id }).remove(),
                                 ])                        
@@ -304,7 +313,7 @@ router.delete('/:taskId', auth.required, function (req, res, next) {
                             .then(function () {
                                 return res.sendStatus(204);
                             })
-                    });                    
+                    })
                 })
             })
 

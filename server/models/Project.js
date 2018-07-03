@@ -10,7 +10,7 @@ var ProjectSchema = new mongoose.Schema({
     // users: ? /* TODO: allow the tracking of all users on an individual project */
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
-ProjectSchema.methods.toJSON = function() {     
+ProjectSchema.methods.toJSON = function() {   
     return {
         id: this.id,
         order: this.order,

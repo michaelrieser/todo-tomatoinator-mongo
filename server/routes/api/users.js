@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 var router = require('express').Router();
 var passport = require('passport');
+
 var User = mongoose.model('User');
+var Project = mongoose.model('Project');
+
 var auth = require('../auth');
 
 router.post('/users', function(req, res, next){  
@@ -11,8 +14,15 @@ router.post('/users', function(req, res, next){
   user.email = req.body.user.email;
   user.setPassword(req.body.user.password);
 
-  user.save().then(function(){
-    return res.json({user: user.toAuthJSON()});
+  user.save().then(function(newUser){
+    // create default 'miscellaneous' project for new user
+    var project = new Project();
+    project.title = 'miscellaneous';
+    project.user = newUser.id;
+
+    return project.save().then(function () {
+      return res.json({user: user.toAuthJSON()});
+    });    
   }).catch(next);
 });
 
