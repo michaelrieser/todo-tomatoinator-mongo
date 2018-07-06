@@ -41,8 +41,8 @@ class AddProjectFormCtrl {
             },
             (err) => {
                 this.isSubmitting = false;
-                this.errors = {'title': [err.data.errors.message] };
-                this._$timeout(this.clearErrors, 3000);
+                this.errors = err.data.errors;
+                this._$timeout(this.clearErrors, 3000); // TODO: this doesn't work!
             }
         )
     }

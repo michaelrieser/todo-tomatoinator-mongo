@@ -8,19 +8,18 @@ class AuthCtrl {
         this.title = $state.current.title;
         this.authType = $state.current.name.replace('app.', '');
     }
-    
+
     submitForm() {        
         this.isSubmitting = true;
         
         this._User.attemptAuth(this.authType, this.formData).then(
-          // Callback for success
           (res) => {
-            this._$state.go('app.home');
-          },
-          // Callback for failure
-          (err) => {
-            this.isSubmitting = false;            
-            this.errors = err.data.errors;
+            if (res.status && res.status === 200) {
+              this._$state.go('app.home');
+            } else if (res.status) {
+              this.isSubmitting = false;            
+              this.errors = res.data.errors;
+            }
           }
         );
     }

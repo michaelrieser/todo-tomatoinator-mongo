@@ -32,7 +32,10 @@ ProjectSchema.pre('save', function(next) {
         if (!projects.length) {
             next();
         } else {
-            next(new Error("already exists!"));
+            var err = new Error('Project creation failed');
+            err.name = 'ValidationError';
+            err.errors = { title: new Error('already exists!') };
+            next(err); // NOTE: calling next() with an argument assumes the error is passed as argument
         }
     });
 });
