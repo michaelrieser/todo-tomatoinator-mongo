@@ -12,6 +12,9 @@ var fs = require('fs'),
 
 var isProduction = process.env.NODE_ENV === 'production';
 
+console.log('isProduction: ', isProduction);
+console.log('MongoLab URI: ', process.env.MONGOLAB_URI);
+
 // Create global app object
 var app = express();
 
