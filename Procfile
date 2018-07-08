@@ -1,1 +1,0 @@
-worker: echo 'hello HEROKU'
