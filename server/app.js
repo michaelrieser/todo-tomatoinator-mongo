@@ -12,9 +12,6 @@ var fs = require('fs'),
 
 var isProduction = process.env.NODE_ENV === 'production';
 
-console.log('isProduction: ', isProduction);
-console.log('MongoLab URI: ', process.env.MONGOLAB_URI);
-
 // Create global app object
 var app = express();
 
@@ -36,6 +33,7 @@ if (!isProduction) {
 }
 
 if(isProduction){
+  console.log('MONGODB_URI: ', MONGODB_URI);
   mongoose.connect(process.env.MONGODB_URI);
 } else {
   mongoose.connect('mongodb://localhost/todotomatoinator')
