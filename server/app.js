@@ -33,7 +33,7 @@ if (!isProduction) {
 }
 
 if(isProduction){
-  console.log('MONGODB_URI: ', MONGODB_URI);
+  console.log('MONGODB_URI: ', process.env.MONGODB_URI);
   mongoose.connect(process.env.MONGODB_URI);
 } else {
   mongoose.connect('mongodb://localhost/todotomatoinator')
