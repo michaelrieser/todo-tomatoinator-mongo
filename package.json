@@ -1,13 +1,14 @@
 {
-  "name": "chat-example",
+  "name": "todo-tomatoinator",
   "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "description": "A task tracking app integrated with pomodoro timer and time tracking capabilities.",
   "main": "server.js",
   "repository": "",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "Michael Rieser",
   "dependencies": {
     "async": "~0.2.8",
     "express": "~3.2.4",
     "socket.io": "~0.9.14"
-  }
+  },
+  "cacheDirectories": ["client/node_modules", "server/node_modules"] 
 }

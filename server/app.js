@@ -33,8 +33,7 @@ if (!isProduction) {
 }
 
 if(isProduction){
-  console.log('MONGODB_URI: ', process.env.MONGODB_URI);
-  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connect(process.env.MONGODB_URI); // MongoLAB web dashboard => https://www.mlab.com/databases/heroku_2j416hmk#users
 } else {
   mongoose.connect('mongodb://localhost/todotomatoinator')
   mongoose.set('debug', true);
