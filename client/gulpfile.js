@@ -83,14 +83,21 @@ gulp.task('build', ['html', 'browserify'], function() {
 
 gulp.task('sounds', function() {
   return gulp.src('./src/public/sounds/*')
+    .on('error', interceptErrors)
     .pipe(gulp.dest('./build/assets/sounds/'))
 })
 
-gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds'], function() {
+gulp.task('vendor_build_assets', function() {
+  return gulp.src('./src/vendor/javascripts/vendor_build_scripts/*')
+    .on('error', interceptErrors)
+    .pipe(gulp.dest('./build/'))
+})
+
+gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function() {
   browserSync.init(['./build/**/**.**'], {
     server: "./build",
     // port: 4000,
-    port: 8080,
+    port: process.env.PORT || 8080, // process.env.PORT provided by Heroku
     notify: false,
     ui: {
       port: 4001
