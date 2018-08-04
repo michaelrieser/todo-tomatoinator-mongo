@@ -135,7 +135,7 @@ gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'ven
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
       root: "./build",
       // livereload: true,
-      port: 8080
+      port:  process.env.PORT || 8080 // process.env.PORT provided by Heroku
     });
 
     /* ATTEMPTED to use gulp-webserver SEE: https://github.com/schickling/gulp-webserver */
