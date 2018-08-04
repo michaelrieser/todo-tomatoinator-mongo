@@ -1,4 +1,9 @@
 var gulp          = require('gulp');
+var using         = require('gulp-using');
+// var gulpExpress   = require('gulp-express'); // ADD "gulp-express": "*" to package.json
+// var debug         = require('debug');
+var connect       = require('gulp-connect'); // add "gulp-connect": "^2.0.6", to package.json *NOTE: gulp-connect DEPRECATED
+// var webserver     = require('gulp-webserver'); // NOTE: DON'T use Express and gulp-webserver concurrently DUH!!!
 var notify        = require('gulp-notify');
 var source        = require('vinyl-source-stream');
 var browserify    = require('browserify');
@@ -93,18 +98,63 @@ gulp.task('vendor_build_assets', function() {
     .pipe(gulp.dest('./build/'))
 })
 
-gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function() {
-  browserSync.init(['./build/**/**.**'], {
-    server: "./build",
-    // port: 4000,
-    port: process.env.PORT || 8080, // process.env.PORT provided by Heroku
-    notify: false,
-    ui: {
-      port: 4001
-    }
-  });
+// * BEFORE - working locally
+// gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function() {
+//   browserSync.init(['./build/**/**.**'], {
+//     server: "./build",
+//     // port: 4000,
+//     port: process.env.PORT || 8080, // process.env.PORT provided by Heroku
+//     notify: false,
+//     ui: {
+//       port: 4001
+//     }
+//   });
 
-  gulp.watch("src/index.html", ['html']);
-  gulp.watch(viewFiles, ['views']);
-  gulp.watch([jsFiles, scssFiles], ['browserify']);
-});
+//   gulp.watch("src/index.html", ['html']);
+//   gulp.watch(viewFiles, ['views']);
+//   gulp.watch([jsFiles, scssFiles], ['browserify']);
+// });
+
+// * ATTEMPT at implementing non-browserSync server. SEE: https://www.sitepoint.com/deploying-heroku-using-gulp-node-git/
+gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function() {    
+  // browserSync.init(['./build/**/**.**'], {
+  //   server: "./build",
+  //   // port: 4000,
+  //   port: process.env.PORT || 8080, // process.env.PORT provided by Heroku
+  //   notify: false,
+  //   ui: {
+  //     port: 4001
+  //   }
+    
+    /* ATTEMPTED to use gulp-connect, but it appears to be deprecated */
+    // connect.server({ // TODO: need 'gulp-connect' package, SEE: https://www.npmjs.com/package/gulp-connect
+    //   root: 'client/src/js',
+    //   port: process.env.PORT || 3000, // localhost:5000
+    //   livereload: false
+    // });
+    connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
+      root: "./build",
+      livereload: true,
+      port: 8080
+    });
+
+    /* ATTEMPTED to use gulp-webserver SEE: https://github.com/schickling/gulp-webserver */
+    // gulp.src('./build/**/**.**')
+    //   // .pipe(using())
+    //   .pipe(webserver({
+    //     // fallback: 'index.html',
+    //     livereload: false,
+    //     // directoryListing: true,
+    //     // open: true
+    //   }));
+
+    /* ATTEMPT to use gulp-express server - https://www.npmjs.com/package/gulp-express */
+    // gulpExpress.run(['app.js'])
+    //   .transform(babelify, {presets: ["es2015"]});
+    // gulpExpress.run('build/app.js')
+
+    gulp.watch("src/index.html", ['html']);
+    gulp.watch(viewFiles, ['views']);
+// gulp.watch([jsFiles, scssFiles], ['browserify']);
+  });
+  
