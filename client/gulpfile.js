@@ -134,7 +134,7 @@ gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'ven
     // });
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
       root: "./build",
-      livereload: true,
+      // livereload: true,
       port: 8080
     });
 
