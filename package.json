@@ -10,5 +10,8 @@
     "express": "~3.2.4",
     "socket.io": "~0.9.14"
   },
-  "cacheDirectories": ["client/node_modules", "server/node_modules"] 
+  "cacheDirectories": ["client/node_modules", "server/node_modules"],
+  "scripts": {
+    "postinstall": "npm start"
+  }
 }
