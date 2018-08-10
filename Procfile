@@ -1,7 +1,2 @@
-web: cd ./server
-web: npm start
-
-web: cd ~
-web: cd ./client
-// TODO: install gulp globally?
-web: gulp
+web: cd client && npm install
+api: cd server && npm install
