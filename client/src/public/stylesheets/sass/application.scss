@@ -10,6 +10,10 @@
     width: percentage(7/7); // Use this to ensure SASS compiled correctly
 }
 
+body {
+    padding-bottom: 100px;
+}
+
 .color-whitesmoke {
     color: whitesmoke;
 }
@@ -87,6 +91,11 @@ h6 {
 .inline { display: inline; }
 .inline-block { display: inline-block; }
 .pos-relative { position: relative; }
+
+// this is a workaround(hack) for not being able to scroll past last task || pomreport-interval due to md-toast body schenanigans
+.hundred-bottom-padding {
+    padding-bottom: 100px;
+}
 
 .tasks-container {
     width: 100%;
@@ -913,8 +922,15 @@ h6 {
 
 .pomreport-interval-wrapper {
     padding: 5px;
+    display: -ms-flexbox;
     display: -webkit-flex; /* Safari */
     display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+
     background-color: lightgray;
     border-bottom: 1px solid gray;
     border-top: 1px solid white;
@@ -939,9 +955,12 @@ h6 {
 //     border-bottom: none;
 // }
 
-
+.pomreport-time {
+    flex-basis: 75px;
+    min-width: 75px;
+}
 .pomreport-box-wrapper {
-    flex-basis: 50px;
+    flex-basis: 50px;    
 }
 .pomreport-box-outer {
     position: relative;

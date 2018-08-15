@@ -62,12 +62,9 @@ export default class PomTimer {
             var currentTimeDelta = Math.round((endTime - new Date().getTime()) / 1000);
 
             this.timeRemaining = currentTimeDelta;
-            this.updateBrowserTitle(this.timeRemaining);
-
-            console.log(`timeRemaining: ${this.timeRemaining}`);
-
-            if (this.timeRemaining % 2 === 0) { // FOR TESTING
-            // if (this.timeRemaining % 60 === 0) {
+            this.updateBrowserTitle(this.timeRemaining);            
+            
+            if (this.timeRemaining % 60 === 0) {
                 this.logTimeAndCloseIntervalIfComplete(currentTimeDelta);
             }
         }, 1000);
