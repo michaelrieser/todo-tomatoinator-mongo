@@ -26,8 +26,6 @@ app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
 // console.log(__dirname + '/public');
 
-console.log('process.env.PORT: ', process.env.PORT);
-
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 
 if (!isProduction) {
@@ -87,7 +85,7 @@ app.use(function(err, req, res, next) {
 });
 
 // finally, let's start our server...
-// var server = app.listen( process.env.PORT || 3000, function(){
-var server = app.listen(3000, function(){
+var server = app.listen( process.env.PORT || 3000, function(){
+// var server = app.listen(3000, function(){
   console.log('Listening on port ' + server.address().port);
 });
