@@ -1,1 +1,1 @@
-web: cd server && npm install
+web: honcho -f ProcfileHoncho start
