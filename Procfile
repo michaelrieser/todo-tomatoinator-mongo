@@ -1,2 +1,1 @@
-web: npm install -g foreman
-web: nf start --procfile ProcfileNodeForeman
+web: npm install -g foreman && nf start --procfile ProcfileNodeForeman
