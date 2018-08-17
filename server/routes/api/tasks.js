@@ -51,6 +51,7 @@ router.post('/', auth.required, function (req, res, next) {
 
 /* GET task list */
 router.get('/', auth.optional, function (req, res, next) {
+    console.log('GET /tasks')
     var query = {};
     var limit = 20;
     var offset = 0;
