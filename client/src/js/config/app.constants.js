@@ -1,7 +1,7 @@
 const AppConstants = {
   // api: 'http://localhost:3000/api',
-  // api: 'http://localhost:3000', // WORKS LOCALLY
-  api: '0.0.0.0:3000',
+  api: 'http://localhost:3000', 
+  // api: '0.0.0.0:3000',
   // api: 'https://todo-tomatoinator-mrieser100.c9users.io',
   jwtKey: 'jwtToken',
   appName: 'Todo-Tomatoinator',

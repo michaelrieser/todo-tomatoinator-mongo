@@ -36,7 +36,7 @@
     "underscore": "1.8.3"
   },
   "scripts": {
-    "start": "node app",
+    "start": "PORT=3000 node app",
     "postinstall": "npm start"
   }
 }
