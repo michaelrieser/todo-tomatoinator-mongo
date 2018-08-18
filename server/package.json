@@ -37,6 +37,6 @@
   },
   "scripts": {
     "start": "node app",
-    "postinstall": "PORT=3000 npm start"
+    "postinstall": "npm start"
   }
 }
