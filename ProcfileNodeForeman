@@ -1,2 +1,2 @@
-server: cd server && npm install
 client: cd client && npm install
+server: cd server && npm install
