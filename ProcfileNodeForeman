@@ -1,1 +1,2 @@
-app: cd client && npm install && PORT=3000 && cd server && npm install
+client: cd client && npm install
+server: cd server && PORT=3000 && npm install
