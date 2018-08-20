@@ -1,2 +1,0 @@
-client: cd client && npm install
-server: cd server && PORT=3000 && npm install

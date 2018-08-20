@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "*** bin/start ***"
+echo "$MY_VAR"
