@@ -1,3 +1,8 @@
 #!/bin/bash
-echo "*** bin/start ***"
-echo "$MY_VAR"
+echo "$CLIENT_OR_SERVER"
+
+if [ "$CLIENT_OR_SERVER" == "client" ]; then
+    cd client && npm install
+else
+    cd server && npm install
+fi
