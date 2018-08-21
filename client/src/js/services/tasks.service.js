@@ -33,7 +33,8 @@ export default class Tasks {
 
   queryAndSet(stateParams = {}) {
     var queryConfig = {};
-    queryConfig.filters = angular.equals(stateParams, {}) ? this.currentlySetFilters : this.getMergedFilters(stateParams);
+    // queryConfig.filters = angular.equals(stateParams, {}) ? this.currentlySetFilters : this.getMergedFilters(stateParams);
+    queryConfig.filters = this.getMergedFilters(stateParams); // dont need empty stateParams check since default param values used
 
     // Create the $http object for this request
     let request = {
@@ -160,16 +161,16 @@ export default class Tasks {
   }
 
 
-  getMergedFilters(stateParams = {}) {
-    this.setStatus = stateParams.status || 'all'; // setStatus field for dynamically setting Tasks href in header.html
-
+  getMergedFilters(stateParams = {}) {    
     this.setStatusFilterFromString(stateParams.status);        
     this.setProjectFilterFromString(stateParams.project);
     return this.currentlySetFilters;
   }
 
   setStatusFilterFromString(targetStatus) {
-    if (targetStatus === undefined) { return; } // TODO: this could probably be deleted since default params are used in ui-router
+    // if (targetStatus === undefined) { return; } // TODO: this could probably be deleted since default params are used in ui-router
+
+    this.setStatus = targetStatus || 'all'; // setStatus field for dynamically setting Tasks href in header.html
 
     switch (targetStatus) {
       case 'all':
