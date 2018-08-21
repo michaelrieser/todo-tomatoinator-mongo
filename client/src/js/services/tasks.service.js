@@ -161,7 +161,9 @@ export default class Tasks {
 
 
   getMergedFilters(stateParams = {}) {
-    this.setStatusFilterFromString(stateParams.status);
+    this.setStatus = stateParams.status || 'all'; // setStatus field for dynamically setting Tasks href in header.html
+
+    this.setStatusFilterFromString(stateParams.status);        
     this.setProjectFilterFromString(stateParams.project);
     return this.currentlySetFilters;
   }

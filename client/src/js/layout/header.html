@@ -44,16 +44,16 @@
           Home
         </a>
       </li>            
-
+      
       <li class="nav-item">
-        <a class="nav-link"
-         ui-sref-active="active"
-         ui-sref="app.tasks.view({status: 'all'})">
+        <a class="nav-link"         
+         ng-class="{'active': $ctrl.tasksViewActive()}"                                  
+         ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl._Tasks.currentlySetFilters.project, status: $ctrl._Tasks.setStatus }) }}">
          Tasks
         </a>
       </li>
 
-      <!--<li class="nav-item">
+      <!--<li class="nav-item">        
         <a class="nav-link"
           ui-sref-active="active"
           ui-sref="app.article">
