@@ -1,1 +1,1 @@
-web: cd server && npm install && npm start
+web: npm install -g foreman && nf start --procfile ProcfileNodeForeman
