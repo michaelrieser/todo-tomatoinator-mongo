@@ -113,14 +113,12 @@ export default class TaskNotifications {
   }
 
   displayToastIfNotifications(newNotifications) {
-        console.log('newNotifications: ', newNotifications);
         if (!newNotifications) { return; } 
         let notificationsLength = newNotifications.dueDateTimeNotifications.length +
             newNotifications.reminderDateTimeNotifications.length;
         if (notificationsLength > 0) {                     
             this.displayToast(newNotifications);                 
-        } 
-        else { 
+        } else { 
           this._$mdToast.hide(); 
         }    
   }
