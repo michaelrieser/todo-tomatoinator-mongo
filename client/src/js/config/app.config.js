@@ -17,10 +17,21 @@ function AppConfig($httpProvider, $stateProvider, $locationProvider, $urlRouterP
     abstract: true,
     templateUrl: 'layout/app-view.html',
     resolve: {
-      auth: function(User) {
+      auth: function(User) {        
         return User.verifyAuth();
       }
     }
+    // TODO: force resolve to be called w/i changes of the same route hierarchy - for calling User.verifyAuth() -> TaskNotificaions.initializeToast()
+    //       to retrieve latest notifications when user changes page ( NOT WORKING, except for Settings route which calls User.ensureAuthIs() -> User.verifyAuth() )
+    //       *THIS is probably OK!
+    //  *SEE: https://stackoverflow.com/questions/32502445/resolve-not-called-the-second-time
+    //  *SEE: https://stackoverflow.com/questions/32284017/ui-router-parents-resolve-not-called-when-state-changes
+    // resolve: {
+    //   auth: ['User', function(User) {
+    //     console.log('app route - verifyAuth()')
+    //     return User.verifyAuth();
+    //   }]
+    // }
   });
 
   $urlRouterProvider.otherwise('/');

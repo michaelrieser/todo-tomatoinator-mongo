@@ -1,22 +1,37 @@
 export default class TaskNotifications {
-  constructor(AppConstants, Tasks, $http, $interval) {
+  constructor(AppConstants, Tasks, $http, $interval, $mdToast) {
     'ngInject';
 
     this._AppConstants = AppConstants;
-    this._Tasks = Tasks;
-    this._$http = $http;
-    this._$interval = $interval;            
+    this._Tasks        = Tasks;
+    this._$http        = $http;
+    this._$interval    = $interval;
+    this._$mdToast     = $mdToast;
+  }
 
-    this.initializeInterval();
+  clearIntervalAndCloseToast() {
+    this.clearInterval();
+    this.closeToast();
+  }
+
+  clearInterval() {
+    this._$interval.cancel(this.timerInterval);
+  }
+
+  closeToast() {
+    this._$mdToast.hide();
   }
 
   initializeInterval() {
+    this.queryAndDisplayToastIfNotifications();
+
+    if (this.timerInterval) { return; } // guard cond - don't want to set another interval if pre existing  
     this.timerInterval = this._$interval(() => {      
-      this.query();
-    }, 60000);    
+      this.queryAndDisplayToastIfNotifications();
+    }, 60000); 
   }
 
-  query(queryConfig = {}) {
+  queryAndDisplayToastIfNotifications(queryConfig = {}) {
     let request = {
       url: `${this._AppConstants.api}/tasks/notifications`,
       method: 'GET',
@@ -29,6 +44,8 @@ export default class TaskNotifications {
     if (!this.notifications) { this.notifications = {}; };
     // NOTE: angular.copy(<src>, <dest>) clears <dest> object and replaces its contents with <src> => thus alleviating need to set $watch on ctrl
     angular.copy(refreshedTaskNotificationInfo.notifications, this.notifications);
+    this.displayToastIfNotifications(this.notifications);
+    
     return refreshedTaskNotificationInfo;
   }
 
@@ -93,5 +110,36 @@ export default class TaskNotifications {
 
     tgtTask.reminderDateTime = reminderDateTime.toISOString();
     this.updateTaskAndResolveNotification(tgtTask, 'reminder');
+  }
+
+  displayToastIfNotifications(newNotifications) {
+        console.log('newNotifications: ', newNotifications);
+        if (!newNotifications) { return; } 
+        let notificationsLength = newNotifications.dueDateTimeNotifications.length +
+            newNotifications.reminderDateTimeNotifications.length;
+        if (notificationsLength > 0) {                     
+            this.displayToast(newNotifications);                 
+        } 
+        else { 
+          this._$mdToast.hide(); 
+        }    
+  }
+
+  displayToast(newNotifications) {
+        // this.toastDisplayed = true; // NOTE: kept for reference
+        // SEE: https://material.angularjs.org/latest/demo/toast & https://material.angularjs.org/latest/api/service/$mdToast
+        this._$mdToast.show({
+            hideDelay: false,
+            // animation: 'fade',
+            // position: 'bottom left', // TODO: appears to be overriding this and going to bottom, this is OK but probably worth investigating
+            controller: 'ToastCtrl',
+            controllerAs: '$ctrl',
+            templateUrl: 'toast/toast.html',
+            locals: {
+                notifications: newNotifications,
+                // toastDisplayed: this.toastDisplayed
+            },
+            bindToController: true
+        }).then( (resolvedPromise) => { /* this.toastDisplayed = false; */ } ); // NOTE: kept for reference
   }
 }

@@ -1,9 +1,10 @@
 export default class User {
-    constructor(JWT, AppConstants, $http, $state, $q) {
+    constructor(JWT, AppConstants, TaskNotifications, $http, $state, $q) {
         'ngInject';
         
         this._JWT = JWT;
         this._AppConstants = AppConstants;
+        this._TaskNotifications = TaskNotifications;
         this._$http = $http;
         this._$state = $state;
         this._$q = $q;
@@ -52,12 +53,14 @@ export default class User {
         
         // Check for the JWT token first
         if (!this._JWT.get()) {
+            this._TaskNotifications.clearIntervalAndCloseToast();
             deferred.resolve(false);
             return deferred.promise;
         }
         
         // If there's a JWT & user is already set
         if (this.current) {
+            this._TaskNotifications.initializeInterval();
             deferred.resolve(true);
             
         // If current user isn't set, get it from the server
@@ -67,12 +70,14 @@ export default class User {
                 url: this._AppConstants.api + '/user',
                 method: 'GET'
             }).then(
-                (res) => {                    
+                (res) => {                                
+                    this._TaskNotifications.initializeInterval();
                     this.current = res.data.user;                    
                     deferred.resolve(true);
                 },
                 // If an error occurs, that means the user's token was invalid
                 (err) => {
+                    this._TaskNotifications.clearIntervalAndCloseToast();   
                     this._JWT.destroy();
                     deferred.resolve(false);
                 }

@@ -82,12 +82,6 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 							// 	);
 							// })
 
-						},
-						taskNotificationInfo: function (TaskNotifications) {
-							return TaskNotifications.query().then(
-								(taskNotificationInfo) => taskNotificationInfo,
-								(err) => console.log(err)
-							)
 						}
 					}
 				},
