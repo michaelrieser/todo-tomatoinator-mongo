@@ -16,6 +16,7 @@ class TaskDueDateTimeInputFormCtrl {
     }
 
     handleDueDateTimeInputBlur() {
+        if (this.task.dueDateTime === undefined) { this.task.dueDateTime = null; }
         // QUESTION / TODO: set bound displayingduedatetimeinput here first (to close input) || Add spinner ?
         this._Tasks.update(this.task).then(
             (updatedTask) => {

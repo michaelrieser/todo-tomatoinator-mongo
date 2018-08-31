@@ -1,13 +1,17 @@
 class TaskDueDateTimeInputCtrl {
-    constructor($scope, Tasks) {
+    constructor($scope, $interval, Tasks) {
         'ngInject';
 
         this._$scope = $scope;
         this._Tasks = Tasks;
+        this._$interval = $interval;
     }
     
     removeTaskDate() {
-        this.task.dueDateTime = null;      
+        // setting this w/o $interval wasn't reflecting changes in view - probably due to jQuery datetimepicker not updating view
+        //  SEE: https://stackoverflow.com/questions/18626039/apply-already-in-progress-error (comment by Onur Yildrium)
+        this._$interval( () => { this.task.dueDateTime = null; }); 
+        
         if (this.editmode) {
             this._Tasks.update(this.task).then(
                 (updatedTask) => {return updatedTask},
