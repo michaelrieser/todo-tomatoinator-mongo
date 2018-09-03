@@ -1,6 +1,6 @@
 const AppConstants = {
   // api: 'http://localhost:3000', // LOCAL
-  api: 'https://todo-tomatoinator-api.herokuapp.com',
+  api: process.env.NODE_ENV === 'production' ? 'https://todo-tomatoinator-api.herokuapp.com' : 'http://localhost:3000',
   // api: '0.0.0.0:3000',
   // api: 'https://todo-tomatoinator-mrieser100.c9users.io',
   jwtKey: 'jwtToken',
