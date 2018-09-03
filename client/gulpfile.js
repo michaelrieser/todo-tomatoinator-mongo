@@ -101,13 +101,17 @@ gulp.task('vendor_build_assets', function () {
 // CONDITIONALLY launch server => browser-sync (LOCAL) || gulp-connect (PRODUCTION) 
 gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function () {
 
+  console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
+
   if (process.env.NODE_ENV === 'production') {
+    console.log("PROD!")
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
       root: "./build",
       // livereload: true,
       port: process.env.PORT || 8080 // process.env.PORT provided by Heroku
     });
   } else {
+    console.log("LOCAL!")
     browserSync.init(['./build/**/**.**'], {
       server: "./build",
       // port: 4000,
