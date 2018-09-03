@@ -15,6 +15,9 @@ var templateCache = require('gulp-angular-templatecache');
 var uglify = require('gulp-uglify');
 var merge = require('merge-stream');
 var sass = require('gulp-sass');
+var log = require('fancy-log');
+
+log("gulpfile-NODE_ENV: ", process.env.NODE_ENV);
 
 // Where our files are located
 var jsFiles = "src/js/**/*.js";

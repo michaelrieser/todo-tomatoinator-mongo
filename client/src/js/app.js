@@ -1,6 +1,10 @@
 // import jquery from 'jquery';
 import angular from 'angular';
 
+console.log('app.js-NODE_ENV: ', process.env.NODE_ENV);
+let isProduction = process.env.NODE_ENV === 'production';
+console.log('app.js - isProduction: ', isProduction);
+
 // Import our app config files
 import constants  from './config/app.constants';
 import appConfig  from './config/app.config';
