@@ -1,9 +1,10 @@
 class AuthCtrl {
-    constructor(User, TaskNotifications, $state) {
+    constructor(User, TaskNotifications, Tasks, $state) {
         'ngInject';
         
         this._User = User;
         this._TaskNotifications = TaskNotifications;
+        this._Tasks = Tasks;
         this._$state = $state;
 
         this.title = $state.current.title;
@@ -17,7 +18,11 @@ class AuthCtrl {
           (res) => {
             if (res.status && res.status === 200) {
               this._$state.go('app.home');
-              this._TaskNotifications.initializeInterval(); // init interval to get notifications & trigger mdToast if notifications exist
+              // NOTE: query and set tasks here to populate tasks for resolving notifications
+              this._Tasks.queryAndSet().then(
+                  (tasksInfo) => this._TaskNotifications.initializeInterval(),
+                  (err) => console.log(err)
+              ); 
             } else if (res.status) {
               this.isSubmitting = false;            
               this.errors = res.data.errors;
