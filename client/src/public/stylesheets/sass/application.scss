@@ -65,8 +65,12 @@ h6 {
     font-size: 0.75em;
 }
 
+.navbar-brand {
+    padding-top: 12px !important;
+}
 .navbar {
     padding: 0;
+    margin: 0;
 }
 .navbar-inner {
     position: absolute;
@@ -901,7 +905,8 @@ h6 {
 
 /* pomreport */
 .pomreport-outer-wrapper {
-    padding: 15px
+    padding: 0 15px 15px 15px;
+    // padding: 15px
 }
 .pomreport-navbar {
     margin-bottom: 0;

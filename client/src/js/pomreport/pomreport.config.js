@@ -18,9 +18,11 @@ function PomreportConfig($stateProvider) {
   .state('app.pomreport.view', { 
     url: '/pomreport/:type',
     views: {
-        'pomreport': {
-            // TODO: dynamically generate templateUrl String from $stateParams
-            templateUrl: 'pomreport/pomreport-daily.html', 
+        'pomreport': {            
+            templateUrl: function ($stateParams) {
+                let reportType = $stateParams.type;
+                return `pomreport/pomreport-${reportType}.html`
+            },
             controller: 'PomreportDisplayCtrl',
             controllerAs: '$ctrl',
             resolve: {
