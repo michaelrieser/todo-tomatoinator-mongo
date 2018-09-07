@@ -1,18 +1,13 @@
 class TasksDisplayCtrl {
-    constructor(tasksInfo, taskNotificationInfo, Tasks, Projects, TaskNotifications, PomTimer, $scope, $stateParams, $mdToast) {
+    constructor(tasksInfo, Tasks, Projects, PomTimer, $scope, $stateParams) {
         'ngInject';
 
         this._Tasks = Tasks;
         this._Projects = Projects;
-        this._TaskNotifications = TaskNotifications;
         this._PomTimer = PomTimer;
         this._$scope = $scope;
-        this._$mdToast = $mdToast;
 
         this.tasksStatus = $stateParams.status; // 'all' || 'in-progress' || 'completed' || 'team'
-
-        this.notifications = this._TaskNotifications.notifications;
-        this.toastDisplayed = false;
 
         this.activeTaskList = [];
 
@@ -76,17 +71,6 @@ class TasksDisplayCtrl {
         }
 
         $scope.$watch(
-            () => { return this.notifications },
-            (newNotifications) => {
-                let notificationsLength = newNotifications.dueDateTimeNotifications.length +
-                    newNotifications.reminderDateTimeNotifications.length;
-                if (notificationsLength > 0) { this.displayToast(); }  // QUESION/TODO: is it even necessary to call displayToast() since notifications set via two-way binding?
-                else { this._$mdToast.hide(); }
-            },
-            true // perform deep watch
-        )
-
-        $scope.$watch(
             () => { return this._Tasks.activeTask; },
             (newActiveTask) => {
                 this.populateActiveTaskList();
@@ -115,26 +99,6 @@ class TasksDisplayCtrl {
             angular.copy([{ displayText: 'Select plus below to add a task', elementType: 'li', cssClass: 'task-list-empty' }], this.activeTaskList);
         }
     }
-
-    displayToast() {
-        this.toastDisplayed = true;
-        // SEE: https://material.angularjs.org/latest/demo/toast & https://material.angularjs.org/latest/api/service/$mdToast
-        this._$mdToast.show({
-            hideDelay: false,
-            // animation: 'fade',
-            // position: 'bottom left', // TODO: appears to be overriding this and going to bottom, this is OK but probably worth investigating
-            controller: 'ToastCtrl',
-            controllerAs: '$ctrl',
-            templateUrl: 'toast/toast.html',
-            locals: {
-                notifications: this.notifications,
-                // toastDisplayed: this.toastDisplayed
-            },
-            bindToController: true
-        }).then(
-            (resolvedPromise) => { this.toastDisplayed = false; }
-            );
-    };
 }
 
 export default TasksDisplayCtrl;

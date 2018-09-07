@@ -1,8 +1,9 @@
 class SettingsCtrl {
-    constructor(User, $state) {
+    constructor(User, TaskNotifications, $state) {
         'ngInject';
 
         this._User = User;
+        this._TaskNotifications = TaskNotifications;
         this._$state = $state;
 
         this.formData = {
@@ -15,8 +16,13 @@ class SettingsCtrl {
 
         // Bind is req'd because the logout method assumes
         //  the execution context is within the User object.
-        this.logout = User.logout.bind(User);
+        // this.logout = User.logout.bind(User); // NOTE: added method below to allow for TaskNotifications interval to be cleared as well
     }    
+
+    logout() {
+        this._User.logout();
+        this._TaskNotifications.clearIntervalAndCloseToast();
+    }
 
     submitForm() {
         this.isSubmitting = true;

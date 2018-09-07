@@ -41,8 +41,8 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 				}
 			}		
 		})
-		.state('app.tasks.view', {
-			url: '/tasks/:project/:status/',
+		.state('app.tasks.view', {			
+			url: '/tasks/:project/:status',
 			params: {
 				status: {
 					value: 'all',
@@ -53,7 +53,11 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 				project: {
 					value: 'all',
 					squash: false
-				}
+				},
+				// NOTE: optional param NOT specified in URL with a default value of null SEE: http://benfoster.io/blog/ui-router-optional-parameters 
+				//	** LEFT FOR ILLUSTRATIVE PURPOSES **
+				// url: '/tasks/:project/:status/?fromTasksView',
+				// fromTasksView: null 
 			},
 			views: {
 				'tasks': {
@@ -61,7 +65,7 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 					controller: 'TasksDisplayCtrl',
 					controllerAs: '$ctrl',
 					resolve: {
-						tasksInfo: function (Tasks, $state, $q, $stateParams) {	
+						tasksInfo: function (Tasks, $state, $q, $stateParams) {				
 							return Tasks.queryAndSet($stateParams).then(
 								(tasksInfo) => tasksInfo,
 								(err) => console.log(err)
@@ -78,12 +82,6 @@ function TasksConfig($stateProvider, $urlRouterProvider) {
 							// 	);
 							// })
 
-						},
-						taskNotificationInfo: function (TaskNotifications) {
-							return TaskNotifications.query().then(
-								(taskNotificationInfo) => taskNotificationInfo,
-								(err) => console.log(err)
-							)
 						}
 					}
 				},

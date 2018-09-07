@@ -105,6 +105,9 @@ componentsModule.component('notificationDateTimeInput', NotificationDateTimeInpu
 import TestComponent from './task-helpers/test-component.component';
 componentsModule.component('testComponent', TestComponent);
 
+import PomreportNavbar from './pomreport-helpers/pomreport-navbar.component';
+componentsModule.component('pomreportNavbar', PomreportNavbar);
+
 import PomreportInterval from './pomreport-helpers/pomreport-interval.component';
 componentsModule.component('pomreportInterval', PomreportInterval);
 
