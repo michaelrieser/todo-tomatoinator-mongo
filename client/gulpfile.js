@@ -1,4 +1,6 @@
 var gulp = require('gulp');
+var gulpRename = require('gulp-rename');
+var fs = require('file-system');
 var using = require('gulp-using');
 // var gulpExpress   = require('gulp-express'); // ADD "gulp-express": "*" to package.json
 // var debug         = require('debug');
@@ -16,8 +18,11 @@ var uglify = require('gulp-uglify');
 var merge = require('merge-stream');
 var sass = require('gulp-sass');
 var log = require('fancy-log');
+var gulpNgConfig = require('gulp-ng-config');
+var constantsBlueprint = require('./src/js/config/app.constants.blueprint.js'); // require config module (AppConstants)
 
-log("gulpfile-NODE_ENV: ", process.env.NODE_ENV);
+require('dotenv').load(); // loads .env file in root directory
+var ENV = process.env.NODE_ENV || 'development'; // default to development if no NODE_ENV specified
 
 // Where our files are located
 var jsFiles = "src/js/**/*.js";
@@ -46,6 +51,19 @@ gulp.task('sass', function () {
 });
 gulp.task('sass:watch', function () {
   gulp.watch(scssFiles, ['sass']);
+});
+
+gulp.task('gulp-config', function () {
+  // SEE: https://scotch.io/tutorials/properly-set-environment-variables-for-angular-apps-with-gulp-ng-config
+  fs.writeFileSync('./src/js/config/app.constants.blueprint.json', JSON.stringify(constantsBlueprint[ENV])); // write blueprint JSON
+  gulp.src('./src/js/config/app.constants.blueprint.json') // create constants.js file containing angular constants module def
+    .pipe(
+      gulpNgConfig('app', {
+        createModule: false
+      })
+    )
+    .pipe(gulpRename('app.constants.js')) // rename app.constants.blueprint.js to app.constants.js
+    .pipe(gulp.dest('./src/js/config')) // output app.constants.js to config dir
 });
 
 gulp.task('browserify', ['views'], function () {
@@ -102,7 +120,7 @@ gulp.task('vendor_build_assets', function () {
 })
 
 // CONDITIONALLY launch server => browser-sync (LOCAL) || gulp-connect (PRODUCTION) 
-gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function () {
+gulp.task('default', ['html', 'gulp-config', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function () {
 
   if (process.env.NODE_ENV === 'production') {
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
