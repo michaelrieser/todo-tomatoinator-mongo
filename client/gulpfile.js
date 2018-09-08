@@ -54,7 +54,6 @@ gulp.task('sass:watch', function () {
 });
 
 gulp.task('gulp-config', function () {
-  log('JOB => gulp-config')
   // SEE: https://scotch.io/tutorials/properly-set-environment-variables-for-angular-apps-with-gulp-ng-config
   fs.writeFileSync('./src/js/config/app.constants.blueprint.json', JSON.stringify(constantsBlueprint[ENV])); // write blueprint JSON
   gulp.src('./src/js/config/app.constants.blueprint.json') // create constants.js file containing angular constants module def
@@ -68,7 +67,6 @@ gulp.task('gulp-config', function () {
 });
 
 gulp.task('browserify', ['views'], function () {
-  log('JOB => browserify')
   return browserify('./src/js/app.js')
     .transform(babelify, { presets: ["es2015"] })
     .transform(ngAnnotate)
@@ -116,7 +114,6 @@ gulp.task('sounds', function () {
 })
 
 gulp.task('vendor_build_assets', function () {
-  log('JOB => vendor_build_assets')
   return gulp.src('./src/vendor/javascripts/vendor_build_scripts/*')
     .on('error', interceptErrors)
     .pipe(gulp.dest('./build/'))
@@ -124,7 +121,6 @@ gulp.task('vendor_build_assets', function () {
 
 // CONDITIONALLY launch server => browser-sync (LOCAL) || gulp-connect (PRODUCTION) 
 gulp.task('default', ['html', 'gulp-config', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function () {
-  log('process.env.PORT: ', process.env.PORT);
   if (process.env.NODE_ENV === 'production') {
     log('PROD')
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
