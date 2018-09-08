@@ -6,6 +6,8 @@ export default class Tasks {
     this._PomTimer = PomTimer;
     this._$http = $http;
 
+    console.log('AppConstants.testKey: ', AppConstants.testKey);
+
     this.currentlySetFilters = {}; // TODO: hook this into local session storage
   }
 
