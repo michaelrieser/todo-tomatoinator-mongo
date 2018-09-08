@@ -5,7 +5,6 @@
 // let apiServerUri = isProduction ? 'https://todo-tomatoinator-api.herokuapp.com' : 'http://localhost:3000';
 
 const shared = {
-    testKey: 'potato',
     api: process.env.API_URL || 'http://localhost:3000', // default to localhost(development) if no API_URL specified    
     jwtKey: 'jwtToken',
     appName: 'Todo-Tomatoinator',
