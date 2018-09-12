@@ -69,7 +69,7 @@ export default class User {
                 (err) => console.log(err)
             ); 
 
-            deferred.resolve(true);
+            deferred.resolve(true); // *** TODO/QUESTION: move this (and others) to callback in Tasks#queryAndSet ***
             
         // If current user isn't set, get it from the server
         // If server doesn't 401, set current user & resolve promise

@@ -1,0 +1,70 @@
+    <!-- Show this for logged out users -->    
+    <ul class="nav navbar-nav navbar-right" show-authed="false">
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.home">
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.login">
+          Sign in
+        </a>
+      </li>          
+
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.register">
+          Sign up
+        </a>
+      </li>
+    </ul>
+
+    <!-- Show this for logged in users -->
+    <ul show-authed="true" class="nav navbar-nav navbar-right">
+
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.home">
+          Home
+        </a>
+      </li>            
+      
+      <li>
+        <a class="nav-link"         
+         ng-class="{'active': $ctrl.tasksViewActive()}"                                  
+         ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl._Tasks.currentlySetFilters.project, status: $ctrl._Tasks.setStatus }) }}">
+         Tasks
+        </a>
+      </li>
+
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.settings">
+          <i class="ion-gear-a"></i>&nbsp;Settings 
+        </a>
+      </li>
+
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.profile">
+          My Profile
+        </a>
+      </li>
+
+      <li>
+        <a class="nav-link"
+          ui-sref-active="active"
+          ui-sref="app.pomreport.view({type: 'daily'})">
+          PomReport
+        </a>
+      </li>      
+    </ul>

@@ -1,90 +1,24 @@
-<nav class="navbar navbar-light">
-  <div>
-    <a class="navbar-brand"
-      ui-sref="app.home"
-      ng-bind="::$ctrl.appName | lowercase">
-    </a>
+<nav class="navbar navbar-default navbar-light" role="navigation">          
+    <div>
+        <div class="navbar-header">
+            <a class="navbar-brand"
+              ui-sref="app.home"
+              ng-bind="::$ctrl.appName | lowercase">
+            </a>
 
-    <!-- Show this for logged out users -->
-    <ul class="nav navbar-nav navbar-inner" show-authed="false">
+            <button type="button" class="navbar-toggle" ng-class="{'collapsed': $ctrl.collapsed}" 
+                    ng-model="$ctrl.collapsed" ng-click="$ctrl.toggleCollapsed()">                
+                <span class="sr-only">Toggle navigation</span>
+                <!-- Transition adapted from http://julienmelissas.com/animated-x-icon-for-the-bootstrap-navbar-toggle/ -->                
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+            </button>
+        </div>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.home">
-          Home
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.login">
-          Sign in
-        </a>
-      </li>          
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.register">
-          Sign up
-        </a>
-      </li>
-    </ul>
-
-    <!-- Show this for logged in users -->
-    <ul show-authed="true"
-      class="nav navbar-nav navbar-inner">
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.home">
-          Home
-        </a>
-      </li>            
-      
-      <li class="nav-item">
-        <a class="nav-link"         
-         ng-class="{'active': $ctrl.tasksViewActive()}"                                  
-         ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl._Tasks.currentlySetFilters.project, status: $ctrl._Tasks.setStatus }) }}">
-         Tasks
-        </a>
-      </li>
-
-      <!--<li class="nav-item">        
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.article">
-          Article
-        </a>
-      </li>-->
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.settings">
-          <i class="ion-gear-a"></i>&nbsp;Settings 
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.profile">
-          My Profile
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.pomreport.view({type: 'daily'})">
-          PomReport
-        </a>
-      </li>      
-    </ul>
-
-  </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->    
+        <div class="navbar-collapse" ng-class="{'collapse': $ctrl.collapsed}">
+            <main-navbar-links></main-navbar-links>
+        </div>
+    </div>
 </nav>

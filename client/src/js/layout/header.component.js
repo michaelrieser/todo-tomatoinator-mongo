@@ -3,9 +3,13 @@ class AppHeaderCtrl {
     'ngInject';
     
     this._$state = $state;
-    this._Tasks = Tasks;        
 
+    this.collapsed = true;
     this.appName = AppConstants.appName;
+  }
+  
+  toggleCollapsed() {
+    this.collapsed = !this.collapsed;
   }
   
   // workaround for Tasks ng-href not setting ui-sref-active when clicked

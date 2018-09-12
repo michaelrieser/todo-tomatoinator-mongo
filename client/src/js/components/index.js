@@ -27,6 +27,9 @@ componentsModule.directive('autoHeight', AutoHeight);
 // componentsModule.directive('PomreportCompletionDisplay', PomreportCompletionDisplay);
 
 // Components
+import MainNavbarLinks from './main-navbar-links.component';
+componentsModule.component('mainNavbarLinks', MainNavbarLinks);
+
 import ListErrors from './list-errors.component';
 componentsModule.component('listErrors', ListErrors);
 
