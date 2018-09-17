@@ -1,5 +1,5 @@
 <div class="feed-toggle">
-    <ul class="nav nav-pills outline-active">
+    <ul class="nav nav-pills task-navbar outline-active">
 
         <li class="nav-item">
             <a class="nav-link"
@@ -33,13 +33,17 @@
             </a>
         </li>
 
-        <!--<li class="nav-item">
-            <a class="nav-link"
-            ui-sref-active="active"
-            ui-sref="app.tasks({status: 'new'})">
-            New
-            </a>
-        </li>-->
+        <li ng-hide="$ctrl._$mdMedia('min-width: 769px')" class="nav-item">
+            <button type="button" class="project-panel-toggle navbar-toggle" 
+                ng-class="{'collapsed': $ctrl._ProjectPanel.projectPanelCollapsed}" 
+                ng-click="$ctrl.toggleProjectPanel($event)">                
+                <span class="sr-only">Toggle projects</span>
+                <!-- Transition adapted from http://julienmelissas.com/animated-x-icon-for-the-bootstrap-navbar-toggle/ -->                
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+            </button>
+        </li>
 
     </ul>
 </div>       

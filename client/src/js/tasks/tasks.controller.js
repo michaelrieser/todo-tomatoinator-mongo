@@ -1,6 +1,8 @@
 class TasksCtrl {
-    constructor($scope, $stateParams) {
+    constructor($scope, $mdMedia) {
         'ngInject';
+
+        this._$mdMedia = $mdMedia;
     }
 }
 

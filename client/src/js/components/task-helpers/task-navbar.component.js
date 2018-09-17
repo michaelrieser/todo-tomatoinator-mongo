@@ -1,6 +1,13 @@
 class TaskNavbarCtrl {
-    constructor() {
+    constructor($mdPanel, $mdMedia, ProjectPanel) {
         'ngInject';
+
+        this._$mdMedia     = $mdMedia;
+        this._ProjectPanel = ProjectPanel;
+    }
+
+    toggleProjectPanel(evt) {
+        this._ProjectPanel.toggleProjectPanel();
     }
 }
 

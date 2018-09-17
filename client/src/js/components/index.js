@@ -75,6 +75,9 @@ componentsModule.component('projectList', ProjectList);
 import AddProjectForm from './project-helpers/add-project-form.component';
 componentsModule.component('addProjectForm', AddProjectForm);
 
+import ProjectPanelCtrl from './project-helpers/project-panel.controller';
+componentsModule.controller('ProjectPanelCtrl', ProjectPanelCtrl)
+
 import Project from './project-helpers/project.component';
 componentsModule.component('project', Project);
 

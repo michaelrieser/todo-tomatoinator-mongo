@@ -5,7 +5,6 @@ class ProjectListCtrl {
         this._Projects = Projects;
         this.projects = this._Projects.projects;
 
-        
         this.startIdx = null;
         this.stopIdx = null;
         this.sortableProjectHandlers = {

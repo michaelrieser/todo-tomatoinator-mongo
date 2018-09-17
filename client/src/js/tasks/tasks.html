@@ -1,14 +1,12 @@
 <div class="container page tasks-container">
-    <div class="row">
-        <!-- Main view - contains tabs & task list-->
+    <div class="tasks-flexbox">   
         <div class="tasks-wrapper">
-            <!-- Tabs for toggling between different task types -->
             <task-navbar></task-navbar>
 
             <div ui-view="tasks"></div>
         </div>
-        <div class="sidebar tasks-sidebar-wrapper">   
+        <div ng-hide="$ctrl._$mdMedia('max-width: 768px')" class="sidebar tasks-sidebar-wrapper">   
             <div ui-view="sidebar"></div>
         </div>
-    </div>   
+    </div>
 </div>  

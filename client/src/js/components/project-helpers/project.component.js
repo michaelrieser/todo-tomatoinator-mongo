@@ -1,11 +1,16 @@
 class ProjectCtrl {
-    constructor(Projects, Tasks, $scope, $state, $stateParams) {
+    constructor(Projects, ProjectPanel, Tasks, $scope, $state, $stateParams) {
         'ngInject';
 
         this._Projects = Projects;
+        this._ProjectPanel = ProjectPanel;
         this._Tasks = Tasks;
         this._$scope = $scope;
         this._$state = $state;
+
+        // NOTE: attempted to just get name of great-grandparent's ctrl to trigger modal close event, 
+        //       BUT "all" project at different level than target projects
+        // console.log(this._$scope.$parent.$parent.$parent.$ctrl.constructor.name)
     }
 
     deleteProject() {
@@ -28,6 +33,10 @@ class ProjectCtrl {
 
     isDisplayProject() {
         return this._Projects.displayProject === this.project.title;
+    }
+
+    closeProjPanelIfOpen() {
+        this._ProjectPanel.closeProjectPanel();
     }
 }
 

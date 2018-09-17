@@ -37,6 +37,11 @@
     border-radius: 5px;
 }
 
+// override for main.css
+html {
+    padding-bottom: 0 !important;
+}
+
 ol {
     padding-left: 20px;
 }
@@ -138,9 +143,43 @@ h6 {
 .tasks-container {
     width: 100%;
 }
+
+.tasks-flexbox {
+    display: -ms-flexbox;
+    display: -webkit-flex; /* Safari */
+    display: flex; // designates flex-container
+}
 .tasks-wrapper {
-    width: 65%; 
+    flex-basis: 65%; // starting width
+    flex-grow: 1; // set to positive int to take up remaining space in flex container
     margin-right: 5%;
+}
+
+// make task navbar list text smaller on <= 480px screens
+@media (max-width: 480px) {
+    .task-navbar > li {
+        font-size: 0.85rem;
+    }
+}
+
+.project-panel-toggle {
+    margin-top: 5px;
+    border-color: #ddd;
+    z-index: 999; // allow user to click through project panel wrapper
+    .icon-bar {
+        background-color: #888;
+    }    
+}
+.project-panel {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+      0 13px 19px 2px rgba(0, 0, 0, 0.14),
+      0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 500px;
+//   margin: 0 10px 0 10px; // TODO: right margin seems to be hindered by something?
+  padding: 10px  
 }
 
 .task-list {
@@ -732,7 +771,7 @@ h6 {
 }
 @media (max-width: 738px) {
     .project-button {
-        font-size: .70em;
+        font-size: .80em;
     }
 }
 .project-button:hover {

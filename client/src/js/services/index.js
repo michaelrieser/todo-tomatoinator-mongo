@@ -40,4 +40,7 @@ servicesModule.service('TaskNotifications', TaskNotificationsService);
 import TimeUtilsService from './time-utils.service';
 servicesModule.service('TimeUtils', TimeUtilsService);
 
+import ProjectPanelService from './project-panel.service';
+servicesModule.service('ProjectPanel', ProjectPanelService);
+
 export default servicesModule;

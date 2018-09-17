@@ -1,7 +1,8 @@
 <div class="project-anchor-wrapper">    
     <div>
         <div ng-class="{'display-project': $ctrl.isDisplayProject()}" class="project-button">
-            <a class="project-anchor" ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl.project.title}) }}">{{ $ctrl.project.title }}</a>
+            <a class="project-anchor" ng-click="$ctrl.closeProjPanelIfOpen()"
+                ng-href="{{ $ctrl._$state.href('app.tasks.view', {project: $ctrl.project.title}) }}">{{ $ctrl.project.title }}</a>
         </div>
     </div>
     <span ng-if="$ctrl.project.title !== 'all'" class="project-controls-outer">
