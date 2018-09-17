@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ "$CLIENT_OR_SERVER" == "client" ]; then
+    cd client && npm install
+else
+    cd server && npm install
+fi
