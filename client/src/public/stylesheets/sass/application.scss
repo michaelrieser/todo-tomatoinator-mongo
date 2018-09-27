@@ -158,7 +158,15 @@ h6 {
 // make task navbar list text smaller on <= 480px screens
 @media (max-width: 480px) {
     .task-navbar > li {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
+    }
+    .task-navbar > li a {
+        padding: 6px !important;
+        color: red;
+    }
+    .project-panel-toggle {
+        margin: 8px 0 8px 6px !important; // added !important to override margin-top in default .project-panel-toggle
+        padding: 0;
     }
 }
 
