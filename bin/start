@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "$CLIENT_OR_SERVER"
 
 if [ "$CLIENT_OR_SERVER" == "client" ]; then
     cd client && npm install
