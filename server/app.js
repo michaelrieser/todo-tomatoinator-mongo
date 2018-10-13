@@ -14,10 +14,8 @@ var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 var app = express();
-
 console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
-var clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:8080';
-app.use(cors({ origin: clientOrigin })); // added origin k:V pair to fix No 'Allow-Access-Control-Allow-Origin' issue
+app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:8080' })); // added origin k:V pair to fix No 'Allow-Access-Control-Allow-Origin' issue
 
 // Normal express config defaults
 app.use(require('morgan')('dev'));
