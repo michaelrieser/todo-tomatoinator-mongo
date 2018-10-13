@@ -25,7 +25,8 @@ app.use(function(req, res, next) {
     // NOTE: these are custom headers returned to browser
     
     // res.header("Access-Control-Allow-Origin", '*');
-    console.log('res.headers.origin: ', res.headers.origin);
+    console.log('*** HERE ***')
+    console.log('req.headers.origin: ', req.headers.origin);
     res.header("Access-Control-Allow-Origin", req.headers.origin);
 
     res.header("Access-Control-Allow-Credentials", true);
