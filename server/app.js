@@ -22,10 +22,17 @@ console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 
 // METHOD 2 - doesn't work on PROD
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
+    // NOTE: these are custom headers returned to browser
+    
+    // res.header("Access-Control-Allow-Origin", '*');
+    console.log('res.headers.origin: ', res.headers.origin);
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,authorization,content-type,application/json');
+    // NOTE: these refer to 'Request Headers' key in Network tab
+    // res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,Authorization');
+    res.header("Access-Control-Allow-Headers", 'Accept, Authorization, Content-Type, Origin, Referer, User-Agent');
 
     if (req.method === 'OPTIONS') res.sendStatus(200); // required for pre flight OPTIONS requests SEE: https://stackoverflow.com/questions/11001817/allow-cors-rest-request-to-a-express-node-js-application-on-heroku
     else next();
