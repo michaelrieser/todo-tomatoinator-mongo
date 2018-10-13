@@ -15,7 +15,7 @@ var isProduction = process.env.NODE_ENV === 'production';
 // Create global app object
 var app = express();
 
-app.use(cors());
+app.use(cors({origin: '*'})); // added origin k:V pair to fix No 'Allow-Access-Control-Allow-Origin' issue
 
 // Normal express config defaults
 app.use(require('morgan')('dev'));

@@ -26,9 +26,8 @@ router.param('tasks', function (req, res, next) {
 /* POST create task */
 router.post('/', auth.required, function (req, res, next) {
     console.log('POST /tasks')
-    console.log(req)
+    // console.log(req)
     User.findById(req.payload.id).then(function (user) {
-        console.log('user found!')
         if (!user) { return res.sendStatus(401); }
         var task = new Task(req.body.task);
         var taskProject = req.body.task.project;
@@ -36,10 +35,8 @@ router.post('/', auth.required, function (req, res, next) {
         task.project = taskProject ? taskProject.id : null;
 
         return task.save().then(function (task) {
-            console.log('task saved!')
             if (taskProject) {
                 task.populate('project').execPopulate().then(function () {
-                    console.log('project populated!')
 
                     task.project.tasks.push(task);
 
