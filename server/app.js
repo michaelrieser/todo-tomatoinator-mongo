@@ -20,24 +20,32 @@ console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 // app.options('*', cors()); // SEE: https://github.com/expressjs/cors#enabling-cors-pre-flight
 // app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:8080' })); // added origin k:V pair to fix No 'Allow-Access-Control-Allow-Origin' issue
 
+// METHOD 1.5
+// app.options('*', cors());
+// app.use(cors({ credentials: true })); // SEE: https://medium.com/@ahsan.ayaz/how-to-handle-cors-in-an-angular2-and-node-express-applications-eb3de412abef
+
 // METHOD 2 - doesn't work on PROD
-app.use(function(req, res, next) {
-    // NOTE: these are custom headers returned to browser
+// NOTE: app.use() attaches to main middleware stack(PROLLY WHAT WE WANT) || app.all() applies to all HTTP methods - prolly trying to attach header to res after its been set? SEE: https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client
+// app.all('*', function(req, res, next) { // was app.use before SEE: https://stackoverflow.com/questions/14125997/difference-between-app-all-and-app-use
+//     // NOTE: these are custom headers returned to browser
     
-    // res.header("Access-Control-Allow-Origin", '*');
-    console.log('*** HERE ***')
-    console.log('req.headers.origin: ', req.headers.origin);
-    res.header("Access-Control-Allow-Origin", req.headers.origin);
+//     if (!req.get('Origin')) return next();
 
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    // NOTE: these refer to 'Request Headers' key in Network tab
-    // res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,Authorization');
-    res.header("Access-Control-Allow-Headers", 'Accept, Authorization, Content-Type, Origin, Referer, User-Agent');
+//     // res.header("Access-Control-Allow-Origin", '*');
+//     console.log('*** HERE ***')
+//     console.log('req.headers.origin: ', req.headers.origin);
+//     res.header("Access-Control-Allow-Origin", req.headers.origin);
 
-    if (req.method === 'OPTIONS') res.sendStatus(200); // required for pre flight OPTIONS requests SEE: https://stackoverflow.com/questions/11001817/allow-cors-rest-request-to-a-express-node-js-application-on-heroku
-    else next();
-});
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     // NOTE: these refer to 'Request Headers' key in Network tab
+//     // res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,Authorization');
+//     res.header("Access-Control-Allow-Headers", 'Accept, Authorization, Content-Type, Origin, Referer, User-Agent');
+
+//     if (req.method === 'OPTIONS') res.sendStatus(200); // required for pre flight OPTIONS requests SEE: https://stackoverflow.com/questions/11001817/allow-cors-rest-request-to-a-express-node-js-application-on-heroku
+    
+//     next();
+// });
 
 // Normal express config defaults
 app.use(require('morgan')('dev'));
