@@ -34,11 +34,20 @@ router.post('/', auth.required, function (req, res, next) {
         task.user = user;
         task.project = taskProject ? taskProject.id : null;
 
+        console.log('before task save:')
+        console.log(task);
+
         return task.save().then(function (task) {
+            console.log('task saved!')
+            console.log(task)
             if (taskProject) {
                 task.populate('project').execPopulate().then(function () {
-
+                    console.log('task: ');
+                    console.log(task);
                     task.project.tasks.push(task);
+
+                    console.log('task after:');
+                    console.log(task)
 
                     return task.project.save().then(function () {
                         console.log('project saved!')
