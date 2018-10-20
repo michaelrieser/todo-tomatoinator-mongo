@@ -26,12 +26,15 @@ var Project = mongoose.model('Project', ProjectSchema);
 
 // ProjectSchema.plugin(uniqueValidator, { message: 'is already taken.'});
 ProjectSchema.pre('save', function(next) {
+    console.log('Project - presave')
     let userId = this.user._id;
     let tgtProjTitle = this.title;
     Project.find({user: userId, title: tgtProjTitle}).then(function (projects) {
         if (!projects.length) {
+            console.log('** EXTANT PROJECT NOT FOUND')        
             next();
         } else {
+            console.log('** EXTANT PROJECT FOUND')        
             var err = new Error('Project creation failed');
             err.name = 'ValidationError';
             err.errors = { title: new Error('already exists!') };

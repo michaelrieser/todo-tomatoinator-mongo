@@ -45,8 +45,8 @@ router.post('/', auth.required, function (req, res, next) {
                 task.populate('project').execPopulate().then(function () {
                     console.log('task: ');
                     console.log(task);
-                    // task.project.tasks.push(task);
-                    task.project.tasks.push(task._id);
+                    // task.project.tasks.push(task); // NOTE: hangs & throws unhandled promise exception warning after upgrade to mongoose 5.3.4...
+                    task.project.tasks.push(task._id); // ...and this fixed it
 
                     console.log('task after:');
                     console.log(task)
