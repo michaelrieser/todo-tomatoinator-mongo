@@ -31,11 +31,15 @@ app.use(function(req, res, next) { // was app.use before SEE: https://stackoverf
     
     // if (!req.get('Origin')) return next();
     
-    console.log('*** HERE ***')
-    console.log('req.headers.origin: ', req.headers.origin);
+    // **************** START =>: see if due to task.project not saving properly in POST /tasks in PROD?
+    //      ** PROD mongo version 3.6.6 vs. 3.4.0 in dev
+
+    // console.log('*** HERE ***')
+    // console.log('req.headers.origin: ', req.headers.origin);
     // res.header("Access-Control-Allow-Origin", '*'); // NOTE: '*' not allowed in modern browsers!!!!!!!!!!!!!!!!!!1
     // res.header("Access-Control-Allow-Origin", req.headers.origin);
-    res.header("Access-Control-Allow-Origin", 'https://todo-tomatoinator.herokuapp.com');
+    let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';
+    res.header("Access-Control-Allow-Origin", allowedOrigin);
 
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS');

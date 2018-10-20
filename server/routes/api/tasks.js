@@ -31,6 +31,7 @@ router.post('/', auth.required, function (req, res, next) {
         if (!user) { return res.sendStatus(401); }
         var task = new Task(req.body.task);
         var taskProject = req.body.task.project;
+        console.log('taskProject: ', taskProject);
         task.user = user;
         task.project = taskProject ? taskProject.id : null;
 
@@ -44,7 +45,8 @@ router.post('/', auth.required, function (req, res, next) {
                 task.populate('project').execPopulate().then(function () {
                     console.log('task: ');
                     console.log(task);
-                    task.project.tasks.push(task);
+                    // task.project.tasks.push(task);
+                    task.project.tasks.push(task._id);
 
                     console.log('task after:');
                     console.log(task)
