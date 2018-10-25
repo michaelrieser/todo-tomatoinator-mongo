@@ -51,7 +51,7 @@ if (isProduction) {
 app.use(function(req, res, next) { // was app.use before SEE: https://stackoverflow.com/questions/14125997/difference-between-app-all-and-app-use
     // if (!req.get('Origin')) return next();
     
-    console.log('REQUEST HEADERS:')
+    console.log('REQUEST HEADERS:') 
     console.log(req.headers)
 
     // ** NOTE: these are custom headers returned to the browser, which will compare them to sent Access-Control-Request-<values> **
