@@ -17,6 +17,7 @@ var app = express();
 console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 
 /* --------------------------------------------- REDIRECTING FROM HTTP => HTTPS ------------------------------------------------------- */
+// ** TAKE 1 **
 // @wip NOTE: redirect from http (mobile) to https with following code from https://jaketrent.com/post/https-redirect-node-heroku/
 // app.configure('production', () => { // ** NOTE: ERROR: "app.configure not a function" - NO LONGER A PART OF EXPRESS 4 (USE if block for env specific configurations)
 // // ***** NOTE: uncomment entire block below to continue work... DON'T use req.header('referer') as it will not always be present (may ONLY be in OPTIONS req's?) and is a security flaw!
@@ -42,20 +43,21 @@ console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 // }
 // // });
 
+// ** TAKE 2 **
 // set up a route to redirect http to https - SEE: https://stackoverflow.com/questions/7450940/automatic-https-connection-redirect-with-node-js-express
-if (isProduction) {
-  app.get('*', function(req, res, next) {  
-    console.log('req.secure: ', req.secure);
-    if (!req.header('origin').startsWith('https')) {
-      console.log('HTTP redirected!')
-      res.redirect(`https://${req.header('host')}${req.url}`);
-      // res.redirect('https://' + req.headers.host + req.url);
-    } else {
-      console.log('HTTPS sent!')
-      next();
-    }
-  })
-}
+// if (isProduction) {
+//   app.get('*', function(req, res, next) {  
+//     console.log('req.secure: ', req.secure);
+//     if (!req.header('origin').startsWith('https')) {
+//       console.log('HTTP redirected!')
+//       res.redirect(`https://${req.header('host')}${req.url}`);
+//       // res.redirect('https://' + req.headers.host + req.url);
+//     } else {
+//       console.log('HTTPS sent!')
+//       next();
+//     }
+//   })
+// }
 /* -------------------------------------------------------------------------------------------------------------------------------------- */
 
 // METHOD 1
@@ -76,7 +78,8 @@ app.use(function(req, res, next) { // was app.use before SEE: https://stackoverf
     console.log(req.headers)
 
     // ** NOTE: these are custom headers returned to the browser, which will compare them to sent Access-Control-Request-<values> **
-    let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';    
+    // let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';    
+    let allowedOrigin = req.headers.origin;
     res.header("Access-Control-Allow-Origin", allowedOrigin);
 
     res.header("Access-Control-Allow-Credentials", true);
