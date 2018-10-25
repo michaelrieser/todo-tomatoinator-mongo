@@ -18,26 +18,28 @@ console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 
 // @wip NOTE: redirect from http (mobile) to https with following code from https://jaketrent.com/post/https-redirect-node-heroku/
 // app.configure('production', () => { // ** NOTE: ERROR: "app.configure not a function" - NO LONGER A PART OF EXPRESS 4 (USE if block for env specific configurations)
-// ***** NOTE: uncomment entire block below to continue work... DON'T use req.header('referer') as it will not always be present (GET req's) and is a security flaw!
-// if (isProduction) {
-//   app.use(function(req, res, next) {
+// ***** NOTE: uncomment entire block below to continue work... DON'T use req.header('referer') as it will not always be present (may ONLY be in OPTIONS req's?) and is a security flaw!
+if (isProduction) {
+  app.use(function(req, res, next) {
 
-//     console.log('CONFIGURED IN PROD')
-//     console.log('*** req.url: ', req.url);
-//     console.log('*** req-referer: ', req.header('referer'))
-//     console.log('*** res.headers: ', res.headers)
+    console.log('CONFIGURED IN PROD')
+    console.log('*** req.url: ', req.url);
+    console.log('*** req-origin: ', req.header('origin'))
+    console.log('*** req.headers: ', req.headers)
 
-//     // if (req.header('x-forwarded-proto') !== 'https') // *appears that x-forwaded-proto always equals 'https' in Heroku, even when request comes from http on mobile (?)    
-//     if (!req.header('referer').startsWith('https')) { // NOTE: DON'T USE THE referer HEADER FOR ANY MATTER OF IMPORTANCE!! see: https://stackoverflow.com/questions/8319862/can-i-rely-on-referer-http-header
-//       console.log('http redirected!!!!')
-//       res.redirect(`https://${req.header('host')}${req.url}`)
-//     } else {
-//       console.log('request sent via https')
-//       next()
-//     }
-//   });
-// }
-// // });
+    // if (req.header('x-forwarded-proto') !== 'https') // *appears that x-forwaded-proto always equals 'https' in Heroku, even when request comes from http on mobile (?)    
+    // if (!req.header('referer').startsWith('https')) { // NOTE: DON'T USE THE referer HEADER FOR ANY MATTER OF IMPORTANCE!! see: https://stackoverflow.com/questions/8319862/can-i-rely-on-referer-http-header
+    if (!req.header('origin').startsWith('https')) {
+      console.log('http redirected!!!!')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+      // QUESTION => add next() here, as remainder of app.use(..) calls aren't executed ???
+    } else {
+      console.log('request sent via https')
+      next()
+    }
+  });
+}
+// });
 
 // METHOD 1
 // app.use(cors());
