@@ -17,6 +17,7 @@ var app = express();
 console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 
 // METHOD 1
+// app.use(cors());
 // app.options('*', cors()); // SEE: https://github.com/expressjs/cors#enabling-cors-pre-flight
 // app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:8080' })); // added origin k:V pair to fix No 'Allow-Access-Control-Allow-Origin' issue
 
@@ -24,21 +25,13 @@ console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 // app.options('*', cors());
 // app.use(cors({ credentials: true })); // SEE: https://medium.com/@ahsan.ayaz/how-to-handle-cors-in-an-angular2-and-node-express-applications-eb3de412abef
 
-// METHOD 2 - doesn't work on PROD
+// METHOD 2
 // NOTE: app.use() attaches to main middleware stack(PROLLY WHAT WE WANT) || app.all() applies to all HTTP methods - prolly trying to attach header to res after its been set? SEE: https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client
 app.use(function(req, res, next) { // was app.use before SEE: https://stackoverflow.com/questions/14125997/difference-between-app-all-and-app-use
-    // NOTE: these are custom headers returned to browser
-    
     // if (!req.get('Origin')) return next();
     
-    // **************** START =>: see if due to task.project not saving properly in POST /tasks in PROD?
-    //      ** PROD mongo version 3.6.6 vs. 3.4.0 in dev
-
-    // console.log('*** HERE ***')
-    // console.log('req.headers.origin: ', req.headers.origin);
-    // res.header("Access-Control-Allow-Origin", '*'); // NOTE: '*' not allowed in modern browsers!!!!!!!!!!!!!!!!!!1
-    // res.header("Access-Control-Allow-Origin", req.headers.origin);
-    let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';
+    // ** NOTE: these are custom headers returned to the browser, which will compare them to sent Access-Control-Request-<values> **
+    let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';    
     res.header("Access-Control-Allow-Origin", allowedOrigin);
 
     res.header("Access-Control-Allow-Credentials", true);
@@ -48,8 +41,7 @@ app.use(function(req, res, next) { // was app.use before SEE: https://stackoverf
     res.header("Access-Control-Allow-Headers", 'Accept, Authorization, Content-Type, Origin, Referer, User-Agent');
 
     if (req.method === 'OPTIONS') res.sendStatus(200); // required for pre flight OPTIONS requests SEE: https://stackoverflow.com/questions/11001817/allow-cors-rest-request-to-a-express-node-js-application-on-heroku
-    
-    next();
+    else next();
 });
 
 // Normal express config defaults

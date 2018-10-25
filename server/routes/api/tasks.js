@@ -25,34 +25,20 @@ router.param('tasks', function (req, res, next) {
 
 /* POST create task */
 router.post('/', auth.required, function (req, res, next) {
-    console.log('POST /tasks')
-    // console.log(req)
     User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
         var task = new Task(req.body.task);
         var taskProject = req.body.task.project;
-        console.log('taskProject: ', taskProject);
         task.user = user;
         task.project = taskProject ? taskProject.id : null;
 
-        console.log('before task save:')
-        console.log(task);
-
         return task.save().then(function (task) {
-            console.log('task saved!')
-            console.log(task)
             if (taskProject) {
                 task.populate('project').execPopulate().then(function () {
-                    console.log('task: ');
-                    console.log(task);
                     // task.project.tasks.push(task); // NOTE: hangs & throws unhandled promise exception warning after upgrade to mongoose 5.3.4...
                     task.project.tasks.push(task._id); // ...and this fixed it
 
-                    console.log('task after:');
-                    console.log(task)
-
                     return task.project.save().then(function () {
-                        console.log('project saved!')
                         return res.json({ task: task.toJSONFor(user) });
                     })
                 });
