@@ -125,7 +125,7 @@ gulp.task('default', ['html', 'gulp-config', 'browserify', 'sass', 'sass:watch',
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
       root: "./build",
       // livereload: true,
-      host: '0.0.0.0', // added to fix Heroku R10 $PORT binding issue SEE: https://github.com/schickling/gulp-webserver/issues/94
+      // host: '0.0.0.0', // added to fix Heroku R10 $PORT binding issue SEE: https://github.com/schickling/gulp-webserver/issues/94
       port: process.env.PORT || 8080 // process.env.PORT provided by Heroku
     });
   } else {
