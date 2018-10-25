@@ -27,6 +27,8 @@ router.post('/users', function(req, res, next){
 });
 
 router.post('/users/login', function(req, res, next){
+  console.log('POST /users/login')
+  console.log(req.body.user)
   if(!req.body.user.email){
     return res.status(422).json({errors: {email: "can't be blank"}});
   }
@@ -36,12 +38,15 @@ router.post('/users/login', function(req, res, next){
   }
 
   passport.authenticate('local', {session: false}, function(err, user, info){
+    console.log('PASSPORT authenticate')
     if(err){ return next(err); }
 
     if(user){
+      console.log('-user!')
       user.token = user.generateJWT();
       return res.json({user: user.toAuthJSON()});
     } else {
+      console.log('-failed!')
       return res.status(422).json(info);
     }
   })(req, res, next);
