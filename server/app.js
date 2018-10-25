@@ -55,9 +55,7 @@ app.use(function(req, res, next) { // was app.use before SEE: https://stackoverf
     console.log(req.headers)
 
     // ** NOTE: these are custom headers returned to the browser, which will compare them to sent Access-Control-Request-<values> **
-    // let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';    
-
-    let allowedOrigin = isProduction ? 'http://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080'; // ** MOBILE TEST for http
+    let allowedOrigin = isProduction ? 'https://todo-tomatoinator.herokuapp.com' : 'http://localhost:8080';    
     res.header("Access-Control-Allow-Origin", allowedOrigin);
 
     res.header("Access-Control-Allow-Credentials", true);
