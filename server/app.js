@@ -16,6 +16,27 @@ var isProduction = process.env.NODE_ENV === 'production';
 var app = express();
 console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 
+// NOTE: redirect from http (mobile) to https with following code from https://jaketrent.com/post/https-redirect-node-heroku/
+// app.configure('production', () => { // ** NOTE: ERROR: "app.configure not a function" - NO LONGER A PART OF EXPRESS 4 (USE if block for env specific configurations)
+if (isProduction) {
+  app.use(function(req, res, next) {
+
+    console.log('CONFIGURED IN PROD')
+    console.log('*** req.url: ', req.url);
+    console.log('*** req-referer: ', req.header('referer'))
+
+    // if (req.header('x-forwarded-proto') !== 'https') // *appears that x-forwaded-proto always equals 'https' in Heroku, even when request comes from http on mobile (?)    
+    if (!req.header('referer').startsWith('https')) {
+      console.log('http redirected!!!!')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    } else {
+      console.log('request sent via https')
+      next()
+    }    
+  });
+}
+// });
+
 // METHOD 1
 // app.use(cors());
 // app.options('*', cors()); // SEE: https://github.com/expressjs/cors#enabling-cors-pre-flight
