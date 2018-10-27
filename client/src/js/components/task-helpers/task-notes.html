@@ -31,6 +31,7 @@
     <fieldset ng-disabled="$ctrl.newNoteForm.isSubmitting">        
         <fieldset class="form-group">
             <input class="form-control"
+                onclick="this.focus()"
                 type="text"
                 placeholder="Add a note"
                 ng-model="$ctrl.newNoteForm.title">
@@ -54,6 +55,7 @@
 
         <fieldset class="form-group">
             <input class="form-control"
+                onclick="this.focus()"
                 type="text"
                 placeholder="Enter tags"
                 ng-model="$ctrl.tagField"
