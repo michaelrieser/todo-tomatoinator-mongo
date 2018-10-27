@@ -24,7 +24,8 @@ class TasksDisplayCtrl {
             placeholder: 'highlighted-task-list', // NOTE: replaced with customized CSS for active/inactive task list, which also remedies
             start: (event, ui) => {
                 this.startIdx = ui.item.index();
-            },            
+            },
+            delay: 250,
             change: (event, ui) => { // NOTE: this event is triggered only when the DOM position has changed during sorting. SEE: http://api.jqueryui.com/sortable/#event-change                
                 this._$scope.$apply(
                     (() => {
