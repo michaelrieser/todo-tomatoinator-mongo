@@ -24,6 +24,7 @@ import './sidebar';
 import './tasks';
 import './toast';
 import './vendor/javascripts/howler.min.js';
+import './vendor/javascripts/jquery.ui.touch-punch.js';
 // import './sortable/src/sortable.js';
 
 // Create and bootstrap application
