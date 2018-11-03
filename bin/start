@@ -3,7 +3,7 @@
 echo "$CLIENT_OR_SERVER"
 
 if [ "$CLIENT_OR_SERVER" == "client" ]; then
-    npm --prefix client heroku-postbuild
+    npm --prefix client run heroku-postbuild
 else
-    npm --prefix server heroku-postbuild
+    npm --prefix server run heroku-postbuild
 fi
