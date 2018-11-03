@@ -31,6 +31,6 @@
     "underscore": "1.8.3"
   },
   "scripts": {
-    "heroku-postbuild": "npm install"
+    "heroku-postbuild": "npm install && node app"
   }
 }

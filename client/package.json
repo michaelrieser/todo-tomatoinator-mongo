@@ -37,6 +37,6 @@
     "gulp-sass": "^3.1.0"    
   },
   "scripts": {
-    "heroku-postbuild": "npm install"
+    "heroku-postbuild": "npm install && gulp default"
   }
 }
