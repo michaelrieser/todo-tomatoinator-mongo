@@ -3,7 +3,7 @@
 echo "$CLIENT_OR_SERVER"
 
 if [ "$CLIENT_OR_SERVER" == "client" ]; then
-    cd client && npm install
+    cd client && gulp default
 else
-    cd server && npm install
+    cd server && node app
 fi

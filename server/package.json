@@ -30,7 +30,7 @@
     "slug": "0.9.1",
     "underscore": "1.8.3"
   },
-  "scripts": {    
-    "postinstall": "npm start"
+  "scripts": {
+    "heroku-postbuild": "npm install"
   }
 }

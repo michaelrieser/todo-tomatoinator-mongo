@@ -36,7 +36,7 @@
     "bootstrap-sass": "^3.3.7",
     "gulp-sass": "^3.1.0"    
   },
-  "scripts": {    
-    "postinstall": "gulp default"
+  "scripts": {
+    "heroku-postbuild": "npm install"
   }
 }
