@@ -39,6 +39,6 @@
     "gulp-sass": "^3.1.0"
   },
   "scripts": {
-    "start": "npm install && gulp default"
+    "start": "gulp default"
   }
 }

@@ -31,6 +31,6 @@
     "underscore": "1.8.3"
   },
   "scripts": {
-    "start": "npm install && node app"
+    "start": "node app"
   }
 }
