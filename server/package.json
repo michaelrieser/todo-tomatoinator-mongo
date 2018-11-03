@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "conduit on node",
   "main": "app.js",
-  "scripts": {
-    "start": "node app",
-    "postinstall": "npm start"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gothinkster/productionready-node-api.git"
@@ -33,5 +29,8 @@
     "request": "2.69.0",
     "slug": "0.9.1",
     "underscore": "1.8.3"
+  },
+  "scripts": {    
+    "postinstall": "npm start"
   }
 }
