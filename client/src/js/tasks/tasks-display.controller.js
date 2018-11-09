@@ -18,6 +18,7 @@ class TasksDisplayCtrl {
         this.sortableOptions = {
             connectWith: '.active-inactive-connected-list',
             // tolerance: 'pointer',
+            handle: '.taskHandle',
             cancel: '.unsortable,input,textarea,button,select,option',  // NOTE: just setting to '.unsortable' will cause inputs to be unclickable, potentially due to sortable event handler taking precedence
             // distance: 5,
             // forcePlaceholderSize: true,
@@ -25,7 +26,7 @@ class TasksDisplayCtrl {
             start: (event, ui) => {
                 this.startIdx = ui.item.index();
             },
-            delay: 250,
+            // delay: 250,
             change: (event, ui) => { // NOTE: this event is triggered only when the DOM position has changed during sorting. SEE: http://api.jqueryui.com/sortable/#event-change                
                 this._$scope.$apply(
                     (() => {

@@ -2,8 +2,11 @@
 <li class="li-list-wrapper" data-order="{{$ctrl.task.order}}">    
     <span class="task-outer-wrapper" ng-dblclick="$ctrl.toggleTaskNotes(task)">
         <div class="task-inner-wrapper">
+            <!--<div class="taskHandle">
+                <i class="ion-arrow-move" style="color:lightsteelblue"></i>
+            </div>-->
             <!--<div style="display:inline-block;">-->
-            <div>
+            <div style="display:inline-block">
                 <span ng-class="{'greyed-out' : $ctrl.task.isComplete}">
                     <span ng-hide="$ctrl.editingTitle" ng-click="$ctrl.handleEditTitleToggle()" class="task-title">{{$ctrl.task.title}}</span>
                     <span ng-if="$ctrl.editingTitle" class="edit-task-form">
@@ -82,6 +85,9 @@
                         <span type="button" ng-click="$ctrl.handleEditReminderDateTimeToggle()">
                             <span class="ion-ios-alarm" data-pack="ios" data-tags="wake, ring"></span>
                         </span>
+                    </span>
+                    <span class="taskHandle">
+                        <i class="ion-arrow-move"></i>
                     </span>
                 </div>
             </span>

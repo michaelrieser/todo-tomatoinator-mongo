@@ -254,6 +254,10 @@ h6 {
     // margin: 10px;
     margin: 10px 65px 10px 10px;
 }
+.taskHandle {
+    // display: inline-block;
+    cursor: move;
+}
 .task-title {
     font-size: 0.85em;
 }
