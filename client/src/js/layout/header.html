@@ -6,8 +6,8 @@
               ng-bind="::$ctrl.appName | lowercase">
             </a>
 
-            <button type="button" class="navbar-toggle" ng-class="{'collapsed': $ctrl.collapsed}" 
-                    ng-model="$ctrl.collapsed" ng-click="$ctrl.toggleCollapsed()">                
+            <button type="button" class="navbar-toggle" ng-class="{'collapsed': $ctrl._AppHeader.collapsed}" 
+                    ng-click="$ctrl._AppHeader.toggleCollapsed()">                
                 <span class="sr-only">Toggle navigation</span>
                 <!-- Transition adapted from http://julienmelissas.com/animated-x-icon-for-the-bootstrap-navbar-toggle/ -->                
                 <span class="icon-bar top-bar"></span>
@@ -17,7 +17,7 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->    
-        <div class="navbar-collapse" ng-class="{'collapse': $ctrl.collapsed}">
+        <div class="navbar-collapse" ng-class="{'collapse': $ctrl._AppHeader.collapsed}">
             <main-navbar-links></main-navbar-links>
         </div>
     </div>

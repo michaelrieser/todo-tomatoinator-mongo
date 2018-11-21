@@ -1,10 +1,10 @@
 class AppHeaderCtrl {
-  constructor(AppConstants, Tasks, $state) {
+  constructor(AppConstants, AppHeader, Tasks, $state) {
     'ngInject';
     
     this._$state = $state;
+    this._AppHeader = AppHeader;
 
-    this.collapsed = true;
     this.appName = AppConstants.appName;
   }
   

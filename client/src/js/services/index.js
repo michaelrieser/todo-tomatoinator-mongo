@@ -43,4 +43,7 @@ servicesModule.service('TimeUtils', TimeUtilsService);
 import ProjectPanelService from './project-panel.service';
 servicesModule.service('ProjectPanel', ProjectPanelService);
 
+import AppHeaderService from './app-header.service';
+servicesModule.service('AppHeader', AppHeaderService);
+
 export default servicesModule;

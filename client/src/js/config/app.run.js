@@ -1,5 +1,10 @@
-function AppRun(AppConstants, $rootScope) {
+function AppRun(AppConstants, AppHeader, $rootScope) {
   'ngInject';
+
+  // collapse (mobile) navbar at start of state change (i.e., when ui-sref clicked)
+  $rootScope.$on('$stateChangeStart', (e, toState, toParams, fromState, fromParams) => {
+    $rootScope.collapseNavbar();
+  })
 
   // change page title based on state
   $rootScope.$on('$stateChangeSuccess', (event, toState) => {
@@ -15,6 +20,10 @@ function AppRun(AppConstants, $rootScope) {
     }
     $rootScope.pageTitle += AppConstants.appName;
   };
+
+  $rootScope.collapseNavbar = () => {
+    AppHeader.collapseNavbar();
+  }
 
 }
 
