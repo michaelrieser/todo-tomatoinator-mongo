@@ -1,5 +1,6 @@
 var gulp = require('gulp');
-var gulpRename = require('gulp-rename');
+var gulpRename = require('gulp-rename'); // TODO: 'gulp-rename' is required 2x, here and in rename var
+var replace = require('gulp-replace')
 var fs = require('file-system');
 var using = require('gulp-using');
 // var gulpExpress   = require('gulp-express'); // ADD "gulp-express": "*" to package.json
@@ -12,7 +13,6 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var ngAnnotate = require('browserify-ngannotate');
 var browserSync = require('browser-sync').create();
-var rename = require('gulp-rename');
 var templateCache = require('gulp-angular-templatecache');
 var uglify = require('gulp-uglify');
 var merge = require('merge-stream');
@@ -49,14 +49,16 @@ gulp.task('sass', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(cssFiles));
 });
-gulp.task('sass:watch', function () {
-  gulp.watch(scssFiles, ['sass']);
+gulp.task('sass:watch', function (done) {
+  var sassWatcher = gulp.watch(scssFiles);
+  sassWatcher.on('all', gulp.parallel('sass'));
+  done();
 });
 
 gulp.task('gulp-config', function () {
   // SEE: https://scotch.io/tutorials/properly-set-environment-variables-for-angular-apps-with-gulp-ng-config
   fs.writeFileSync('./src/js/config/app.constants.blueprint.json', JSON.stringify(constantsBlueprint[ENV])); // write blueprint JSON
-  gulp.src('./src/js/config/app.constants.blueprint.json') // create constants.js file containing angular constants module def
+  return gulp.src('./src/js/config/app.constants.blueprint.json') // create constants.js file containing angular constants module def
     .pipe(
       gulpNgConfig('app', {
         createModule: false
@@ -66,7 +68,18 @@ gulp.task('gulp-config', function () {
     .pipe(gulp.dest('./src/js/config')) // output app.constants.js to config dir
 });
 
-gulp.task('browserify', ['views'], function () {
+gulp.task('views', gulp.series(function () {
+  return gulp.src(viewFiles)
+    .pipe(templateCache({
+      standalone: true
+    }))    
+    .pipe(replace(/templateCache.put\("\//g, 'templateCache.put("')) // kludge breaking forward slash out of every template in templateCache (SEE: https://github.com/miickel/gulp-angular-templatecache/issues/117)
+    .on('error', interceptErrors)    
+    .pipe(gulpRename("app.templates.js"))    
+    .pipe(gulp.dest('./src/js/config/'));
+}));
+
+function runBrowserify() {
   return browserify('./src/js/app.js')
     .transform(babelify, { presets: ["es2015"] })
     .transform(ngAnnotate)
@@ -75,8 +88,10 @@ gulp.task('browserify', ['views'], function () {
     //Pass desired output filename to vinyl-source-stream
     .pipe(source('main.js'))
     // Start piping stream to tasks!
-    .pipe(gulp.dest('./build/'));
-});
+    .pipe(gulp.dest('./build/'));  
+}
+
+gulp.task('browserify', gulp.series(gulp.series('views'), runBrowserify));
 
 gulp.task('html', function () {
   return gulp.src("src/index.html")
@@ -84,19 +99,10 @@ gulp.task('html', function () {
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('views', function () {
-  return gulp.src(viewFiles)
-    .pipe(templateCache({
-      standalone: true
-    }))
-    .on('error', interceptErrors)
-    .pipe(rename("app.templates.js"))
-    .pipe(gulp.dest('./src/js/config/'));
-});
 
 // This task is used for building production ready
 // minified JS/CSS files into the dist/ folder
-gulp.task('build', ['html', 'browserify'], function () {
+gulp.task('build', gulp.series(gulp.parallel('html', 'browserify'), function () {
   var html = gulp.src("build/index.html")
     .pipe(gulp.dest('./dist/'));
 
@@ -105,7 +111,7 @@ gulp.task('build', ['html', 'browserify'], function () {
     .pipe(gulp.dest('./dist/'));
 
   return merge(html, js);
-});
+}));
 
 gulp.task('sounds', function () {
   return gulp.src('./src/public/sounds/*')
@@ -120,7 +126,7 @@ gulp.task('vendor_build_assets', function () {
 })
 
 // CONDITIONALLY launch server => browser-sync (LOCAL) || gulp-connect (PRODUCTION) 
-gulp.task('default', ['html', 'gulp-config', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function () {
+gulp.task('default', gulp.series(gulp.parallel('html', 'gulp-config', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'), function () {
   if (process.env.NODE_ENV === 'production') {
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
       root: "./build",
@@ -133,6 +139,7 @@ gulp.task('default', ['html', 'gulp-config', 'browserify', 'sass', 'sass:watch',
       server: "./build",
       // port: 4000,
       port: process.env.PORT || 8080, // process.env.PORT provided by Heroku
+      // reloadDebounce: 4000, // wait 2 seconds before checking for any further updates - SEE: https://browsersync.io/docs/options#option-reloadDebounce *DOESN'T SEEM TO WORK
       notify: false,
       ui: {
         port: 4001
@@ -140,11 +147,17 @@ gulp.task('default', ['html', 'gulp-config', 'browserify', 'sass', 'sass:watch',
     });    
   }
 
-  gulp.watch([jsFiles, scssFiles], ['browserify']);
-  gulp.watch("src/index.html", ['html']);
-  gulp.watch(viewFiles, ['views']);
-  
-});
+  // gulp.watch([jsFiles, scssFiles], gulp.parallel('browserify')); // REFERENCE: Gulp 3.x syntax
+  var jsScssWatcher = gulp.watch([jsFiles, scssFiles]);
+  jsScssWatcher.on('all', runBrowserify);
+
+  var htmlWatcher = gulp.watch("src/index.html");
+  htmlWatcher.on('all', gulp.parallel('html'))
+
+  var viewWatcher = gulp.watch(viewFiles);
+  viewWatcher.on('all', gulp.parallel('views'));
+    
+}));
 
 // // * ATTEMPTS at implementing non-browserSync server. SEE: https://www.sitepoint.com/deploying-heroku-using-gulp-node-git/
 // gulp.task('default', ['html', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'], function () {
