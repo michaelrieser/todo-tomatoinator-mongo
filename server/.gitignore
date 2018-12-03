@@ -34,6 +34,6 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-# local db seeds
-server/seeds/*
+# local db seeds & generate_pom_report.rb
+server/seeds
 
