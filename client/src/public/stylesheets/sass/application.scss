@@ -43,6 +43,9 @@ hr {
 .yellow-orange {
     color: #ffce27;
 }
+.yellow-green {
+    color: greenyellow;
+}
 .green {
     color: green;
 }
@@ -1038,7 +1041,7 @@ h6 {
 }
 .pomreport-summary-wrapper {
     flex-basis: 37%;
-    height: 500px;
+    height: fit-content;
     background-color: #c6d8ec;
     padding: 5px;
     border-radius: 5px;
@@ -1047,6 +1050,35 @@ h6 {
     .pomreport-summary-wrapper {
         display: none;
     }
+}
+.pomreport-section-header {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 200;
+    font-style: italic;
+}
+.pomreport-pct-comp-container {
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;    
+}
+.pomreport-pct-comp-stats-wrapper {
+    flex-basis: 75%;
+    // text-align: left;
+    // padding-left: 25px;
+}
+.pomreport-pct-comp-stats {
+    text-align: left;
+    display: table;
+    margin: auto;
+}
+.pomreport-pct-comp-percentage {
+    flex-basis: 25%;
+    text-align: left;
 }
 
 .pomreport-list {

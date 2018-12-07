@@ -1,6 +1,8 @@
 class PomreportSummaryDailyCtrl {
-    constructor() {
+    constructor(PomTracker) {
         'ngInject';
+
+        this._PomTracker = PomTracker;
     }
 }
 

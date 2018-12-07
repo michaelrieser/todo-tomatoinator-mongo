@@ -133,6 +133,7 @@ export default class PomTracker {
     calcAndSetStats() {
         this.completedPoms = this.calcCompletedPoms();
         this.attemptedPoms = this.calcAttemptedPoms();
+        this.rawPomCompletionPct = this.calcRawPomCompletionPct();
         this.timesPaused   = this.calcTimesPaused();
     }
     calcCompletedPoms() {
@@ -143,11 +144,29 @@ export default class PomTracker {
     }
     calcAttemptedPoms() {
         let attemptedPoms = this.pomtrackers.reduce( (sum, p) => { return p.trackerType === 'pom' ? ++sum : sum}, 0);
-        return this.pomTracker ? attemptedPoms - 1 : attemptedPoms; // subtract 1 if pomtracker currently in progress
+        return (this.pomTracker && this.pomTracker.trackerType === 'pom') ? attemptedPoms - 1 : attemptedPoms; // subtract 1 if pomtracker currently in progress
+    }
+    calcRawPomCompletionPct() {
+        if (this.attemptedPoms === 0) { return 0; }
+        return (this.completedPoms / this.attemptedPoms) * 100;
     }
     calcTimesPaused() {
-        // @wip
-        return;
+        return this.pomtrackers.reduce( (sum, p) => { return sum += p.timesPaused }, 0);
     }
     
+    colorBasedOnCompletionPct() {
+        if (this.rawPomCompletionPct >= 90) {
+            return 'green';
+        } else if (this.rawPomCompletionPct >= 80) {
+            return 'yellow-green';
+        } else if (this.rawPomCompletionPct >= 70) {
+            return 'yellow-orange';
+        } else if (this.rawPomCompletionPct >= 60) {
+            return 'red-orange';
+        } else if (this.rawPomCompletionPct > 0) {
+            return 'red';
+        } else {
+            return 'black';
+        }
+    }
 }
