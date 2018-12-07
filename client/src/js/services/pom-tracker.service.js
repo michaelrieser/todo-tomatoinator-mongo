@@ -6,6 +6,11 @@ export default class PomTracker {
         this._$http = $http;
 
         this.pomTracker = null; 
+        this.pomtrackerInfo = {};
+        this.pomtrackers = [];
+        this.completedPoms = 0;
+        this.attemptedPoms = 0;
+        this.timesPaused = 0;
     }
 
     // returns true (coerced from set pomTracker instance) if PomEntry already created, otherwise calls createPomTracker and creates new
@@ -74,7 +79,7 @@ export default class PomTracker {
             (res) => { return this.handleCloseResponse(res); },
             (err) => { return err; }
         )
-        this.pomTrackerId = null;
+        this.pomTracker = null; // TODO: think we need to set this.pomTracker to null here (was using pomTrackerId before?)
     }
     handleCloseResponse(res) {
         this.resetPomTracker();        
@@ -84,8 +89,24 @@ export default class PomTracker {
     resetPomTracker() {        
         this.pomTracker = null;
     }
+    // TODO/INFO: kept for reference, but can probably delete
+    // query(stateParams = {}) {
+    //     var queryConfig = {};
+    //     queryConfig.filters = stateParams || null;
 
-    query(stateParams = {}) {
+    //     let request = {
+    //         url: `${this._AppConstants.api}/pomtracker`,
+    //         method: 'GET',
+    //         params: queryConfig.filters ? queryConfig.filters : null
+    //     }
+
+    //     return this._$http(request).then(
+    //         (res) => { return res.data; },
+    //         (err) => { console.log(err); }
+    //     );
+    // }
+
+    queryAndSet(stateParams = {}) {
         var queryConfig = {};
         queryConfig.filters = stateParams || null;
 
@@ -96,9 +117,37 @@ export default class PomTracker {
         }
 
         return this._$http(request).then(
-            (res) => { return res.data; },
+            (res) => { return this.handleQueryResponse(res.data); },
             (err) => { console.log(err); }
         );
+    }
+
+    handleQueryResponse(pomtrackerInfo) {
+        angular.copy(pomtrackerInfo, this.pomtrackerInfo);
+        angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
+        this.calcAndSetStats();
+
+        return pomtrackerInfo;
+    }
+
+    calcAndSetStats() {
+        this.completedPoms = this.calcCompletedPoms();
+        this.attemptedPoms = this.calcAttemptedPoms();
+        this.timesPaused   = this.calcTimesPaused();
+    }
+    calcCompletedPoms() {
+        return this.pomtrackers.reduce( (sum, p) => {
+            if (p.trackerType !== 'pom') return sum;
+            return p.intervalSuccessful ? ++sum : sum;
+        }, 0)
+    }
+    calcAttemptedPoms() {
+        let attemptedPoms = this.pomtrackers.reduce( (sum, p) => { return p.trackerType === 'pom' ? ++sum : sum}, 0);
+        return this.pomTracker ? attemptedPoms - 1 : attemptedPoms; // subtract 1 if pomtracker currently in progress
+    }
+    calcTimesPaused() {
+        // @wip
+        return;
     }
     
 }

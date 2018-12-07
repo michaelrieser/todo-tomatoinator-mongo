@@ -27,7 +27,7 @@ function PomreportConfig($stateProvider) {
             controllerAs: '$ctrl',
             resolve: {
                 pomtrackerInfo: function (PomTracker, $stateParams) {
-                    return PomTracker.query($stateParams).then(
+                    return PomTracker.queryAndSet($stateParams).then(
                         (pomtrackerInfo) => pomtrackerInfo,
                         (err) => console.log(err)
                     )

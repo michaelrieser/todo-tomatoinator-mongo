@@ -1023,6 +1023,32 @@ h6 {
     padding-top: 0px;
 }
 
+.pomreport-daily-wrapper {
+    display: -ms-flexbox;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+}
+.pomreport-list-wrapper {
+    flex-basis: 60%;
+    margin-right: 3%;
+    flex-grow: 1;
+    background-color: #c6d8ec;
+    border-radius: 5px;
+    padding: 5px;
+}
+.pomreport-summary-wrapper {
+    flex-basis: 37%;
+    height: 500px;
+    background-color: #c6d8ec;
+    padding: 5px;
+    border-radius: 5px;
+}
+@media(max-width: 730px) {    
+    .pomreport-summary-wrapper {
+        display: none;
+    }
+}
+
 .pomreport-list {
     padding: 0;
     list-style: none;

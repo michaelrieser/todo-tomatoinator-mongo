@@ -1,10 +1,15 @@
-<div class="hundred-bottom-padding">
-    <span class="ion-arrow-left-c" data-pack="default" data-tags="write"></span>
-    <span class="ion-arrow-right-c" data-pack="default" data-tags="write"></span>    
-    <ul class="pomreport-list">
-        <li ng-repeat="pomtracker in $ctrl.pomtrackers">        
-            <pomreport-interval pomtracker="pomtracker"></pomreport-interval>
-            <!--<hr/>-->
-        </li>
-    </ul>
+<div class="hundred-bottom-padding pomreport-daily-wrapper">
+    <div class="pomreport-list-wrapper">
+        <span class="ion-arrow-left-c" data-pack="default" data-tags="write"></span>
+        <span class="ion-arrow-right-c" data-pack="default" data-tags="write"></span>    
+        <ul class="pomreport-list">
+            <li ng-repeat="pomtracker in $ctrl.pomtrackers">        
+                <pomreport-interval pomtracker="pomtracker"></pomreport-interval>
+                <!--<hr/>-->
+            </li>
+        </ul>
+    </div>
+    <div class="pomreport-summary-wrapper">
+        <pomreport-summary-daily></pomreport-summary-daily>
+    </div>
 </div>

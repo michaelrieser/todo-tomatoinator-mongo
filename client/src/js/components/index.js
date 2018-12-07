@@ -117,5 +117,7 @@ componentsModule.component('pomreportNavbar', PomreportNavbar);
 import PomreportInterval from './pomreport-helpers/pomreport-interval.component';
 componentsModule.component('pomreportInterval', PomreportInterval);
 
+import PomreportSummaryDaily from './pomreport-helpers/pomreport-summary-daily.component';
+componentsModule.component('pomreportSummaryDaily', PomreportSummaryDaily)
 
 export default componentsModule;
