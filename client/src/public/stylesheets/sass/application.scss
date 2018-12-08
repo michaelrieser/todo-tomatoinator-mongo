@@ -1057,28 +1057,30 @@ h6 {
     font-weight: 200;
     font-style: italic;
 }
-.pomreport-pct-comp-container {
-    display: -webkit-flex;
-    display: flex;
-
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    align-items: center;    
-}
-.pomreport-pct-comp-stats-wrapper {
-    flex-basis: 75%;
-    // text-align: left;
-    // padding-left: 25px;
-}
-.pomreport-pct-comp-stats {
-    text-align: left;
+.pomreport-pct-comp-container {   
     display: table;
     margin: auto;
 }
-.pomreport-pct-comp-percentage {
-    flex-basis: 25%;
+.pomreport-pct-comp-stats-wrapper {
+    display: inline-block;
     text-align: left;
+    margin-right: 10px;
+}
+.pomreport-pct-comp-stats {
+    // text-align: left;
+    // display: table;
+    // margin: auto;
+}
+.pomreport-pct-comp-percentage {
+    display: inline-block;
+    font-size: 1.6em;
+    position: relative;
+    bottom: 10px;
+}
+.pomreport-anciallary-info-wrapper {
+    display: table;
+    text-align: left;
+    margin: auto;
 }
 
 .pomreport-list {

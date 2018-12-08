@@ -135,6 +135,8 @@ export default class PomTracker {
         this.attemptedPoms = this.calcAttemptedPoms();
         this.rawPomCompletionPct = this.calcRawPomCompletionPct();
         this.timesPaused   = this.calcTimesPaused();
+        this.completedActiveMinutes = this.calcCompletedActiveMinutes();
+        this.potentialActiveMinutes = this.calcPotentialActiveMinutes();
     }
     calcCompletedPoms() {
         return this.pomtrackers.reduce( (sum, p) => {
@@ -144,7 +146,7 @@ export default class PomTracker {
     }
     calcAttemptedPoms() {
         let attemptedPoms = this.pomtrackers.reduce( (sum, p) => { return p.trackerType === 'pom' ? ++sum : sum}, 0);
-        return (this.pomTracker && this.pomTracker.trackerType === 'pom') ? attemptedPoms - 1 : attemptedPoms; // subtract 1 if pomtracker currently in progress
+        return (this.pomTracker && this.pomTracker.trackerType === 'pom') ? attemptedPoms - 1 : attemptedPoms; // subtract 1 if pomtracker('pom') currently in progress
     }
     calcRawPomCompletionPct() {
         if (this.attemptedPoms === 0) { return 0; }
@@ -152,6 +154,16 @@ export default class PomTracker {
     }
     calcTimesPaused() {
         return this.pomtrackers.reduce( (sum, p) => { return sum += p.timesPaused }, 0);
+    }
+    calcCompletedActiveMinutes() {       
+        // create deep copy of pomtrackers and pop last tracker if it is an active pom
+        let targetPomtrackers = angular.copy(this.pomtrackers);        
+        if (this.pomTracker && this.pomTracker.trackerType === 'pom') { targetPomtrackers.pop(); }
+
+        return targetPomtrackers.reduce( (sum, p) => { return (p.trackerType === 'pom') ? sum += p.minutesElapsed : sum }, 0);
+    }
+    calcPotentialActiveMinutes() {
+        return this.attemptedPoms * 25;
     }
     
     colorBasedOnCompletionPct() {

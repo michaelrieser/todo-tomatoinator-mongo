@@ -1,20 +1,22 @@
 <div class="pomreport-summary-daily-wrapper">
-        <h4 class="text-center-aligned">Pomreport Summary</h4>
-        <div class="pomreport-section-header"><em>Completion Statistics</div>
-        <div class="pomreport-pct-comp-container">
-            <div class="pomreport-pct-comp-stats-wrapper">
-                <div class="pomreport-pct-comp-stats">
-                    <div><strong>Poms Completed: </strong>{{ $ctrl._PomTracker.completedPoms }}</div>
-                    <div><strong>Poms Attempted: </strong>{{ $ctrl._PomTracker.attemptedPoms }}</div>
-                </div>
-            </div>
-            <div class="pomreport-pct-comp-percentage">
-                <h4 ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct()">{{ $ctrl._PomTracker.rawPomCompletionPct | prettyPercentage }}</h4>
+    <h4 class="text-center-aligned">Pomreport Summary</h4>
+    <div class="pomreport-section-header"><em>Completion Statistics</div>
+    <div class="pomreport-pct-comp-container">
+        <div class="pomreport-pct-comp-stats-wrapper">
+            <div class="pomreport-pct-comp-stats">
+                <div><strong>Poms Completed: </strong>{{ $ctrl._PomTracker.completedPoms }}</div>
+                <div><strong>Poms Attempted: </strong>{{ $ctrl._PomTracker.attemptedPoms }}</div>
             </div>
         </div>
-        <!--<hr/>-->
-        <div class="pomreport-section-header">Ancillary Information</div>
-        <div class="text-center-aligned">
-            <div><strong>Interruptions: </strong>{{ $ctrl._PomTracker.timesPaused }}</div>
+        <div class="pomreport-pct-comp-percentage">
+            <div ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct()">{{ $ctrl._PomTracker.rawPomCompletionPct | prettyPercentage }}</div>
         </div>
+    </div>
+    <!--<hr/>-->
+    <div class="pomreport-section-header">Ancillary Information</div>
+    <div class="pomreport-anciallary-info-wrapper">
+        <div><strong>Interruptions: </strong>{{ $ctrl._PomTracker.timesPaused }}</div>
+        <div><strong>Completed Active Minutes: </strong>{{ $ctrl._PomTracker.completedActiveMinutes }}</div>
+        <div><strong>Potential Active Minutes: </strong>{{ $ctrl._PomTracker.potentialActiveMinutes }}</div>
+    </div>
 </div>
