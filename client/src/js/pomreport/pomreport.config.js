@@ -16,7 +16,11 @@ function PomreportConfig($stateProvider) {
     }
   })
   .state('app.pomreport.view', { 
-    url: '/pomreport/:type',
+    // NOTE: optional param NOT specified in URL with a default value of null SEE: http://benfoster.io/blog/ui-router-optional-parameters 
+    //	** LEFT FOR ILLUSTRATIVE PURPOSES **
+    // url: '/tasks/:project/:status/?fromTasksView',
+    // fromTasksView: null       
+    url: '/pomreport/:type?offset',
     views: {
         'pomreport': {            
             templateUrl: function ($stateParams) {
@@ -27,6 +31,7 @@ function PomreportConfig($stateProvider) {
             controllerAs: '$ctrl',
             resolve: {
                 pomtrackerInfo: function (PomTracker, $stateParams) {
+                    console.log('offset: ', $stateParams.offset)
                     return PomTracker.queryAndSet($stateParams).then(
                         (pomtrackerInfo) => pomtrackerInfo,
                         (err) => console.log(err)

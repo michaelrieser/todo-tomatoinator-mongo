@@ -26,8 +26,6 @@ router.get('/', auth.required, function (req, res, next) {
     query.updatedAt = { $gte: todayStart, $lt: todayEnd };
 
     PomTracker.find(query).sort({ updatedAt: 'asc'}).populate('task', 'title project dueDateTime').exec().then(function (pomtrackers) {
-        console.log('** pomtrackers: ')
-        console.log(pomtrackers)
         return res.json({
             pomtrackers: pomtrackers.map(function (pomtracker) {
                 return pomtracker.toJSON();

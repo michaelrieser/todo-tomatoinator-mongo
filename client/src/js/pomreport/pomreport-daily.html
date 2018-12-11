@@ -1,7 +1,12 @@
 <div class="hundred-bottom-padding pomreport-daily-wrapper">
     <div class="pomreport-list-wrapper">
-        <span class="ion-arrow-left-c" data-pack="default" data-tags="write"></span>
-        <span class="ion-arrow-right-c" data-pack="default" data-tags="write"></span>    
+        <div class="pomreport-date-wrapper">
+            <a class="ion-arrow-left-c pomreport-arrow-left" data-pack="default" 
+                  ui-sref="app.pomreport.view({type: 'daily', offset: $ctrl._PomTracker.offset - 1})" data-tags="write"></a>
+            <span class="pomreport-date-display">{{ 'date-here' }}</span>
+            <a class="ion-arrow-right-c pomreport-arrow-right" data-pack="default"
+                  ui-sref="app.pomreport.view({type: 'daily', offset: $ctrl._PomTracker.offset + 1})" data-tags="write"></a>    
+        </div>
         <ul class="pomreport-list">
             <li ng-repeat="pomtracker in $ctrl.pomtrackers">        
                 <pomreport-interval pomtracker="pomtracker"></pomreport-interval>

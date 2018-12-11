@@ -1039,6 +1039,17 @@ h6 {
     border-radius: 5px;
     padding: 5px;
 }
+.pomreport-date-wrapper {
+    display: table;
+    margin: auto;
+}
+.pomreport-arrow-left {
+    margin-right: 5px;
+}
+.pomreport-arrow-right {
+    margin-left: 5px;
+    float: right;
+}
 .pomreport-summary-wrapper {
     flex-basis: 37%;
     height: fit-content;

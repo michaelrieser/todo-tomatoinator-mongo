@@ -11,6 +11,8 @@ export default class PomTracker {
         this.completedPoms = 0;
         this.attemptedPoms = 0;
         this.timesPaused = 0;
+
+        this.offset = 0;
     }
 
     // returns true (coerced from set pomTracker instance) if PomEntry already created, otherwise calls createPomTracker and creates new
@@ -117,12 +119,14 @@ export default class PomTracker {
         }
 
         return this._$http(request).then(
-            (res) => { return this.handleQueryResponse(res.data); },
+            (res) => { return this.handleQueryResponse(res.data, stateParams); },
             (err) => { console.log(err); }
         );
     }
 
-    handleQueryResponse(pomtrackerInfo) {
+    handleQueryResponse(pomtrackerInfo, stateParams) {        
+        if (stateParams.offset) { this.offset = parseInt(stateParams.offset); }
+
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
         this.calcAndSetStats();
