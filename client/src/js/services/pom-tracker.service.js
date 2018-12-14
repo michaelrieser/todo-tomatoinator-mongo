@@ -12,6 +12,8 @@ export default class PomTracker {
         this.attemptedPoms = 0;
         this.timesPaused = 0;
 
+        this.queryStartISO;
+        this.queryEndISO;
         this.offset = 0;
     }
 
@@ -109,6 +111,10 @@ export default class PomTracker {
     // }
 
     queryAndSet(stateParams = {}) {
+        // Delete offset if moving to a new pomreport type (ex: 'daily' => 'weekly') - NOTE: prior offset remains in query string if passed prior (akin to /tasks projects & status)
+        if (stateParams.offset && stateParams.type !== this.setPomreportType) {
+            delete stateParams.offset;
+        }
         var queryConfig = {};
         queryConfig.filters = stateParams || null;
 
@@ -125,16 +131,63 @@ export default class PomTracker {
     }
 
     handleQueryResponse(pomtrackerInfo, stateParams) {        
+        this.pomtrackers = []; // NOTE/TODO: pomtrackers set as: { 'daily': [], 'weekly'||'monthly': {} } - TEMPORARY HACK TO RESET!
+        console.log('handleQueryResponse()')
+        console.log('pomtrackerInfo.queryStartISO: ', pomtrackerInfo.queryStartISO);
+        console.log('pomtrackerInfo.queryEndISO: ', pomtrackerInfo.queryEndISO);
+        console.log('stateParams.type: ', stateParams.type);
         if (stateParams.offset) { this.offset = parseInt(stateParams.offset); }
+        else { this.offset = 0; } // reset to 0 when moving between types (ex: 'daily' => 'weekly'). ALSO resets offset to 0 when coming back from another page (ex: Tasks => PomReport)
 
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
+        this.queryStartISO = pomtrackerInfo.queryStartISO;
+        this.queryEndISO   = pomtrackerInfo.queryEndISO;
+
+        this.setPomreportType = stateParams.type;
+        
         this.calcAndSetStats();
+
+        this.groupPomReportsIfNotDaily();
 
         return pomtrackerInfo;
     }
 
-    calcAndSetStats() {
+    groupPomReportsIfNotDaily() {
+        if (this.setPomreportType !== 'daily') {
+            this.setPomreportType === 'weekly' ? this.groupWeeklyPomreports() : this.groupMonthlyPomreports();
+        }
+    }
+
+    // TODO/QUESTION: implement these, then UNSURE if they will stay here || go in pomreport-display.controller.js ?
+    groupWeeklyPomreports() {
+        this.pomtrackers = this.pomtrackers.reduce( (sortedPomTrackers, p) => {
+            let currentMoment = moment(p.updatedAt);
+            let existingDateStrings = Object.keys(sortedPomTrackers);
+
+            let displayDate = currentMoment.format('ddd MMM Do'); // EX: Sun Jan 1st
+            console.log('displayDate: ', displayDate);
+            let currentMomentInExisting = existingDateStrings.find( (d) => displayDate === d);
+            console.log('currentMomentInExisting: ', currentMomentInExisting);
+
+            // let currentMomentInExisting = existingDates.find( (d) => moment(d).isSame(currentMoment, 'day') )
+                    
+            if (currentMomentInExisting) {
+                sortedPomTrackers[displayDate].push(p);
+            } else {                
+                sortedPomTrackers[displayDate] = [p];
+            }
+            console.log(sortedPomTrackers);            
+            console.log('************')
+            return sortedPomTrackers;
+        }, {})
+        console.log(this.pomtrackers);
+    }
+    groupMonthlyPomreports() {
+
+    }
+
+    calcAndSetStats() {        
         this.completedPoms = this.calcCompletedPoms();
         this.attemptedPoms = this.calcAttemptedPoms();
         this.rawPomCompletionPct = this.calcRawPomCompletionPct();

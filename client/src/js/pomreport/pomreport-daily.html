@@ -3,7 +3,7 @@
         <div class="pomreport-date-wrapper">
             <a class="ion-arrow-left-c pomreport-arrow-left" data-pack="default" 
                   ui-sref="app.pomreport.view({type: 'daily', offset: $ctrl._PomTracker.offset - 1})" data-tags="write"></a>
-            <span class="pomreport-date-display">{{ 'date-here' }}</span>
+            <span class="pomreport-date-display">{{ $ctrl._PomTracker.queryEndISO | date:'longDate' }}</span>
             <a class="ion-arrow-right-c pomreport-arrow-right" data-pack="default"
                   ui-sref="app.pomreport.view({type: 'daily', offset: $ctrl._PomTracker.offset + 1})" data-tags="write"></a>    
         </div>

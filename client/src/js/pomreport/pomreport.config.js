@@ -31,7 +31,6 @@ function PomreportConfig($stateProvider) {
             controllerAs: '$ctrl',
             resolve: {
                 pomtrackerInfo: function (PomTracker, $stateParams) {
-                    console.log('offset: ', $stateParams.offset)
                     return PomTracker.queryAndSet($stateParams).then(
                         (pomtrackerInfo) => pomtrackerInfo,
                         (err) => console.log(err)
