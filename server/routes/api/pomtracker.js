@@ -14,22 +14,43 @@ router.get('/', auth.required, function (req, res, next) {
     console.log('USER - req.payload.id: ', req.payload.id.toString());    
 
     var query = {};
-    // var limit = 20;
-    // var offset = 0;
+    var queryOffset = parseInt(req.query.offset); // Integer || NaN (falsy)
+    var queryType = req.query.type;
 
-    // ** type: 'daily' **
-    // TDOO: add conditional for 'daily' || 'weekly' || 'monthly' || etc..
-    var todayStart = moment().startOf('day');
-    var todayEnd   = moment().endOf('day');
+    var queryMomentStart;
+    var queryMomentEnd   = moment().endOf('day');
 
+    if (queryType === 'daily') {
+        queryMomentStart = moment().startOf('day');
+        if (queryOffset) {
+            queryMomentStart = queryMomentStart.add(queryOffset, 'days');
+            queryMomentEnd   = queryMomentEnd.add(queryOffset, 'days');
+        }
+    // TODO: set as business week!? || OR add option on front end?
+    } else if (queryType === 'weekly') {
+        queryMomentStart = moment().startOf('day').subtract('6', 'days'); // NOTE: 1 week adds addtional day
+        if (queryOffset) {
+            queryMomentStart = queryMomentStart.add(queryOffset, 'weeks');
+            queryMomentEnd   = queryMomentEnd.add(queryOffset, 'weeks');
+        }
+    } else if (queryType === 'monthly') {
+        // TODO: set queryMomentStart to moment.startOf('day) - ~30(set based on month?);
+    } else {
+        // TODO: throw error || return 500 with explicit msg?
+    }
+    // NOTE: left for testing monthly when implemented
+    // console.log('queryMomentStart: ', queryMomentStart.format('MMMM Do YYYY, h:mm:ss a'));
+    // console.log('queryMomentEnd: ', queryMomentEnd.format('MMMM Do YYYY, h:mm:ss a'));
     query.user = req.payload.id.toString();
-    query.updatedAt = { $gte: todayStart, $lt: todayEnd };
+    query.updatedAt = { $gte: queryMomentStart, $lt: queryMomentEnd };
 
     PomTracker.find(query).sort({ updatedAt: 'asc'}).populate('task', 'title project dueDateTime').exec().then(function (pomtrackers) {
         return res.json({
             pomtrackers: pomtrackers.map(function (pomtracker) {
                 return pomtracker.toJSON();
             }),
+            queryStartISO: queryMomentStart.toISOString(),
+            queryEndISO: queryMomentEnd.toISOString()            
         });
     }).catch(next);    
 });

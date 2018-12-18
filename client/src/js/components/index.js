@@ -120,4 +120,7 @@ componentsModule.component('pomreportInterval', PomreportInterval);
 import PomreportSummaryDaily from './pomreport-helpers/pomreport-summary-daily.component';
 componentsModule.component('pomreportSummaryDaily', PomreportSummaryDaily)
 
+import PomreportDayList from './pomreport-helpers/pomreport-day-list.component';
+componentsModule.component('pomreportDayList', PomreportDayList);
+
 export default componentsModule;

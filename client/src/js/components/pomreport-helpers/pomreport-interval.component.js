@@ -2,7 +2,7 @@ class PomreportIntervalCtrl {
     constructor(AppConstants, $scope) {
         'ngInject';
 
-        this._AppConstants = AppConstants;        
+        this._AppConstants = AppConstants;       
 
         this.calculateAndSetCompletionMetrics();                
     }
@@ -38,7 +38,8 @@ class PomreportIntervalCtrl {
 
 let PomreportInterval =  {
     bindings: {
-        pomtracker: '='
+        pomtracker: '=',
+        verboseinfo: '='
     },
     controller: PomreportIntervalCtrl,
     templateUrl: 'components/pomreport-helpers/pomreport-interval.html'

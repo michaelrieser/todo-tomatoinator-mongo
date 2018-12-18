@@ -1,6 +1,6 @@
 <!--<span class="pomreport-tracker-type">{{ $ctrl.pomtracker.trackerType }}</span>-->
-<div class="pomreport-interval-wrapper">    
-    <h5 class="pomreport-time">{{ $ctrl.pomtracker.createdAt | date:'h:mm a' }}</h5>    
+<div class="pomreport-interval-wrapper"> 
+    <div class="pomreport-time">{{ $ctrl.pomtracker.createdAt | date:'h:mm a' }}</div>    
     <div style="display:table">
         <div style="display:table-cell;vertical-align: middle">
             <div class="pomreport-box-wrapper">
@@ -12,7 +12,7 @@
     </div>
     <!--<span>test span</span>-->
 
-    <div class="pomreport-info-wrapper">
+    <div ng-if="$ctrl.verboseinfo" class="pomreport-info-wrapper">
         <div style="height:100%">
             <span ng-switch on="$ctrl.trackerType">
                 <span ng-switch-when="pom" class="ion-play" data-pack="default" data-tags="write"></span>    
