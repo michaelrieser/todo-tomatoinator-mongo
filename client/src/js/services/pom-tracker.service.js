@@ -152,31 +152,42 @@ export default class PomTracker {
 
     setSortedPomtrackers() {
         if (this.setPomreportType !== 'monthly') {
-            // this.setPomreportType === 'weekly' ? this.groupWeeklyPomreports() : this.groupMonthlyPomreports();
             this.setDailyWeeklyPomtrackers();
         } else {
             this.setMonthlyPomtrackers();
         }
     }
 
-    // TODO/QUESTION: implement these, then UNSURE if they will stay here || go in pomreport-display.controller.js ?
-    // groupWeeklyPomreports() {
     setDailyWeeklyPomtrackers() {
-        this.pomtrackersSortedByDate = this.pomtrackers.reduce( (sortedPomTrackers, p) => {
-            let currentMoment = moment(p.updatedAt);
-            let existingDateStrings = Object.keys(sortedPomTrackers);
+        // METHOD 1 - kept for reference
+        // this.pomtrackersSortedByDate = this.pomtrackers.reduce( (sortedPomTrackers, p) => {
+        //     let currentMoment = moment(p.updatedAt);
+        //     let existingDateStrings = Object.keys(sortedPomTrackers);
 
-            let displayDate = currentMoment.format('ddd MMM Do'); // EX: Sun Jan 1st
-            let displayDateInExisting = existingDateStrings.find( (d) => displayDate === d);
+        //     let displayDate = currentMoment.format('ddd MMM Do'); // EX: Sun Jan 1st
+        //     let displayDateInExisting = existingDateStrings.find( (d) => displayDate === d);
 
-            if (displayDateInExisting) {
-                sortedPomTrackers[displayDate].push(p);
-            } else {                
-                sortedPomTrackers[displayDate] = [p];
-            }
-            return sortedPomTrackers;
-        }, {})
-    }
+        //     if (displayDateInExisting) {
+        //         sortedPomTrackers[displayDate].push(p);
+        //     } else {                
+        //         sortedPomTrackers[displayDate] = [p];
+        //     }
+        //     return sortedPomTrackers;
+        // }, {})
+
+        // METHOD 2 - full REFACTOR - setting empty days in same loop
+        let targetMoment = moment(this.queryStartISO);
+        let iterations = this.setPomreportType === 'daily' ? 1 : 7;
+        let newPomtrackersSortedByDate = {};
+
+        for (var i = 0; i < iterations; i++) {            
+            let displayDate = targetMoment.format('ddd MMM Do');
+            let matchingPomtrackers = this.pomtrackers.filter( (p) => { return moment(p.updatedAt).isSame(targetMoment, 'day') });            
+            newPomtrackersSortedByDate[displayDate] = matchingPomtrackers;
+            targetMoment.add(1, 'day');            
+        }
+        angular.copy(newPomtrackersSortedByDate, this.pomtrackersSortedByDate);
+    }    
     setMonthlyPomtrackers() {
         // TODO
     }
