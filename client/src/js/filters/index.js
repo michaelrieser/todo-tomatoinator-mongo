@@ -14,4 +14,7 @@ filtersModule.filter('prettyPercentage', PrettyPercentage);
 import TimeDeltaInWords from './time-delta-in-words.filter';
 filtersModule.filter('timeDeltaInWords', TimeDeltaInWords);
 
+import MinutesToHours from './minutes-to-hours.filter';
+filtersModule.filter('minutesToHours', MinutesToHours);
+
 export default filtersModule;
