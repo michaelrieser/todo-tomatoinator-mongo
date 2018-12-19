@@ -1,5 +1,6 @@
 <!--<span class="pomreport-tracker-type">{{ $ctrl.pomtracker.trackerType }}</span>-->
 <div class="pomreport-interval-wrapper"> 
+    <md-tooltip ng-if="$ctrl.isPomInterval() && !$ctrl.verboseinfo" md-direction="top">{{ $ctrl.pomtracker.task.title }}</md-tooltip>
     <div class="pomreport-time">{{ $ctrl.pomtracker.createdAt | date:'h:mm a' }}</div>    
     <div style="display:table">
         <div style="display:table-cell;vertical-align: middle">
