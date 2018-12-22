@@ -1,6 +1,6 @@
-<!--<span class="pomreport-tracker-type">{{ $ctrl.pomtracker.trackerType }}</span>-->
-<div class="pomreport-interval-wrapper"> 
-    <md-tooltip ng-if="$ctrl.isPomInterval() && !$ctrl.verboseinfo" md-direction="top">{{ $ctrl.pomtracker.task.title }}</md-tooltip>
+<div class="pomreport-interval-wrapper" ng-click="$ctrl.queryAndDisplayPomtrackerInfoPanelIfPom($event)"> 
+    <md-tooltip ng-if="$ctrl.isPomInterval() && !$ctrl.verboseinfo" md-direction="top"
+                ng-class="{'italic': $ctrl.taskMissingTitle}">{{ $ctrl.getTaskTitle() }}</md-tooltip>
     <div class="pomreport-time">{{ $ctrl.pomtracker.createdAt | date:'h:mm a' }}</div>    
     <div style="display:table">
         <div style="display:table-cell;vertical-align: middle">
@@ -11,7 +11,6 @@
             </div>
         </div>
     </div>
-    <!--<span>test span</span>-->
 
     <div ng-if="$ctrl.verboseinfo" class="pomreport-info-wrapper">
         <div style="height:100%">
@@ -21,7 +20,7 @@
                 <span ng-switch-when="longBrk" class="ion-ios-bolt" data-pack="default" data-tags="write"></span>
             </span>
             &nbsp;
-            <span ng-if="$ctrl.isPomInterval()">{{ $ctrl.pomtracker.task.title }}</span>
+            <span ng-if="$ctrl.isPomInterval()" ng-class="{'italic': $ctrl.taskMissingTitle}">{{ $ctrl.getTaskTitle() }}</span>
         </div>
     </div>
 </div>

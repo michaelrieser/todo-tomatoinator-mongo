@@ -14,5 +14,7 @@ pomreportModule.controller('PomreportCtrl', PomreportCtrl);
 import PomreportDisplayCtrl from './pomreport-display.controller';
 pomreportModule.controller('PomreportDisplayCtrl', PomreportDisplayCtrl);
 
+import PomtrackerInfoPanelCtrl from './pomtracker-info-panel.controller';
+pomreportModule.controller('PomtrackerInfoPanelCtrl', PomtrackerInfoPanelCtrl);
 
 export default pomreportModule;

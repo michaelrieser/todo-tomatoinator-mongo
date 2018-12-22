@@ -43,6 +43,9 @@ servicesModule.service('TimeUtils', TimeUtilsService);
 import ProjectPanelService from './project-panel.service';
 servicesModule.service('ProjectPanel', ProjectPanelService);
 
+import PomtrackerInfoPanelService from './pomtracker-info-panel.service';
+servicesModule.service('PomtrackerInfoPanel', PomtrackerInfoPanelService);
+
 import AppHeaderService from './app-header.service';
 servicesModule.service('AppHeader', AppHeaderService);
 

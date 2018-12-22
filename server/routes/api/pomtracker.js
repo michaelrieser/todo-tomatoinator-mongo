@@ -9,9 +9,10 @@ var moment = require('moment');
 
 /* GET pomtracker list */
 router.get('/', auth.required, function (req, res, next) {
-    console.log('GET /pomtracker');
-    console.log('req.query: ', req.query); // START => return values from given user based on { type: 'daily' }
-    console.log('USER - req.payload.id: ', req.payload.id.toString());    
+    // NOTE: left for testing monthly when implemented
+    // console.log('GET /pomtracker');
+    // console.log('req.query: ', req.query); // START => return values from given user based on { type: 'daily' }
+    // console.log('USER - req.payload.id: ', req.payload.id.toString());    
 
     var query = {};
     var queryOffset = parseInt(req.query.offset); // Integer || NaN (falsy)
@@ -44,9 +45,17 @@ router.get('/', auth.required, function (req, res, next) {
     query.user = req.payload.id.toString();
     query.updatedAt = { $gte: queryMomentStart, $lt: queryMomentEnd };
 
-    PomTracker.find(query).sort({ updatedAt: 'asc'}).populate('task', 'title project dueDateTime').exec().then(function (pomtrackers) {
+    PomTracker.find(query).sort({ updatedAt: 'asc'}).populate({
+            path: 'task', 
+            select: 'title project dueDateTime',
+            populate: {
+                path: 'project',
+                select: 'title'
+            }
+    }).exec().then(function (pomtrackers) {
         return res.json({
             pomtrackers: pomtrackers.map(function (pomtracker) {
+                // console.log(pomtracker.toJSON());
                 return pomtracker.toJSON();
             }),
             queryStartISO: queryMomentStart.toISOString(),
@@ -86,16 +95,12 @@ router.put('/incrementpause', function (req, res, next) {
 
 /* PUT update PomTracker interval */
 router.put('/', function (req, res, next) {    
-    console.log('PUT /pomtracker')
     let reqPomTracker = req.body.pomTracker;
     PomTracker.findById(reqPomTracker.id).then(function (tgtPomTracker) {        
         if (typeof reqPomTracker.intervalSuccessful !== 'undefined') {
             tgtPomTracker.intervalSuccessful = reqPomTracker.intervalSuccessful;
             tgtPomTracker.closed = true;
             tgtPomTracker.closedTime = new Date(); // NOTE: want to set closedTime regardless of pom success
-            // if (tgtPomTracker.intervalSuccessful) {
-            //     tgtPomTracker.completedTime = new Date();
-            // }
         }
 
         tgtPomTracker.save().then(function (pomTracker) {
@@ -103,5 +108,18 @@ router.put('/', function (req, res, next) {
         })
     })
 })
+
+/* GET aggregate total time (minutesElapsed) spent on given task */
+router.get('/taskinfo', function (req, res, next) {   
+    let targetTaskID = req.query.taskID;
+    PomTracker.find({"task": mongoose.Types.ObjectId(targetTaskID) }).then(function (pomtrackers) {
+        let minutesElapsed = pomtrackers.reduce( function(sum, p) {
+            return sum + p.minutesElapsed;
+        }, 0);
+        return res.json({
+            minutesElapsed: minutesElapsed
+        })
+    }).catch(next);
+});
 
 module.exports = router;

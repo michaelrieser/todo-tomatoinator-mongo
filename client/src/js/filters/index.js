@@ -17,4 +17,7 @@ filtersModule.filter('timeDeltaInWords', TimeDeltaInWords);
 import MinutesToHours from './minutes-to-hours.filter';
 filtersModule.filter('minutesToHours', MinutesToHours);
 
+import MinutesToDaysHoursMinutes from './minutes-to-days-hours-minutes.filter';
+filtersModule.filter('minutesToDaysHoursMinutes', MinutesToDaysHoursMinutes);
+
 export default filtersModule;

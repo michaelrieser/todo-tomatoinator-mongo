@@ -1,9 +1,12 @@
 class PomreportIntervalCtrl {
-    constructor(AppConstants, $scope) {
+    constructor(AppConstants, PomTracker, PomtrackerInfoPanel, $scope) {
         'ngInject';
 
-        this._AppConstants = AppConstants;       
+        this._AppConstants = AppConstants;
+        this._PomTracker = PomTracker;
+        this._PomtrackerInfoPanel = PomtrackerInfoPanel;
 
+        this.taskMissingTitle = false;
         this.calculateAndSetCompletionMetrics();                
     }
 
@@ -34,6 +37,22 @@ class PomreportIntervalCtrl {
         return this.completedIntervalMinutes === this.targetIntervalMinutes ? '4px' : '4px 4px 0 0';
     }
 
+    getTaskTitle() {
+        if (this.pomtracker.task) {
+            return this.pomtracker.task.title;
+        } else if (this.pomtracker.initialTaskTitle) {
+            return this.pomtracker.initialTaskTitle;
+        } else {
+            this.taskMissingTitle = true;
+            return '<task-not-found>';            
+        }
+    }
+
+    queryAndDisplayPomtrackerInfoPanelIfPom(evt) {
+        if (!this.isPomInterval()) { return; }
+        let targetTaskID = this.pomtracker.task ? this.pomtracker.task._id : this.pomtracker.taskIdString;
+        this._PomtrackerInfoPanel.queryAndDisplayPomtrackerInfoPanel(evt, targetTaskID, this.pomtracker);
+    }
 }
 
 let PomreportInterval =  {

@@ -23,7 +23,7 @@ class PomTimerCtrl {
             // only reset and create new PomTracker if PomTimer is NOT ( paused and pressing Play(pom) )
             this._PomTimer.timerPaused  && timerType === 'pom' ? true : this._PomTracker.resetAndBuildPomTracker(this.task, timerType)
         ).then((res) => {            
-            if (res.status && res.status !== 200) { // create succeeded with HTTP 200 success
+            if (res.status && res.status !== 200) { // error
                 // TODO: inform user and/or try again?
                 console.log('ERROR: ', res.statusText);
             } else { // timer created with HTTP 200 success

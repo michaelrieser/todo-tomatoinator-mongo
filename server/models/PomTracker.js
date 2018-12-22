@@ -7,6 +7,8 @@ var PomTrackerSchema = new mongoose.Schema({
     minutesElapsed: { type: Number, default: 0 },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+    taskIdString: { type: String },
+    initialTaskTitle: { type: String },
     timesPaused: { type: Number, default: 0 },    
     intervalSuccessful: { type: Boolean, default: false }, // set to false by default and force app to set to true (handles refreshing and losing pomTrackerId from PomTracker service)
     closed: { type: Boolean, default: false }, // closed + !intervalSuccessful => STOPPED | !closed + !intervalSuccessful => PAGE REFRESH || ERROR(?) 
@@ -29,6 +31,8 @@ PomTrackerSchema.methods.toJSON = function() {
       minutesElapsed: this.minutesElapsed,
       user: this.user,
       task: this.task,
+      taskIdString: this.taskIdString, // for pomtracker query if task was deleted, NOTE: couldn't find out how to populate task ID if no task doc found
+      initialTaskTitle: this.initialTaskTitle, // for display if task was deleted
       timesPaused: this.timesPaused,
       intervalSuccessful: this.intervalSuccessful,
       closed: this.closed,

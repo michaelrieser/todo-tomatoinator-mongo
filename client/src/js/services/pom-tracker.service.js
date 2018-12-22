@@ -32,7 +32,9 @@ export default class PomTracker {
         let request = {
             url: `${this._AppConstants.api}/pomtracker/`,
             method: 'POST',
-            data: { pomTracker: {trackerType: trackerType, task: taskId, user: userId} }            
+            data: { pomTracker: {trackerType: trackerType, task: taskId, 
+                                 initialTaskTitle: task.title, user: userId,
+                                 taskIdString: taskId} }            
         }
         return this._$http(request).then(
             (res) => { return this.handleCreateSuccess(res); },
@@ -242,5 +244,17 @@ export default class PomTracker {
         } else {
             return 'black';
         }
+    }
+
+    getPomtrackerTaskInfo(targetTaskID) {
+        let request = {
+            url: `${this._AppConstants.api}/pomtracker/taskinfo`,
+            method: 'GET',
+            params: { taskID: targetTaskID }            
+        }
+        return this._$http(request).then(
+            (res) => { return res; },
+            (err) => { return err; }
+        );        
     }
 }
