@@ -138,6 +138,10 @@ export default class PomTracker {
         if (stateParams.offset) { this.offset = parseInt(stateParams.offset); }
         else { this.offset = 0; } // reset to 0 when moving between types (ex: 'daily' => 'weekly'). ALSO resets offset to 0 when coming back from another page (ex: Tasks => PomReport)
 
+
+        console.log('PomTracker svc - handleQueryResponse()')
+        console.log(pomtrackerInfo);
+
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
         this.queryStartISO = pomtrackerInfo.queryStartISO;
@@ -148,6 +152,11 @@ export default class PomTracker {
         this.calcAndSetStats();
 
         this.setSortedPomtrackers();
+
+        console.log('this.pomtrackers');
+        console.log(this.pomtrackers);
+        console.log('this.pomtrackersSortedByDate:');
+        console.log(this.pomtrackersSortedByDate);
 
         return pomtrackerInfo;
     }
