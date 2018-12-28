@@ -197,6 +197,7 @@ export default class PomTracker {
 
         for (var i = 0; i < iterations; i++) {            
             let displayDate = targetMoment.format('ddd MMM Do');
+            console.log('displayDate: ', displayDate)
             let matchingPomtrackers = this.pomtrackers.filter( (p) => { return moment(p.updatedAt).isSame(targetMoment, 'day') });            
             newPomtrackersSortedByDate[displayDate] = matchingPomtrackers;
             targetMoment.add(1, 'day');            

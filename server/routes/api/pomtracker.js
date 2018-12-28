@@ -10,6 +10,8 @@ var moment = require('moment');
 /* GET pomtracker list */
 router.get('/', auth.required, function (req, res, next) {
     console.log('GET /pomtracker')
+    console.log('moment():')
+    console.log(moment().format('ddd MMM Do'))
     // NOTE: left for testing monthly when implemented
     // console.log('GET /pomtracker');
     // console.log('req.query: ', req.query); // START => return values from given user based on { type: 'daily' }
@@ -46,8 +48,8 @@ router.get('/', auth.required, function (req, res, next) {
     query.user = req.payload.id.toString();
     query.updatedAt = { $gte: queryMomentStart, $lt: queryMomentEnd };
 
-    console.log('query:')
-    console.log(query);
+    console.log('queryMomentStart: ', queryMomentStart);
+    console.log('queryMomentEnd: ', queryMomentEnd);
 
     PomTracker.find(query).sort({ updatedAt: 'asc'}).populate({
             path: 'task', 
@@ -57,8 +59,6 @@ router.get('/', auth.required, function (req, res, next) {
                 select: 'title'
             }
     }).exec().then(function (pomtrackers) {
-        console.log('pomtrackers:')
-        console.log(pomtrackers)
         return res.json({
             pomtrackers: pomtrackers.map(function (pomtracker) {
                 // console.log(pomtracker.toJSON());
