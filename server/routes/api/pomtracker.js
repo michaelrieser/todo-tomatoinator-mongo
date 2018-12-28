@@ -48,8 +48,8 @@ router.get('/', auth.required, function (req, res, next) {
     query.user = req.payload.id.toString();
     query.updatedAt = { $gte: queryMomentStart, $lt: queryMomentEnd };
 
-    console.log('queryMomentStart: ', queryMomentStart);
-    console.log('queryMomentEnd: ', queryMomentEnd);
+    console.log('queryMomentStart ISO: ', queryMomentStart.toISOString());
+    console.log('queryMomentEnd ISO: ', queryMomentEnd.toISOString());
 
     PomTracker.find(query).sort({ updatedAt: 'asc'}).populate({
             path: 'task', 
