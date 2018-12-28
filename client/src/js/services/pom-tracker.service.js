@@ -145,6 +145,7 @@ export default class PomTracker {
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
         this.queryStartISO = pomtrackerInfo.queryStartISO;
+        console.log('this.queryStartISO: ', this.queryStartISO);
         this.queryEndISO   = pomtrackerInfo.queryEndISO;
 
         this.setPomreportType = stateParams.type;
@@ -187,7 +188,10 @@ export default class PomTracker {
         // }, {})
 
         // METHOD 2 - full REFACTOR - setting empty days in same loop
+        console.log('setDailyWeeklyPomtrackers()')
+        console.log('this.queryStartISO: ', this.queryStartISO);
         let targetMoment = moment(this.queryStartISO);
+        console.log('targetMoment: ', targetMoment);
         let iterations = this.setPomreportType === 'daily' ? 1 : 7;
         let newPomtrackersSortedByDate = {};
 
