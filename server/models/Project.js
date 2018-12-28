@@ -10,6 +10,24 @@ var ProjectSchema = new mongoose.Schema({
     // users: ? /* TODO: allow the tracking of all users on an individual project */
 }, {timestamps: true}); // adds createdAt and updatedAt fields
 
+ProjectSchema.pre('save', function(next) {    
+    let userId = this.user._id;
+    let tgtProjTitle = this.title;
+    let tgtProjId = this._id;
+    
+    const Project = this.constructor;
+    Project.find({user: userId, title: tgtProjTitle, _id: { $ne: tgtProjId }}).then(function (projects) {
+        if (!projects.length) {
+            next();
+        } else {
+            var err = new Error('Project creation failed');
+            err.name = 'ValidationError';
+            err.errors = { title: new Error('already exists!') };
+            next(err); // NOTE: calling next() with an argument assumes the error is passed as argument
+        }
+    });
+});
+
 ProjectSchema.methods.toJSON = function() {   
     return {
         id: this.id,
@@ -22,20 +40,4 @@ ProjectSchema.methods.toJSON = function() {
     };
 };
 
-var Project = mongoose.model('Project', ProjectSchema);
-
-// ProjectSchema.plugin(uniqueValidator, { message: 'is already taken.'});
-ProjectSchema.pre('save', function(next) {
-    let userId = this.user._id;
-    let tgtProjTitle = this.title;
-    Project.find({user: userId, title: tgtProjTitle}).then(function (projects) {
-        if (!projects.length) {
-            next();
-        } else {
-            var err = new Error('Project creation failed');
-            err.name = 'ValidationError';
-            err.errors = { title: new Error('already exists!') };
-            next(err); // NOTE: calling next() with an argument assumes the error is passed as argument
-        }
-    });
-});
+mongoose.model('Project', ProjectSchema);

@@ -17,9 +17,9 @@ router.post('/', auth.required, function (req, res, next) {
   User.findById(req.payload.id).then(function (user) {
     if (!user) { return res.sendStatus(401); }
 
-    var project = new Project(req.body.project);
+    var project = new Project(req.body.project);    
 
-    project.user = user;
+    project.user = user._id;
 
     // TODO: Add project to user model as well ?
     return project.save().then(function (project) {
@@ -73,7 +73,7 @@ router.put('/update', auth.required, function (req, res, next) {
     if (req.body.project.user.toString() === req.payload.id.toString()) {
 
       Project.findById(req.body.project.id).then(function (targetProject) {
-
+        
         if (typeof req.body.project.title !== 'undefined') {
           targetProject.title = req.body.project.title;
         }

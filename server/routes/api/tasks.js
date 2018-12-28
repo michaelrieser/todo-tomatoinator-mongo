@@ -97,7 +97,7 @@ router.get('/', auth.optional, function (req, res, next) {
 
         // Find project if query included project
         return Promise.all([
-            req.query.project ? Project.findOne({ title: req.query.project }) : null
+            req.query.project ? Project.findOne({ user: userId, title: req.query.project }) : null
         ]).then(function (results) {
             var project = results[0];
 
