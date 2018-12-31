@@ -5,13 +5,13 @@ var async = require('async');
 
 var PomTracker = mongoose.model('PomTracker');
 var auth = require('../auth'); 
-var moment = require('moment');
+// var moment = require('moment');
+var moment = require('moment-timezone');
 
 /* GET pomtracker list */
 router.get('/', auth.required, function (req, res, next) {
     console.log('GET /pomtracker')
-    console.log('moment():')
-    console.log(moment().format('ddd MMM Do'))
+
     // NOTE: left for testing monthly when implemented
     // console.log('GET /pomtracker');
     // console.log('req.query: ', req.query); // START => return values from given user based on { type: 'daily' }
@@ -20,19 +20,20 @@ router.get('/', auth.required, function (req, res, next) {
     var query = {};
     var queryOffset = parseInt(req.query.offset); // Integer || NaN (falsy)
     var queryType = req.query.type;
+    var queryTimezone = req.query.timezone;
 
     var queryMomentStart;
-    var queryMomentEnd   = moment().endOf('day');
+    var queryMomentEnd = moment().tz(queryTimezone).endOf('day');
 
     if (queryType === 'daily') {
-        queryMomentStart = moment().startOf('day');
+        queryMomentStart = moment().tz(queryTimezone).startOf('day');
         if (queryOffset) {
             queryMomentStart = queryMomentStart.add(queryOffset, 'days');
             queryMomentEnd   = queryMomentEnd.add(queryOffset, 'days');
         }
     // TODO: set as business week!? || OR add option on front end?
     } else if (queryType === 'weekly') {
-        queryMomentStart = moment().startOf('day').subtract('6', 'days'); // NOTE: 1 week adds addtional day
+        queryMomentStart = moment().tz(queryTimezone).startOf('day').subtract('6', 'days'); // NOTE: 1 week adds addtional day
         if (queryOffset) {
             queryMomentStart = queryMomentStart.add(queryOffset, 'weeks');
             queryMomentEnd   = queryMomentEnd.add(queryOffset, 'weeks');
@@ -46,10 +47,10 @@ router.get('/', auth.required, function (req, res, next) {
     // console.log('queryMomentStart: ', queryMomentStart.format('MMMM Do YYYY, h:mm:ss a'));
     // console.log('queryMomentEnd: ', queryMomentEnd.format('MMMM Do YYYY, h:mm:ss a'));
     query.user = req.payload.id.toString();
-    query.updatedAt = { $gte: queryMomentStart, $lt: queryMomentEnd };
+    query.updatedAt = { $gte: queryMomentStart, $lte: queryMomentEnd };
 
-    console.log('queryMomentStart ISO: ', queryMomentStart.toISOString());
-    console.log('queryMomentEnd ISO: ', queryMomentEnd.toISOString());
+    console.log('queryMomentStart: ', queryMomentStart.format('LLLL'));
+    console.log('queryMomentEnd: ', queryMomentEnd.format('LLLL'));
 
     PomTracker.find(query).sort({ updatedAt: 'asc'}).populate({
             path: 'task', 

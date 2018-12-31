@@ -120,9 +120,9 @@ gulp.task('sounds', function () {
 })
 
 gulp.task('vendor_build_assets', function () {
-  return gulp.src('./src/vendor/javascripts/vendor_build_scripts/*')
+  return gulp.src('./src/js/vendor/javascripts/vendor_build_scripts/*')
     .on('error', interceptErrors)
-    .pipe(gulp.dest('./build/'))
+    .pipe(gulp.dest('./build/vendor/'))
 })
 
 // CONDITIONALLY launch server => browser-sync (LOCAL) || gulp-connect (PRODUCTION) 

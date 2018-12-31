@@ -21,6 +21,7 @@
     "method-override": "2.3.5",
     "methods": "1.1.2",
     "moment": "^2.20.1",
+    "moment-timezone": "^0.5.23",
     "mongoose": "^5.3.4",
     "mongoose-unique-validator": "^2.0.2",
     "morgan": "1.7.0",

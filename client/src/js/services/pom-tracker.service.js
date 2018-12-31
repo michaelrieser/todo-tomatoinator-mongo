@@ -122,6 +122,9 @@ export default class PomTracker {
         var queryConfig = {};
         queryConfig.filters = stateParams || null;
 
+        // Leverage Internationalization API to guess browser's timezone        
+        queryConfig.filters.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
         let request = {
             url: `${this._AppConstants.api}/pomtracker`,
             method: 'GET',
@@ -139,13 +142,9 @@ export default class PomTracker {
         else { this.offset = 0; } // reset to 0 when moving between types (ex: 'daily' => 'weekly'). ALSO resets offset to 0 when coming back from another page (ex: Tasks => PomReport)
 
 
-        console.log('PomTracker svc - handleQueryResponse()')
-        console.log(pomtrackerInfo);
-
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
         this.queryStartISO = pomtrackerInfo.queryStartISO;
-        console.log('this.queryStartISO: ', this.queryStartISO);
         this.queryEndISO   = pomtrackerInfo.queryEndISO;
 
         this.setPomreportType = stateParams.type;
@@ -153,11 +152,6 @@ export default class PomTracker {
         this.calcAndSetStats();
 
         this.setSortedPomtrackers();
-
-        console.log('this.pomtrackers');
-        console.log(this.pomtrackers);
-        console.log('this.pomtrackersSortedByDate:');
-        console.log(this.pomtrackersSortedByDate);
 
         return pomtrackerInfo;
     }
@@ -188,16 +182,12 @@ export default class PomTracker {
         // }, {})
 
         // METHOD 2 - full REFACTOR - setting empty days in same loop
-        console.log('setDailyWeeklyPomtrackers()')
-        console.log('this.queryStartISO: ', this.queryStartISO);
         let targetMoment = moment(this.queryStartISO);
-        console.log('targetMoment: ', targetMoment);
         let iterations = this.setPomreportType === 'daily' ? 1 : 7;
         let newPomtrackersSortedByDate = {};
 
         for (var i = 0; i < iterations; i++) {            
             let displayDate = targetMoment.format('ddd MMM Do');
-            console.log('displayDate: ', displayDate)
             let matchingPomtrackers = this.pomtrackers.filter( (p) => { return moment(p.updatedAt).isSame(targetMoment, 'day') });            
             newPomtrackersSortedByDate[displayDate] = matchingPomtrackers;
             targetMoment.add(1, 'day');            
