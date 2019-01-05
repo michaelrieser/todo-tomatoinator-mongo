@@ -168,11 +168,10 @@ export default class Tasks {
   }
 
   setStatusFilterFromString(targetStatus) {
-    // if (targetStatus === undefined) { return; } // TODO: this could probably be deleted since default params are used in ui-router
+    if (targetStatus) { this.setStatus = targetStatus; }
+    else { this.setStatus = this.setStatus || 'all' } // keep original status if targetStatus not set - for when calling queryAndSet() outside of app.tasks.view route
 
-    this.setStatus = targetStatus || 'all'; // setStatus field for dynamically setting Tasks href in header.html
-
-    switch (targetStatus) {
+    switch (this.setStatus) {
       case 'all':
         delete this.currentlySetFilters.isComplete;
         break;
