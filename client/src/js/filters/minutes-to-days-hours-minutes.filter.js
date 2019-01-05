@@ -2,7 +2,13 @@
 function minutesToDaysHoursMinutesFilter() {
     'ngInject';
 
-    return (input) => {        
+    return (input, includedTimeHorizons) => {       
+        // TODO: add error handling for missing includedTimeHorizons param? => just set to all?
+
+        let inclDays = includedTimeHorizons.includes('d');
+        let inclHours = includedTimeHorizons.includes('h');
+        let inclMinutes = includedTimeHorizons.includes('m'); 
+        let returnStr = '';
         
         // set minutes to seconds
         let seconds = input * 60;
@@ -18,7 +24,11 @@ function minutesToDaysHoursMinutesFilter() {
         // calc (and subtract) whole minutes
         let minutes = Math.floor(seconds / 60);
 
-        return `${days}d ${hours}h ${minutes}m`;
+        if (inclDays) returnStr += `${days}d`;
+        if (inclHours) returnStr += ` ${hours}h`;
+        if (inclMinutes) returnStr += ` ${minutes}m`;
+
+        return returnStr;
     }
 }
 

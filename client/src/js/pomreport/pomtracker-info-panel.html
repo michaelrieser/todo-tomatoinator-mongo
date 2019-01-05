@@ -8,7 +8,7 @@
 </div>
 <hr/>
 <div><strong>Project: </strong><span ng-class="{'italic': $ctrl.taskMissingProject}">{{:: $ctrl.taskProjectTitle }}</span></div>
-<div><strong>Time Spent: </strong>{{:: $ctrl.minutesElapsed | minutesToDaysHoursMinutes }}</div>
+<div><strong>Time Spent: </strong>{{:: $ctrl.minutesElapsed | minutesToDaysHoursMinutes: 'dhm' }}</div>
 <div><strong>Completed Minutes: </strong>{{:: $ctrl.completedIntervalMinutesRatio() }}</div>
 <div ng-if="$ctrl.taskHasDueDateTime()">
     <strong>Due: </strong>

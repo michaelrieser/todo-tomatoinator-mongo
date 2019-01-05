@@ -16,7 +16,7 @@
     <div class="pomreport-section-header">Ancillary Information</div>
     <div class="pomreport-ancillary-info-wrapper">
         <div><strong>Interruptions: </strong>{{ $ctrl._PomTracker.timesPaused }}</div>
-        <div><strong>Completed Active Minutes: </strong>{{ $ctrl._PomTracker.completedActiveMinutes }}</div>
-        <div><strong>Potential Active Minutes: </strong>{{ $ctrl._PomTracker.potentialActiveMinutes }}</div>
+        <div><strong>Completed Active Time: </strong>{{ $ctrl._PomTracker.completedActiveMinutes | minutesToDaysHoursMinutes: 'hm' }}</div>
+        <div><strong>Potential Active Time: </strong>{{ $ctrl._PomTracker.potentialActiveMinutes | minutesToDaysHoursMinutes: 'hm' }}</div>
     </div>
 </div>
