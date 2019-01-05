@@ -168,8 +168,7 @@ export default class Tasks {
   }
 
   setStatusFilterFromString(targetStatus) {
-    if (targetStatus) { this.setStatus = targetStatus; }
-    else { this.setStatus = this.setStatus || 'all' } // keep original status if targetStatus not set - for when calling queryAndSet() outside of app.tasks.view route
+    this.setStatus = targetStatus || this.setStatus || 'all'; // keep original status if targetStatus not set - for when calling queryAndSet() outside of app.tasks.view route
 
     switch (this.setStatus) {
       case 'all':
