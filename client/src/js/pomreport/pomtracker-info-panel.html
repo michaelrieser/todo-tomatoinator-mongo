@@ -1,12 +1,20 @@
-<h5 class="centered-title" style="font-weight:bolder">{{ $ctrl.taskTitle }}</h5>
+<div class="pomtracker-info-panel-title-wrapper">
+    <div class="pomtracker-info-panel-title">
+        <div class="centered-title" style="font-weight:bolder">{{:: $ctrl.taskTitle }}</div>
+    </div>
+    <div class="pomtracker-info-panel-pom-light-wrapper">
+        <div ng-class="$ctrl.colorBasedOnIntervalSuccessful()" class="pomtracker-info-panel-pom-light"></div>
+    </div>
+</div>
 <hr/>
-<div><strong>Project: </strong><span ng-class="{'italic': $ctrl.taskMissingProject}">{{ $ctrl.taskProjectTitle }}</span></div>
-<div><strong>Time Spent: </strong>{{ $ctrl.minutesElapsed | minutesToDaysHoursMinutes }}</div>
+<div><strong>Project: </strong><span ng-class="{'italic': $ctrl.taskMissingProject}">{{:: $ctrl.taskProjectTitle }}</span></div>
+<div><strong>Time Spent: </strong>{{:: $ctrl.minutesElapsed | minutesToDaysHoursMinutes }}</div>
+<div><strong>Completed Minutes: </strong>{{:: $ctrl.completedIntervalMinutesRatio() }}</div>
 <div ng-if="$ctrl.taskHasDueDateTime()">
     <strong>Due: </strong>
     <span ng-class="$ctrl.colorBasedOnTimeRemaining()">
-        {{ $ctrl.pomtracker.task.dueDateTime | timeDeltaInWords }}
-        <md-tooltip md-direction="right">{{ $ctrl.pomtracker.task.dueDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
+        {{:: $ctrl.pomtracker.task.dueDateTime | timeDeltaInWords }}
+        <md-tooltip md-direction="right">{{:: $ctrl.pomtracker.task.dueDateTime | date: 'MMM d yyyy, h:mm a' }}</md-tooltip>
     </span>    
 </div>
 <!--<div><em>fancy-graph?</em></div>-->

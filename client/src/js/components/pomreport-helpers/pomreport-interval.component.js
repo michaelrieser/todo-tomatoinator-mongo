@@ -53,6 +53,16 @@ class PomreportIntervalCtrl {
         let targetTaskID = this.pomtracker.task ? this.pomtracker.task._id : this.pomtracker.taskIdString;
         this._PomtrackerInfoPanel.queryAndDisplayPomtrackerInfoPanel(evt, targetTaskID, this.pomtracker);
     }
+
+    intervalSucceeded() {
+        return this.pomtracker.intervalSuccessful;
+    }
+
+    intervalIsActive() {
+        if (!(this.pomtracker.trackerType === 'pom') || !this._PomTracker.pomTracker) { return false; }
+        return this._PomTracker.pomTracker.id === this.pomtracker.id;
+    }
+
 }
 
 let PomreportInterval =  {

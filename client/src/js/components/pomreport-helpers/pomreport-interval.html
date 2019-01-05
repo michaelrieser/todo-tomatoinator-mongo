@@ -4,8 +4,11 @@
     <div class="pomreport-time">{{ $ctrl.pomtracker.createdAt | date:'h:mm a' }}</div>    
     <div style="display:table">
         <div style="display:table-cell;vertical-align: middle">
+            
             <div class="pomreport-box-wrapper">
-                <div ng-style="{ height: $ctrl.boxPixelHeightFromIntervalType() }" class="pomreport-box-outer">
+                <md-progress-circular ng-show="$ctrl.intervalIsActive()" md-mode="indeterminate"></md-progress-circular>
+                <div ng-hide="$ctrl.intervalIsActive()" ng-style="{ height: $ctrl.boxPixelHeightFromIntervalType() }" 
+                     class="pomreport-box-outer" ng-class="::{ 'light-blue-background': $ctrl.intervalSucceeded() }">
                     <div ng-style="{ 'height': $ctrl.intervalCompletionPercentage, 'border-radius': $ctrl.setInnerBoxBottomBorderRadius() }" class="pomreport-box-inner"></div>    
                 </div>
             </div>

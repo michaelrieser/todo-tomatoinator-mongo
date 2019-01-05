@@ -53,9 +53,18 @@ hr {
     color: black;
 }
 
+.red-background {
+    background-color: red;
+}
 .gray-background {
     background-color: lightgray;
     border-radius: 5px;
+}
+.light-blue-background {
+    background-color: lightblue !important;
+}
+.light-green-brand-background {
+    background-color: #5cb85c !important;
 }
 .italic {
     font-style: italic;
@@ -1097,7 +1106,7 @@ h6 {
     position: relative;
     bottom: 10px;
 }
-.pomreport-anciallary-info-wrapper {
+.pomreport-ancillary-info-wrapper {
     display: table;
     text-align: left;
     margin: auto;
@@ -1201,4 +1210,26 @@ h6 {
     border-radius: 2px;
     padding: 5px;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+.pomtracker-info-panel-title-wrapper {
+    display: -webkit-flex;
+    display: flex;
+}
+.pomtracker-info-panel-title {
+    margin-right: 15px;
+    font-size: 1.1em;
+    font-style: italic;
+}
+.pomtracker-info-panel-pom-light-wrapper {
+    margin-left: auto; // aligns right
+    position: relative;
+}
+.pomtracker-info-panel-pom-light {
+    height: 12px;
+    width: 12px;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    right: 35%;
+    transform: translateY(-50%);
 }

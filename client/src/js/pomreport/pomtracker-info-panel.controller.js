@@ -1,11 +1,12 @@
 class PomtrackerInfoPanel {
   // NOTE: mdPanelReference(resolved from $mdPanel.open()) may be passed to panel ctrl ctor
-  constructor(mdPanelRef, TimeUtils, $scope) {
+  constructor(mdPanelRef, TimeUtils, AppConstants, $scope) {
     'ngInject';
 
-    this._mdPanelRef = mdPanelRef;
-    this._TimeUtils  = TimeUtils;
-    this._$scope     = $scope;
+    this._mdPanelRef   = mdPanelRef;
+    this._TimeUtils    = TimeUtils;
+    this._AppConstants = AppConstants;
+    this._$scope       = $scope;
 
     this.minutesElapsed = this.pomtrackerTaskInfo.minutesElapsed;
     this.taskTitle = this.getTaskTitle();
@@ -38,6 +39,14 @@ class PomtrackerInfoPanel {
   colorBasedOnTimeRemaining() {
       return this._TimeUtils.colorBasedOnTimeRemaining(this.pomtracker.task.dueDateTime);
   }  
+
+  colorBasedOnIntervalSuccessful() {
+    return this.pomtracker.intervalSuccessful ? 'light-green-brand-background' : 'red-background';
+  }
+
+  completedIntervalMinutesRatio() {
+    return `${ this.pomtracker.minutesElapsed }/${ this._AppConstants.pomTimerData[this.pomtracker.trackerType] }`;
+  }
 }
 
 export default PomtrackerInfoPanel;
