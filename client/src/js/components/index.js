@@ -123,7 +123,13 @@ componentsModule.component('pomreportSummaryDaily', PomreportSummaryDaily);
 import PomreportSummaryWeekly from './pomreport-helpers/pomreport-summary-weekly.component';
 componentsModule.component('pomreportSummaryWeekly', PomreportSummaryWeekly);
 
+import PomreportSummaryMonthly from './pomreport-helpers/pomreport-summary-monthly.component';
+componentsModule.component('pomreportSummaryMonthly', PomreportSummaryMonthly);
+
 import PomreportDayList from './pomreport-helpers/pomreport-day-list.component';
 componentsModule.component('pomreportDayList', PomreportDayList);
+
+import PomreportWeekList from './pomreport-helpers/pomreport-week-list.component';
+componentsModule.component('pomreportWeekList', PomreportWeekList);
 
 export default componentsModule;

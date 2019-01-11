@@ -1,6 +1,7 @@
 <div class="hundred-bottom-padding pomreport-weekly-wrapper">
     <div class="pomreport-weekly-list-wrapper">
         <div class="pomreport-date-wrapper">
+            <!-- TODO: extract to component and retrofit to pomreport-daily & pomreport-monthly html -->
             <a class="ion-arrow-left-c pomreport-arrow-left" data-pack="default" 
                   ui-sref="app.pomreport.view({type: 'weekly', offset: $ctrl._PomTracker.offset - 1})" data-tags="write"></a>
             <span class="pomreport-date-display">{{ $ctrl._PomTracker.queryStartISO | date:'longDate' }}</span>
@@ -8,13 +9,13 @@
             <span class="pomreport-date-display">{{ $ctrl._PomTracker.queryEndISO | date:'longDate' }}</span>
             <a class="ion-arrow-right-c pomreport-arrow-right" data-pack="default"
                   ui-sref="app.pomreport.view({type: 'weekly', offset: $ctrl._PomTracker.offset + 1})" data-tags="write"></a>    
+            <!-- /TODO -->
         </div>
 
         <!-- TODO: extract to pomreport-day-lists component -->
         <ul class="pomreport-list">
-            <li class="pomreport-single-day-wrapper" ng-repeat="(date, pomtrackers) in $ctrl.pomtrackersSortedByDate">
-                <div class="pomreport-date-wrapper">{{date}}</div>       
-                <pomreport-day-list verboseinfo="false" pomtrackers="pomtrackers"></pomreport-day-list>
+            <li class="pomreport-single-day-wrapper" ng-repeat="(date, pomtrackers) in $ctrl.pomtrackersSortedByDate">       
+                <pomreport-day-list date="date" verboseinfo="false" pomtrackers="pomtrackers"></pomreport-day-list>
             </li>
         </ul>
         <!-- /TODO -->

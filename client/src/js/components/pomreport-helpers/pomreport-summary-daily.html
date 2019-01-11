@@ -9,7 +9,8 @@
             </div>
         </div>
         <div class="pomreport-pct-comp-percentage">
-            <div ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct()">{{ $ctrl._PomTracker.rawPomCompletionPct | prettyPercentage }}</div>
+            <!-- TODO/REFACTOR: this is bad... ?=>Move PomTracker.calcAndSetStats() to ctrl? -->
+            <div ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct($ctrl._PomTracker.rawPomCompletionPct)">{{ $ctrl._PomTracker.rawPomCompletionPct | prettyPercentage }}</div>
         </div>
     </div>
     <!--<hr/>-->

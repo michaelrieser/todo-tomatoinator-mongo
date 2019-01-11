@@ -137,7 +137,7 @@ export default class PomTracker {
         );
     }
 
-    handleQueryResponse(pomtrackerInfo, stateParams) {        
+    handleQueryResponse(pomtrackerInfo, stateParams) {      
         if (stateParams.offset) { this.offset = parseInt(stateParams.offset); }
         else { this.offset = 0; } // reset to 0 when moving between types (ex: 'daily' => 'weekly'). ALSO resets offset to 0 when coming back from another page (ex: Tasks => PomReport)
 
@@ -195,55 +195,69 @@ export default class PomTracker {
         angular.copy(newPomtrackersSortedByDate, this.pomtrackersSortedByDate);
     }    
     setMonthlyPomtrackers() {
-        // TODO
+        let targetMomentStart = moment(this.queryStartISO); // already set to startOf day, which will be retained when adding a week for next iteration
+        let newPomtrackersSortedByWeek = {};
+
+        for (var i = 0; i < 4; i++) {
+            let targetMomentEnd = targetMomentStart.clone().add(6, 'days').endOf('day');
+
+            let displayStartDate = targetMomentStart.format('ddd MMM Do');
+            let displayEndDate   = targetMomentEnd.format('ddd MMM Do');
+            let displayDateStr   = `${displayStartDate} - ${displayEndDate}`;
+                        
+            let matchingPomtrackers = this.pomtrackers.filter( (p) => { return moment(p.updatedAt).isBetween(targetMomentStart, targetMomentEnd) });
+            newPomtrackersSortedByWeek[displayDateStr] = matchingPomtrackers;
+            targetMomentStart.add(1, 'week');
+        }
+        angular.copy(newPomtrackersSortedByWeek, this.pomtrackersSortedByDate)
     }
 
-    calcAndSetStats() {        
-        this.completedPoms = this.calcCompletedPoms();
-        this.attemptedPoms = this.calcAttemptedPoms();
-        this.rawPomCompletionPct = this.calcRawPomCompletionPct();
-        this.timesPaused   = this.calcTimesPaused();
-        this.completedActiveMinutes = this.calcCompletedActiveMinutes();
-        this.potentialActiveMinutes = this.calcPotentialActiveMinutes();
+    calcAndSetStats() { // NOTE: for pomtracker-(daily|weekly)-summary
+        this.completedPoms          = this.calcCompletedPoms(this.pomtrackers);
+        this.attemptedPoms          = this.calcAttemptedPoms(this.pomtrackers);
+        this.rawPomCompletionPct    = this.calcRawPomCompletionPct(this.completedPoms, this.attemptedPoms);
+        this.timesPaused            = this.calcTimesPaused(this.pomtrackers);
+        this.completedActiveMinutes = this.calcCompletedActiveMinutes(this.pomtrackers);
+        this.potentialActiveMinutes = this.calcPotentialActiveMinutes(this.attemptedPoms);
     }
-    calcCompletedPoms() {
-        return this.pomtrackers.reduce( (sum, p) => {
+    calcCompletedPoms(tgtPomtrackers) {
+        return tgtPomtrackers.reduce( (sum, p) => {
             if (p.trackerType !== 'pom') return sum;
             return p.intervalSuccessful ? ++sum : sum;
         }, 0)
     }
-    calcAttemptedPoms() {
-        let attemptedPoms = this.pomtrackers.reduce( (sum, p) => { return p.trackerType === 'pom' ? ++sum : sum}, 0);
+    calcAttemptedPoms(tgtPomtrackers) {
+        let attemptedPoms = tgtPomtrackers.reduce( (sum, p) => { return p.trackerType === 'pom' ? ++sum : sum}, 0);
         return (this.pomTracker && this.pomTracker.trackerType === 'pom') ? attemptedPoms - 1 : attemptedPoms; // subtract 1 if pomtracker('pom') currently in progress
     }
-    calcRawPomCompletionPct() {
-        if (this.attemptedPoms === 0) { return 0; }
-        return (this.completedPoms / this.attemptedPoms) * 100;
+    calcRawPomCompletionPct(completedPoms, attemptedPoms) {
+        if (attemptedPoms === 0) { return 0; }
+        return (completedPoms / attemptedPoms) * 100;
     }
-    calcTimesPaused() {
-        return this.pomtrackers.reduce( (sum, p) => { return sum += p.timesPaused }, 0);
+    calcTimesPaused(tgtPomtrackers) {
+        return tgtPomtrackers.reduce( (sum, p) => { return sum += p.timesPaused }, 0);
     }
-    calcCompletedActiveMinutes() {       
+    calcCompletedActiveMinutes(tgtPomtrackers) {
         // create deep copy of pomtrackers and pop last tracker if it is an active pom
-        let targetPomtrackers = angular.copy(this.pomtrackers);        
-        if (this.pomTracker && this.pomTracker.trackerType === 'pom') { targetPomtrackers.pop(); }
+        let tgtPomtrackersCopy = angular.copy(tgtPomtrackers);        
+        if (this.pomTracker && this.pomTracker.trackerType === 'pom') { tgtPomtrackersCopy.pop(); }
 
-        return targetPomtrackers.reduce( (sum, p) => { return (p.trackerType === 'pom') ? sum += p.minutesElapsed : sum }, 0);
+        return tgtPomtrackersCopy.reduce( (sum, p) => { return (p.trackerType === 'pom') ? sum += p.minutesElapsed : sum }, 0);
     }
-    calcPotentialActiveMinutes() {
-        return this.attemptedPoms * 25;
+    calcPotentialActiveMinutes(attemptedPoms) {
+        return attemptedPoms * 25;
     }
     
-    colorBasedOnCompletionPct() {
-        if (this.rawPomCompletionPct >= 90) {
+    colorBasedOnCompletionPct(rawCompletionPct) {
+        if (rawCompletionPct >= 90) {
             return 'green';
-        } else if (this.rawPomCompletionPct >= 80) {
+        } else if (rawCompletionPct >= 80) {
             return 'yellow-green';
-        } else if (this.rawPomCompletionPct >= 70) {
+        } else if (rawCompletionPct >= 70) {
             return 'yellow-orange';
-        } else if (this.rawPomCompletionPct >= 60) {
+        } else if (rawCompletionPct >= 60) {
             return 'red-orange';
-        } else if (this.rawPomCompletionPct > 0) {
+        } else if (rawCompletionPct > 0) {
             return 'red';
         } else {
             return 'black';

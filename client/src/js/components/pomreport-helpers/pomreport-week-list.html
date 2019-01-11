@@ -1,0 +1,31 @@
+<div class="pomreport-week-date-wrapper">
+    <div class="pomreport-date-wrapper">{{$ctrl.date}}</div>       
+</div>
+<hr/>
+<div class="pomreport-single-week-content-wrapper">
+    <div class="pomreport-pct-comp-container">
+        <div class="pomreport-section-header">Completion Statistics</div>
+        <div class="pomreport-pct-comp-stats-wrapper">
+            <div class="pomreport-pct-comp-stats">
+                <div><strong>Poms Completed: </strong>{{ $ctrl.completedPoms }}</div>
+                <div><strong>Poms Attempted: </strong>{{ $ctrl.attemptedPoms }}</div>
+            </div>
+        </div>
+        <div class="pomreport-pct-comp-percentage">
+            <div ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct($ctrl.rawPomCompletionPct)">{{ $ctrl.rawPomCompletionPct | prettyPercentage }}</div>
+        </div>
+    </div>
+    <!--<hr/>-->
+    <div class="pomreport-section-header">Ancillary Information</div>
+    <div class="pomreport-ancillary-info-wrapper">
+        <div><strong>Interruptions: </strong>{{ $ctrl.timesPaused }}</div>
+        <div><strong>Completed Active Time: </strong>{{ $ctrl.completedActiveMinutes | minutesToDaysHoursMinutes: 'dhm' }}</div>
+        <div><strong>Potential Active Time: </strong>{{ $ctrl.potentialActiveMinutes | minutesToDaysHoursMinutes: 'dhm' }}</div>
+    </div>
+    <div class="pomreport-week-pie-chart-wrapper">
+        <canvas id="pie" class="chart chart-pie" chart-data="$ctrl.pieChartData" 
+                chart-labels="$ctrl.pieChartLabels" chart-colors="$ctrl.pieChartColors"
+                chart-options="$ctrl.pieChartOptions">
+        </canvas>
+    </div>
+</div>

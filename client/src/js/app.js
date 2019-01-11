@@ -25,7 +25,8 @@ import './tasks';
 import './toast';
 import './vendor/javascripts/howler.min.js';
 import './vendor/javascripts/jquery.ui.touch-punch.js';
-// import './sortable/src/sortable.js';
+import './vendor/javascripts/Chart.min.js';
+import './vendor/javascripts/angular-chart.min.js';
 
 // Create and bootstrap application
 const requires = [  
@@ -44,7 +45,8 @@ const requires = [
   'app.settings',
   'app.sidebar',
   'app.tasks',
-  'app.toast'
+  'app.toast',
+  'chart.js'
 ];
 
 // Mount on window for testing

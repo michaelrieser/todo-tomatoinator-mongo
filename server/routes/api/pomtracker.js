@@ -23,34 +23,43 @@ router.get('/', auth.required, function (req, res, next) {
     var queryTimezone = req.query.timezone;
 
     var queryMomentStart;
-    var queryMomentEnd = moment().tz(queryTimezone).endOf('day');
+    var queryMomentEnd;
 
     if (queryType === 'daily') {
         queryMomentStart = moment().tz(queryTimezone).startOf('day');
+        queryMomentEnd = moment().tz(queryTimezone).endOf('day');
         if (queryOffset) {
             queryMomentStart = queryMomentStart.add(queryOffset, 'days');
             queryMomentEnd   = queryMomentEnd.add(queryOffset, 'days');
         }
     // TODO: set as business week!? || OR add option on front end?
     } else if (queryType === 'weekly') {
-        queryMomentStart = moment().tz(queryTimezone).startOf('day').subtract('6', 'days'); // NOTE: 1 week adds addtional day
+        queryMomentStart = moment().tz(queryTimezone).startOf('day').subtract(6, 'days'); // NOTE: 1 week adds addtional day
+        queryMomentEnd = moment().tz(queryTimezone).endOf('day');
         if (queryOffset) {
             queryMomentStart = queryMomentStart.add(queryOffset, 'weeks');
             queryMomentEnd   = queryMomentEnd.add(queryOffset, 'weeks');
         }
-    } else if (queryType === 'monthly') {
-        // TODO: set queryMomentStart to moment.startOf('day) - ~30(set based on month?);
+    } else if (queryType === 'monthly') {        
+        // NOTE: subtracting 1 'month' places moment today's day in prior month (ex: Jan 7 => Dec 7), this would result 
+        //       in over 28 days being subtracted (for certain months) and the moment being set one week too far back
+        //       *INSTEAD:
+        //                - subtract 21 days(3 weeks) to get corresponding day of start week
+        //                - if today is NOT Monday, set queryMomentStart to Monday of start week
+        //                - then add 27 days to set queryMomentEnd
+        queryMomentStart = moment().tz(queryTimezone).startOf('day').subtract(21, 'days');    
+        if (queryMomentStart.day() !== 1) { queryMomentStart = queryMomentStart.isoWeekday(1); }
+        queryMomentEnd = queryMomentStart.clone().add(27, 'days');
+        if (queryOffset) {
+            let offsetDays = queryOffset * 28;            
+            queryMomentStart = queryMomentStart.add(offsetDays, 'days');
+            queryMomentEnd   = queryMomentEnd.add(offsetDays, 'days');
+        }
     } else {
         // TODO: throw error || return 500 with explicit msg?
     }
-    // NOTE: left for testing monthly when implemented
-    // console.log('queryMomentStart: ', queryMomentStart.format('MMMM Do YYYY, h:mm:ss a'));
-    // console.log('queryMomentEnd: ', queryMomentEnd.format('MMMM Do YYYY, h:mm:ss a'));
     query.user = req.payload.id.toString();
     query.updatedAt = { $gte: queryMomentStart, $lte: queryMomentEnd };
-
-    console.log('queryMomentStart: ', queryMomentStart.format('LLLL'));
-    console.log('queryMomentEnd: ', queryMomentEnd.format('LLLL'));
 
     PomTracker.find(query).sort({ updatedAt: 'asc'}).populate({
             path: 'task', 
@@ -61,8 +70,7 @@ router.get('/', auth.required, function (req, res, next) {
             }
     }).exec().then(function (pomtrackers) {
         return res.json({
-            pomtrackers: pomtrackers.map(function (pomtracker) {
-                // console.log(pomtracker.toJSON());
+            pomtrackers: pomtrackers.map(function (pomtracker) {            
                 return pomtracker.toJSON();
             }),
             queryStartISO: queryMomentStart.toISOString(),

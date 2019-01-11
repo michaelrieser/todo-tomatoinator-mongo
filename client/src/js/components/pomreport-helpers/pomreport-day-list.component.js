@@ -8,6 +8,7 @@ class PomreportDayListCtrl {
 
 let PomreportDayList =  {
     bindings: {
+        date: '=',
         pomtrackers: '=',
         verboseinfo: '='
     },
