@@ -15,17 +15,27 @@
             <div ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct($ctrl.rawPomCompletionPct)">{{ $ctrl.rawPomCompletionPct | prettyPercentage }}</div>
         </div>
     </div>
-    <!--<hr/>-->
-    <div class="pomreport-section-header">Ancillary Information</div>
+
+    <div class="pomreport-week-pie-chart-wrapper">
+        <canvas ng-hide="$ctrl.noPomCompletionData()" id="pie" class="chart chart-pie" chart-data="$ctrl.completionMinsPieChartData" 
+                chart-labels="$ctrl.completionMinsPieChartLabels" chart-colors="$ctrl.completionMinsPieChartColors">
+        </canvas>
+        <image class="no-pom-data-circle" ng-show="$ctrl.noPomCompletionData()" ng-src="assets/images/no_data_dashed_circle.png">
+    </div>
+    
+    <!--<div class="pomreport-section-header">Ancillary Information</div>-->
     <div class="pomreport-ancillary-info-wrapper">
         <div><strong>Interruptions: </strong>{{ $ctrl.timesPaused }}</div>
         <div><strong>Completed Active Time: </strong>{{ $ctrl.completedActiveMinutes | minutesToDaysHoursMinutes: 'dhm' }}</div>
         <div><strong>Potential Active Time: </strong>{{ $ctrl.potentialActiveMinutes | minutesToDaysHoursMinutes: 'dhm' }}</div>
     </div>
-    <div class="pomreport-week-pie-chart-wrapper">
-        <canvas id="pie" class="chart chart-pie" chart-data="$ctrl.pieChartData" 
-                chart-labels="$ctrl.pieChartLabels" chart-colors="$ctrl.pieChartColors"
-                chart-options="$ctrl.pieChartOptions">
+    
+    <div class="pomreport-section-header">Task Breakdown</div>
+    <div class="pomreport-week-task-breakdown-wrapper">
+        <canvas ng-hide="$ctrl.noPomCompletionData()" class="chart chart-pie pomreport-week-task-breakdown" chart-data="$ctrl.taskBreakdownPieChartData"
+                chart-labels="$ctrl.taskBreakdownPieChartLabels" chart-colors="$ctrl.taskBreakdownPieChartColors"
+                chart-options="$ctrl.taskBreakdownPieChartOptions">
         </canvas>
+        <image class="no-pom-data-circle" ng-show="$ctrl.noPomCompletionData()" ng-src="assets/images/no_data_dashed_circle.png">
     </div>
 </div>

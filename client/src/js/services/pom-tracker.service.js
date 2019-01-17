@@ -17,6 +17,9 @@ export default class PomTracker {
         this.queryStartISO;
         this.queryEndISO;
         this.offset = 0;
+
+        this.taskGraphColors = ['#a6cee3', '#6a3d9a', '#b2df8a', '#b15928', '#fb9a99', '#ff7f00', '#b44d1d', '#ffff99', '#e31a1c', '#fdbf6f',
+                                '#1f78b4', '#33a02c', '#00fff7', '#a000a3', '#887aff', '#a31e00', '#fad900', '#fa0057', '#a69c96', '#4aa9f2'];        
     }
 
     // returns true (coerced from set pomTracker instance) if PomEntry already created, otherwise calls createPomTracker and creates new
@@ -141,7 +144,6 @@ export default class PomTracker {
         if (stateParams.offset) { this.offset = parseInt(stateParams.offset); }
         else { this.offset = 0; } // reset to 0 when moving between types (ex: 'daily' => 'weekly'). ALSO resets offset to 0 when coming back from another page (ex: Tasks => PomReport)
 
-
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
         this.queryStartISO = pomtrackerInfo.queryStartISO;
@@ -150,8 +152,8 @@ export default class PomTracker {
         this.setPomreportType = stateParams.type;
         
         this.calcAndSetStats();
-
         this.setSortedPomtrackers();
+        this.taskGraphColorMap = this.getTaskGraphColorMap();
 
         return pomtrackerInfo;
     }
@@ -274,5 +276,28 @@ export default class PomTracker {
             (res) => { return res; },
             (err) => { return err; }
         );        
+    }
+
+    getPomtrackerTaskTimeMap(pomtrackers) {
+        // using ES6 Map Object TO ENSURE KEY/VALUE ORDER IS KEPT => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map && https://stackoverflow.com/questions/5525795/does-javascript-guarantee-object-property-order
+        return pomtrackers.reduce( (res, p) => {
+            if (!p.task || !p.task.title || p.trackerType !== 'pom') { return res; }
+            let tgtTitle = p.task.title;
+            if (!Object.keys(res).includes(tgtTitle)) { res[tgtTitle] = 0; }
+            res[tgtTitle] += p.minutesElapsed;
+            return res;
+        }, new Map())                
+    }
+
+    getTaskGraphColorMap() {
+        return this.pomtrackers.reduce( (taskColorMap, p) => {
+            if (!p.task || !p.task.title) { return taskColorMap; }
+            let taskTitle = p.task.title;
+            if ( !(taskTitle in taskColorMap) ) {                
+                let tgtColorIdx = Object.keys(taskColorMap).length; // length => current index + 1
+                taskColorMap[taskTitle] = this.taskGraphColors[tgtColorIdx];
+            } 
+            return taskColorMap;
+        }, new Map())
     }
 }

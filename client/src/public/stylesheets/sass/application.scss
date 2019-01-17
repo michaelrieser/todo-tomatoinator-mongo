@@ -1288,6 +1288,7 @@ h6 {
 }
 .pomreport-single-week-content-wrapper {
     padding: 10px;
+    height: 450px;
 }
 .pomreport-summary-monthly-wrapper {
     flex-basis: 18%;
@@ -1301,4 +1302,12 @@ h6 {
         display: none;
         // TODO: hide & create toggleable overlay button || move to bottom?
     }
+}
+
+.pomreport-week-task-breakdown {
+    width: 100%;
+}
+
+.no-pom-data-circle {
+    width: 127px;
 }

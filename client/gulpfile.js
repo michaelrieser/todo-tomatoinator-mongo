@@ -119,6 +119,12 @@ gulp.task('sounds', function () {
     .pipe(gulp.dest('./build/assets/sounds/'))
 })
 
+gulp.task('images', function() {
+  return gulp.src('./src/public/images/*')
+    .on('error', interceptErrors)
+    .pipe(gulp.dest('./build/assets/images'))
+})
+
 gulp.task('vendor_build_assets', function () {
   return gulp.src('./src/js/vendor/javascripts/vendor_build_scripts/*')
     .on('error', interceptErrors)
@@ -126,7 +132,7 @@ gulp.task('vendor_build_assets', function () {
 })
 
 // CONDITIONALLY launch server => browser-sync (LOCAL) || gulp-connect (PRODUCTION) 
-gulp.task('default', gulp.series(gulp.parallel('html', 'gulp-config', 'browserify', 'sass', 'sass:watch', 'sounds', 'vendor_build_assets'), function () {
+gulp.task('default', gulp.series(gulp.parallel('html', 'gulp-config', 'browserify', 'sass', 'sass:watch', 'sounds', 'images', 'vendor_build_assets'), function () {
   if (process.env.NODE_ENV === 'production') {
     connect.server({ // ** THIS IS DEFINITELY NOT THE RIGHT WAY TO WORK THIS - HAVING THIS gulp-connect server SERVE Express server??? **
       root: "./build",
