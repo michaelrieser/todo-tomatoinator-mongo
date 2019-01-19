@@ -1257,6 +1257,7 @@ h6 {
     margin-right: 2%;
     background-color: #c6d8ec;
     flex-grow: 1;
+    border-radius: 3px;
 }
 .pomreport-week-date-wrapper {
     width: 100%;
@@ -1295,7 +1296,7 @@ h6 {
     height: fit-content;
     background-color: #c6d8ec;
     padding: 5px;
-    border-radius: 5px;    
+    border-radius: 3px;    
 }
 @media(max-width: 1165px) {
     .pomreport-summary-monthly-wrapper {
@@ -1304,8 +1305,17 @@ h6 {
     }
 }
 
-.pomreport-week-task-breakdown {
+.pomreport-week-task-breakdown,
+.pomreport-agg-monthly-task-breakdown {
     width: 100%;
+}
+
+.pomreport-agg-monthly-completion-chart-wrapper {
+    width: 260px;
+    text-align: center;
+}
+.pomreport-agg-monthly-task-breakdown-wrapper {
+    text-align: center;
 }
 
 .no-pom-data-circle {

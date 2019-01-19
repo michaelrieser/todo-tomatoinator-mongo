@@ -49,4 +49,7 @@ servicesModule.service('PomtrackerInfoPanel', PomtrackerInfoPanelService);
 import AppHeaderService from './app-header.service';
 servicesModule.service('AppHeader', AppHeaderService);
 
+import PomreportChartHelpers from './pomreport-chart-helpers.service';
+servicesModule.service('PomreportChartHelpers', PomreportChartHelpers);
+
 export default servicesModule;

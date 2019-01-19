@@ -16,9 +16,10 @@
         </div>
     </div>
 
-    <div class="pomreport-week-pie-chart-wrapper">
-        <canvas ng-hide="$ctrl.noPomCompletionData()" id="pie" class="chart chart-pie" chart-data="$ctrl.completionMinsPieChartData" 
-                chart-labels="$ctrl.completionMinsPieChartLabels" chart-colors="$ctrl.completionMinsPieChartColors">
+    <div class="pomreport-week-completion-chart-wrapper">
+        <canvas ng-hide="$ctrl.noPomCompletionData()" class="chart chart-pie" chart-data="$ctrl.completionMinsPieChartData" 
+                chart-labels="$ctrl.completionMinsPieChartLabels" chart-colors="$ctrl.completionMinsPieChartColors"
+                chart-options="$ctrl.completionMinsPieChartOptions">
         </canvas>
         <image class="no-pom-data-circle" ng-show="$ctrl.noPomCompletionData()" ng-src="assets/images/no_data_dashed_circle.png">
     </div>
@@ -34,7 +35,7 @@
     <div class="pomreport-week-task-breakdown-wrapper">
         <canvas ng-hide="$ctrl.noPomCompletionData()" class="chart chart-pie pomreport-week-task-breakdown" chart-data="$ctrl.taskBreakdownPieChartData"
                 chart-labels="$ctrl.taskBreakdownPieChartLabels" chart-colors="$ctrl.taskBreakdownPieChartColors"
-                chart-options="$ctrl.taskBreakdownPieChartOptions">
+                chart-options="$ctrl._PomreportChartHelpers.taskBreakdownPieChartOptions">
         </canvas>
         <image class="no-pom-data-circle" ng-show="$ctrl.noPomCompletionData()" ng-src="assets/images/no_data_dashed_circle.png">
     </div>

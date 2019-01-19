@@ -1,8 +1,10 @@
 class PomreportSummaryMonthlyCtrl {
-    constructor(PomTracker) {
+    constructor(PomTracker, PomreportChartHelpers) {
         'ngInject';
 
-        this._PomTracker = PomTracker;
+        // NOTE: leveraging MVVM pattern with Aggregated Pomreport Charts
+        this._PomTracker            = PomTracker;
+        this._PomreportChartHelpers = PomreportChartHelpers;
     }
 }
 

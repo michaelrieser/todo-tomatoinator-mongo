@@ -1,8 +1,9 @@
 export default class PomTracker {
-    constructor(AppConstants, $http) {
+    constructor(AppConstants, PomreportChartHelpers, $http) {
         'ngInject';
 
         this._AppConstants = AppConstants;
+        this._PomreportChartHelpers = PomreportChartHelpers;
         this._$http = $http;
 
         this.pomTracker = null; 
@@ -16,10 +17,7 @@ export default class PomTracker {
 
         this.queryStartISO;
         this.queryEndISO;
-        this.offset = 0;
-
-        this.taskGraphColors = ['#a6cee3', '#6a3d9a', '#b2df8a', '#b15928', '#fb9a99', '#ff7f00', '#b44d1d', '#ffff99', '#e31a1c', '#fdbf6f',
-                                '#1f78b4', '#33a02c', '#00fff7', '#a000a3', '#887aff', '#a31e00', '#fad900', '#fa0057', '#a69c96', '#4aa9f2'];        
+        this.offset = 0;     
     }
 
     // returns true (coerced from set pomTracker instance) if PomEntry already created, otherwise calls createPomTracker and creates new
@@ -153,7 +151,6 @@ export default class PomTracker {
         
         this.calcAndSetStats();
         this.setSortedPomtrackers();
-        this.taskGraphColorMap = this.getTaskGraphColorMap();
 
         return pomtrackerInfo;
     }
@@ -214,13 +211,22 @@ export default class PomTracker {
         angular.copy(newPomtrackersSortedByWeek, this.pomtrackersSortedByDate)
     }
 
-    calcAndSetStats() { // NOTE: for pomtracker-(daily|weekly)-summary
+    calcAndSetStats() { // NOTE: for pomtracker-(daily|weekly|monthly)-summary
         this.completedPoms          = this.calcCompletedPoms(this.pomtrackers);
         this.attemptedPoms          = this.calcAttemptedPoms(this.pomtrackers);
         this.rawPomCompletionPct    = this.calcRawPomCompletionPct(this.completedPoms, this.attemptedPoms);
         this.timesPaused            = this.calcTimesPaused(this.pomtrackers);
         this.completedActiveMinutes = this.calcCompletedActiveMinutes(this.pomtrackers);
         this.potentialActiveMinutes = this.calcPotentialActiveMinutes(this.attemptedPoms);
+        this.missedMinutes          = this.potentialActiveMinutes - this.completedActiveMinutes;
+        this.aggtdCompletionMinutesPieChartData = [this.completedActiveMinutes, this.missedMinutes];
+
+        this.aggtdPomtrackerTaskTimeMap        = this.getPomtrackerTaskTimeMap(this.pomtrackers);
+        this.aggtdTaskBreakdownPieChartLabels  = Object.keys(this.aggtdPomtrackerTaskTimeMap);
+        this.aggtdTaskBreakdownPieChartData    = Object.values(this.aggtdPomtrackerTaskTimeMap);
+        this._PomreportChartHelpers.setBaseTaskChartColorMap(this.pomtrackers);        
+        this.aggtdTaskBreakdownPieChartColors  = this._PomreportChartHelpers.getStratifiedTaskChartColors(this.aggtdTaskBreakdownPieChartLabels);
+        this.aggtdTaskBreakdownPieChartOptions = this._PomreportChartHelpers.taskBreakdownPieChartOptions;
     }
     calcCompletedPoms(tgtPomtrackers) {
         return tgtPomtrackers.reduce( (sum, p) => {
@@ -286,18 +292,10 @@ export default class PomTracker {
             if (!Object.keys(res).includes(tgtTitle)) { res[tgtTitle] = 0; }
             res[tgtTitle] += p.minutesElapsed;
             return res;
-        }, new Map())                
-    }
-
-    getTaskGraphColorMap() {
-        return this.pomtrackers.reduce( (taskColorMap, p) => {
-            if (!p.task || !p.task.title) { return taskColorMap; }
-            let taskTitle = p.task.title;
-            if ( !(taskTitle in taskColorMap) ) {                
-                let tgtColorIdx = Object.keys(taskColorMap).length; // length => current index + 1
-                taskColorMap[taskTitle] = this.taskGraphColors[tgtColorIdx];
-            } 
-            return taskColorMap;
         }, new Map())
     }
+
+    noPomCompletionData() {
+        return this.potentialActiveMinutes === 0;
+    }    
 }
