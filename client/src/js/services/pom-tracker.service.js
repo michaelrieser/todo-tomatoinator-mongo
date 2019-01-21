@@ -218,13 +218,17 @@ export default class PomTracker {
         this.timesPaused            = this.calcTimesPaused(this.pomtrackers);
         this.completedActiveMinutes = this.calcCompletedActiveMinutes(this.pomtrackers);
         this.potentialActiveMinutes = this.calcPotentialActiveMinutes(this.attemptedPoms);
-        this.missedMinutes          = this.potentialActiveMinutes - this.completedActiveMinutes;
+        this.missedMinutes          = this.potentialActiveMinutes - this.completedActiveMinutes;        
+        
         this.aggtdCompletionMinutesPieChartData = [this.completedActiveMinutes, this.missedMinutes];
+        this.aggtdPomtrackerTaskTimeMap         = this.getPomtrackerTaskTimeMap(this.pomtrackers);
+        this.aggtdTaskBreakdownPieChartLabels   = Object.keys(this.aggtdPomtrackerTaskTimeMap);
+        this.aggtdTaskBreakdownPieChartData     = Object.values(this.aggtdPomtrackerTaskTimeMap);
 
-        this.aggtdPomtrackerTaskTimeMap        = this.getPomtrackerTaskTimeMap(this.pomtrackers);
-        this.aggtdTaskBreakdownPieChartLabels  = Object.keys(this.aggtdPomtrackerTaskTimeMap);
-        this.aggtdTaskBreakdownPieChartData    = Object.values(this.aggtdPomtrackerTaskTimeMap);
-        this._PomreportChartHelpers.setBaseTaskChartColorMap(this.pomtrackers);        
+        // NOTE: sort stratifies across monthly week charts, but NOT daily, weekly, summaries, etc => would need to assign colors & store as we only order on receieved tasks
+        this.sortedTaskTitles = Array.from(this.aggtdTaskBreakdownPieChartLabels).sort();  
+        this._PomreportChartHelpers.setBaseTaskChartColorMap(this.sortedTaskTitles);      
+        
         this.aggtdTaskBreakdownPieChartColors  = this._PomreportChartHelpers.getStratifiedTaskChartColors(this.aggtdTaskBreakdownPieChartLabels);
         this.aggtdTaskBreakdownPieChartOptions = this._PomreportChartHelpers.taskBreakdownPieChartOptions;
     }

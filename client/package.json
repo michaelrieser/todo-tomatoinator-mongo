@@ -33,6 +33,7 @@
     "gulp-using": "*",
     "gulp-util": "^3.0.7",
     "marked": "^0.3.5",
+    "moment-timezone": "^0.5.23",
     "merge-stream": "^1.0.0",
     "natives": "1.1.6",
     "vinyl-source-stream": "^2.0.0"

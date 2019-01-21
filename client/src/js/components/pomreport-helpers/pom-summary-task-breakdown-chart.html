@@ -1,0 +1,7 @@
+<div class="pomreport-agg-task-breakdown-wrapper">
+    <canvas ng-hide="$ctrl._PomTracker.noPomCompletionData()" class="chart chart-pie pomreport-agg-monthly-task-breakdown" 
+            chart-data="$ctrl._PomTracker.aggtdTaskBreakdownPieChartData" chart-labels="$ctrl._PomTracker.aggtdTaskBreakdownPieChartLabels" 
+            chart-colors="$ctrl._PomTracker.aggtdTaskBreakdownPieChartColors" chart-options="$ctrl._PomTracker.aggtdTaskBreakdownPieChartOptions">
+    </canvas>
+    <image class="no-pom-data-circle" ng-show="$ctrl._PomTracker.noPomCompletionData()" ng-src="assets/images/no_data_dashed_circle.png">
+</div>

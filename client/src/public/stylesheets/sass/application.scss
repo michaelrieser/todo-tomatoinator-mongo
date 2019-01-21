@@ -1201,9 +1201,7 @@ h6 {
 }
 .pomreport-summary-weekly-wrapper {
     flex-basis: 18;
-    // height: fit-content;
-    height: auto;
-    max-height: 250px;
+    height: fit-content;
     background-color: #c6d8ec;
     padding: 5px;
     border-radius: 5px;    
@@ -1310,11 +1308,11 @@ h6 {
     width: 100%;
 }
 
-.pomreport-agg-monthly-completion-chart-wrapper {
+.pomreport-completion-chart-wrapper {
     width: 260px;
     text-align: center;
 }
-.pomreport-agg-monthly-task-breakdown-wrapper {
+.pomreport-agg-task-breakdown-wrapper {
     text-align: center;
 }
 

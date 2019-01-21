@@ -1,0 +1,27 @@
+<h4 class="text-center-aligned">Pomreport Summary</h4>
+<div class="pomreport-section-header">Overall Completion Statistics</div>
+<div class="pomreport-pct-comp-container">
+    <div class="pomreport-pct-comp-stats-wrapper">
+        <div class="pomreport-pct-comp-stats">
+            <div><strong>Poms Completed: </strong>{{ $ctrl._PomTracker.completedPoms }}</div>
+            <div><strong>Poms Attempted: </strong>{{ $ctrl._PomTracker.attemptedPoms }}</div>
+        </div>
+    </div>
+    <div class="pomreport-pct-comp-percentage">
+        <!-- TODO/REFACTOR: this is bad... ?=>Move PomTracker.calcAndSetStats() to ctrl? -->
+        <div ng-class="$ctrl._PomTracker.colorBasedOnCompletionPct($ctrl._PomTracker.rawPomCompletionPct)">
+            {{ $ctrl._PomTracker.rawPomCompletionPct | prettyPercentage }}
+        </div>
+    </div>
+</div>
+
+<pom-summary-completion-chart></pom-summary-completion-chart>
+
+<div class="pomreport-ancillary-info-wrapper">
+    <div><strong>Interruptions: </strong>{{ $ctrl._PomTracker.timesPaused }}</div>
+    <div><strong>Completed Active Time: </strong>{{ $ctrl._PomTracker.completedActiveMinutes | minutesToDaysHoursMinutes: 'dhm' }}</div>
+    <div><strong>Potential Active Time: </strong>{{ $ctrl._PomTracker.potentialActiveMinutes | minutesToDaysHoursMinutes: 'dhm' }}</div>
+</div>
+
+<div class="pomreport-section-header">Overall Task Breakdown</div>
+<pom-summary-task-breakdown-chart></pom-summary-task-breakdown-chart>    

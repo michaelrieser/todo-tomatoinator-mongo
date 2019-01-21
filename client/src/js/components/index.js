@@ -132,4 +132,13 @@ componentsModule.component('pomreportDayList', PomreportDayList);
 import PomreportWeekList from './pomreport-helpers/pomreport-week-list.component';
 componentsModule.component('pomreportWeekList', PomreportWeekList);
 
+import PomreportSummary from './pomreport-helpers/pomreport-summary.component';
+componentsModule.component('pomreportSummary', PomreportSummary);
+
+import PomSummaryCompletionChart from './pomreport-helpers/pom-summary-completion-chart.component';
+componentsModule.component('pomSummaryCompletionChart', PomSummaryCompletionChart);
+
+import PomSummaryTaskBreakdownChart from './pomreport-helpers/pom-summary-task-breakdown-chart.component';
+componentsModule.component('pomSummaryTaskBreakdownChart', PomSummaryTaskBreakdownChart);
+
 export default componentsModule;

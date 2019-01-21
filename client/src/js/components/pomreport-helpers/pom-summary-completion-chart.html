@@ -1,0 +1,7 @@
+<div class="pomreport-completion-chart-wrapper">
+    <canvas ng-hide="$ctrl._PomTracker.noPomCompletionData()" class="chart chart-pie" chart-data="$ctrl._PomTracker.aggtdCompletionMinutesPieChartData" 
+            chart-labels="$ctrl._PomreportChartHelpers.completionMinsPieChartLabels" chart-colors="$ctrl._PomreportChartHelpers.completionMinsPieChartColors"
+            chart-options="$ctrl._PomreportChartHelpers.completionMinsPieChartOptions">
+    </canvas>
+    <image class="no-pom-data-circle" ng-show="$ctrl._PomTracker.noPomCompletionData()" ng-src="assets/images/no_data_dashed_circle.png">
+</div>

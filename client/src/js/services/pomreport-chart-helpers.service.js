@@ -163,21 +163,29 @@ export default class PomreportChartHelpers {
         }
     }
 
+    // setBaseTaskChartColorMap(pomtrackers) { // *NOTE: deprecated method using pomtracker objects, now using task titles
+    //     // TODO: account for case when there are more than 20 tasks
+    //     this.baseTaskChartColorMap = pomtrackers.reduce((taskColorMap, p) => {
+    //         if (!p.task || !p.task.title) { return taskColorMap; }
+    //         let taskTitle = p.task.title;
+    //         if (!(taskTitle in taskColorMap)) {
+    //             let tgtColorIdx = Object.keys(taskColorMap).length; // length => current index + 1
+    //             taskColorMap[taskTitle] = this.taskChartColors[tgtColorIdx];
+    //         }
+    //         return taskColorMap;
+    //     }, new Map())        
+    // }
 
-
-    // *** Task Breakdown Chart members ***
-    setBaseTaskChartColorMap(pomtrackers) {
+    setBaseTaskChartColorMap(taskTitles) {
         // TODO: account for case when there are more than 20 tasks
-        // return pomtrackers.reduce( (taskColorMap, p) => {
-        this.baseTaskChartColorMap = pomtrackers.reduce((taskColorMap, p) => {
-            if (!p.task || !p.task.title) { return taskColorMap; }
-            let taskTitle = p.task.title;
+        this.baseTaskChartColorMap = taskTitles.reduce((taskColorMap, taskTitle) => {
+            if (!taskTitle) { return taskColorMap; } // title is undefined (shouldn't happen - only in pomtrackers created before initialTaskTitle was set && task deleted)
             if (!(taskTitle in taskColorMap)) {
                 let tgtColorIdx = Object.keys(taskColorMap).length; // length => current index + 1
                 taskColorMap[taskTitle] = this.taskChartColors[tgtColorIdx];
             }
             return taskColorMap;
-        }, new Map())
+        }, new Map())        
     }
 
     getStratifiedTaskChartColors(targetTaskLabels) {
@@ -185,8 +193,5 @@ export default class PomreportChartHelpers {
             return this.baseTaskChartColorMap[title];
         })
     }
-
-    // **NOTE: for custom label, SEE: https://www.chartjs.org/docs/latest/configuration/tooltip.html#label-color-callback   
-    // getTaskBreakdownPieChartOptions() {
 
 }
