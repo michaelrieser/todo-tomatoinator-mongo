@@ -37,11 +37,9 @@ class PomTimerCtrl {
         this._$q.when(
             this._PomTracker.incrementPause()
         ).then( (res) => {
-            console.log(res)
             if (res.status && res.status !== 204) { // Expecting 204: No Content
                 console.log('ERROR: ', res.statusText);
-            } else {
-                console.log('SUCCESS')
+            } else {                
                 this._PomTimer.pauseTimer()
             }
         })

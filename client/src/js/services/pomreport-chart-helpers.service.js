@@ -2,8 +2,8 @@ export default class PomreportChartHelpers {
     constructor() {
         'ngInject';
 
-        this.taskChartColors = ['#a6cee3', '#6a3d9a', '#b2df8a', '#b15928', '#fb9a99', '#ff7f00', '#b44d1d', '#ffff99', '#e31a1c', '#fdbf6f',
-            '#1f78b4', '#33a02c', '#00fff7', '#a000a3', '#887aff', '#a31e00', '#fad900', '#fa0057', '#a69c96', '#4aa9f2'];
+        this.taskChartColors = ['#33a02c', '#4aa9f2', '#6a3d9a', '#b2df8a', '#b15928', '#fb9a99', '#ff7f00', '#b44d1d', '#ffff99', '#e31a1c', '#fdbf6f',
+                                '#1f78b4', '#a6cee3', '#00fff7', '#a000a3', '#887aff', '#a31e00', '#fad900', '#fa0057', '#a69c96', '#a6cee3'];
 
         this.completionMinsPieChartLabels  = ['Completed Minutes', 'Missed Minutes'];
         this.completionMinsPieChartColors  = ['#87cefa', '#cd5c5c'];

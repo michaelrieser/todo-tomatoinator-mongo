@@ -25,7 +25,7 @@ class PomreportWeekListCtrl {
         this.rawPomCompletionPct    = this._PomTracker.calcRawPomCompletionPct(this.completedPoms, this.attemptedPoms);
         this.timesPaused            = this._PomTracker.calcTimesPaused(this.pomtrackers);
         this.completedActiveMinutes = this._PomTracker.calcCompletedActiveMinutes(this.pomtrackers);
-        this.potentialActiveMinutes = this._PomTracker.calcPotentialActiveMinutes(this.attemptedPoms);
+        this.potentialActiveMinutes = this._PomTracker.calcPotentialActiveMinutes(this.pomtrackers);
         this.missedMinutes          = this.potentialActiveMinutes - this.completedActiveMinutes;
     }
 

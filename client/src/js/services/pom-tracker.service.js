@@ -217,7 +217,7 @@ export default class PomTracker {
         this.rawPomCompletionPct    = this.calcRawPomCompletionPct(this.completedPoms, this.attemptedPoms);
         this.timesPaused            = this.calcTimesPaused(this.pomtrackers);
         this.completedActiveMinutes = this.calcCompletedActiveMinutes(this.pomtrackers);
-        this.potentialActiveMinutes = this.calcPotentialActiveMinutes(this.attemptedPoms);
+        this.potentialActiveMinutes = this.calcPotentialActiveMinutes(this.pomtrackers);
         this.missedMinutes          = this.potentialActiveMinutes - this.completedActiveMinutes;        
         
         this.aggtdCompletionMinutesPieChartData = [this.completedActiveMinutes, this.missedMinutes];
@@ -256,8 +256,16 @@ export default class PomTracker {
 
         return tgtPomtrackersCopy.reduce( (sum, p) => { return (p.trackerType === 'pom') ? sum += p.minutesElapsed : sum }, 0);
     }
-    calcPotentialActiveMinutes(attemptedPoms) {
-        return attemptedPoms * 25;
+    calcPotentialActiveMinutes(tgtPomtrackers) {
+        // create deep copy of pomtrackers and pop last tracker if it is an active pom
+        let tgtPomtrackersCopy = angular.copy(tgtPomtrackers);        
+        if (this.pomTracker && this.pomTracker.trackerType === 'pom') { tgtPomtrackersCopy.pop(); }
+
+        return tgtPomtrackersCopy.reduce( (sum, p) => { 
+            if (p.trackerType !== 'pom') { return sum; }
+            // account for successful intervals which were completed early(i.e. before 25(default) mins elapsed)            
+            return p.intervalSuccessful ? sum += p.minutesElapsed : sum += this._AppConstants.pomTimerData.pom;            
+        }, 0);        
     }
     
     colorBasedOnCompletionPct(rawCompletionPct) {
