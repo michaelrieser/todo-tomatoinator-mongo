@@ -117,7 +117,7 @@ export default class PomTracker {
 
     queryAndSet(stateParams = {}) {
         // Delete offset if moving to a new pomreport type (ex: 'daily' => 'weekly') - NOTE: prior offset remains in query string if passed prior (akin to /tasks projects & status)
-        if (stateParams.offset && stateParams.type !== this.setPomreportType) {
+        if (this.setPomreportType && stateParams.offset && stateParams.type !== this.setPomreportType) {
             delete stateParams.offset;
         }
         var queryConfig = {};
@@ -144,7 +144,7 @@ export default class PomTracker {
 
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
         angular.copy(pomtrackerInfo.pomtrackers, this.pomtrackers);
-        this.queryStartISO = pomtrackerInfo.queryStartISO;
+        this.queryStartISO = pomtrackerInfo.queryStartISO;        
         this.queryEndISO   = pomtrackerInfo.queryEndISO;
 
         this.setPomreportType = stateParams.type;
