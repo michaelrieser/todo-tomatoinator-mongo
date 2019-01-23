@@ -1,10 +1,12 @@
 class SettingsCtrl {
-    constructor(User, TaskNotifications, $state) {
+    constructor(User, TaskNotifications, PomTimer, PomTracker, $state) {
         'ngInject';
 
-        this._User = User;
+        this._User              = User;
         this._TaskNotifications = TaskNotifications;
-        this._$state = $state;
+        this._PomTimer          = PomTimer;
+        this._PomTracker        = PomTracker;
+        this._$state            = $state;
 
         this.formData = {
             // Note: these are set in User.verifyAuth() method which is resolved as part of base 'app' router
@@ -22,6 +24,8 @@ class SettingsCtrl {
     logout() {
         this._User.logout();
         this._TaskNotifications.clearIntervalAndCloseToast();
+        this._PomTimer.clearAndResetTimer();
+        this._PomTracker.closeInterval(false);
     }
 
     submitForm() {
