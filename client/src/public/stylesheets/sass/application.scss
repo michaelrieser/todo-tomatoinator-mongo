@@ -58,7 +58,7 @@ hr {
 }
 .gray-background {
     background-color: lightgray;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 .light-blue-background {
     background-color: lightblue !important;
@@ -179,6 +179,23 @@ h6 {
     padding-bottom: 100px;
 }
 
+/* Home */
+.top-features-list {
+    text-align: center;
+}
+.top-feature-container {
+    display: inline-block;
+    width: 350px;
+    height: 350px;
+    background-color: #5cb85c;    
+}
+.top-feature-img {
+    // width: 100%;
+    // height: auto;
+}
+
+/* Tasks */
+
 .tasks-container {
     width: 100%;
 }
@@ -219,7 +236,7 @@ h6 {
 }
 .project-panel {
   background: white;
-  border-radius: 4px;
+  border-radius: 3px;
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
       0 13px 19px 2px rgba(0, 0, 0, 0.14),
       0 5px 24px 4px rgba(0, 0, 0, 0.12);
@@ -243,7 +260,7 @@ h6 {
     display: inline-block;
     // padding: 10px;
     position: relative; /* set to allow for absolute positioning on task controls */
-    border-radius: 5px;
+    border-radius: 3px;
     margin-bottom: 2px;
     background-color: #F5F5F5;
 }
@@ -256,7 +273,7 @@ h6 {
     color: darkgray;
     font-style: italic;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 .inactive-task-list {
     padding: 0;
@@ -360,7 +377,7 @@ h6 {
     height: 60px;
     background-color: lightpink;
     border: 1px solid crimson;    
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .li-no-active-task {
@@ -383,7 +400,7 @@ h6 {
     height: 60px;
     line-height: 60px;
     vertical-align: 50%;
-    border-radius: 5px;
+    border-radius: 3px;
     margin-top: 5px;
     background-color: deepskyblue;
     border: 1px white dashed;    
@@ -397,7 +414,7 @@ h6 {
     height: 60px;
     line-height: 60px;
     vertical-align: 50%;
-    border-radius: 5px;
+    border-radius: 3px;
     border: 1px white dashed;
     background-color: lightgrey;    
 }
@@ -413,7 +430,7 @@ h6 {
     position: absolute; 
     display: inline-block;    
     // background-color: whitesmoke;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 3px 3px 0px;
     width: 60px;
     padding: 3px;
     /*padding-left: 4px;*/
@@ -441,7 +458,7 @@ h6 {
     // display: inline-block;
     :hover:not(i) {
         border: 1px solid green;
-        border-radius: 5px;
+        border-radius: 3px;
         cursor: pointer;
     }
 }
@@ -459,7 +476,7 @@ h6 {
 }
 
 .reminder-date-time-ctrls-wrapper {
-    margin-top: 10px;
+    margin: 10px 0 10px 0;    
 }
 
 .date-time-picker {
@@ -507,7 +524,7 @@ h6 {
     // margin-left: 10px;
     margin: 0 0 5px 5px;
     background-color: lightgray;
-    border-radius: 5px;
+    border-radius: 3px;
     // :hover {
     //     font-size: 1.2em;
     // }
@@ -572,7 +589,7 @@ h6 {
         position: relative;
         font-size: .75em;
         border: 1px solid white;
-        border-radius: 5px;
+        border-radius: 3px;
         padding: 3px;
         margin-bottom: 2px;
         background-color: white;
@@ -637,7 +654,7 @@ h6 {
     position: absolute; 
     display: inline-block;    
     // background-color: whitesmoke;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 3px 3px 0px;
     width: 30px;
     padding: 3px;
     height: 100%;   
@@ -691,7 +708,7 @@ h6 {
     position: relative;
     background-color: #c7deea;
     // border: 0.5px solid black;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 2px;
     margin-bottom: 3px;
     width: 93%;
@@ -708,19 +725,19 @@ h6 {
 }
 .add-step-wrapper:hover {
     background-color: lightgrey;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 .add-step-icon, .add-step-icon-close {    
     padding-left: 5px;
     :hover {
-        border-radius: 5px;
+        border-radius: 3px;
         background-color: lightgrey;
     }
 }
 
 .add-note-wrapper:hover {
     background-color: white;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 .add-note-icon, .add-note-icon-close {    
     padding-left: 3px;
@@ -751,7 +768,7 @@ h6 {
     position: absolute; 
     display: inline-block;    
     // background-color: whitesmoke;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 3px 3px 0px;
     width: 30px;
     padding: 3px;
     /*padding-left: 4px;*/
@@ -781,7 +798,7 @@ h6 {
 .tasks-sidebar {
     padding: 5px;
     background: #f3f3f3;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 @media (max-width: 738px) {
@@ -837,7 +854,7 @@ h6 {
     position: absolute; 
     display: inline-block;    
     // background-color: whitesmoke;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 3px 3px 0px;
     width: 20px;
     padding: 3px;
     /*padding-left: 4px;*/
@@ -864,7 +881,7 @@ h6 {
 .sidebar-well {
     background-color: white;
     padding: 2px;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 /* Word Of The Day */
 .word-of-the-day-wrapper, .quote-of-the-day-wrapper {
@@ -989,7 +1006,7 @@ h6 {
     height: 100%;
     position: absolute;
     display: inline-block;
-    // border-radius: 0px 5px 5px 0px;
+    // border-radius: 0px 3px 3px 0px;
     // padding: 3px;
     top: 0;
     right: 0;
@@ -1054,7 +1071,7 @@ h6 {
     margin-right: 3%;
     flex-grow: 1;
     background-color: #c6d8ec;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 5px;
 }
 .pomreport-date-wrapper {
@@ -1074,7 +1091,7 @@ h6 {
     height: fit-content;
     background-color: #c6d8ec;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 @media(max-width: 730px) {    
     .pomreport-summary-daily-wrapper {
@@ -1163,13 +1180,12 @@ h6 {
     width: 50px;
     background-color: indianred;
     // margin-bottom: 5px;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 .pomreport-box-inner {
     position: absolute;
     width: 50px;
     background-color: lightskyblue;
-    // border-radius: 4px;
 }
 
 .pomreport-info-wrapper {
@@ -1189,7 +1205,7 @@ h6 {
     margin-right: 2%;
     background-color: #c6d8ec;
     flex-grow: 1;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 .pomreport-single-day-wrapper {
     vertical-align: top;
@@ -1204,7 +1220,7 @@ h6 {
     height: fit-content;
     background-color: #c6d8ec;
     padding: 5px;
-    border-radius: 5px;    
+    border-radius: 3px;    
 }
 @media(max-width: 1165px) {
     .pomreport-summary-weekly-wrapper {
