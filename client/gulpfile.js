@@ -120,7 +120,7 @@ gulp.task('sounds', function () {
 })
 
 gulp.task('images', function() {
-  return gulp.src('./src/public/images/*')
+  return gulp.src('./src/public/images/**/*') // '**' => 'globstar', matches 0 ro more directories/subdirectories searching for matches
     .on('error', interceptErrors)
     .pipe(gulp.dest('./build/assets/images'))
 })

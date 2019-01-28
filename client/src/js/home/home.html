@@ -1,7 +1,8 @@
  <div class="home-page">
 
   <!-- Splash banner that only shows when not logged in -->
-  <div class="banner" show-authed="false">
+  <!--<div class="banner" show-authed="false">-->
+  <div class="banner">    
     <div class="container-fluid">
       <h1 class="logo-font" ng-bind="::$ctrl.appName | lowercase"></h1>
       <p>Work better.</p>
@@ -10,102 +11,41 @@
 
   <div class="container-fluid page">
     <div class="row">
+      <h3 class="app-one-liner animate-test">
+        a full featured productivity application tightly integrated with
+        the pomodoro technique
+      </h3>
+    </div>
 
-
-      <!-- Main view - contains tabs & article list -->
-      <div class="col-md-9">
-        <!-- Tabs for toggling between feed, article lists -->
-        <div class="feed-toggle">
-          <ul class="nav nav-pills outline-active">
-
-            <li class="nav-item" show-authed="true">
-              <a href="" class="nav-link"
-                ui-sref-active="active"
-                ui-sref="app.home.inprogress">
-                In Progress
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="" class="nav-link"
-                ui-sref-active="active"
-                ui-sref="app.home.completed">
-                Completed
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="" class="nav-link"
-                ui-sref-active="active"
-                ui-sref="app.home.team">
-                Team
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="" class="nav-link"
-                ui-sref-active="active"
-                ui-sref="app.home.new">
-                New
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="" class="nav-link"
-                ui-sref-active="active"
-                ui-sref="app.home.evernote">
-                Rndm Evrnote
-              </a>
-            </li>
-
-          </ul>
-        </div>        
-
-        <!-- TODO: not sure what to put here -->        
-        <div class="article-preview">
-          <div class="article-meta">
-            <a href=""><img /></a>
-            <div class="info">
-              <a href="" class="author">BradGreen</a>
-              <span class="date">January 20th</span>
-            </div>
-            <button class="btn btn-outline-primary btn-sm pull-xs-right">
-              <i class="ion-heart"></i> 29
-            </button>
-          </div>
-          <a href="" class="preview-link">
-            <h1>How to build Angular apps that scale</h1>
-            <p>Building web applications is not an easy task. It's even hard to make ones that scale.</p>
-            <span>Read more...</span>
-            <ul class="tag-list">
-              <li class="tag-default tag-pill tag-outline">programming</li>
-              <li class="tag-default tag-pill tag-outline">web</li>
-            </ul>
-          </a>
-        </div>
-
+    <div class="top-features-list">
+      <div class="top-feature-container tracking-in-expand">
+        <div class="top-feature-title animate">Organize Projects</div>
+        <image class="top-feature-img" ng-src="assets/images/app_screens/project_panel.png"></image>
+        <div class="top-feature-desc">Create projects and assign them tasks to stay more organized</div>
       </div>
-
-      <!-- Sidebar where popular tags are listed -->
-      <div class="col-md-3">
-        <div class="sidebar">
-
-          <p>Stock Tracker</p>
-
-          <div class="tag-list">
-            <a href="" class="tag-default tag-pill">
-              Tag One
-            </a>
-            <a href="" class="tag-default tag-pill">
-              Tag Two
-            </a>
-          </div>
-
+      <div class="top-feature-container">
+        <div class="top-feature-title">Track Time Spent</div>
+        <image class="top-feature-img" ng-src="assets/images/app_screens/active_task_pom_ticking.png"></image>
+        <div class="top-feature-desc">
+          Set a task active, start the timer, and produce with laser like focus
         </div>
       </div>
-
-      <!-- End the row & container divs -->
+      <div class="top-feature-container">
+        <div class="top-feature-title">Manage Deadlines</div>
+        <image class="top-feature-img" ng-src="assets/images/app_screens/set_due_date.png"></image>
+        <div class="top-feature-desc">
+          Assign due dates and recurring reminders to knock those deadlines out of the park
+        </div>
+      </div>
+      <div class="top-feature-container">
+        <div class="top-feature-title">Visualize Results</div>
+        <image class="top-feature-img" ng-src="assets/images/app_screens/pom_completion_graph.png"></image>
+        <div class="top-feature-desc">
+          Gain actionable insights into your daily, weekly, and monthly productivity
+        </div>
+      </div>
     </div>
   </div>
+
 
 </div>
