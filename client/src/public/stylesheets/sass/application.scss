@@ -264,6 +264,9 @@ h6 {
     padding: 0;
     text-align: center;
     // background-color: $brand-color;
+/* Home */
+.top-features-list {
+    text-align: center;
 }
 .top-feature-container {
     display: inline-block;
@@ -292,6 +295,12 @@ h6 {
     margin: auto;
     font-size: 1.1em;
     // color: white;
+    height: 350px;
+    background-color: #5cb85c;    
+}
+.top-feature-img {
+    // width: 100%;
+    // height: auto;
 }
 
 /* Tasks */
