@@ -13,7 +13,14 @@ $brand-color: #5cb85c; /* 'fern' => SEE: http://chir.ag/projects/name-that-color
 //     -webkit-backface-visibility: hidden;
 // }
 
-
+/* Mixins */
+// SEE: https://engageinteractive.co.uk/blog/top-10-scss-mixins
+@mixin push--auto { // quickly center block element without having to worry about pre-applied top/bottom margin
+    margin: {
+        left: auto;
+        right: auto;
+    }
+}
 
 .test {
     color: red;
@@ -264,10 +271,8 @@ h6 {
     padding: 0;
     text-align: center;
     // background-color: $brand-color;
-/* Home */
-.top-features-list {
-    text-align: center;
 }
+
 .top-feature-container {
     display: inline-block;
     width: 350px;
@@ -294,9 +299,6 @@ h6 {
     color: $brand-color;
     margin: auto;
     font-size: 1.1em;
-    // color: white;
-    height: 350px;
-    background-color: #5cb85c;    
 }
 .top-feature-img {
     // width: 100%;
