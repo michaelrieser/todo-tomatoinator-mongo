@@ -21,6 +21,9 @@ componentsModule.directive('pluralizeTimePeriod', PluralizeTimePeriod);
 import AutoHeight from './auto-height.directive';
 componentsModule.directive('autoHeight', AutoHeight);
 
+import AnimateOnScroll from './animate-on-scroll.directive';
+componentsModule.directive('animateOnScroll', AnimateOnScroll);
+
 // *** NOTE: decision was made to just dynamically set height of pomreport completion display boxes via ng-style directives in pomreport-interval.html *** //
 // ***       LEAVING FOR REFERENCE/FUTURE REFACTOR                   
 // import PomreportCompletionDisplay from './pomreport-helpers/pomreport-completion-display.directive';
