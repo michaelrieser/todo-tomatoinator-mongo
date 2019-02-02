@@ -336,14 +336,14 @@ h6 {
 
 /* Home */
 .app-one-liner {
-    font-size: 2.25rem;
+    font-size: 2rem;
     padding: 20px;
     margin: 10px auto 20px auto;
     text-align: center;
     color: deepskyblue;   
 }
 .app-feature-list-title {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
     text-align: center;
     padding: 10px;
     color: darkgray;
@@ -407,8 +407,11 @@ h6 {
     // height: auto;
 }
 
-/* Tasks */
+.home-signup-form {
+    padding: 0 100px 0 100px;
+}
 
+/* Tasks */
 .tasks-container {
     width: 100%;
 }

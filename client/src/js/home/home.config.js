@@ -1,13 +1,23 @@
 function HomeConfig($stateProvider) {
   'ngInject';
-  
+
   $stateProvider
     .state('app.home', {
       url: '/',
-      controller: 'HomeCtrl',
-      controllerAs: '$ctrl',
-      templateUrl: 'home/home.html',
-      title: 'Home'
+      title: 'Home',
+      views: {
+        '': {
+          controller: 'HomeCtrl as $ctrl',
+          templateUrl: 'home/home.html',
+        },
+        'signup@app.home': {
+          controller: 'AuthCtrl as $ctrl',
+          templateUrl: 'auth/auth.html',
+          resolve: {
+            authTypeOverride: function () { return 'register'; }
+          }
+        }
+      }
     })
 
 };

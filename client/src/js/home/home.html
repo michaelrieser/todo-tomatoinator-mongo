@@ -1,94 +1,104 @@
- <div class="home-page">
+<div class="home-page">
 
   <!-- Splash banner that only shows when not logged in -->
   <!--<div class="banner" show-authed="false">-->
-  <div class="banner">    
+  <div class="banner">
     <div class="container-fluid">
       <h1 class="logo-font" ng-bind="::$ctrl.appName | lowercase"></h1>
       <p>Work better.</p>
     </div>
   </div>
 
-  <div class="container-fluid page">
-    <div class="row">
-      <h2 class="app-one-liner">
-        a full featured productivity application tightly integrated with
-        the pomodoro technique
-      </h2>
-    </div>
+  <div show-authed="false">
+    <div class="container-fluid page">
+      <div class="row">
+        <h2 class="app-one-liner">
+          a full featured productivity application tightly integrated with the pomodoro technique
+        </h2>
+      </div>
 
-    <h2 class="app-feature-list-title">Map your workload at the project level:</h2>
-    <div class="top-features-list">
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Organize Projects</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/project_panel.png"></image>
-        <div class="top-feature-desc">
-          Break down tasks into manageable projects
+      <h2 class="app-feature-list-title">Map your workload at the project level:</h2>
+      <div class="top-features-list">
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Organize Projects</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/project_panel.png"></image>
+          <div class="top-feature-desc">
+            Break down tasks into manageable projects
+          </div>
         </div>
-      </div>      
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Track Time Spent</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/active_task_pom_ticking.png"></image>
-        <div class="top-feature-desc">
-          Set a task active, start the timer, and produce with laser like focus
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Track Time Spent</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/active_task_pom_ticking.png"></image>
+          <div class="top-feature-desc">
+            Set a task active, start the timer, and produce with laser like focus
+          </div>
+        </div>
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Take Notes and Create Checklists</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/task_notes_and_checklist.png"></image>
+          <div class="top-feature-desc">
+            Assign notes, todos, and checklists
+          </div>
         </div>
       </div>
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Take Notes and Create Checklists</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/task_notes_and_checklist.png"></image>
-        <div class="top-feature-desc">
-          Assign notes, todos, and checklists
-        </div>
-      </div>      
-    </div>
 
-    <h2 class="app-feature-list-title">Track deadlines like a boss:</h2>
-    <div class="top-features-list">
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Assign Due Dates</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/set_due_date.png"></image>
-        <div class="top-feature-desc">
-          Assign due dates to tasks and knock those deadlines out of the park
+      <h2 class="app-feature-list-title">Track deadlines like a boss:</h2>
+      <div class="top-features-list">
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Assign Due Dates</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/set_due_date.png"></image>
+          <div class="top-feature-desc">
+            Assign due dates to tasks and knock those deadlines out of the park
+          </div>
+        </div>
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Set Recurring Reminders</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/task_set_reminder.png"></image>
+          <div class="top-feature-desc">
+            Never miss another timesheet with highly customizeable reminders
+          </div>
+        </div>
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Get Notified</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/task_notifications.png"></image>
+          <div class="top-feature-desc">
+            Hone in on your current task and let us worry about everything else
+          </div>
         </div>
       </div>
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Set Recurring Reminders</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/task_set_reminder.png"></image>
-        <div class="top-feature-desc">
-          Never miss another timesheet with highly customizeable reminders
-        </div>
-      </div>       
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Get Notified</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/task_notifications.png"></image>
-        <div class="top-feature-desc">
-          Hone in on your current task and let us worry about everything else
-        </div>
-      </div>          
-    </div>
 
-    <h2 class="app-feature-list-title">Visualize your productivity and time allocation over time:</h2>
-    <div class="top-features-list">
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Visualize Pom Completion</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/pom_completion_summary.png"></image>
-        <div class="top-feature-desc">
-          Gauge your pomodoro effectiveness
+      <h2 class="app-feature-list-title">Visualize your productivity and time allocation over time:</h2>
+      <div class="top-features-list">
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Visualize Pom Completion</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/pom_completion_summary.png"></image>
+          <div class="top-feature-desc">
+            Gauge your pomodoro effectiveness
+          </div>
         </div>
-      </div>      
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Track Task Time Spend</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/pomreport_info_panel.png"></image>
-        <div class="top-feature-desc">
-          Determine how much time goes into each task
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Track Task Time Spend</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/pomreport_info_panel.png"></image>
+          <div class="top-feature-desc">
+            Determine how much time goes into each task
+          </div>
         </div>
-      </div>      
-      <div class="top-feature-container" animate-on-scroll="bounce-in-left">
-        <div class="top-feature-title">Fine Grained Time Tracking</div>
-        <image class="top-feature-img" ng-src="assets/images/app_screens/task_breakdown_chart.png"></image>
-        <div class="top-feature-desc">
-          Leverage beautiful visualizations to see where your time is going
+        <div class="top-feature-container" animate-on-scroll="bounce-in-left">
+          <div class="top-feature-title">Fine Grained Time Tracking</div>
+          <image class="top-feature-img" ng-src="assets/images/app_screens/task_breakdown_chart.png"></image>
+          <div class="top-feature-desc">
+            Leverage beautiful visualizations to see where your time is going
+          </div>
         </div>
-      </div>      
-    </div>                
+      </div>
+
+      <div class="home-signup-form">
+        <div ui-view="signup"></div>
+      </div>
+    </div>
+  </div>
+
+  <div show-authed="true">
+    <p>TODO: logged in charts/graphs/earth shattering widgets!</p>
+  </div>
 </div>

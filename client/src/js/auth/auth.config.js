@@ -12,7 +12,8 @@ function AuthConfig($stateProvider, $httpProvider) {
     resolve: {
       auth: function(User) {
         return User.ensureAuthIs(false);
-      }
+      },
+      authTypeOverride: function () { return null; }
     }
   })
 
@@ -24,7 +25,8 @@ function AuthConfig($stateProvider, $httpProvider) {
     resolve: {
       auth: function(User) {
         return User.ensureAuthIs(false);
-      }
+      },
+      authTypeOverride: function () { return null; }
     }
   });
 
