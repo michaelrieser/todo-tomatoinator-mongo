@@ -98,22 +98,26 @@ export default class PomTracker {
     resetPomTracker() {        
         this.pomTracker = null;
     }
-    // TODO/INFO: kept for reference, but can probably delete
-    // query(stateParams = {}) {
-    //     var queryConfig = {};
-    //     queryConfig.filters = stateParams || null;
 
-    //     let request = {
-    //         url: `${this._AppConstants.api}/pomtracker`,
-    //         method: 'GET',
-    //         params: queryConfig.filters ? queryConfig.filters : null
-    //     }
+    // TODO: merge two following methods (pass target callback as second argument)
+    query(stateParams = {}) {
+        var queryConfig = {};
+        queryConfig.filters = stateParams;
 
-    //     return this._$http(request).then(
-    //         (res) => { return res.data; },
-    //         (err) => { console.log(err); }
-    //     );
-    // }
+        // Leverage Internationalization API to guess browser's timezone        
+        queryConfig.filters.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        let request = {
+            url: `${this._AppConstants.api}/pomtracker`,
+            method: 'GET',
+            params: queryConfig.filters ? queryConfig.filters : null
+        }
+
+        return this._$http(request).then(
+            (res) => { return res.data; },
+            (err) => { console.log(err); }
+        );
+    }
 
     queryAndSet(stateParams = {}) {
         // Delete offset if moving to a new pomreport type (ex: 'daily' => 'weekly') - NOTE: prior offset remains in query string if passed prior (akin to /tasks projects & status)

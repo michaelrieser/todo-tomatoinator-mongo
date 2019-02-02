@@ -10,7 +10,7 @@ function animateOnScroll() {
                 root: null, // null => viewport
                 // rootMargin: '0', // similar to CSS margin, grow/shrink root element's bounding box
                 // threshold: 1.0 // 1.0 => 100% of element must be visible || Array => run each time visibility passes element in array (ex: [0, 0.50, 1.0]) 
-                threshold: 0.05
+                threshold: 0.15
             }
 
             const observer = new IntersectionObserver(triggerAnimate, options); // <callback>, <options-object>            
@@ -22,7 +22,7 @@ function animateOnScroll() {
                 // changes => list of IntersectionObserverEntry objects
                 entries.forEach( (entry) => {
                     // NOTE: called once when defined & again when options.threshold is reached
-                    if (entry.intersectionRatio > .05) { 
+                    if (entry.intersectionRatio > .15) { 
                         element.addClass(animationClass);
                     } 
                 })
