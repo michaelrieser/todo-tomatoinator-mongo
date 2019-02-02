@@ -125,9 +125,14 @@ router.put('/', function (req, res, next) {
 })
 
 /* GET aggregate total time (minutesElapsed) spent on given task */
-router.get('/taskinfo', function (req, res, next) {   
+router.get('/taskinfo', function (req, res, next) {       
     let targetTaskID = req.query.taskID;
-    PomTracker.find({"task": mongoose.Types.ObjectId(targetTaskID) }).then(function (pomtrackers) {
+
+    let query = {};    
+    query.task = mongoose.Types.ObjectId(targetTaskID);
+    query.trackerType = 'pom';
+
+    PomTracker.find(query).then(function (pomtrackers) {
         let minutesElapsed = pomtrackers.reduce( function(sum, p) {
             return sum + p.minutesElapsed;
         }, 0);
