@@ -3,22 +3,14 @@ function HomeConfig($stateProvider) {
 
     $stateProvider
         .state('app.home', {
-            url: '/',
-            title: 'Home',
+            abstract: true,
             views: {
                 '': {
                     controller: 'HomeCtrl as $ctrl',
-                    templateUrl: 'home/home.html',
-                    resolve: {
-                        pomtrackerInfo: function (PomTracker, User) {
-                            if (!User.current) { return; }
-                            return PomTracker.query({ type: 'monthly' }).then(
-                                (pomtrackerInfo) => console.log(pomtrackerInfo),
-                                (err) => console.log(err)
-                            )
-                        }
-                    }
+                    templateUrl: 'home/home.html'
                 },
+                // TODO: set app.home as abstract parent and extract signup@app.home to concrete child route 
+                //       to ALLOW USER TO SIGN IN FROM HOME PAGE INSTEAD OF HAVING TO REDIRECT
                 'signup@app.home': {
                     controller: 'AuthCtrl as $ctrl',
                     templateUrl: 'auth/auth.html',
@@ -29,7 +21,28 @@ function HomeConfig($stateProvider) {
                 }
             }
         })
-
+        .state('app.home.view', {
+            url: '/:type?offset',
+            views: {
+                'homepomdata': {
+                    controller: 'HomePomDataCtrl as $ctrl',
+                    templateUrl: 'home/home-pom-data.html',
+                    resolve: {
+                        pomtrackerInfo: function (PomTrackerHome, User, $stateParams) {
+                            if (!User.current) { return; }
+                            return PomTrackerHome.queryAndSet($stateParams).then(                                
+                                (pomtrackerInfo) => pomtrackerInfo,
+                                (err) => console.log(err)
+                            )
+                        }
+                    }
+                }
+            },
+            params: {
+                type: 'weekly' // default to 'weekly' - NOTE: use 'squash: true' to remove param from url if default is set
+            },
+            title: 'Home'          
+        })
 };
 
 export default HomeConfig;

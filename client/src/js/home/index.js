@@ -12,5 +12,7 @@ homeModule.config(HomeConfig);
 import HomeCtrl from './home.controller';
 homeModule.controller('HomeCtrl', HomeCtrl);
 
+import HomePomDataCtrl from './home-pom-data.controller';
+homeModule.controller('HomePomDataCtrl', HomePomDataCtrl);
 
 export default homeModule;

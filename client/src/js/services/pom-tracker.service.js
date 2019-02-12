@@ -102,7 +102,10 @@ export default class PomTracker {
     // TODO: merge two following methods (pass target callback as second argument)
     query(stateParams = {}) {
         var queryConfig = {};
-        queryConfig.filters = stateParams;
+        // NOTE: using angular.copy as setting this to just stateParams obj updates it's properties as well 
+        //  *RESULTING IN weird logging behavior, i.e. logged $stateParams in app.home.view had same props
+        //                as stateParams set to same object and updated (after $stateParams was logged in app.home.view)
+        queryConfig.filters = angular.copy(stateParams); 
 
         // Leverage Internationalization API to guess browser's timezone        
         queryConfig.filters.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

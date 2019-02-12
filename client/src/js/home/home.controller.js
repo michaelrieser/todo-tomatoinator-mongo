@@ -1,11 +1,9 @@
 class HomeCtrl {
-  constructor(AppConstants, User) {
-    'ngInject';
+    constructor(AppConstants, User) {
+        'ngInject';
 
-    this.appName = AppConstants.appName;
-  }
-
-
+        this.appName = AppConstants.appName;
+    }
 }
 
 export default HomeCtrl;

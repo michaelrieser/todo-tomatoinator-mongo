@@ -1,0 +1,7 @@
+<div class="pomreport-date-display-wrapper">
+    <a class="ion-arrow-left-c pomreport-arrow-left" data-pack="default" ng-href="{{ $ctrl.getOffsetState(-1) }}"></a>
+    <span class="pomreport-date-display">{{ $ctrl.tgtobject.queryStartISO | date:'longDate' }}</span>
+    <span>&nbsp;&mdash;&nbsp;</span>
+    <span class="pomreport-date-display">{{ $ctrl.tgtobject.queryEndISO | date:'longDate' }}</span>
+    <a class="ion-arrow-right-c pomreport-arrow-right" data-pack="default" ng-href="{{ $ctrl.getOffsetState(1) }}"></a>
+</div>

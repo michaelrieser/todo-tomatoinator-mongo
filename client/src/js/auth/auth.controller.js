@@ -19,7 +19,7 @@ class AuthCtrl {
         this._User.attemptAuth(this.authType, this.formData).then(
           (res) => {
             if (res.status && res.status === 200) {
-              this._$state.go('app.home');
+              this._$state.go('app.home.view');
               // NOTE: query and set tasks here to populate tasks for resolving notifications
               this._Tasks.queryAndSet().then(
                   (tasksInfo) => this._TaskNotifications.initializeInterval(),

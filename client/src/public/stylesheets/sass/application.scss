@@ -413,6 +413,42 @@ h6 {
     padding: 0 100px 0 100px;
 }
 
+// Home - authenticated user
+.home-pomtracker-data-wrapper {
+    display: -ms-flexbox;
+    display: -webkit-flex; /* Safari */
+    display: flex; // designates flex-container
+
+    flex-wrap: wrap;  
+    justify-content: center;
+}
+.home-pomtracker-data-title {
+    font-size: 1.2em;
+    font-family: Dosis;
+    color: $brand-color;
+    font-weight: bold;    
+}
+.home-pomtracker-combined-graph-wrapper {
+    padding: 5px;
+    flex-basis: 600px;
+    flex-grow: 0.5; // don't want chart to stretch too far on smaller screens (too big)
+    // *NOTE: set flex-grow here & no flex-grow on .home-top-tasks-container to have graph automagically fill remaining space
+    //        until there are not 500px remaining for it to fit, and .home-top-tasks-container will wrap to next line
+}
+.home-top-tasks-container {
+    padding: 5px;
+    flex-basis: 600px;
+    flex-grow: 0.5;
+    background-color: lightblue;
+}
+.pomreport-date-display-wrapper {
+    display: -ms-flexbox;
+    display: -webkit-flex; /* Safari */
+    display: flex; // designates flex-container
+
+    justify-content: center;
+}
+
 /* Tasks */
 .tasks-container {
     width: 100%;

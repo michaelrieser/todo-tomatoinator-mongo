@@ -144,4 +144,7 @@ componentsModule.component('pomSummaryCompletionChart', PomSummaryCompletionChar
 import PomSummaryTaskBreakdownChart from './pomreport-helpers/pom-summary-task-breakdown-chart.component';
 componentsModule.component('pomSummaryTaskBreakdownChart', PomSummaryTaskBreakdownChart);
 
+import PomreportDateDisplayPanel from './pomreport-helpers/pomreport-date-display-panel.component';
+componentsModule.component('pomreportDateDisplayPanel', PomreportDateDisplayPanel);
+
 export default componentsModule;

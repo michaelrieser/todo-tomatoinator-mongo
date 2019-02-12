@@ -38,7 +38,8 @@ function PomreportConfig($stateProvider) {
                 }
             }
         }
-    }
+    },
+    title: 'Pomreport'
   })
 };
 
