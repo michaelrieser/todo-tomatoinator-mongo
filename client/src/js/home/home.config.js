@@ -23,12 +23,17 @@ function HomeConfig($stateProvider) {
         })
         .state('app.home.view', {
             url: '/:type?offset',
+            params: {
+                type: 'weekly', // default to 'weekly' - NOTE: use 'squash: true' to remove param from url if default is set
+                squash: true
+            },            
             views: {
                 'homepomdata': {
                     controller: 'HomePomDataCtrl as $ctrl',
                     templateUrl: 'home/home-pom-data.html',
                     resolve: {
                         pomtrackerInfo: function (PomTrackerHome, User, $stateParams) {
+                            // console.log($stateParams)
                             if (!User.current) { return; }
                             return PomTrackerHome.queryAndSet($stateParams).then(                                
                                 (pomtrackerInfo) => pomtrackerInfo,
@@ -37,9 +42,6 @@ function HomeConfig($stateProvider) {
                         }
                     }
                 }
-            },
-            params: {
-                type: 'weekly' // default to 'weekly' - NOTE: use 'squash: true' to remove param from url if default is set
             },
             title: 'Home'          
         })

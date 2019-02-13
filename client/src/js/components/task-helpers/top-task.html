@@ -1,0 +1,10 @@
+<div class="home-top-task-wrapper">
+    <p class="home-top-task-title">{{ $ctrl.task.title }}</p>
+    <ul class="home-top-task-info-list">
+        <li class="home-top-task-project"><strong>Project: </strong>{{ $ctrl.task.project }}</li>
+        <li class="home-top-task-time-elapsed"><strong>Time Elapsed: </strong>
+            {{ $ctrl.task.minutesElapsed | minutesToDaysHoursMinutes: 'dhm' }}
+        </li>
+    </ul>
+</div>
+        

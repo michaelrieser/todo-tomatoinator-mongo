@@ -56,6 +56,7 @@ export default class PomTrackerHome {
     handleQueryResponse(pomtrackerInfo, stateParams) {
         this.setPomtrackerFields(pomtrackerInfo);        
         this.calcAndSetPomtrackerGraphStats();
+        this.calcAndSetTopTasks();
     }    
     setPomtrackerFields(pomtrackerInfo) {
         angular.copy(pomtrackerInfo, this.pomtrackerInfo);
@@ -63,6 +64,7 @@ export default class PomTrackerHome {
         this.queryStartISO = pomtrackerInfo.queryStartISO;
         this.queryEndISO   = pomtrackerInfo.queryEndISO;
     }
+    // Pomtracker Graph Methods
     calcAndSetPomtrackerGraphStats() {
         this.pomtrackerDateMap = this.getPomtrackerDateMap();
         this.pomtrackerDateLabels = Object.keys(this.pomtrackerDateMap);
@@ -106,21 +108,33 @@ export default class PomTrackerHome {
     getPomtrackerPomsAttemptedData() {
 
     }
+
+    // Top Tasks Methods
+    calcAndSetTopTasks() {
+        let unsortedTasks = this.getTasksFromPomtrackers();
+        this.topTasks     = this.getTopFourSortedTasks(unsortedTasks);
+    }
     getTasksFromPomtrackers() {
         return this.pomtrackers.reduce( (taskMap, p) => {
             if (p.trackerType !== 'pom') { return taskMap; }
-            let tgtTaskId = p.task._id; // use id to ensure uniqueness - tasks could potentially have identical titles
-            let tgtTaskTitle = p.task.title;
+            let tgtTaskId         = p.task._id; // use id to ensure uniqueness - tasks could potentially have identical titles
+            let tgtTaskTitle      = p.task.title;
             let tgtMinutesElapsed = p.minutesElapsed;
-            let tgtTaskProject = p.task.project.title;            
+            let tgtTaskProject    = p.task.project.title;            
 
             if (!(tgtTaskId in taskMap)) {
                 taskMap[tgtTaskId] = { title: tgtTaskTitle, minutesElapsed: tgtMinutesElapsed, project: tgtTaskProject };
             } else {
                 taskMap[tgtTaskId]['minutesElapsed'] += tgtMinutesElapsed;
-                console.log('-', taskMap[tgtTaskId])
             }
             return taskMap;
         }, new Map())
+    }
+    getTopFourSortedTasks(targetTasks) {
+        let sortedTasks = Object.values(targetTasks).sort( (a, b) => { return b.minutesElapsed - a.minutesElapsed; } );
+        return sortedTasks.slice(0, 4);  // slice to return top 4 tasks
+    }
+    topTasksIsEmpty() {
+        return this.topTasks.length === 0;
     }
 }

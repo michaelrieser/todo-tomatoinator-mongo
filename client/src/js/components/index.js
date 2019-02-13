@@ -102,6 +102,9 @@ componentsModule.component('taskReminderDateTimeInput', TaskReminderDateTimeInpu
 import TaskReminderDateTimeInputForm from './task-helpers/task-reminder-date-time-input-form.component';
 componentsModule.component('taskReminderDateTimeInputForm', TaskReminderDateTimeInputForm);
 
+import TopTask from './task-helpers/top-task.component';
+componentsModule.component('topTask', TopTask);
+
 import DueNotification from './notification-helpers/due-notification.component';
 componentsModule.component('dueNotification', DueNotification);
 

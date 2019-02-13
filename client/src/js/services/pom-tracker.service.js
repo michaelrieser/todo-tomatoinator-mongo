@@ -1,3 +1,7 @@
+/* 
+TODO/IDEA: refactor PomTracker service into factory, and return separate PomTracker svc instances for 
+           each collaborator (i.e. one for home controller & one for pomreport-daily/weekly/monthly etc..)
+*/
 export default class PomTracker {
     constructor(AppConstants, PomreportChartHelpers, $http) {
         'ngInject';

@@ -1,21 +1,22 @@
 <div class="home-pomtracker-data-wrapper">
     <div class="home-pomtracker-combined-graph-wrapper">
-    <div class="home-pomtracker-data-title centered-title">Last Week's Progress</div>
-    
-    <!-- TODO: refactor PomTracker service into factory, and return separate PomTracker svc instances for 
-                each collaborator (i.e. one for home controller & one for pomreport-daily/weekly/monthly etc..) -->
-    <pomreport-date-display-panel tgtobject="$ctrl._PomTrackerHome" tgtroute="'app.home.view'"></pomreport-date-display-panel>
+        <div class="home-pomtracker-data-title centered-title">Weekly Progress</div>
+        
+        <pomreport-date-display-panel tgtobject="$ctrl._PomTrackerHome" tgtroute="'app.home.view'"></pomreport-date-display-panel>
 
-    <canvas ng-hide="$ctrl._PomTrackerHome.noPomCompletionData()" class="chart chart-bar" 
-            chart-labels="$ctrl._PomTrackerHome.pomtrackerDateLabels"
-            chart-data="$ctrl._PomTrackerHome.pomtrackerCombinedGraphData"                                 
-            chart-dataset-override="$ctrl._PomTrackerHome.pomtrackerCombinedGraphDatasetOverride"
-            chart-colors="$ctrl._PomTrackerHome.pomtrackerCombinedGraphColors"
-            chart-options="$ctrl._PomTrackerHome.pomtrackerCombinedGraphOptions">
-    </canvas>   
+        <canvas ng-hide="$ctrl._PomTrackerHome.noPomCompletionData()" class="chart chart-bar" 
+                chart-labels="$ctrl._PomTrackerHome.pomtrackerDateLabels"
+                chart-data="$ctrl._PomTrackerHome.pomtrackerCombinedGraphData"                                 
+                chart-dataset-override="$ctrl._PomTrackerHome.pomtrackerCombinedGraphDatasetOverride"
+                chart-colors="$ctrl._PomTrackerHome.pomtrackerCombinedGraphColors"
+                chart-options="$ctrl._PomTrackerHome.pomtrackerCombinedGraphOptions">
+        </canvas>   
     </div>
-    <div class="home-top-tasks-container">
-    <div class="home-pomtracker-data-title centered-title">Top Weekly Tasks</div>
-        <!-- TODO -->
+    <div class="home-top-tasks-wrapper">
+        <div class="home-pomtracker-data-title centered-title">Top Weekly Tasks</div>
+        <ul class="home-top-tasks-list">
+            <top-task ng-hide="$ctrl.topTasksIsEmpty()" task="task" ng-repeat="task in $ctrl._PomTrackerHome.topTasks"></top-task>
+            <li ng-show="$ctrl.topTasksIsEmpty()" class="top-tasks-empty-placeholder"></li>
+        </ul>
     </div>
-</div>  
+</div>
