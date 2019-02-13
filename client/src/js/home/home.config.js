@@ -11,6 +11,7 @@ function HomeConfig($stateProvider) {
                 },
                 // TODO: set app.home as abstract parent and extract signup@app.home to concrete child route 
                 //       to ALLOW USER TO SIGN IN FROM HOME PAGE INSTEAD OF HAVING TO REDIRECT
+                // *NOTE: extending auth component turned out to be more trouble than it was worth - just using standalone template
                 'signup@app.home': {
                     controller: 'AuthCtrl as $ctrl',
                     templateUrl: 'auth/auth.html',
@@ -22,10 +23,10 @@ function HomeConfig($stateProvider) {
             }
         })
         .state('app.home.view', {
-            url: '/:type?offset',
+            // url: '/:type?offset', // *NOTE/WARNING: setting params in url (i.e. :type) for home state caused other state's url (ex: /settings) to be used for :type
+            url: '/?offset',            
             params: {
                 type: 'weekly', // default to 'weekly' - NOTE: use 'squash: true' to remove param from url if default is set
-                squash: true
             },            
             views: {
                 'homepomdata': {

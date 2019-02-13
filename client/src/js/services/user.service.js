@@ -44,7 +44,8 @@ export default class User {
         this.current = null;
         this._JWT.destroy();
         // Do a hard reload of current state to ensure all data is flushed
-        this._$state.go(this._$state.$current, null, { reload: true });
+        // this._$state.go(this._$state.$current, null, { reload: true }); // *NOTE: attempting to go to abstract 'app.home' state, just hardcoding concrete child for now..
+        this._$state.go('app.home.view', null, { reload: true});
     }
 
     // returns a promise with false if JWT isn't present or true if User.current isn't null
