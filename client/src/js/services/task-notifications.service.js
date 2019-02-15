@@ -96,19 +96,66 @@ export default class TaskNotifications {
     let reminderIntervalNumber = tgtNotification.reminderIntervalNumber;
     let reminderIntervalPeriod = tgtNotification.reminderIntervalPeriod;
 
-    let reminderDateTime = moment().add(reminderIntervalNumber, reminderIntervalPeriod)
+    let tgtHour = priorTgtDateTime.get('hour');
+    let tgtMinute = priorTgtDateTime.get('minute');
+    let tgtSecond = priorTgtDateTime.get('second');           
 
-    if (reminderIntervalPeriod.indexOf('day') !== -1) { // TODO: look into ES6 includes()
-      let tgtHour = priorTgtDateTime.get('hour');
-      let tgtMinute = priorTgtDateTime.get('minute');
-      let tgtSecond = priorTgtDateTime.get('second');
+    // *METHOD 1: SLEEP from current time - will add reminderIntervalNumber/Period to current moment()
+    //    - DOESN'T KEEP HOUR/MINUTE/SECOND MOMENT WAS SET
+    // let reminderDateTime = moment().add(reminderIntervalNumber, reminderIntervalPeriod) 
+    
+    // if (reminderIntervalPeriod.indexOf('day') !== -1) { // TODO: look into ES6 includes()
+    //   let tgtHour = priorTgtDateTime.get('hour');
+    //   let tgtMinute = priorTgtDateTime.get('minute');
+    //   let tgtSecond = priorTgtDateTime.get('second');
 
-      reminderDateTime.set('hour', tgtHour);
-      reminderDateTime.set('minute', tgtMinute);
-      reminderDateTime.set('second', tgtSecond);
+    //   reminderDateTime.set('hour', tgtHour);
+    //   reminderDateTime.set('minute', tgtMinute);
+    //   reminderDateTime.set('second', tgtSecond);
+    // }
+
+    // *METHOD 2: KEEP (h/m/s) and add day/week when reminderIntervalPeriod === 'day' || 'week', add hour(s) & set (m/s) if reminderIntervalPeriod === 'hour'
+    // ** TODO: refactor and POSSIBLY extract to method? **
+    let newReminderDateTime = moment();
+    if (reminderIntervalPeriod.includes('week')) {
+      let tgtWeekday     = priorTgtDateTime.isoWeekday();
+      let currentWeekday = moment().isoWeekday();
+      
+      newReminderDateTime.isoWeekday(tgtWeekday);
+      newReminderDateTime.set('hour', tgtHour);
+      newReminderDateTime.set('minute', tgtMinute);
+      newReminderDateTime.set('second', tgtSecond);   
+
+      if (tgtWeekday <= currentWeekday) { 
+        newReminderDateTime.add(reminderIntervalNumber, reminderIntervalPeriod);
+      } 
+    // *** TODO: *** day&hour UNTESTED!!!!!!!!!!! ****  
+    } else if (reminderIntervalPeriod.includes('day')) {      
+      let currentHour = moment().get('hour');
+
+      newReminderDateTime.set('hour', tgtHour);
+      newReminderDateTime.set('minute', tgtMinute);
+      newReminderDateTime.set('second', tgtSecond);
+
+      if (tgtHour <= currentHour) {
+        newReminderDateTime.add(reminderIntervalNumber, reminderIntervalPeriod);
+      }      
+    } else if (reminderIntervalPeriod.includes('hour')) {      
+      let currentMinute = moment().get('minute');
+
+      newReminderDateTime.set('minute', tgtMinute);
+      newReminderDateTime.set('second', tgtSecond);
+
+      if (tgtMinute <= currentMinute) {
+        newReminderDateTime.add(reminderIntervalNumber, reminderIntervalPeriod);
+      }
+    } else {
+      // TODO: throw error?
     }
 
-    tgtTask.reminderDateTime = reminderDateTime.toISOString();
+    console.log(newReminderDateTime.format('LLLL'))
+
+    tgtTask.reminderDateTime = newReminderDateTime.toISOString();
     this.updateTaskAndResolveNotification(tgtTask, 'reminder');
   }
 

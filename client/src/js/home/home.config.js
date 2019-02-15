@@ -34,7 +34,6 @@ function HomeConfig($stateProvider) {
                     templateUrl: 'home/home-pom-data.html',
                     resolve: {
                         pomtrackerInfo: function (PomTrackerHome, User, $stateParams) {
-                            // console.log($stateParams)
                             if (!User.current) { return; }
                             return PomTrackerHome.queryAndSet($stateParams).then(                                
                                 (pomtrackerInfo) => pomtrackerInfo,
