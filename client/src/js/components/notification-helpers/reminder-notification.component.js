@@ -32,10 +32,10 @@ class ReminderNotificationCtrl {
         this.editingdatetime = !this.editingdatetime;
     }
 
-    reminderIntervalString() {
+    reminderIntervalString() {        
         let reminderIntervalNumber = this.notification.reminderIntervalNumber;
         let reminderIntervalPeriod = this.notification.reminderIntervalPeriod;
-        return `${reminderIntervalNumber} ${reminderIntervalPeriod}${reminderIntervalNumber > 1 ? 's' : '' }`;
+        return `${reminderIntervalNumber} ${reminderIntervalPeriod}`;
     }
 }
 

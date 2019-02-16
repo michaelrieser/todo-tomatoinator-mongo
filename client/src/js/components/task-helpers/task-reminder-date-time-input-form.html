@@ -3,13 +3,13 @@
         Every
         <fieldset class="form-group inline-block">
             <select class="form-control" ng-required="$ctrl.displayingreminderdatetimeinput" 
-                ng-model="$ctrl.task.reminderIntervalNumber" ng-change="$ctrl.handleReminderIntervalChange()" 
+                ng-model="$ctrl.reminderIntervalNumber" ng-change="$ctrl.handleReminderIntervalChange()" 
                 data-ng-options="opt for opt in $ctrl.reminderIntervalOptions">
             </select>                        
         </fieldset>
         <fieldset class="form-group inline-block">
             <select class="form-control" ng-required="$ctrl.displayingreminderdatetimeinput" 
-                ng-model="$ctrl.task.reminderIntervalPeriod" ng-change="$ctrl.handleReminderIntervalChange()" 
+                ng-model="$ctrl.reminderIntervalPeriod" ng-change="$ctrl.handleReminderIntervalChange()" 
                 data-ng-options="opt for opt in $ctrl.reminderPeriodOptions">
                 <!--pluralize-time-period reminder-interval-number="{{$ctrl.task.reminderIntervalNumber}}"-->
                 <!--ng-pluralize count="{{$ctrl.task.reminderIntervalNumber}}" 
@@ -30,14 +30,13 @@
                 </span>            
                 <input type="text" ng-required="$ctrl.displayingreminderdatetimeinput"                      
                     class="form-control add-task-date-input" 
-                    ng-model="$ctrl.task.reminderDateTime"                                 
+                    ng-model="$ctrl.reminderDateTime"                                 
                     data-date-time-picker="MMMM Do YYYY, h:mm a"                    
                     show-focus="$ctrl.editingReminderDateTime"/>
             </div>        
             <button type="button" class="ion-close-round clear-task-date-btn btn btn-sm" 
                 data-pack="ios" ng-click="$ctrl.removeTaskDate()"></button>        
         </fieldset>
-        <!-- TODO: add button to trigger reminderDateTime update - may need to separate add-task-form + task edit components, since add-task-form is already nested in a form-->
         <div class="reminder-date-time-ctrls-wrapper">
             <button class="update-reminder-btn btn btn-sm btn-success" type="submit">
                 Save
