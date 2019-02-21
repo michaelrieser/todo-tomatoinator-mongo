@@ -1,3 +1,5 @@
+require('newrelic');
+
 // import jquery from 'jquery';
 import angular from 'angular';
 
