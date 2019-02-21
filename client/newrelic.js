@@ -1,4 +1,6 @@
 'use strict'
+console.log('newrelic.js')
+console.log(process.env.NEW_RELIC_LICENSE_KEY);
 /**
  * New Relic agent configuration.
  *
