@@ -1,3 +1,5 @@
+require('newrelic');
+
 var fs = require('fs'),
     http = require('http'),
     path = require('path'),
@@ -14,7 +16,6 @@ var isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 var app = express();
-console.log('process.env.CLIENT_ORIGIN: ', process.env.CLIENT_ORIGIN);
 
 /* --------------------------------------------- REDIRECTING FROM HTTP => HTTPS ------------------------------------------------------- */
 // ** TAKE 1 **

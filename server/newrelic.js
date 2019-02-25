@@ -1,5 +1,6 @@
 'use strict'
-console.log('process.env.NEW_RELIC_HOME: ', process.env.NEW_RELIC_HOME);
+console.log('process.env.NEW_RELIC_LICENSE_KEY: ', process.env.NEW_RELIC_LICENSE_KEY);
+
 /**
  * New Relic agent configuration.
  *
@@ -10,11 +11,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Todo Tomatoinator Client'],
+  app_name: ['My Application'],
   /**
    * Your New Relic license key.
    */
-  license_key: process.env.NEW_RELIC_HOME,
+  license_key: process.env.NEW_RELIC_LICENSE_KEY,
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
