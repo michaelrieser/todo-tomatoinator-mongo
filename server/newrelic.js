@@ -11,7 +11,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['My Application'],
+  app_name: ['Todo Tomatoinator API'],
   /**
    * Your New Relic license key.
    */
