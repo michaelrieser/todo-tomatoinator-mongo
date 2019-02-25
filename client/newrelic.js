@@ -1,6 +1,5 @@
 'use strict'
-console.log('newrelic.js')
-console.log(process.env.NEW_RELIC_LICENSE_KEY);
+console.log('process.env.NEW_RELIC_HOME: ', process.env.NEW_RELIC_HOME);
 /**
  * New Relic agent configuration.
  *
@@ -15,7 +14,7 @@ exports.config = {
   /**
    * Your New Relic license key.
    */
-  license_key: 'b55190b0acc80a1f6a85d43997837f5929f86d41',
+  license_key: process.env.NEW_RELIC_HOME,
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
