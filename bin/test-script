@@ -1,0 +1,6 @@
+#1 /app/bin/node
+function helloWorld() {
+    console.log('Hello World');
+}
+helloWorld();
+process.exit();
