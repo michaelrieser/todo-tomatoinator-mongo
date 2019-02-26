@@ -1,4 +1,4 @@
-#1 /app/bin/node
+#! /app/bin/node
 function helloWorld() {
     console.log('Hello World');
 }
