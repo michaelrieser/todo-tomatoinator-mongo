@@ -1,10 +1,11 @@
 class TaskReminderDateTimeInputFormCtrl {
-    constructor($scope, Tasks, TaskNotifications) {
+    constructor($scope, Tasks, TaskNotifications, TimeUtils) {
         'ngInject';
 
         this._$scope = $scope;
         this._Tasks = Tasks;
         this._TaskNotifications = TaskNotifications;
+        this._TimeUtils = TimeUtils;
 
         this.reminderIntervalOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];
@@ -77,17 +78,9 @@ class TaskReminderDateTimeInputFormCtrl {
         }
 
         if (this.reminderIntervalNumber && this.reminderIntervalPeriod && !calledOnLoad) { // all values set and change made (i.e. not on component instantiation)
-            this.reminderDateTime = this.getSuggestedTgtReminderDateTime().toISOString();
+            this.reminderDateTime = this._TimeUtils.getSuggestedTgtReminderDateTime(this.reminderIntervalNumber, this.reminderIntervalPeriod).toISOString();
         }
     }   
-    getSuggestedTgtReminderDateTime() {
-        let tgtReminderDateTime = moment().add(this.reminderIntervalNumber,this.reminderIntervalPeriod)
-        // round up to nearest hour - SEE: https://stackoverflow.com/questions/17691202/round-up-round-down-a-momentjs-moment-to-nearest-minute
-        !this.reminderIntervalPeriod.includes('hour') && ( tgtReminderDateTime.minute() || tgtReminderDateTime.second() || tgtReminderDateTime.millisecond() ) 
-            ? tgtReminderDateTime.add(1, 'hour').startOf('hour') // add 1 hour if 'monthly' || weekly' || 'daily' ('hourly' already adds)
-            : tgtReminderDateTime.startOf('hour');
-        return tgtReminderDateTime;
-    } 
 }
 
 let TaskReminderDateTimeInputForm =  {

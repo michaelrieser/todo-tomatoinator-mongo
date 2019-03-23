@@ -29,4 +29,12 @@ export default class TimeUtils {
             return 'black';
         }
     }
+    getSuggestedTgtReminderDateTime(reminderIntervalNumber, reminderIntervalPeriod) {
+        let tgtReminderDateTime = moment().add(reminderIntervalNumber, reminderIntervalPeriod)
+        // round up to nearest hour - SEE: https://stackoverflow.com/questions/17691202/round-up-round-down-a-momentjs-moment-to-nearest-minute
+        !reminderIntervalPeriod.includes('hour') && ( tgtReminderDateTime.minute() || tgtReminderDateTime.second() || tgtReminderDateTime.millisecond() ) 
+            ? tgtReminderDateTime.add(1, 'hour').startOf('hour') // add 1 hour if 'monthly' || weekly' || 'daily' ('hourly' already adds)
+            : tgtReminderDateTime.startOf('hour');
+        return tgtReminderDateTime;
+    } 
 }

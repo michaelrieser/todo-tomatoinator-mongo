@@ -1,9 +1,10 @@
 class TaskReminderDateTimeInputCtrl {
-    constructor($scope, Tasks) {
+    constructor($scope, Tasks, TimeUtils) {
         'ngInject';
 
         this._$scope = $scope;
         this._Tasks = Tasks;
+        this._TimeUtils = TimeUtils;
 
         this.reminderIntervalOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.reminderPeriodOptions = ['hour', 'day', 'week', 'month'];
@@ -37,7 +38,7 @@ class TaskReminderDateTimeInputCtrl {
         }
 
         if (intervalNumber && intervalPeriod) {
-            this.task.reminderDateTime = moment().add(intervalNumber, intervalPeriod).toISOString();
+            this.task.reminderDateTime = this._TimeUtils.getSuggestedTgtReminderDateTime(this.task.reminderIntervalNumber, this.task.reminderIntervalPeriod).toISOString();
         }
     } 
 }
