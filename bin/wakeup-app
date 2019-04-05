@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "$CLIENT_OR_SERVER"
+
+cd ..
+
+if [ "$CLIENT_OR_SERVER" == "client" ]; then
+    # npm --prefix client run heroku-postbuild
+    cd client && npm run start
+else
+    # npm --prefix server run heroku-postbuild
+    cd server && npm run start
+fi
