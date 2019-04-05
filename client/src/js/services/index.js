@@ -55,4 +55,7 @@ servicesModule.service('PomreportChartHelpers', PomreportChartHelpers);
 import PomTrackerHome from './pom-tracker-home.service';
 servicesModule.service('PomTrackerHome', PomTrackerHome);
 
+import WakeupApi from './wakeup-api.service';
+servicesModule.service('WakeupApi', WakeupApi);
+
 export default servicesModule;

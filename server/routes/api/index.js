@@ -5,6 +5,7 @@ router.use('/tasks', require('./tasks'));
 router.use('/notes', require('./notes'));
 router.use('/steps', require('./steps'));
 router.use('/pomtracker', require('./pomtracker'));
+router.use('/ping', require('./ping'));
 // router.use('/tags', require('./tags')); // @wip
 
 // ERROR HANDLER middleware - defined with 4 args

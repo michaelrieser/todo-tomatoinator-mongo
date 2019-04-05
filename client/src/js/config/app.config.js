@@ -19,6 +19,9 @@ function AppConfig($httpProvider, $stateProvider, $locationProvider, $urlRouterP
     resolve: {
       auth: function(User) {        
         return User.verifyAuth();
+      },
+      wakeupApi: function(WakeupApi) {
+        return WakeupApi.pingServer();
       }
     }
     // TODO: force resolve to be called w/i changes of the same route hierarchy - for calling User.verifyAuth() -> TaskNotificaions.initializeToast()
